@@ -1,17 +1,18 @@
 == files ==
 raw:
-total 704
-drwxr-xr-x 2 runner runner   4096 Nov  6 23:30 .
-drwxr-xr-x 7 runner runner   4096 Nov  6 23:30 ..
--rw-r--r-- 1 runner runner     12 Nov  6 23:30 _manifest.txt
--rw-r--r-- 1 runner runner 539003 Nov  6 23:30 school_locations.csv
--rw-r--r-- 1 runner runner 165023 Nov  6 23:30 vce_2025.xlsx
+total 708
+drwxr-xr-x 3 runner runner   4096 Nov  6 23:34 .
+drwxr-xr-x 8 runner runner   4096 Nov  6 23:34 ..
+-rw-r--r-- 1 runner runner     12 Nov  6 23:34 _manifest.txt
+-rw-r--r-- 1 runner runner 539003 Nov  6 23:34 school_locations.csv
+-rw-r--r-- 1 runner runner 165023 Nov  6 23:34 vce_2025.xlsx
+drwxr-xr-x 2 runner runner   4096 Nov  6 23:34 zones
 
 tmp:
 total 10432
-drwxr-xr-x 2 runner runner     4096 Nov  6 23:30 .
-drwxr-xr-x 7 runner runner     4096 Nov  6 23:30 ..
--rw-r--r-- 1 runner runner 10673831 Nov  6 23:30 zones.zip
+drwxr-xr-x 2 runner runner     4096 Nov  6 23:34 .
+drwxr-xr-x 8 runner runner     4096 Nov  6 23:34 ..
+-rw-r--r-- 1 runner runner 10673831 Nov  6 23:34 zones.zip
 == zip contents ==
 Archive:  tmp/zones.zip
   Length      Date    Time    Name
@@ -317,15 +318,15 @@ Attribute data
 [proj] Source and destination CRS are the same
 [o] Wrote raw/zones/Secondary_Integrated_Year12_2027.json
 total 2156
-drwxr-xr-x 2 runner runner   4096 Nov  6 23:30 .
-drwxr-xr-x 3 runner runner   4096 Nov  6 23:30 ..
--rw-r--r-- 1 runner runner 749299 Nov  6 23:30 Primary_Integrated_2027.json
--rw-r--r-- 1 runner runner 237510 Nov  6 23:30 Secondary_Integrated_Year10_2027.json
--rw-r--r-- 1 runner runner 230346 Nov  6 23:30 Secondary_Integrated_Year11_2027.json
--rw-r--r-- 1 runner runner 229100 Nov  6 23:30 Secondary_Integrated_Year12_2027.json
--rw-r--r-- 1 runner runner 245627 Nov  6 23:30 Secondary_Integrated_Year7_2027.json
--rw-r--r-- 1 runner runner 245627 Nov  6 23:30 Secondary_Integrated_Year8_2027.json
--rw-r--r-- 1 runner runner 243282 Nov  6 23:30 Secondary_Integrated_Year9_2027.json
--rw-r--r-- 1 runner runner    701 Nov  6 23:30 Standalone_juniorsec_2027.json
--rw-r--r-- 1 runner runner   1127 Nov  6 23:30 Standalone_seniorsec_2027.json
--rw-r--r-- 1 runner runner   2052 Nov  6 23:30 Standalone_singlesex_2027.json
+drwxr-xr-x 2 runner runner   4096 Nov  6 23:34 .
+drwxr-xr-x 3 runner runner   4096 Nov  6 23:34 ..
+-rw-r--r-- 1 runner runner 749299 Nov  6 23:34 Primary_Integrated_2027.json
+-rw-r--r-- 1 runner runner 237510 Nov  6 23:34 Secondary_Integrated_Year10_2027.json
+-rw-r--r-- 1 runner runner 230346 Nov  6 23:34 Secondary_Integrated_Year11_2027.json
+-rw-r--r-- 1 runner runner 229100 Nov  6 23:34 Secondary_Integrated_Year12_2027.json
+-rw-r--r-- 1 runner runner 245627 Nov  6 23:34 Secondary_Integrated_Year7_2027.json
+-rw-r--r-- 1 runner runner 245627 Nov  6 23:34 Secondary_Integrated_Year8_2027.json
+-rw-r--r-- 1 runner runner 243282 Nov  6 23:34 Secondary_Integrated_Year9_2027.json
+-rw-r--r-- 1 runner runner    701 Nov  6 23:34 Standalone_juniorsec_2027.json
+-rw-r--r-- 1 runner runner   1127 Nov  6 23:34 Standalone_seniorsec_2027.json
+-rw-r--r-- 1 runner runner   2052 Nov  6 23:34 Standalone_singlesex_2027.json
