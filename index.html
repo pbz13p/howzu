@@ -114,7 +114,7 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
   <section class="card">
     <h2>VCE 成绩排名（2025）</h2>
     <p class="note" style="margin-top:-4px">按 VCAA 公布的 VCE 中位分排序，同分按 40 分以上比例。只计有 VCE 毕业生、20 人以上的学校。</p>
-    <input id="rankSearch" placeholder="搜学校名或区，如 Glen Waverley">
+    <input id="rankSearch" placeholder="搜学校名，如 Balwyn High">
     <div class="list" id="rank"></div>
     <div class="row"><button class="ghost" id="more">显示更多</button></div>
   </section>
@@ -238,7 +238,9 @@ function renderRank(){
   const q=$("#rankSearch").value.trim().toLowerCase();
   const all=D.sc.filter(s=>s.vce_rank).sort((a,b)=>a.vce_rank-b.vce_rank);
   const list=q?all.filter(s=>(s.name+" "+s.addr).toLowerCase().includes(q)):all;
-  $("#rank").innerHTML=list.slice(0,rankShown).map(s=>itemHTML(s, s.addr.split(", ").slice(-1)[0].replace(/ \d{4}$/,""))).join("") || `<div class="note">没找到。</div>`;
+  $("#rank").innerHTML=list.slice(0,rankShown).map(s=>itemHTML(s, s.addr.split(", ").slice(-1)[0].replace(/ \d{4}$/,""))).join("")
+    || `<div class="note">“${q}” 附近没有排名内的学校。</div><div class="row"><button id="toZone">查 “${q}” 的学区和周边学校</button></div>`;
+  const tz=$("#toZone"); if(tz) tz.onclick=()=>{$("#q").value=$("#rankSearch").value.trim(); window.scrollTo({top:0,behavior:"smooth"}); search();};
   $("#more").style.display = list.length>rankShown ? "" : "none";
 }
 
