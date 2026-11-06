@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>墨尔本学区通 · 输入地址查学区和学校</title>
+<meta name="description" content="输入墨尔本地址，马上查对口公立小学、中学学区，周边学校，VCE 成绩和排名。2027 年最新学区数据。">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:var(--accent);color:#fff;padding:22px 18px 18px}
+header h1{margin:0;font-size:22px;letter-spacing:.5px}
+header p{margin:4px 0 0;opacity:.85;font-size:14px}
+main{max-width:760px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.search{display:flex;gap:8px}
+.search input{flex:1;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;min-width:0}
+button{font-size:15px;padding:12px 16px;border:0;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer;white-space:nowrap}
+button.ghost{background:var(--accent2);color:var(--accent)}
+.row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+#suggest{margin-top:8px}
+#suggest div{padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}
+#suggest div:hover{background:var(--accent2)}
+#map{height:300px;border-radius:12px;margin-top:12px;display:none}
+h2{font-size:17px;margin:0 0 10px}
+.zone{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.zone .tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:20px;background:var(--accent2);color:var(--accent);margin-bottom:4px}
+.zone .name{font-size:17px;font-weight:600}
+.zone .meta{font-size:13px;color:var(--muted)}
+.stats{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+.stat{background:var(--bg);border-radius:10px;padding:8px 10px;min-width:90px}
+.stat b{display:block;font-size:20px}
+.stat span{font-size:12px;color:var(--muted)}
+.none{color:var(--warn);background:var(--warnbg);border-radius:10px;padding:10px;font-size:14px}
+.tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.tabs button{padding:7px 12px;font-size:13px;background:var(--bg);color:var(--ink)}
+.tabs button.on{background:var(--accent);color:#fff}
+.list .item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.list .item:last-child{border-bottom:0}
+.list .l{min-width:0}
+.list .n{font-weight:600;font-size:15px}
+.list .s{font-size:12px;color:var(--muted)}
+.list .r{text-align:right;font-size:13px;white-space:nowrap}
+.list .r b{font-size:16px}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+.f input,.f select,.f textarea{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;background:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.note{font-size:12px;color:var(--muted)}
+.note a{color:var(--accent)}
+.ok{background:var(--accent2);color:var(--accent);padding:12px;border-radius:10px;margin-top:10px;font-size:14px;white-space:pre-wrap}
+#rankSearch{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.hidden{display:none}
+footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>墨尔本学区通</h1>
+  <p>输入地址，马上知道对口哪所公立学校、周边有哪些学校、VCE 成绩如何</p>
+</header>
+<main>
+  <section class="card">
+    <div class="search">
+      <input id="q" placeholder="输入地址，如 40 Balwyn Rd, Balwyn" autocomplete="off" enterkeyhint="search">
+      <button id="go">查询</button>
+    </div>
+    <div class="row">
+      <button class="ghost" id="me">📍 用我现在的位置</button>
+    </div>
+    <div id="suggest"></div>
+    <div class="hint" id="status">数据：2027 年维州政府学区（2027 年 1 月起生效）＋ 2025 年 VCE 成绩</div>
+    <div id="map"></div>
+  </section>
+
+  <section class="card hidden" id="zoneCard">
+    <h2>对口公立学校（学区）</h2>
+    <div id="zones"></div>
+    <div class="note">有学区 = 住在这里就<b>有权入读</b>这所公立学校。精英中学（MacRob、Melbourne High、Nossal、Suzanne Cory 等）和私校不分学区，靠考试或报名。</div>
+  </section>
+
+  <section class="card hidden" id="nearCard">
+    <h2>周边 3 公里内的学校</h2>
+    <div class="tabs" id="nearTabs"></div>
+    <div class="list" id="near"></div>
+  </section>
+
+  <section class="card" id="leadCard">
+    <h2>想租这个学区的房子？</h2>
+    <p class="note" style="margin-top:-4px">留下需求，有合适房源第一时间通知你。海外人士现在不能买二手房（禁令延长到 2029 年 6 月 30 日），租学区房是进好学校最直接的方式。</p>
+    <form class="f" id="lead">
+      <label>想要的学区 / 学校</label>
+      <input name="school" id="leadSchool" placeholder="如 Balwyn High School">
+      <div class="grid">
+        <div><label>房型</label>
+          <select name="beds"><option>1 房</option><option>2 房</option><option selected>3 房</option><option>4 房以上</option></select></div>
+        <div><label>每周预算（澳元）</label><input name="budget" inputmode="numeric" placeholder="如 800"></div>
+      </div>
+      <div class="grid">
+        <div><label>入住时间</label><input name="when" placeholder="如 2027 年 1 月"></div>
+        <div><label>孩子年级</label><input name="grade" placeholder="如 7 年级"></div>
+      </div>
+      <label>联系方式（微信号或手机）</label>
+      <input name="contact" required placeholder="必填">
+      <label>其他要求</label>
+      <textarea name="other" rows="2" placeholder="如 带车位、可养宠物"></textarea>
+      <div class="row"><button type="submit">提交需求</button></div>
+      <div id="leadOk" class="ok hidden"></div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>VCE 成绩排名（2025）</h2>
+    <p class="note" style="margin-top:-4px">按 VCAA 公布的 VCE 中位分排序，同分按 40 分以上比例。只计有 VCE 毕业生、20 人以上的学校。</p>
+    <input id="rankSearch" placeholder="搜学校名或区，如 Glen Waverley">
+    <div class="list" id="rank"></div>
+    <div class="row"><button class="ghost" id="more">显示更多</button></div>
+  </section>
+</main>
+<footer class="note">
+  <p><b>重要提示：</b>学区每年可能调整，入学前请以维州教育部官网 <a href="https://www.findmyschool.vic.gov.au" target="_blank" rel="noopener">findmyschool.vic.gov.au</a> 为准。政府说明学区数据不应作为买房决策的唯一依据。VCE 中位分只反映学校的一个方面，不代表学校整体好坏。</p>
+  <p>数据来源：学区和学校位置 © State of Victoria (Department of Education)，<a href="https://discover.data.vic.gov.au/dataset/victorian-government-school-zones-2027" target="_blank" rel="noopener">DataVic</a>，CC BY 4.0；VCE 数据 © Victorian Curriculum and Assessment Authority，详见 <a href="https://www.vcaa.vic.edu.au" target="_blank" rel="noopener">www.vcaa.vic.edu.au</a>；地址查询和地图 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors。</p>
+  <p id="built"></p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Where lead submissions go. Empty = show a copyable summary only.
+const LEAD_ENDPOINT = "";
+
+const $ = s => document.querySelector(s);
+const SECTOR = {Government:"公立", Catholic:"天主教", Independent:"私立"};
+const TYPE = {Primary:"小学", Secondary:"中学", "Pri/Sec":"小学+中学", Special:"特殊学校", Language:"语言学校"};
+let D = {}, map, layers = [], nearData = [], nearFilter = "all", rankShown = 30;
+
+async function load(){
+  const [zp, zs, sc, meta] = await Promise.all(
+    ["zones_primary","zones_secondary","schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
+  zp.features.forEach(prepBBox); zs.features.forEach(prepBBox);
+  D = {zp, zs, sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
+  $("#built").textContent = `学区年份 ${meta.zones_year}｜VCE 年份 ${meta.vce_year}｜数据更新 ${meta.built}`;
+  renderRank();
+}
+
+function prepBBox(f){
+  let a=[180,90,-180,-90];
+  const polys = f.geometry.type==="Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+  polys.forEach(p=>p[0].forEach(([x,y])=>{a[0]=Math.min(a[0],x);a[1]=Math.min(a[1],y);a[2]=Math.max(a[2],x);a[3]=Math.max(a[3],y)}));
+  f.bbox=a; f.polys=polys;
+}
+function inRing(x,y,ring){
+  let inside=false;
+  for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+    const [xi,yi]=ring[i],[xj,yj]=ring[j];
+    if(((yi>y)!==(yj>y)) && (x < (xj-xi)*(y-yi)/(yj-yi)+xi)) inside=!inside;
+  }
+  return inside;
+}
+function inFeature(f,x,y){
+  const b=f.bbox; if(x<b[0]||x>b[2]||y<b[1]||y>b[3]) return false;
+  return f.polys.some(p => inRing(x,y,p[0]) && !p.slice(1).some(h=>inRing(x,y,h)));
+}
+function km(a,b,c,d){const R=6371,t=Math.PI/180,dl=(c-a)*t,dn=(d-b)*t;
+  const h=Math.sin(dl/2)**2+Math.cos(a*t)*Math.cos(c*t)*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+
+async function geocode(q){
+  const url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&countrycodes=au&addressdetails=0&viewbox=140.9,-34,150,-39.2&bounded=1&q="+encodeURIComponent(q);
+  try{ const r = await fetch(url,{headers:{"Accept-Language":"en"}}); if(r.ok){const j=await r.json(); if(j.length) return j.map(x=>({lat:+x.lat,lng:+x.lon,label:x.display_name}));} }catch(e){}
+  try{ const r = await fetch("https://photon.komoot.io/api/?limit=5&lat=-37.81&lon=144.96&bbox=140.9,-39.2,150,-34&q="+encodeURIComponent(q));
+    const j = await r.json();
+    return j.features.map(f=>({lng:f.geometry.coordinates[0],lat:f.geometry.coordinates[1],
+      label:[f.properties.housenumber,f.properties.street||f.properties.name,f.properties.city||f.properties.district,f.properties.postcode].filter(Boolean).join(", ")}));
+  }catch(e){ return []; }
+}
+
+async function search(){
+  const q=$("#q").value.trim(); if(!q) return;
+  if(!D.sc){ $("#status").textContent="数据加载中，请稍候…"; await ready; }
+  $("#status").textContent="正在查找地址…"; $("#suggest").innerHTML="";
+  const res = await geocode(/vic|victoria|\b3\d{3}\b/i.test(q) ? q : q+", Victoria");
+  if(!res.length){ $("#status").textContent="没找到这个地址，试试加上区名或邮编，比如 “12 Smith St, Box Hill 3128”"; return; }
+  if(res.length===1) return show(res[0]);
+  $("#status").textContent="请选择你要的地址：";
+  res.forEach(r=>{const d=document.createElement("div");d.textContent=r.label;d.onclick=()=>{$("#suggest").innerHTML="";show(r)};$("#suggest").appendChild(d);});
+}
+
+function show(p){
+  $("#status").textContent = p.label;
+  const zp = D.zp.features.filter(f=>inFeature(f,p.lng,p.lat));
+  const zs = D.zs.features.filter(f=>inFeature(f,p.lng,p.lat));
+  drawMap(p, zp, zs);
+  let h="";
+  if(!zp.length && !zs.length) h=`<div class="none">这个位置不在任何公立学校学区内（可能不在维州，或地址定位有偏差）。</div>`;
+  zs.forEach(f=>h+=zoneHTML(f,"中学学区"));
+  zp.forEach(f=>h+=zoneHTML(f,"小学学区"));
+  if(!zs.length && zp.length) h+=`<div class="none">没找到对应的中学学区，请到 findmyschool 官网核实。</div>`;
+  $("#zones").innerHTML=h; $("#zoneCard").classList.remove("hidden");
+  if(zs[0]) $("#leadSchool").value = zs[0].properties.name;
+  nearData = D.sc.map(s=>({...s,d:km(p.lat,p.lng,s.lat,s.lng)})).filter(s=>s.d<=3 && s.type!=="Language").sort((a,b)=>a.d-b.d);
+  renderNear(); $("#nearCard").classList.remove("hidden");
+  $("#zoneCard").scrollIntoView({behavior:"smooth"});
+}
+
+function zoneHTML(f,tag){
+  const pr=f.properties, s=D.byNo[pr.no];
+  const campus = pr.campus && pr.campus!==pr.name ? `（${pr.campus}）`:"";
+  let stats="";
+  if(s && s.vce_med){
+    stats=`<div class="stats">
+      <div class="stat"><b>${s.vce_med}</b><span>VCE 中位分</span></div>
+      <div class="stat"><b>${s.vce_p40??"-"}%</b><span>40 分以上比例</span></div>
+      ${s.vce_rank?`<div class="stat"><b>${s.vce_rank}</b><span>全州 ${D.meta.vce_ranked_total} 所中排名</span></div>`:""}
+    </div>`;
+  }
+  return `<div class="zone"><span class="tag">${tag}</span>
+    <div class="name">${pr.name}${campus}</div>
+    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}</div>`;
+}
+
+function renderNear(){
+  const tabs=[["all","全部"],["Government","公立"],["Independent","私立"],["Catholic","天主教"],["sec","只看中学"]];
+  $("#nearTabs").innerHTML=tabs.map(([k,v])=>`<button class="${k===nearFilter?"on":""}" data-k="${k}">${v}</button>`).join("");
+  $("#nearTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{nearFilter=b.dataset.k;renderNear();});
+  const list = nearData.filter(s=> nearFilter==="all" || (nearFilter==="sec" ? /Secondary|Pri\/Sec/.test(s.type) : s.sector===nearFilter));
+  $("#near").innerHTML = list.length ? list.slice(0,40).map(s=>itemHTML(s,`${s.d.toFixed(1)} 公里`)).join("") : `<div class="note">附近 3 公里内没有这类学校。</div>`;
+}
+
+function itemHTML(s, extra){
+  const vce = s.vce_med ? `<b>${s.vce_med}</b> 分${s.vce_rank?`<br>第 ${s.vce_rank} 名`:""}` : "";
+  return `<div class="item"><div class="l"><div class="n">${s.name}</div>
+    <div class="s">${SECTOR[s.sector]||s.sector} · ${TYPE[s.type]||s.type}${extra?" · "+extra:""}</div></div>
+    <div class="r">${vce}</div></div>`;
+}
+
+function renderRank(){
+  const q=$("#rankSearch").value.trim().toLowerCase();
+  const all=D.sc.filter(s=>s.vce_rank).sort((a,b)=>a.vce_rank-b.vce_rank);
+  const list=q?all.filter(s=>(s.name+" "+s.addr).toLowerCase().includes(q)):all;
+  $("#rank").innerHTML=list.slice(0,rankShown).map(s=>itemHTML(s, s.addr.split(", ").slice(-1)[0].replace(/ \d{4}$/,""))).join("") || `<div class="note">没找到。</div>`;
+  $("#more").style.display = list.length>rankShown ? "" : "none";
+}
+
+function drawMap(p,zp,zs){
+  $("#map").style.display="block";
+  if(!map){ map=L.map("map",{scrollWheelZoom:false});
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map); }
+  layers.forEach(l=>map.removeLayer(l)); layers=[];
+  const add=(f,color)=>{const l=L.geoJSON({type:"Feature",geometry:f.geometry},{style:{color,weight:2,fillOpacity:.08}}).addTo(map);layers.push(l);return l;};
+  let bounds=null;
+  zs.forEach(f=>{const l=add(f,"#0f6b4f");bounds=bounds?bounds.extend(l.getBounds()):l.getBounds();});
+  zp.forEach(f=>{const l=add(f,"#c2410c");bounds=bounds?bounds.extend(l.getBounds()):l.getBounds();});
+  layers.push(L.marker([p.lat,p.lng]).addTo(map));
+  [...zs,...zp].forEach(f=>{const s=D.byNo[f.properties.no]; if(s) layers.push(L.circleMarker([s.lat,s.lng],{radius:6,color:"#1d2321",fillOpacity:.9}).bindTooltip(s.name).addTo(map));});
+  setTimeout(()=>{map.invalidateSize(); bounds?map.fitBounds(bounds,{padding:[10,10]}):map.setView([p.lat,p.lng],14);},50);
+}
+
+$("#go").onclick=search;
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
+$("#me").onclick=()=>{
+  if(!navigator.geolocation){$("#status").textContent="你的浏览器不支持定位";return;}
+  $("#status").textContent="正在定位…";
+  navigator.geolocation.getCurrentPosition(async pos=>{await ready; show({lat:pos.coords.latitude,lng:pos.coords.longitude,label:"你当前的位置"});},
+    ()=>$("#status").textContent="无法获取位置，请直接输入地址");
+};
+$("#rankSearch").addEventListener("input",()=>{rankShown=30;renderRank();});
+$("#more").onclick=()=>{rankShown+=50;renderRank();};
+
+$("#lead").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const f=Object.fromEntries(new FormData(e.target));
+  const text=`租学区房需求\n学区：${f.school||"-"}\n房型：${f.beds}\n预算：$${f.budget||"-"}/周\n入住：${f.when||"-"}\n孩子年级：${f.grade||"-"}\n联系方式：${f.contact}\n其他：${f.other||"-"}`;
+  let sent=false;
+  if(LEAD_ENDPOINT){ try{ const r=await fetch(LEAD_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({...f,_subject:"租学区房需求"})}); sent=r.ok; }catch(_){} }
+  const ok=$("#leadOk"); ok.classList.remove("hidden");
+  ok.textContent = sent ? "已收到！有合适房源会第一时间联系你。" : "已记录。下面是你的需求，可以复制后发给我们：\n\n"+text;
+});
+
+const ready = load();
+</script>
+</body>
+</html>
