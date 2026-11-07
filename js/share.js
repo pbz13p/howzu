@@ -101,11 +101,11 @@
   async function open(x) {
     const m = document.createElement("div"); m.className = "sh-mask";
     m.innerHTML = `<div class="sh"><h3>分享这套房 <button aria-label="关闭">✕</button></h3><img class="poster" alt="房源海报"><div class="grid">
-      <button class="main" data-a="wx1">💬 一键发微信</button>
+      <button class="main" data-a="wx1">💬 发微信（先发海报，再发文字）</button>
 </div>
       <a class="moreT" href="#">其他方式 ›</a><div class="more" hidden><button data-a="save">保存海报</button><button data-a="wx">复制微信文案</button><button data-a="link">复制链接</button></div>
       <div class="step" id="shStep" hidden></div>
-      <div class="tip" id="shTip">${isMobile ? "点一下选微信，海报直接发出；文案已自动复制，在微信里长按 → 粘贴。" : ""}</div></div>`;
+      <div class="tip" id="shTip">${isMobile ? "点一下选微信，海报直接发出；文字已自动复制，在微信里长按 → 粘贴，再发一条。" : ""}</div></div>`;
     document.body.appendChild(m);
     m.addEventListener("click", e => { if (e.target === m || e.target.closest("h3 button")) m.remove(); });
     // 先把图准备好：分享必须在点击的瞬间发出，不能临时再去下载
@@ -135,11 +135,11 @@
         try { if (png && window.ClipboardItem) { await navigator.clipboard.write([new ClipboardItem({ "image/png": png })]); ok = true; } } catch (_) {}
         if (!ok) { if (poster_) download(poster_); copy(wechatText(x)); return toast("已下载海报、复制文案"); }
         stepBox.hidden = false;
-        stepBox.innerHTML = `<div><b>① 海报已复制</b>：去微信对话框按 <kbd>Ctrl</kbd>+<kbd>V</kbd>，发送。<br><button class="next" data-a="wx2">② 再点这里复制文案</button></div>`;
+        stepBox.innerHTML = `<div><b>① 海报已复制（不用下载）</b>：去微信对话框按 <kbd>Ctrl</kbd>+<kbd>V</kbd>，发送。<br><button class="next" data-a="wx2">② 点这里复制文字</button></div>`;
         stepBox.scrollIntoView({ block: "nearest", behavior: "smooth" });
         return;
       }
-      if (a === "wx2") { await copy(wechatText(x)); stepBox.innerHTML = `<div><b>② 文案已复制</b>：回微信再按 <kbd>Ctrl</kbd>+<kbd>V</kbd>，发送。完成 ✓</div>`; return; }
+      if (a === "wx2") { await copy(wechatText(x)); stepBox.innerHTML = `<div><b>② 文字已复制</b>：回微信再按 <kbd>Ctrl</kbd>+<kbd>V</kbd>，发送。完成 ✓</div>`; return; }
       if (!isMobile && a === "xhs1") {
         const u = `${url(x)}&send=1`;
         const q = qrCanvas(u, 200);
