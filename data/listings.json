@@ -166,10 +166,10 @@
     {
       "id": "2801b-wsp",
       "status": "draft",
-      "title": "West Side Place · 一房一卫",
+      "title": "West Side Place · 两房一卫高层公寓",
       "address": "2801B/639 Little Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": 1,
+      "beds": 2,
       "baths": 1,
       "cars": 0,
       "rentWeekly": null,
@@ -183,6 +183,7 @@
         "photos/2801b-wsp-5.jpg",
         "photos/2801b-wsp-6.jpg",
         "photos/2801b-wsp-7.jpg",
+        "photos/2801b-wsp-11.jpg",
         "photos/2801b-wsp-8.jpg",
         "photos/2801b-wsp-9.jpg",
         "photos/2801b-wsp-10.jpg"
