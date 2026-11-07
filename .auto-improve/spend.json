@@ -1,11 +1,17 @@
 {
- "total_usd": 0.4158,
- "total_tokens": 382688,
+ "total_usd": 0.8589,
+ "total_tokens": 929570,
  "runs": [
   {
    "at": "2026-11-07T02:38+00:00",
    "usd": 0.4158,
    "tokens": 382688,
+   "status": "success"
+  },
+  {
+   "at": "2026-11-07T12:41+00:00",
+   "usd": 0.4431,
+   "tokens": 546882,
    "status": "success"
   }
  ]
