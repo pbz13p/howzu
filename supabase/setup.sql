@@ -53,3 +53,6 @@ create policy "anyone uploads listing photos" on storage.objects
 drop policy if exists "admin deletes listing photos" on storage.objects;
 create policy "admin deletes listing photos" on storage.objects
   for delete to authenticated using (bucket_id = 'listing-photos' and (auth.jwt() ->> 'email') = 'fanicyn@gmail.com');
+
+grant select, insert on public.listings to anon, authenticated;
+grant update, delete on public.listings to authenticated;
