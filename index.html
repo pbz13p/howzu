@@ -72,7 +72,7 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
 <header>
   <h1>墨尔本学区通</h1>
   <p>输入地址，马上知道对口哪所公立学校、周边有哪些学校、VCE 成绩如何</p>
-  <p style="margin-top:8px"><a href="invest.html" style="color:#fff;font-weight:600">📈 投资房回报测算（含海外买家税费） ›</a></p>
+  <p style="margin-top:8px"><a href="rentals.html" style="color:#fff;font-weight:600">🏠 在租房源 ›</a>　<a href="invest.html" style="color:#fff;font-weight:600">📈 投资房回报测算 ›</a></p>
 </header>
 <main>
   <section class="card">
@@ -410,6 +410,7 @@ function calcFee(){
 $("#visa").onchange=calcFee; $("#lvl").onchange=calcFee; calcFee();
 
 const ready = load();
+{const q0=new URLSearchParams(location.search).get("q"); if(q0){$("#q").value=q0; search();}}
 </script>
 </body>
 </html>
