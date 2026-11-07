@@ -31,6 +31,8 @@
     // Source: https://www.sro.vic.gov.au/about-us/rates-and-statistics/current-rates/vacant-residential-land-tax-current-rates (checked 2026-11-07)
     vrltRateFor(consecutiveYears) { return consecutiveYears >= 3 ? 0.03 : consecutiveYears === 2 ? 0.02 : 0.01; },
     // FIRB application fees 1 Jul 2026 – 30 Jun 2027 (ATO). new = Table 1, est = Table 2 (x3)
+    // Checked 2026-11-07: ATO https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors
+    //   and Treasury Schedule of Fees v8 (1 Jul 2026): <$75k $4,600; <=$1m $15,600; <=$2m $31,300; established <=$1m $46,800.
     firbFee(price, established) {
       let f;
       if (price < 75000) f = 4600;
@@ -69,8 +71,12 @@
       return 0;
     },
     medicare: 0.02,
-    medicareLowThreshold: 28011, // singles 2026-27; levy phases in at 10c per $ above
-    // Medicare levy surcharge (singles, no private hospital cover) 2026-27
+    // Singles low-income threshold: $28,011 is the 2025-26 figure (announced in the May 2026 Budget, 2.9% up
+    // from $27,222). The 2026-27 figure is normally only set in the following May Budget, so we use the latest
+    // known value. Levy phases in at 10c per $ above (full 2% from ~$35,013). Checked 2026-11-07.
+    medicareLowThreshold: 28011,
+    // Medicare levy surcharge (singles, no private hospital cover) 2026-27: $105k / $123k / $164k.
+    // Checked 2026-11-07: https://www.privatehealth.gov.au/health_insurance/surcharges_incentives/medicare_levy.htm
     mlsRate(mlsIncome) {
       if (mlsIncome <= 105000) return 0;
       if (mlsIncome <= 123000) return 0.01;

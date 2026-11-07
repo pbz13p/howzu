@@ -42,6 +42,13 @@ eq("FIRB $1M", R.firbFee(1000000, false), 15600);
 eq("FIRB $1.5M", R.firbFee(1500000, false), 31300);
 eq("FIRB $3.5M", R.firbFee(3500000, false), 93900);
 eq("FIRB 二手 $650k ×3", R.firbFee(650000, true), 46800);
+eq("FIRB 刚好 $75k 进第二档", R.firbFee(75000, false), 15600);
+// MLS 2026-27 singles (privatehealth.gov.au, checked 2026-11-07)
+eq("MLS $105,000 不交", R.mlsRate(105000), 0, 1e-9);
+eq("MLS $105,001 1%", R.mlsRate(105001), 0.01, 1e-9);
+eq("MLS $123,001 1.25%", R.mlsRate(123001), 0.0125, 1e-9);
+eq("MLS $164,001 1.5%", R.mlsRate(164001), 0.015, 1e-9);
+eq("Medicare 低收入门槛 $28,011", R.medicareLowThreshold, 28011);
 
 // ---- 个税 2026-27 ----
 eq("居民税 $18,200", R.taxResident(18200), 0);

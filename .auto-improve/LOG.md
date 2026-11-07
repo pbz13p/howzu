@@ -36,3 +36,22 @@
 - SRO 页面还提到另一种 1% VRLT（墨尔本都市区土地连续 5 年未开发、新房建成超过 3 年未用未卖），本工具不涉及。
 - 下次继续用官网核对：Medicare 低收入门槛、MLS 门槛、FIRB 2026-27 费表；学区站用真实地址走一遍。
 - 期限提醒：楼花印花税优惠 2027-04-21 截止（约 5 个半月）；外国人二手房禁令到 2029-06-30。
+
+## 2026-11-07（第三次运行，预算 $0.50）
+
+**做了什么（税率核对，没有改任何数字，只补了来源和测试）**
+1. FIRB 2026-27 申请费：对照 ATO 收费页和财政部 Schedule of Fees v8（2026-07-01 生效）。新房/空地 <$75k $4,600；≤$1m $15,600；≤$2m $31,300（之后每多 $1m 加 $31,300）；二手房 ≤$1m $46,800（=3 倍）。**代码一致**。
+   - https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors
+   - https://foreigninvestment.gov.au/sites/foreigninvestment.gov.au/files/2026-06/schedule-of-fees-v8.pdf
+2. MLS 医保附加税 2026-27 单身门槛 $105k / $123k / $164k，税率 1% / 1.25% / 1.5%：对照卫生部 privatehealth.gov.au，**代码一致**。
+   - https://www.privatehealth.gov.au/health_insurance/surcharges_incentives/medicare_levy.htm
+3. Medicare 低收入门槛 $28,011：数字对，但代码注释写的是"2026-27"，其实是 **2025-26** 的门槛（2026 年 5 月预算案宣布，比 $27,222 涨了 2.9%）。2026-27 的门槛通常要到 2027 年 5 月预算案才会定，所以现在用的是已知的最新数字。已经改正了注释。
+   - 说明：ATO 官网拦了抓取工具（403），这一项是看多个二手来源互相印证的，**待老板确认** $28,011 的立法是否已经通过。
+4. tools/test-engine.js 新增 6 项边界测试：FIRB 刚好 $75k、MLS 四个档位的分界点、Medicare 门槛。
+
+**测试结果**：`node tools/test-engine.js` 96 项全过；`node tools/test-data.js` 全过。
+
+**下一步建议**
+- 2027 年 5 月预算案后要更新 Medicare 低收入门槛（2026-27）。
+- 还没核对：LITO、外国居民 CGT 折扣、FRCGW（12.5%，门槛 $0）、Div 43 2.5%；学区站真实地址走查；手机截图走查（这三次运行预算都用在税务上了）。
+- 期限提醒：楼花印花税优惠 2027-04-21 截止（还有约 5 个半月）；外国人二手房禁令到 2029-06-30。
