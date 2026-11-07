@@ -47,6 +47,10 @@ h2{font-size:17px;margin:0 0 10px}
 .list .r b{font-size:15px;color:var(--accent)}
 .list .r small{color:var(--muted)}
 .nr{color:var(--muted);font-weight:600}
+details.fee{margin-top:4px;font-size:13px}
+details.fee summary{cursor:pointer;color:#a24b0b;font-weight:600}
+details.fee table{width:100%;max-width:320px;border-collapse:collapse;margin:6px 0;font-size:13px}
+details.fee td{padding:2px 0;border-bottom:1px solid var(--line)}
 .chips{margin:3px 0 2px}
 .chip{display:inline-block;font-size:12px;padding:1px 8px;border-radius:20px;background:var(--bg);margin-right:4px}
 .chip.Government{background:#e8f3ee;color:#0f6b4f}
@@ -188,6 +192,8 @@ async function load(){
     ["zones_primary","zones_secondary","schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
   zp.features.forEach(prepBBox); zs.features.forEach(prepBBox);
   D = {zp, zs, sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
+  try{ const fees = await fetch("data/fees.json").then(r=>r.ok?r.json():{});
+    for(const [no,f] of Object.entries(fees)) if(f.found && f.max_annual_aud && D.byNo[no]) D.byNo[no].fee=f; }catch(_){}
   $("#rt").textContent = meta.vce_ranked_total;
   $("#built").textContent = `学区年份 ${meta.zones_year}｜VCE 年份 ${meta.vce_year}｜数据更新 ${meta.built}`;
   renderRank();
@@ -269,7 +275,7 @@ function zoneHTML(f,tag){
   }
   return `<div class="zone"><span class="tag">${tag}</span>
     <div class="name">${pr.name}${campus}</div>
-    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}</div>`;
+    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}${s?feeHTML(s):""}</div>`;
 }
 
 function renderNear(){
@@ -287,6 +293,18 @@ function renderNear(){
   $("#near").innerHTML = list.length ? list.slice(0,60).map(s=>itemHTML(s,`${s.d.toFixed(1)} 公里`)).join("") : `<div class="note">这个范围内没有这类学校。</div>`;
 }
 
+function feeText(s){
+  const f=s.fee; if(!f) return "";
+  const lo=f.min_annual_aud, hi=f.max_annual_aud, r = lo&&lo!==hi ? `${money(lo)}–${money(hi)}` : money(hi);
+  return f.kind==="parent_payment" ? `杂费约 ${r}/年（${f.year}）` : `学费 ${r}/年（${f.year}）`;
+}
+function feeHTML(s){
+  const f=s.fee; if(!f) return "";
+  const rows=(f.levels||[]).filter(l=>l.annual_aud).map(l=>`<tr><td>${l.label}</td><td style="text-align:right">${money(l.annual_aud)}</td></tr>`).join("");
+  return `<details class="fee"><summary>${feeText(s)}</summary>${rows?`<table>${rows}</table>`:""}
+    ${f.note_zh?`<div class="note">${f.note_zh}</div>`:""}
+    <div class="note">${f.includes||""} · <a href="${f.source_url}" target="_blank" rel="noopener">学校官网原文</a> · ${f.checked} 收集，以学校为准</div></details>`;
+}
 function itemHTML(s, extra){
   let r;
   if(s.vce_rank) r=`<b>第 ${s.vce_rank} 名</b><br>VCE ${s.vce_med} 分`;
@@ -296,7 +314,7 @@ function itemHTML(s, extra){
   const yrs = YEARS[s.type] ? ` · ${YEARS[s.type]}` : "";
   return `<div class="item"><div class="l"><div class="n">${s.name}</div>
     <div class="chips"><span class="chip ${s.sector}">${SECTOR_LONG[s.sector]||s.sector}</span><span class="chip">${TYPE[s.type]||s.type}</span></div>
-    <div class="s">${[YEARS[s.type],extra].filter(Boolean).join(" · ")}</div></div>
+    <div class="s">${[YEARS[s.type],extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)}</div>
     <div class="r">${r}</div></div>`;
 }
 
