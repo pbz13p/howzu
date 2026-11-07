@@ -9,10 +9,15 @@
   .sh h3{margin:0 0 10px;font-size:17px;display:flex;justify-content:space-between;align-items:center}
   .sh h3 button{border:0;background:#f1efe8;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer}
   .sh .poster{width:100%;border-radius:12px;display:block;background:#f1efe8;min-height:200px}
-  .sh .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+  .sh .grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
   .sh .grid button{border:1px solid #e4e1d8;background:#fff;border-radius:12px;padding:12px 8px;font-size:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:#1d2321}
   .sh .grid button b{font-size:22px;line-height:1}
   .sh .grid button.main{grid-column:1/-1;background:#0f6b4f;color:#fff;border-color:#0f6b4f;flex-direction:row;justify-content:center;font-size:16px;font-weight:600}
+  .sh .grid button.xhs{background:#ff2442;border-color:#ff2442}
+  .sh .more{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .sh .more button{border:1px solid #e4e1d8;background:#fff;border-radius:16px;padding:6px 12px;font-size:13px;cursor:pointer;color:#1d2321}
+  .sh .more[hidden]{display:none}
+  .sh .moreT{display:inline-block;margin-top:10px;font-size:13px;color:#6b726f;text-decoration:none}
   .sh .tip{font-size:12px;color:#6b726f;margin-top:10px;line-height:1.6}
   .sh-toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 16px;border-radius:10px;z-index:200;font-size:14px}`;
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
@@ -77,33 +82,55 @@
     return c;
   }
 
+  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+  async function photoFiles(x, n) {
+    const out = [];
+    for (const [i, p] of (x.photos || []).slice(0, n).entries()) {
+      try { const r = await fetch(p); if (!r.ok) continue; const b = await r.blob(); out.push(new File([b], `好租-${i + 1}.jpg`, { type: b.type || "image/jpeg" })); } catch (_) {}
+    }
+    return out;
+  }
+  function download(file) { const l = document.createElement("a"); l.href = URL.createObjectURL(file); l.download = file.name; document.body.appendChild(l); l.click(); l.remove(); }
+
   async function open(x) {
     const m = document.createElement("div"); m.className = "sh-mask";
     m.innerHTML = `<div class="sh"><h3>分享这套房 <button aria-label="关闭">✕</button></h3><img class="poster" alt="房源海报"><div class="grid">
-      <button class="main" data-a="sys">📤 发给朋友（微信 / 小红书 / 其他）</button>
-      <button data-a="save"><b>🖼️</b>保存海报图</button><button data-a="wx"><b>💬</b>复制微信文案</button>
-      <button data-a="xhs"><b>📕</b>复制小红书文案</button><button data-a="link"><b>🔗</b>复制链接</button></div>
-      <div class="tip">发微信群 / 朋友圈：保存海报图 + 复制微信文案，一起发。<br>发小红书：保存海报图，复制小红书文案（已去掉链接，避免限流）。</div></div>`;
+      <button class="main" data-a="wx1">💬 一键发微信（海报 + 文案）</button>
+      <button class="main xhs" data-a="xhs1">📕 一键发小红书（多图 + 文案）</button></div>
+      <a class="moreT" href="#">其他方式 ›</a><div class="more" hidden><button data-a="save">保存海报</button><button data-a="wx">复制微信文案</button><button data-a="xhs">复制小红书文案</button><button data-a="link">复制链接</button></div>
+      <div class="tip" id="shTip">${isMobile ? "文案会自动复制，发的时候在文字框里长按 → 粘贴。" : "电脑上会下载图片并复制文案；在手机上点才是一键发。"}</div></div>`;
     document.body.appendChild(m);
     m.addEventListener("click", e => { if (e.target === m || e.target.closest("h3 button")) m.remove(); });
-    let blob = null; const c = await poster(x);
-    try { blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.9)); m.querySelector(".poster").src = URL.createObjectURL(blob); } catch (_) {}
-    const fname = `好租-${(x.title || "房源").slice(0, 20)}.jpg`;
-    m.querySelector(".grid").addEventListener("click", async e => {
+    // 先把图准备好：分享必须在点击的瞬间发出，不能临时再去下载
+    let poster_ = null, photos = [];
+    const ready = (async () => {
+      const c = await poster(x);
+      try { const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.9)); m.querySelector(".poster").src = URL.createObjectURL(blob);
+        poster_ = new File([blob], `好租-${(x.title || "房源").slice(0, 20)}.jpg`, { type: "image/jpeg" }); } catch (_) {}
+      photos = await photoFiles(x, 8);
+    })();
+    const canFiles = fs => fs.length && navigator.canShare && navigator.canShare({ files: fs });
+    async function shareFiles(fs, text, done) {
+      if (isMobile && canFiles(fs)) {
+        try { await navigator.share({ files: fs }); toast(done); return; } catch (e) { if (e && e.name === "AbortError") return; }
+      }
+      fs.forEach((f, i) => setTimeout(() => download(f), i * 250));
+      toast(isMobile ? "图片已保存，文案已复制" : "图片已下载，文案已复制，去微信里粘贴");
+    }
+    m.addEventListener("click", async e => {
+      if (e.target.closest(".moreT")) { e.preventDefault(); m.querySelector(".more").hidden = false; e.target.remove(); return; }
       const a = e.target.closest("button")?.dataset.a; if (!a) return;
-      if (a === "wx") { await copy(wechatText(x)); toast("微信文案已复制，去微信粘贴"); }
+      if (a === "wx1" || a === "xhs1") {
+        const text = a === "wx1" ? wechatText(x) : xhsText(x);
+        if (!poster_) { toast("图片还在生成，稍等一秒再点"); await ready; return; }
+        copy(text); // 不等它，保证分享窗口在点击瞬间弹出
+        const fs = a === "wx1" ? [poster_] : [poster_, ...photos].slice(0, 9);
+        return shareFiles(fs, text, "文案已复制，在正文框里长按粘贴");
+      }
+      if (a === "wx") { await copy(wechatText(x)); toast("微信文案已复制"); }
       if (a === "xhs") { await copy(xhsText(x)); toast("小红书文案已复制"); }
       if (a === "link") { await copy(url(x)); toast("链接已复制"); }
-      if (a === "save") { if (!blob) return toast("海报生成失败"); const file = new File([blob], fname, { type: "image/jpeg" });
-        if (navigator.canShare && navigator.canShare({ files: [file] }) && /iPhone|iPad|Android/i.test(navigator.userAgent)) { try { await navigator.share({ files: [file] }); } catch (_) {} }
-        else { const l = document.createElement("a"); l.href = URL.createObjectURL(blob); l.download = fname; l.click(); toast("海报已下载"); } }
-      if (a === "sys") {
-        await copy(wechatText(x));
-        const file = blob ? new File([blob], fname, { type: "image/jpeg" }) : null;
-        if (navigator.share) {
-          try { if (file && navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], text: wechatText(x) }); else await navigator.share({ title: x.title, text: wechatText(x), url: url(x) }); } catch (_) {}
-        } else toast("文案已复制。电脑上请用「保存海报图」后发到微信");
-      }
+      if (a === "save") { await ready; if (!poster_) return toast("海报生成失败"); shareFiles([poster_], "", "海报已发出"); }
     });
   }
   window.HowzuShare = { open };
