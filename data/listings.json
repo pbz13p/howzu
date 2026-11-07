@@ -46,7 +46,20 @@
       "rentWeekly": null,
       "available": "尽快",
       "furnished": null,
-      "photos": [],
+      "photos": [
+        "photos/3005-latrobe-1.jpg",
+        "photos/3005-latrobe-2.jpg",
+        "photos/3005-latrobe-3.jpg",
+        "photos/3005-latrobe-4.jpg",
+        "photos/3005-latrobe-5.jpg",
+        "photos/3005-latrobe-6.jpg",
+        "photos/3005-latrobe-7.jpg",
+        "photos/3005-latrobe-8.jpg",
+        "photos/3005-latrobe-9.jpg",
+        "photos/3005-latrobe-10.jpg",
+        "photos/3005-latrobe-11.jpg",
+        "photos/3005-latrobe-12.jpg"
+      ],
       "highlights": [
         "免费电车区内",
         "近 RMIT、墨大、State Library"
@@ -77,7 +90,8 @@
         "photos/4803b-wsp-9.jpg"
       ],
       "highlights": [
-        "West Side Place 酒店式公寓楼",
+        "West Side Place",
+        "楼内泳池、健身房",
         "近 Southern Cross 站"
       ],
       "desc": ""
@@ -85,34 +99,64 @@
     {
       "id": "6309d-lonsdale",
       "status": "draft",
-      "title": "Lonsdale St 高层公寓",
+      "title": "West Side Place · 63 层一房一卫（另有小书房）",
       "address": "6309D/648 Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": null,
-      "baths": null,
+      "beds": 1,
+      "baths": 1,
       "cars": null,
       "rentWeekly": null,
       "available": "2027 年 1 月",
       "furnished": null,
-      "photos": [],
+      "photos": [
+        "photos/6309d-lonsdale-1.jpg",
+        "photos/6309d-lonsdale-2.jpg",
+        "photos/6309d-lonsdale-3.jpg",
+        "photos/6309d-lonsdale-4.jpg",
+        "photos/6309d-lonsdale-5.jpg",
+        "photos/6309d-lonsdale-6.jpg",
+        "photos/6309d-lonsdale-7.jpg",
+        "photos/6309d-lonsdale-8.jpg",
+        "photos/6309d-lonsdale-9.jpg",
+        "photos/6309d-lonsdale-10.jpg",
+        "photos/6309d-lonsdale-11.jpg",
+        "photos/6309d-lonsdale-12.jpg",
+        "photos/6309d-lonsdale-13.jpg",
+        "photos/6309d-lonsdale-14.jpg"
+      ],
       "highlights": [
-        "免费电车区内"
+        "63 层全景落地窗",
+        "楼内泳池、健身房",
+        "正对 Southern Cross 站"
       ],
       "desc": ""
     },
     {
       "id": "3817-victoria",
       "status": "draft",
-      "title": "Carlton · Victoria St 公寓",
+      "title": "Carlton · 38 层一房一卫高层公寓",
       "address": "3817/160 Victoria St, Carlton VIC 3053",
       "suburb": "Carlton",
-      "beds": null,
-      "baths": null,
+      "beds": 1,
+      "baths": 1,
       "cars": null,
       "rentWeekly": null,
       "available": "2027 年 1 月",
       "furnished": null,
-      "photos": [],
+      "photos": [
+        "photos/3817-victoria-1.jpg",
+        "photos/3817-victoria-2.jpg",
+        "photos/3817-victoria-3.jpg",
+        "photos/3817-victoria-4.jpg",
+        "photos/3817-victoria-5.jpg",
+        "photos/3817-victoria-6.jpg",
+        "photos/3817-victoria-7.jpg",
+        "photos/3817-victoria-8.jpg",
+        "photos/3817-victoria-9.jpg",
+        "photos/3817-victoria-10.jpg",
+        "photos/3817-victoria-11.jpg",
+        "photos/3817-victoria-12.jpg"
+      ],
       "highlights": [
         "步行到墨尔本大学",
         "近 Queen Victoria Market"
@@ -131,9 +175,21 @@
       "rentWeekly": null,
       "available": "2027 年 1 月",
       "furnished": null,
-      "photos": [],
+      "photos": [
+        "photos/2801b-wsp-1.jpg",
+        "photos/2801b-wsp-2.jpg",
+        "photos/2801b-wsp-3.jpg",
+        "photos/2801b-wsp-4.jpg",
+        "photos/2801b-wsp-5.jpg",
+        "photos/2801b-wsp-6.jpg",
+        "photos/2801b-wsp-7.jpg",
+        "photos/2801b-wsp-8.jpg",
+        "photos/2801b-wsp-9.jpg",
+        "photos/2801b-wsp-10.jpg"
+      ],
       "highlights": [
-        "West Side Place 酒店式公寓楼",
+        "West Side Place",
+        "楼内泳池、健身房",
         "近 Southern Cross 站"
       ],
       "desc": ""
