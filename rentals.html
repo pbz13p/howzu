@@ -119,7 +119,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/share.js?v=20261107b"></script>
+<script src="js/share.js?v=20261107c"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -209,7 +209,7 @@ async function userListings(){
     return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,user:true}));
   }catch(_){return []}
 }
-Promise.all([fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})),userListings()]).then(([j,u])=>{L=[...(j.listings||[]).map(x=>({...x,address:hideUnit(x.address)})),...u];C=j.contact||{};render();if(one){const x=L.find(y=>String(y.id)===one);if(x)openDetail(x,true);}});
+Promise.all([fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})),userListings()]).then(([j,u])=>{L=[...(j.listings||[]).map(x=>({...x,address:hideUnit(x.address)})),...u];C=j.contact||{};render();if(one){const x=L.find(y=>String(y.id)===one);if(x){if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else openDetail(x,true);}}});
 </script>
 </body>
 </html>

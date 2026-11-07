@@ -9,6 +9,7 @@
   .sh h3{margin:0 0 10px;font-size:17px;display:flex;justify-content:space-between;align-items:center}
   .sh h3 button{border:0;background:#f1efe8;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer}
   .sh .poster{width:100%;border-radius:12px;display:block;background:#f1efe8;min-height:200px}
+  @media(min-width:721px){.sh .poster{max-height:46vh;object-fit:contain}}
   .sh .grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
   .sh .grid button{border:1px solid #e4e1d8;background:#fff;border-radius:12px;padding:12px 8px;font-size:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:#1d2321}
   .sh .grid button b{font-size:22px;line-height:1}
@@ -18,6 +19,11 @@
   .sh .more button{border:1px solid #e4e1d8;background:#fff;border-radius:16px;padding:6px 12px;font-size:13px;cursor:pointer;color:#1d2321}
   .sh .more[hidden]{display:none}
   .sh .moreT{display:inline-block;margin-top:10px;font-size:13px;color:#6b726f;text-decoration:none}
+  .sh .step{margin-top:10px;background:#e8f3ee;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.7;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .sh .step[hidden]{display:none}
+  .sh .step .qr canvas{width:120px;height:120px;display:block;border-radius:8px}
+  .sh .step kbd{background:#fff;border:1px solid #cfd8d3;border-radius:4px;padding:0 5px;font-size:12px}
+  .sh .step .next{margin-top:6px;border:0;background:#0f6b4f;color:#fff;border-radius:10px;padding:8px 14px;font-size:14px;cursor:pointer}
   .sh .tip{font-size:12px;color:#6b726f;margin-top:10px;line-height:1.6}
   .sh-toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 16px;border-radius:10px;z-index:200;font-size:14px}`;
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
@@ -98,15 +104,17 @@
       <button class="main" data-a="wx1">💬 一键发微信（海报 + 文案）</button>
       <button class="main xhs" data-a="xhs1">📕 一键发小红书（多图 + 文案）</button></div>
       <a class="moreT" href="#">其他方式 ›</a><div class="more" hidden><button data-a="save">保存海报</button><button data-a="wx">复制微信文案</button><button data-a="xhs">复制小红书文案</button><button data-a="link">复制链接</button></div>
-      <div class="tip" id="shTip">${isMobile ? "文案会自动复制，发的时候在文字框里长按 → 粘贴。" : "电脑上会下载图片并复制文案；在手机上点才是一键发。"}</div></div>`;
+      <div class="step" id="shStep" hidden></div>
+      <div class="tip" id="shTip">${isMobile ? "文案会自动复制，发的时候在文字框里长按 → 粘贴。" : ""}</div></div>`;
     document.body.appendChild(m);
     m.addEventListener("click", e => { if (e.target === m || e.target.closest("h3 button")) m.remove(); });
     // 先把图准备好：分享必须在点击的瞬间发出，不能临时再去下载
-    let poster_ = null, photos = [];
+    let poster_ = null, png = null, photos = [];
     const ready = (async () => {
       const c = await poster(x);
       try { const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.9)); m.querySelector(".poster").src = URL.createObjectURL(blob);
         poster_ = new File([blob], `好租-${(x.title || "房源").slice(0, 20)}.jpg`, { type: "image/jpeg" }); } catch (_) {}
+      try { png = await new Promise(r => c.toBlob(r, "image/png")); } catch (_) {}
       photos = await photoFiles(x, 8);
     })();
     const canFiles = fs => fs.length && navigator.canShare && navigator.canShare({ files: fs });
@@ -120,6 +128,27 @@
     m.addEventListener("click", async e => {
       if (e.target.closest(".moreT")) { e.preventDefault(); m.querySelector(".more").hidden = false; e.target.remove(); return; }
       const a = e.target.closest("button")?.dataset.a; if (!a) return;
+      const stepBox = m.querySelector("#shStep");
+      if (!isMobile && a === "wx1") {
+        await ready;
+        let ok = false;
+        try { if (png && window.ClipboardItem) { await navigator.clipboard.write([new ClipboardItem({ "image/png": png })]); ok = true; } } catch (_) {}
+        if (!ok) { if (poster_) download(poster_); copy(wechatText(x)); return toast("已下载海报、复制文案"); }
+        stepBox.hidden = false;
+        stepBox.innerHTML = `<div><b>① 海报已复制</b>：去微信对话框按 <kbd>Ctrl</kbd>+<kbd>V</kbd>，发送。<br><button class="next" data-a="wx2">② 再点这里复制文案</button></div>`;
+        stepBox.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        return;
+      }
+      if (a === "wx2") { await copy(wechatText(x)); stepBox.innerHTML = `<div><b>② 文案已复制</b>：回微信再按 <kbd>Ctrl</kbd>+<kbd>V</kbd>，发送。完成 ✓</div>`; return; }
+      if (!isMobile && a === "xhs1") {
+        const u = `${url(x)}&send=1`;
+        const q = qrCanvas(u, 200);
+        stepBox.hidden = false;
+        stepBox.innerHTML = `<div class="qr"></div><div><b>小红书要用手机发</b><br>用手机相机扫这个码，点「一键发小红书」，照片和文案就直接进小红书了。</div>`;
+        if (q) stepBox.querySelector(".qr").appendChild(q); else stepBox.querySelector(".qr").textContent = u;
+        stepBox.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        return;
+      }
       if (a === "wx1" || a === "xhs1") {
         const text = a === "wx1" ? wechatText(x) : xhsText(x);
         if (!poster_) { toast("图片还在生成，稍等一秒再点"); await ready; return; }
