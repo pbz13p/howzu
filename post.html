@@ -41,6 +41,8 @@ textarea{resize:vertical;min-height:110px}
 .ph .cover{position:absolute;left:4px;top:4px;background:var(--accent);color:#fff;font-size:11px;padding:1px 6px;border-radius:8px}
 .ph .x,.ph .mv{position:absolute;bottom:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:15px;cursor:pointer}
 .ph .x{right:4px}.ph .mv{left:4px}
+.ph .fx{position:absolute;right:4px;top:4px;border:0;border-radius:10px;font-size:11px;padding:2px 7px;background:rgba(255,255,255,.92);color:#0f6b4f;cursor:pointer;font-weight:600}
+.ph .fx.off{background:rgba(0,0,0,.55);color:#fff}
 .ph .busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.7);font-size:12px}
 #sug div{padding:10px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
 #sug div:active{background:var(--accent2)}
@@ -71,7 +73,7 @@ textarea{resize:vertical;min-height:110px}
     <div class="drop" id="drop"><b>📷 点这里选照片</b>可以一次选多张，手机会自动压缩</div>
     <input type="file" id="file" accept="image/*" multiple hidden>
     <div class="grid" id="grid"></div>
-    <div class="hint">建议：客厅、卧室、厨房整体、浴室、窗外景色、楼里泳池/健身房。不用拍锅碗瓢盆。</div>
+    <div class="hint">✨ 照片已自动调亮、校正偏色、增加通透感。点照片右上角的「✨美化」可以切换回原图对比。<br>建议拍：客厅、卧室、厨房整体、浴室、窗外景色、楼里泳池/健身房。白天开灯、横着拍更好看，不用拍锅碗瓢盆。</div>
   </section>
 
   <section class="card">
@@ -145,6 +147,39 @@ const LIM = { beds: [0, 10], baths: [1, 10], cars: [0, 10] };
 // ---------- photos ----------
 $("#drop").onclick = () => $("#file").click();
 $("#file").onchange = e => { addFiles([...e.target.files]); e.target.value = ""; };
+// 自动美化：曝光、白平衡、对比度、色彩、锐度。全部在手机上完成，不上传原图。
+function enhance(c) {
+  const g = c.getContext("2d", { willReadFrequently: true }), W = c.width, H = c.height;
+  const im = g.getImageData(0, 0, W, H), d = im.data, N = W * H;
+  const hist = new Uint32Array(256); let sr = 0, sg = 0, sb = 0, mc = 0;
+  for (let i = 0; i < d.length; i += 4) {
+    const y = (d[i] * 77 + d[i + 1] * 150 + d[i + 2] * 29) >> 8; hist[y]++;
+    if (y > 40 && y < 220) { sr += d[i]; sg += d[i + 1]; sb += d[i + 2]; mc++; }
+  }
+  const pct = q => { let a = 0, t = N * q; for (let v = 0; v < 256; v++) { a += hist[v]; if (a >= t) return v; } return 255; };
+  const lo = Math.min(pct(0.005), 40), hi = Math.max(pct(0.995), 200);
+  // 白平衡（灰世界，限制幅度，避免偏色过头）
+  const avg = mc ? (sr + sg + sb) / (3 * mc) : 128, cl = v => Math.max(0.88, Math.min(1.12, v));
+  const gr = mc ? cl(avg / (sr / mc)) : 1, gg = mc ? cl(avg / (sg / mc)) : 1, gb = mc ? cl(avg / (sb / mc)) : 1;
+  // 亮度：室内照偏暗就提亮
+  let mean = 0; for (let v = 0; v < 256; v++) mean += hist[v] * Math.min(1, Math.max(0, (v - lo) / (hi - lo))); mean /= N;
+  const gamma = mean < 0.5 ? Math.max(0.72, Math.log(0.52) / Math.log(Math.max(mean, 0.05))) : 1;
+  const lut = (gain) => { const t = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) { let x = Math.min(1, Math.max(0, (v * gain - lo) / (hi - lo))); x = Math.pow(x, gamma); x = x + 0.08 * Math.sin(2 * Math.PI * x) * (x * (1 - x)) * 4 * 0.5; t[v] = x * 255; } return t; };
+  const LR = lut(gr), LG = lut(gg), LB = lut(gb);
+  for (let i = 0; i < d.length; i += 4) {
+    let r = LR[d[i]], gg2 = LG[d[i + 1]], b = LB[d[i + 2]];
+    const y = 0.299 * r + 0.587 * gg2 + 0.114 * b, mx = Math.max(r, gg2, b), mn = Math.min(r, gg2, b);
+    const k = 1 + 0.18 * (1 - (mx - mn) / 255); // 鲜艳度：越灰的颜色加得越多
+    d[i] = y + (r - y) * k; d[i + 1] = y + (gg2 - y) * k; d[i + 2] = y + (b - y) * k;
+  }
+  // 轻度锐化
+  const src = new Uint8ClampedArray(d), amt = 0.35, row = W * 4;
+  for (let yy = 1; yy < H - 1; yy++) for (let xx = 1; xx < W - 1; xx++) {
+    const i = yy * row + xx * 4;
+    for (let ch = 0; ch < 3; ch++) { const j = i + ch; const blur = (src[j - 4] + src[j + 4] + src[j - row] + src[j + row]) / 4; d[j] = src[j] + amt * (src[j] - blur); }
+  }
+  g.putImageData(im, 0, 0);
+}
 async function shrink(file) {
   const bmp = await createImageBitmap(file).catch(() => null);
   let w, h, src;
@@ -153,7 +188,9 @@ async function shrink(file) {
   const k = Math.min(1, 1600 / Math.max(w, h));
   const c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
   c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
-  return await new Promise(r => c.toBlob(r, "image/jpeg", 0.82));
+  const orig = await new Promise(r => c.toBlob(r, "image/jpeg", 0.85));
+  let enh = orig; try { enhance(c); enh = await new Promise(r => c.toBlob(r, "image/jpeg", 0.85)); } catch (_) {}
+  return { orig, enh };
 }
 async function addFiles(files) {
   for (const f of files) {
@@ -161,16 +198,18 @@ async function addFiles(files) {
     if (!f.type.startsWith("image/")) continue;
     const p = { id: Math.random().toString(36).slice(2), url: URL.createObjectURL(f), blob: null };
     S.photos.push(p); render();
-    try { p.blob = await shrink(f); p.url = URL.createObjectURL(p.blob); } catch (_) { p.blob = f; }
+    try { const r = await shrink(f); p.orig = r.orig; p.enh = r.enh; p.ourl = URL.createObjectURL(r.orig); p.eurl = URL.createObjectURL(r.enh); setUse(p, false); } catch (_) { p.blob = f; }
     render();
   }
 }
+function setUse(p, orig) { p.useOrig = orig; p.blob = orig ? p.orig : p.enh; p.url = orig ? p.ourl : p.eurl; }
 function render() {
-  $("#grid").innerHTML = S.photos.map((p, i) => `<div class="ph"><img src="${p.url}">${i === 0 ? '<span class="cover">封面</span>' : ""}${!p.blob ? '<div class="busy">压缩中…</div>' : ""}${i ? `<button class="mv" data-mv="${i}" title="设为封面">★</button>` : ""}<button class="x" data-x="${i}">✕</button></div>`).join("");
+  $("#grid").innerHTML = S.photos.map((p, i) => `<div class="ph"><img src="${p.url}">${i === 0 ? '<span class="cover">封面</span>' : ""}${!p.blob ? '<div class="busy">美化中…</div>' : ""}${p.eurl ? `<button class="fx${p.useOrig ? " off" : ""}" data-fx="${i}">${p.useOrig ? "原图" : "✨美化"}</button>` : ""}${i ? `<button class="mv" data-mv="${i}" title="设为封面">★</button>` : ""}<button class="x" data-x="${i}">✕</button></div>`).join("");
   progress();
 }
 $("#grid").onclick = e => {
-  const x = e.target.dataset.x, mv = e.target.dataset.mv;
+  const x = e.target.dataset.x, mv = e.target.dataset.mv, fx = e.target.dataset.fx;
+  if (fx != null) { const p = S.photos[+fx]; setUse(p, !p.useOrig); render(); return; }
   if (x != null) { S.photos.splice(+x, 1); render(); }
   if (mv != null) { const [p] = S.photos.splice(+mv, 1); S.photos.unshift(p); render(); }
 };

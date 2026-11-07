@@ -1,14 +1,14 @@
 {
   "contact": {
     "name": "Frank",
-    "phone": "",
+    "phone": "0431438595",
     "wechat": "",
     "note": "status: live = 公开显示；draft = 只在 rentals.html?preview=1 显示，等补齐租金、入住日期、照片再改成 live"
   },
   "listings": [
     {
       "id": "2110-spencer",
-      "status": "draft",
+      "status": "live",
       "title": "Spencer St · 两房一卫公寓",
       "address": "2110/138 Spencer St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
@@ -36,7 +36,7 @@
     },
     {
       "id": "3005-latrobe",
-      "status": "draft",
+      "status": "live",
       "title": "La Trobe St · 一房一卫公寓",
       "address": "3005/327 La Trobe St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
@@ -68,7 +68,7 @@
     },
     {
       "id": "4803b-wsp",
-      "status": "draft",
+      "status": "live",
       "title": "West Side Place · 两房一卫高层公寓",
       "address": "4803B/639 Little Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
@@ -98,7 +98,7 @@
     },
     {
       "id": "6309d-lonsdale",
-      "status": "draft",
+      "status": "live",
       "title": "West Side Place · 63 层一房一卫（另有小书房）",
       "address": "6309D/648 Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
@@ -133,7 +133,7 @@
     },
     {
       "id": "3817-victoria",
-      "status": "draft",
+      "status": "live",
       "title": "Carlton · 38 层一房一卫高层公寓",
       "address": "3817/160 Victoria St, Carlton VIC 3053",
       "suburb": "Carlton",
@@ -165,7 +165,7 @@
     },
     {
       "id": "2801b-wsp",
-      "status": "draft",
+      "status": "live",
       "title": "West Side Place · 两房一卫高层公寓",
       "address": "2801B/639 Little Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
