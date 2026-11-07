@@ -54,7 +54,8 @@ tr.total td{font-weight:700;border-top:2px solid var(--ink)}
     <h2>房子和买家</h2>
     <label><span>买家身份</span><select id="buyerType">
       <option value="resident">澳洲公民 / PR（税务居民）</option>
-      <option value="foreignHere">临时签证在澳居住（如学生、工签）</option>
+      <option value="foreignHere">临时签证：学生（课程 6 个月以上）/ 工签在澳 6 个月以上</option>
+      <option value="whm">临时签证：打工度假 / 旅游等短期签证</option>
       <option value="foreignAbroad">海外人士（不在澳洲居住）</option>
     </select></label>
     <label><span>房产类型</span><select id="propType">
@@ -78,6 +79,7 @@ tr.total td{font-weight:700;border-top:2px solid var(--ink)}
 
     <h3>税务</h3>
     <label><span>你在澳洲的其他年收入 $</span><input id="otherIncome" type="number" step="5000"></label>
+    <label><span>有私人住院医保（免 Medicare 附加税）</span><select id="privateCover"><option value="yes">有</option><option value="no">没有</option></select></label>
     <label><span>已持有的其他维州应税土地 $</span><input id="otherVicLand" type="number" step="50000"></label>
     <label><span>可折旧建筑成本（Div 43）$</span><input id="buildCost" type="number" step="10000"></label>
     <label><span>家具设备折旧（Div 40，仅新房）$</span><input id="div40" type="number" step="1000"></label>
@@ -149,7 +151,7 @@ tr.total td{font-weight:700;border-top:2px solid var(--ink)}
 
   <div class="card note">
     <p><b>计算依据（2026 年 11 月核实）</b>：维州印花税、海外买家附加税 8%、楼花印花税临时优惠（2027-4-21 前签约）、土地税 2024–2033 税率表（含 COVID 附加费）、海外业主附加土地税 4%、空置住宅税 —— <a href="https://www.sro.vic.gov.au" target="_blank" rel="noopener">SRO Victoria</a>；FIRB 申请费 2026-27、空置费（申请费 2 倍）、外国人二手房购买禁令至 2029-6-30、个人所得税 2026-27 税率、外国居民资本利得税预扣 15% —— <a href="https://www.ato.gov.au" target="_blank" rel="noopener">ATO</a>。</p>
-    <p><b>简化处理</b>：临时签证在澳居住者按税务居民计算（多数情况如此，以个人税务居民身份判定为准）；海外人士出售时外国居民没有 50% 资本利得折扣；租金亏损可抵扣其他澳洲收入，用不完的结转到以后年份；未计低收入税收抵免、Medicare 附加税、土地税逐年估值调整以外的变化。</p>
+    <p><b>税务处理</b>：学生（课程 6 个月以上）和在澳 6 个月以上的工签持有人，ATO 一般视为税务居民，按居民税率并享受 LITO，但作为临时居民，出售投资房<b>没有 50% 资本利得折扣</b>；打工度假和短期签证一般是外国居民，按打工度假税率，出售时有 15% 预扣；海外人士按外国居民税率，没有免税额。租金亏损（收入税亏损）先抵扣当年其他澳洲收入，用不完的无限期结转，出售当年可抵扣资本利得（先算 50% 折扣再抵亏损）。已计入 LITO、Medicare 及低收入减免、Medicare 附加税（按单身门槛，投资亏损加回计算）。FIRB 申请费、FPAD 计入成本基数。税务居民身份最终以 ATO 居住测试为准。</p>
     <p><b>重要提示</b>：本工具提供的是一般性测算，不构成税务、财务或法律建议。具体情况请咨询注册税务代理、律师或持牌贷款经纪。</p>
   </div>
 </section>
@@ -160,7 +162,7 @@ tr.total td{font-weight:700;border-top:2px solid var(--ink)}
 const $ = s => document.querySelector(s);
 const PCT = ["lvr","rate","mgmtPct","growth","landGrowth","rentGrowth","cpi","sellPct"];
 const DEFAULTS = {
-  buyerType:"resident", propType:"new", price:650000, landValue:150000, otpRemainingBuild:250000,
+  buyerType:"resident", propType:"new", privateCover:"yes", price:650000, landValue:150000, otpRemainingBuild:250000,
   lvr:80, rate:6.2, ioYears:5, weeklyRent:600, vacancyWeeks:2,
   otherIncome:100000, otherVicLand:0, buildCost:300000, div40:10000,
   mgmtPct:6.6, lettingWeeks:1, leaseYears:1, conditionReport:300, council:1600, water:800, oc:4000,
@@ -180,7 +182,7 @@ function readInputs(){
     if (PCT.includes(k)) v = v / 100;
     o[k] = v;
   }
-  o.loanYears = 30; o.io = o.ioYears > 0; o.firbInCostBase = false;
+  o.loanYears = 30; o.io = o.ioYears > 0; o.firbInCostBase = true; o.privateCover = o.privateCover === "yes";
   o.hold = Math.max(1, Math.min(30, Math.round(o.hold)));
   return o;
 }
@@ -203,10 +205,10 @@ function render(){
   $("#kpiNote").textContent = `IRR 已计入首付、所有买入费用、每年税后现金流、出售时的费用、还清贷款和资本利得税。`;
 
   // comparison across buyer types
-  const types = [["resident","公民/PR"],["foreignHere","临时签证在澳"],["foreignAbroad","海外人士"]];
+  const types = [["resident","公民/PR"],["foreignHere","学生/工签"],["whm","打工度假等"],["foreignAbroad","海外人士"]];
   const rows = types.map(([t,n]) => {
     const rr = InvestEngine.run({...inp, buyerType:t, lvr: t==="resident" ? inp.lvr : Math.min(inp.lvr, 0.6),
-      otherIncome: t==="foreignAbroad" ? 0 : inp.otherIncome});
+      otherIncome: t==="foreignAbroad" ? 0 : t==="whm" ? Math.min(inp.otherIncome, 45000) : inp.otherIncome});
     const extra = rr.acq.filter(a=>/FPAD|FIRB/.test(a.label)).reduce((s,a)=>s+a.amt,0);
     const aos = rr.years[0].exp.find(e=>/附加土地税/.test(e[0]));
     return {n, rr, extra, aos: aos?aos[1]:0};
@@ -244,10 +246,10 @@ function render(){
   $("#sale").innerHTML = `<tbody>
     <tr><td>第 ${inp.hold} 年卖出价（按 ${(inp.growth*100).toFixed(1)}%/年）</td><td>${money(s.salePrice)}</td></tr>
     <tr><td>− 卖房费用（佣金含 GST + 其他）</td><td>${money(-s.sellCost)}</td></tr>
-    <tr><td>成本基数（房价 + 印花税 + 附加税 + 律师费 − 已扣 Div 43 折旧）</td><td>${money(s.costBase)}</td></tr>
+    <tr><td>成本基数（房价 + 印花税 + FPAD + FIRB 申请费 + 律师/验房 − 已扣 Div 43 折旧）</td><td>${money(s.costBase)}</td></tr>
     <tr><td>资本利得</td><td>${money(s.gross)}</td></tr>
-    <tr><td>${s.discount?"50% 资本利得折扣（持有超 12 个月的居民个人）":"无 50% 折扣（外国居民）"}</td><td>${money(s.assessable)}</td></tr>
-    <tr><td>− 资本利得税（按出售当年边际税率）</td><td>${money(-s.cgtTax)}</td></tr>
+    <tr><td>${s.discount?"50% 资本利得折扣（持有超 12 个月的居民个人）":"无 50% 折扣（外国居民及临时居民 2012-5-8 后的收益不适用）"}</td><td>${money(s.assessable)}</td></tr>
+    <tr><td>− 资本利得税（按出售当年边际税率，先用累计结转的租金亏损抵扣）</td><td>${money(-s.cgtTax)}</td></tr>
     ${s.frcgw?`<tr><td class="small">买家律师会先预扣 15%（${money(s.frcgw)}）交给 ATO，报税后多退少补，这里已按最终税额计算</td><td></td></tr>`:""}
     <tr><td>− 还清贷款</td><td>${money(-s.loanPayout)}</td></tr>
     <tr class="total"><td>出售后到手现金</td><td>${money(s.netSale)}</td></tr></tbody>`;

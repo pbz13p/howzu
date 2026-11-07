@@ -50,15 +50,43 @@
       if (x <= 190000) return 40500 + (x - 135000) * 0.37;
       return 60850 + (x - 190000) * 0.45;
     },
+    // Working holiday maker (417/462) rates 2026-27
+    taxWHM(x) {
+      if (x <= 0) return 0;
+      if (x <= 45000) return x * 0.15;
+      if (x <= 135000) return 6750 + (x - 45000) * 0.30;
+      if (x <= 190000) return 33750 + (x - 135000) * 0.37;
+      return 54100 + (x - 190000) * 0.45;
+    },
+    // Low income tax offset (unchanged 2026-27), non-refundable
+    lito(x) {
+      if (x <= 37500) return 700;
+      if (x <= 45000) return 700 - (x - 37500) * 0.05;
+      if (x <= 66667) return 325 - (x - 45000) * 0.015;
+      return 0;
+    },
     medicare: 0.02,
+    medicareLowThreshold: 28011, // singles 2026-27; levy phases in at 10c per $ above
+    // Medicare levy surcharge (singles, no private hospital cover) 2026-27
+    mlsRate(mlsIncome) {
+      if (mlsIncome <= 105000) return 0;
+      if (mlsIncome <= 123000) return 0.01;
+      if (mlsIncome <= 164000) return 0.0125;
+      return 0.015;
+    },
     frcgw: 0.15, // Foreign resident CGT withholding (all values from 1 Jan 2025)
     div43: 0.025,
   };
 
-  function incomeTax(x, buyer) {
+  // Total personal tax for the year. nil = net investment loss (added back for MLS income)
+  function incomeTax(x, buyer, nil) {
     x = Math.max(0, x);
-    if (buyer.taxResident) return RULES.taxResident(x) + x * RULES.medicare;
-    return RULES.taxForeign(x);
+    if (buyer.whm) return RULES.taxWHM(x);
+    if (!buyer.taxResident) return RULES.taxForeign(x);
+    const base = Math.max(0, RULES.taxResident(x) - RULES.lito(x));
+    const ml = Math.min(x * RULES.medicare, Math.max(0, (x - RULES.medicareLowThreshold) * 0.10));
+    const mls = buyer.privateCover ? 0 : (x + (nil || 0)) * RULES.mlsRate(x + (nil || 0)) * (x + (nil || 0) > 0 ? x / (x + (nil || 0)) : 0);
+    return base + ml + mls;
   }
 
   // Monthly loan schedule for one year; interest-only for the first ioYears if io
@@ -92,10 +120,16 @@
 
   /* inp: see defaults in invest.html */
   function run(inp) {
+    // resident = citizen/PR; tempResident = student (course >6m) or work visa living here >6m;
+    // whm = working holiday / short-stay visa (foreign resident for tax, WHM rates); foreignAbroad = lives overseas
+    const t = inp.buyerType;
     const buyer = {
-      foreign: inp.buyerType !== "resident",               // foreign person for FPAD/FIRB
-      absentee: inp.buyerType === "foreignAbroad",         // absentee owner surcharge
-      taxResident: inp.buyerType !== "foreignAbroad",      // simplification: temp residents living here are usually tax residents
+      foreign: t !== "resident",                         // foreign person for FPAD/FIRB
+      absentee: t === "foreignAbroad",                   // absentee owner surcharge
+      taxResident: t === "resident" || t === "foreignHere",
+      whm: t === "whm",
+      cgtDiscount: t === "resident",                     // no 50% discount for foreign or temporary residents (post 8 May 2012)
+      privateCover: inp.privateCover !== false,
     };
     const warnings = [];
     const P = inp.price;
@@ -172,10 +206,11 @@
       const taxableProperty = grossRent - deductibleOpex - ln.interest - div43 - div40;
       // Rental losses offset other Australian income; any unused loss is carried forward
       const other = inp.otherIncome * infl;
-      const taxBefore = incomeTax(other, buyer);
+      const taxBefore = incomeTax(other, buyer, 0);
+      const nil = Math.max(0, -taxableProperty);
       let total = other + taxableProperty - carry;
       let taxAfter;
-      if (total < 0) { carry = -total; taxAfter = 0; } else { carry = 0; taxAfter = incomeTax(total, buyer); }
+      if (total < 0) { carry = -total; taxAfter = 0; } else { carry = 0; taxAfter = incomeTax(total, buyer, nil); }
       const taxEffect = taxAfter - taxBefore;
       const preTaxCF = grossRent - opex - ln.interest - ln.principal;
       const afterTaxCF = preTaxCF - taxEffect;
@@ -191,14 +226,14 @@
     // ---------- Sale ----------
     const salePrice = P * Math.pow(1 + inp.growth, inp.hold);
     const sellCost = salePrice * inp.sellPct * 1.1 + inp.sellFixed;
-    const costBase = P + duty + fpad + inp.legal + firb * (inp.firbInCostBase ? 1 : 0) - cumDiv43;
+    const costBase = P + duty + fpad + inp.legal + inp.inspection + firb * (inp.firbInCostBase ? 1 : 0) - cumDiv43;
     const gross = salePrice - sellCost - costBase;
-    const discount = buyer.taxResident && gross > 0 && inp.hold >= 1 ? 0.5 : 0;
+    const discount = buyer.cgtDiscount && gross > 0 && inp.hold >= 1 ? 0.5 : 0;
     const assessable = Math.max(0, gross * (1 - discount));
     // Tax on the gain at marginal rates in the sale year, after any carried-forward rental losses
     const lastInc = Math.max(0, inp.otherIncome * Math.pow(1 + inp.cpi, inp.hold - 1) + years[years.length - 1].taxableProperty);
-    const cgtTax = gross > 0 ? incomeTax(lastInc + Math.max(0, assessable - carry), buyer) - incomeTax(lastInc, buyer) : 0;
-    const frcgw = buyer.taxResident ? 0 : salePrice * RULES.frcgw;
+    const cgtTax = gross > 0 ? incomeTax(lastInc + Math.max(0, assessable - carry), buyer, 0) - incomeTax(lastInc, buyer, 0) : 0;
+    const frcgw = buyer.taxResident ? 0 : salePrice * RULES.frcgw; // foreign residents for tax (incl. WHM)
     const netSale = salePrice - sellCost - bal - cgtTax;
     cfs[cfs.length - 1] += netSale;
     const totalIn = cfs.slice(1).reduce((s, c) => s + c, 0);
