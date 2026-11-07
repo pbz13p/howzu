@@ -44,7 +44,14 @@ h2{font-size:17px;margin:0 0 10px}
 .list .n{font-weight:600;font-size:15px}
 .list .s{font-size:12px;color:var(--muted)}
 .list .r{text-align:right;font-size:13px;white-space:nowrap}
-.list .r b{font-size:16px}
+.list .r b{font-size:15px;color:var(--accent)}
+.list .r small{color:var(--muted)}
+.nr{color:var(--muted);font-weight:600}
+.chips{margin:3px 0 2px}
+.chip{display:inline-block;font-size:12px;padding:1px 8px;border-radius:20px;background:var(--bg);margin-right:4px}
+.chip.Government{background:#e8f3ee;color:#0f6b4f}
+.chip.Independent{background:#efe9fb;color:#5b3fa0}
+.chip.Catholic{background:#fdeee2;color:#a24b0b}
 label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
 .f input,.f select,.f textarea{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;background:#fff}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
@@ -64,10 +71,12 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
 <main>
   <section class="card">
     <div class="search">
-      <input id="q" placeholder="输入地址，如 40 Balwyn Rd, Balwyn" autocomplete="off" enterkeyhint="search">
+      <input id="q" placeholder="输入地址或区名，如 Balwyn North" autocomplete="off" enterkeyhint="search">
       <button id="go">查询</button>
     </div>
     <div class="row">
+      <button class="ghost" id="mic">🎤 说英文地址</button>
+      <button class="ghost" id="micZh">🎤 说中文区名</button>
       <button class="ghost" id="me">📍 用我现在的位置</button>
     </div>
     <div id="suggest"></div>
@@ -82,8 +91,9 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
   </section>
 
   <section class="card hidden" id="nearCard">
-    <h2>周边 3 公里内的学校</h2>
-    <div class="tabs" id="nearTabs"></div>
+    <h2 id="nearTitle">周边 3 公里内的学校</h2>
+    <div id="nearTabs"></div>
+    <p class="note">澳洲没有单独的“高中”：中学是 7–12 年级，11–12 年级就是高中阶段（考 VCE）。排名按 2025 年 VCE 中位分，全州共 <span id="rt"></span> 所学校参与排名。</p>
     <div class="list" id="near"></div>
   </section>
 
@@ -132,7 +142,11 @@ const LEAD_ENDPOINT = "";
 
 const $ = s => document.querySelector(s);
 const SECTOR = {Government:"公立", Catholic:"天主教", Independent:"私立"};
-const TYPE = {Primary:"小学", Secondary:"中学", "Pri/Sec":"小学+中学", Special:"特殊学校", Language:"语言学校"};
+const SECTOR_LONG = {Government:"公立", Catholic:"天主教私立", Independent:"私立"};
+const TYPE = {Primary:"小学", Secondary:"中学（含高中）", "Pri/Sec":"一贯制（小学到高中）", Special:"特殊学校", Language:"语言学校"};
+const YEARS = {Primary:"Prep–6 年级", Secondary:"7–12 年级", "Pri/Sec":"Prep–12 年级"};
+const AREA_TYPES = ["suburb","city","town","village","postcode","neighbourhood","quarter","municipality","city_district","county","hamlet","locality","district"];
+let nearLevel = "all", nearSort = "dist", place = null;
 let D = {}, map, layers = [], nearData = [], nearFilter = "all", rankShown = 30;
 
 async function load(){
@@ -140,6 +154,7 @@ async function load(){
     ["zones_primary","zones_secondary","schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
   zp.features.forEach(prepBBox); zs.features.forEach(prepBBox);
   D = {zp, zs, sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
+  $("#rt").textContent = meta.vce_ranked_total;
   $("#built").textContent = `学区年份 ${meta.zones_year}｜VCE 年份 ${meta.vce_year}｜数据更新 ${meta.built}`;
   renderRank();
 }
@@ -167,11 +182,11 @@ function km(a,b,c,d){const R=6371,t=Math.PI/180,dl=(c-a)*t,dn=(d-b)*t;
 
 async function geocode(q){
   const url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&countrycodes=au&addressdetails=0&viewbox=140.9,-34,150,-39.2&bounded=1&q="+encodeURIComponent(q);
-  try{ const r = await fetch(url,{headers:{"Accept-Language":"en"}}); if(r.ok){const j=await r.json(); if(j.length) return j.map(x=>({lat:+x.lat,lng:+x.lon,label:x.display_name}));} }catch(e){}
+  try{ const r = await fetch(url,{headers:{"Accept-Language":"en"}}); if(r.ok){const j=await r.json(); if(j.length) return j.map(x=>({lat:+x.lat,lng:+x.lon,label:x.display_name,area:AREA_TYPES.includes(x.addresstype||x.type),name:x.name}));} }catch(e){}
   try{ const r = await fetch("https://photon.komoot.io/api/?limit=5&lat=-37.81&lon=144.96&bbox=140.9,-39.2,150,-34&q="+encodeURIComponent(q));
     const j = await r.json();
     return j.features.map(f=>({lng:f.geometry.coordinates[0],lat:f.geometry.coordinates[1],
-      label:[f.properties.housenumber,f.properties.street||f.properties.name,f.properties.city||f.properties.district,f.properties.postcode].filter(Boolean).join(", ")}));
+      area:AREA_TYPES.includes(f.properties.type)&&!f.properties.housenumber,name:f.properties.name,label:[f.properties.housenumber,f.properties.street||f.properties.name,f.properties.city||f.properties.district,f.properties.postcode].filter(Boolean).join(", ")}));
   }catch(e){ return []; }
 }
 
@@ -187,18 +202,22 @@ async function search(){
 }
 
 function show(p){
-  $("#status").textContent = p.label;
+  $("#status").textContent = p.label; place = p;
   const zp = D.zp.features.filter(f=>inFeature(f,p.lng,p.lat));
   const zs = D.zs.features.filter(f=>inFeature(f,p.lng,p.lat));
   drawMap(p, zp, zs);
   let h="";
-  if(!zp.length && !zs.length) h=`<div class="none">这个位置不在任何公立学校学区内（可能不在维州，或地址定位有偏差）。</div>`;
+  if(p.area) h+=`<div class="none">你输入的是一个区域，这里显示的是<b>区中心点</b>的学区。同一个区内不同街道可能对口不同学校，请输入具体门牌地址确认。</div>`;
+  if(!zp.length && !zs.length) h+=`<div class="none">这个位置不在任何公立学校学区内（可能不在维州，或地址定位有偏差）。</div>`;
   zs.forEach(f=>h+=zoneHTML(f,"中学学区"));
   zp.forEach(f=>h+=zoneHTML(f,"小学学区"));
   if(!zs.length && zp.length) h+=`<div class="none">没找到对应的中学学区，请到 findmyschool 官网核实。</div>`;
   $("#zones").innerHTML=h; $("#zoneCard").classList.remove("hidden");
   if(zs[0]) $("#leadSchool").value = zs[0].properties.name;
-  nearData = D.sc.map(s=>({...s,d:km(p.lat,p.lng,s.lat,s.lng)})).filter(s=>s.d<=3 && s.type!=="Language").sort((a,b)=>a.d-b.d);
+  const town = p.area && p.name ? p.name.toLowerCase() : null;
+  nearData = D.sc.map(s=>({...s,d:km(p.lat,p.lng,s.lat,s.lng),inTown: town && s.addr.toLowerCase().includes(", "+town+" ")}))
+    .filter(s=>(s.d<=3 || s.inTown) && s.type!=="Language");
+  $("#nearTitle").textContent = p.area && p.name ? `${p.name} 区内及周边 3 公里的学校` : "周边 3 公里内的学校";
   renderNear(); $("#nearCard").classList.remove("hidden");
   $("#zoneCard").scrollIntoView({behavior:"smooth"});
 }
@@ -220,18 +239,31 @@ function zoneHTML(f,tag){
 }
 
 function renderNear(){
-  const tabs=[["all","全部"],["Government","公立"],["Independent","私立"],["Catholic","天主教"],["sec","只看中学"]];
-  $("#nearTabs").innerHTML=tabs.map(([k,v])=>`<button class="${k===nearFilter?"on":""}" data-k="${k}">${v}</button>`).join("");
-  $("#nearTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{nearFilter=b.dataset.k;renderNear();});
-  const list = nearData.filter(s=> nearFilter==="all" || (nearFilter==="sec" ? /Secondary|Pri\/Sec/.test(s.type) : s.sector===nearFilter));
-  $("#near").innerHTML = list.length ? list.slice(0,40).map(s=>itemHTML(s,`${s.d.toFixed(1)} 公里`)).join("") : `<div class="note">附近 3 公里内没有这类学校。</div>`;
+  const groups=[
+    [["all","全部"],["Government","公立"],["Independent","私立"],["Catholic","天主教"]],
+    [["all","全部年级"],["pri","小学"],["sec","中学 / 高中"]],
+    [["dist","按距离"],["rank","按排名"]]];
+  const cur=[nearFilter,nearLevel,nearSort];
+  $("#nearTabs").innerHTML=groups.map((g,gi)=>`<div class="tabs">`+g.map(([k,v])=>`<button class="${k===cur[gi]?"on":""}" data-g="${gi}" data-k="${k}">${v}</button>`).join("")+`</div>`).join("");
+  $("#nearTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=b.dataset.k;
+    if(b.dataset.g==="0")nearFilter=k; else if(b.dataset.g==="1")nearLevel=k; else nearSort=k; renderNear();});
+  let list = nearData.filter(s=>(nearFilter==="all"||s.sector===nearFilter)
+    && (nearLevel==="all" || (nearLevel==="pri" ? /Primary|Pri\/Sec/.test(s.type) : /Secondary|Pri\/Sec/.test(s.type))));
+  list.sort(nearSort==="rank" ? (a,b)=>(a.vce_rank||1e9)-(b.vce_rank||1e9)||a.d-b.d : (a,b)=>a.d-b.d);
+  $("#near").innerHTML = list.length ? list.slice(0,60).map(s=>itemHTML(s,`${s.d.toFixed(1)} 公里`)).join("") : `<div class="note">这个范围内没有这类学校。</div>`;
 }
 
 function itemHTML(s, extra){
-  const vce = s.vce_med ? `<b>${s.vce_med}</b> 分${s.vce_rank?`<br>第 ${s.vce_rank} 名`:""}` : "";
+  let r;
+  if(s.vce_rank) r=`<b>第 ${s.vce_rank} 名</b><br>VCE ${s.vce_med} 分`;
+  else if(s.type==="Primary") r=`<span class="nr">无排名</span><br><small>小学不考 VCE</small>`;
+  else if(s.vce_med) r=`<span class="nr">无排名</span><br><small>VCE ${s.vce_med} 分，人数少</small>`;
+  else r=`<span class="nr">无排名</span><br><small>无公开 VCE 数据</small>`;
+  const yrs = YEARS[s.type] ? ` · ${YEARS[s.type]}` : "";
   return `<div class="item"><div class="l"><div class="n">${s.name}</div>
-    <div class="s">${SECTOR[s.sector]||s.sector} · ${TYPE[s.type]||s.type}${extra?" · "+extra:""}</div></div>
-    <div class="r">${vce}</div></div>`;
+    <div class="chips"><span class="chip ${s.sector}">${SECTOR_LONG[s.sector]||s.sector}</span><span class="chip">${TYPE[s.type]||s.type}</span></div>
+    <div class="s">${yrs.slice(3)}${extra?" · "+extra:""}</div></div>
+    <div class="r">${r}</div></div>`;
 }
 
 function renderRank(){
@@ -257,6 +289,30 @@ function drawMap(p,zp,zs){
   [...zs,...zp].forEach(f=>{const s=D.byNo[f.properties.no]; if(s) layers.push(L.circleMarker([s.lat,s.lng],{radius:6,color:"#1d2321",fillOpacity:.9}).bindTooltip(s.name).addTo(map));});
   setTimeout(()=>{map.invalidateSize(); bounds?map.fitBounds(bounds,{padding:[10,10]}):map.setView([p.lat,p.lng],14);},50);
 }
+
+// Common Chinese names for Melbourne suburbs, so voice input in Chinese still works
+const ZH = {"博士山":"Box Hill","博士山北":"Box Hill North","格伦韦弗利":"Glen Waverley","格兰维弗利":"Glen Waverley","威弗利山":"Mount Waverley","韦弗利山":"Mount Waverley",
+ "巴尔温":"Balwyn","北巴尔温":"Balwyn North","巴尔温北":"Balwyn North","唐卡斯特":"Doncaster","东唐卡斯特":"Doncaster East","坎伯韦尔":"Camberwell","坎伯威尔":"Camberwell",
+ "马尔文":"Malvern","东马尔文":"Malvern East","马尔文东":"Malvern East","图拉克":"Toorak","克莱顿":"Clayton","南岸":"Southbank","墨尔本市中心":"Melbourne","市中心":"Melbourne",
+ "卡尔顿":"Carlton","里士满":"Richmond","南亚拉":"South Yarra","圣基尔达":"St Kilda","布莱顿":"Brighton","考菲尔德":"Caulfield","奥克利":"Oakleigh","钱士顿":"Chadstone",
+ "邱区":"Kew","丘区":"Kew","霍索恩":"Hawthorn","萨里山":"Surrey Hills","坎特伯雷":"Canterbury","惠灵顿":"Wheelers Hill","伯伍德":"Burwood","布莱克本":"Blackburn",
+ "林伍德":"Ringwood","坦普斯托":"Templestowe","沃伦泰":"Warrandyte","麦克劳德":"Macleod","邦都拉":"Bundoora","普兰斯顿":"Preston","布伦瑞克":"Brunswick",
+ "埃森顿":"Essendon","福茨克雷":"Footscray","威廉斯敦":"Williamstown","韦里比":"Werribee","波因特库克":"Point Cook","塔尼特":"Tarneit","克兰本":"Cranbourne",
+ "伯威克":"Berwick","丹德农":"Dandenong","弗兰克斯顿":"Frankston","本特利":"Bentleigh","东本特利":"Bentleigh East","麦金农":"McKinnon","艾尔伍德":"Elwood","南墨尔本":"South Melbourne"};
+function zhToEn(t){ let x=t.replace(/[。，,.\s]/g,""); for(const k of Object.keys(ZH).sort((a,b)=>b.length-a.length)) if(x.includes(k)) return ZH[k]; return t; }
+
+function listen(lang){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ $("#status").textContent="这个浏览器不支持语音。可以点输入框，用手机键盘上的 🎤 说话。"; $("#q").focus(); return; }
+  const r = new SR(); r.lang = lang; r.interimResults = true; r.maxAlternatives = 1;
+  $("#status").textContent = lang==="zh-CN" ? "请说区名，比如“博士山”…" : "Speak the address, e.g. “12 Station Street Box Hill”…";
+  r.onresult = e => { const t=[...e.results].map(x=>x[0].transcript).join(""); $("#q").value = t;
+    if(e.results[e.results.length-1].isFinal){ if(lang==="zh-CN") $("#q").value = zhToEn(t); search(); } };
+  r.onerror = e => { $("#status").textContent = e.error==="not-allowed" ? "需要允许麦克风权限才能用语音" : "没听清，请再试一次"; };
+  try{ r.start(); }catch(_){}
+}
+$("#mic").onclick=()=>listen("en-AU");
+$("#micZh").onclick=()=>listen("zh-CN");
 
 $("#go").onclick=search;
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
