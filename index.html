@@ -75,8 +75,6 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
       <button id="go">查询</button>
     </div>
     <div class="row">
-      <button class="ghost" id="mic">🎤 说英文地址</button>
-      <button class="ghost" id="micZh">🎤 说中文区名</button>
       <button class="ghost" id="me">📍 用我现在的位置</button>
     </div>
     <div id="suggest"></div>
@@ -95,6 +93,42 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
     <div id="nearTabs"></div>
     <p class="note">澳洲没有单独的“高中”：中学是 7–12 年级，11–12 年级就是高中阶段（考 VCE）。排名按 2025 年 VCE 中位分，全州共 <span id="rt"></span> 所学校参与排名。</p>
     <div class="list" id="near"></div>
+  </section>
+
+  <section class="card" id="feeCard">
+    <h2>公立学校学费计算器</h2>
+    <p class="note" style="margin-top:-4px">按签证类型算孩子上维州公立学校每年要交多少学费。</p>
+    <form class="f" id="fee" onsubmit="return false">
+      <label>孩子（或父母）的签证</label>
+      <select id="visa">
+        <optgroup label="免学费">
+          <option value="free|公民">澳洲公民 / 新西兰公民</option>
+          <option value="free|PR">永久居民 PR（189、190、186、191、887 等）</option>
+          <option value="free|partner">配偶签证（309、820、100、801）</option>
+          <option value="free|work">工作签证 482（Skills in Demand）/ 457 / 494 / 491</option>
+          <option value="free|485">毕业生工签 485</option>
+          <option value="free|188">商业投资签证 188 / 888</option>
+          <option value="free|phd">父母读博士（500 研究型）或拿政府奖学金</option>
+        </optgroup>
+        <optgroup label="要交学费">
+          <option value="dep|500" selected>父母持学生签证 500 读本科 / 硕士 / TAFE / 语言（孩子随行）</option>
+          <option value="std|500s">孩子自己持学生签证 500（留学生，可配监护签证 590）</option>
+          <option value="tmp|visitor">旅游签证 600 / 打工度假 417、462</option>
+          <option value="tmp|parent">父母类临时签证 870 / 173 / 884</option>
+        </optgroup>
+        <optgroup label="其他">
+          <option value="bridge|bv">过桥签证（Bridging）</option>
+        </optgroup>
+      </select>
+      <label>年级</label>
+      <select id="lvl">
+        <option value="0">小学 Prep–6 年级</option>
+        <option value="1">初中 7–10 年级</option>
+        <option value="2">高中 11–12 年级（VCE）</option>
+      </select>
+    </form>
+    <div id="feeOut" style="margin-top:12px"></div>
+    <p class="note">学费来源：维州教育部 International Student Program 2026、2027 年官方收费表，及“签证类型对照表”。具体以 <a href="https://www.study.vic.gov.au/en/international-student-program/support-and-payments/school-fees" target="_blank" rel="noopener">study.vic.gov.au</a> 为准。私立学校学费正在收集中。</p>
   </section>
 
   <section class="card" id="leadCard">
@@ -290,32 +324,24 @@ function drawMap(p,zp,zs){
   setTimeout(()=>{map.invalidateSize(); bounds?map.fitBounds(bounds,{padding:[10,10]}):map.setView([p.lat,p.lng],14);},50);
 }
 
-// Common Chinese names for Melbourne suburbs, so voice input in Chinese still works
-const ZH = {"博士山":"Box Hill","博士山北":"Box Hill North","格伦韦弗利":"Glen Waverley","格兰维弗利":"Glen Waverley","威弗利山":"Mount Waverley","韦弗利山":"Mount Waverley",
- "巴尔温":"Balwyn","北巴尔温":"Balwyn North","巴尔温北":"Balwyn North","唐卡斯特":"Doncaster","东唐卡斯特":"Doncaster East","坎伯韦尔":"Camberwell","坎伯威尔":"Camberwell",
- "马尔文":"Malvern","东马尔文":"Malvern East","马尔文东":"Malvern East","图拉克":"Toorak","克莱顿":"Clayton","南岸":"Southbank","墨尔本市中心":"Melbourne","市中心":"Melbourne",
- "卡尔顿":"Carlton","里士满":"Richmond","南亚拉":"South Yarra","圣基尔达":"St Kilda","布莱顿":"Brighton","考菲尔德":"Caulfield","奥克利":"Oakleigh","钱士顿":"Chadstone",
- "邱区":"Kew","丘区":"Kew","霍索恩":"Hawthorn","萨里山":"Surrey Hills","坎特伯雷":"Canterbury","惠灵顿":"Wheelers Hill","伯伍德":"Burwood","布莱克本":"Blackburn",
- "林伍德":"Ringwood","坦普斯托":"Templestowe","沃伦泰":"Warrandyte","麦克劳德":"Macleod","邦都拉":"Bundoora","普兰斯顿":"Preston","布伦瑞克":"Brunswick",
- "埃森顿":"Essendon","福茨克雷":"Footscray","威廉斯敦":"Williamstown","韦里比":"Werribee","波因特库克":"Point Cook","塔尼特":"Tarneit","克兰本":"Cranbourne",
- "伯威克":"Berwick","丹德农":"Dandenong","弗兰克斯顿":"Frankston","本特利":"Bentleigh","东本特利":"Bentleigh East","麦金农":"McKinnon","艾尔伍德":"Elwood","南墨尔本":"South Melbourne"};
-function zhToEn(t){ let x=t.replace(/[。，,.\s]/g,""); for(const k of Object.keys(ZH).sort((a,b)=>b.length-a.length)) if(x.includes(k)) return ZH[k]; return t; }
-
-function listen(lang){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ $("#status").textContent="这个浏览器不支持语音。可以点输入框，用手机键盘上的 🎤 说话。"; $("#q").focus(); return; }
-  const r = new SR(); r.lang = lang; r.interimResults = true; r.maxAlternatives = 1;
-  $("#status").textContent = lang==="zh-CN" ? "请说区名，比如“博士山”…" : "Speak the address, e.g. “12 Station Street Box Hill”…";
-  r.onresult = e => { const t=[...e.results].map(x=>x[0].transcript).join(""); $("#q").value = t;
-    if(e.results[e.results.length-1].isFinal){ if(lang==="zh-CN") $("#q").value = zhToEn(t); search(); } };
-  r.onerror = e => { $("#status").textContent = e.error==="not-allowed" ? "需要允许麦克风权限才能用语音" : "没听清，请再试一次"; };
-  try{ r.start(); }catch(_){}
-}
-$("#mic").onclick=()=>listen("en-AU");
-$("#micZh").onclick=()=>listen("zh-CN");
-
 $("#go").onclick=search;
-$("#q").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){clearTimeout(acT);search();}});
+let acT, acN=0;
+$("#q").addEventListener("input",()=>{
+  clearTimeout(acT); const q=$("#q").value.trim(); if(q.length<4){$("#suggest").innerHTML="";return;}
+  acT=setTimeout(async()=>{ const n=++acN;
+    try{ const r=await fetch("https://photon.komoot.io/api/?limit=5&lat=-37.81&lon=144.96&bbox=140.9,-39.2,150,-34&q="+encodeURIComponent(q));
+      const j=await r.json(); if(n!==acN) return;
+      const AREA=["city","district","locality","county"];
+      const items=j.features.filter(f=>(f.properties.state||"").includes("Victoria")).map(f=>{const p=f.properties;
+        return {lng:f.geometry.coordinates[0],lat:f.geometry.coordinates[1],name:p.name,
+          area:!p.housenumber && (AREA.includes(p.type)||p.osm_value==="suburb"),
+          label:[p.housenumber?p.housenumber+" "+(p.street||""):(p.name||p.street),p.housenumber?(p.district||p.city):(p.city&&p.city!==p.name?p.city:""),p.postcode].filter(Boolean).join(", ")};});
+      $("#suggest").innerHTML=""; await ready;
+      items.forEach(it=>{const d=document.createElement("div");d.textContent="📍 "+it.label;d.onclick=()=>{$("#suggest").innerHTML="";$("#q").value=it.label;show(it);};$("#suggest").appendChild(d);});
+    }catch(_){}
+  },350);
+});
 $("#me").onclick=()=>{
   if(!navigator.geolocation){$("#status").textContent="你的浏览器不支持定位";return;}
   $("#status").textContent="正在定位…";
@@ -334,6 +360,29 @@ $("#lead").addEventListener("submit", async e=>{
   const ok=$("#leadOk"); ok.classList.remove("hidden");
   ok.textContent = sent ? "已收到！有合适房源会第一时间联系你。" : "已记录。下面是你的需求，可以复制后发给我们：\n\n"+text;
 });
+
+// Victorian government schools, International Student Program tuition (AUD/year)
+const FEES = {
+  std: {2026:[16000,19600,22000], 2027:[17000,20580,23100], name:"Standard 留学生学费"},
+  tmp: {2026:[16000,19600,22000], 2027:[17000,20580,23100], name:"Temporary 临时签证学费"},
+  dep: {2026:[13600,16660,18700], 2027:[14450,17493,19635], name:"Dependant 随行子女学费"}};
+const money = n => "$"+n.toLocaleString("en-AU");
+function calcFee(){
+  const [kind] = $("#visa").value.split("|"), l = +$("#lvl").value, out=$("#feeOut");
+  const extra = `<div class="note" style="margin-top:6px">另外每年还有校服、书本、电脑、营地等杂费，大约 $1,500–$3,500（公民和留学生都要交）。</div>`;
+  if(kind==="free"){ out.innerHTML=`<div class="zone"><span class="tag">公立学校</span><div class="name">免学费 $0</div>
+    <div class="meta">只交学校自定的杂费和自愿捐款。</div>${extra}</div>`; return; }
+  if(kind==="bridge"){ out.innerHTML=`<div class="none">过桥签证看<b>上一个签证</b>：上一个签证免学费就继续免，要交就继续交。请在上面选你之前持有的签证。</div>`; return; }
+  const f=FEES[kind];
+  out.innerHTML=`<div class="zone"><span class="tag">${f.name}</span>
+    <div class="stats">
+      <div class="stat"><b>${money(f[2027][l])}</b><span>2027 年 / 年</span></div>
+      <div class="stat"><b>${money(f[2026][l])}</b><span>2026 年 / 年</span></div>
+      <div class="stat"><b>$300</b><span>申请费（一次）</span></div>
+    </div>
+    <div class="meta" style="margin-top:6px">学费交给维州教育部，不是交给学校。${kind==="std"?"留学生还需要买 OSHC 学生保险，未成年留学生需安排住宿和监护。":""}</div>${extra}</div>`;
+}
+$("#visa").onchange=calcFee; $("#lvl").onchange=calcFee; calcFee();
 
 const ready = load();
 </script>
