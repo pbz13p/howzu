@@ -12,8 +12,9 @@ on:
       refresh:
         description: "Re-check schools already done (true/false)"
         default: "false"
-  schedule:
-    - cron: "41 2 5 11,12,1,2 *" # 5th of Nov–Feb, when new-year fee schedules come out
+  # schedule disabled until an API key is added:
+  # schedule:
+  #   - cron: "41 2 5 11,12,1,2 *"
 
 permissions:
   contents: write
