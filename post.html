@@ -77,20 +77,16 @@ textarea{resize:vertical;min-height:110px}
   <div class="links"><a href="index.html">🏫 查学区</a><a href="rentals.html">🏠 在租房源</a><a href="invest.html">📈 投资测算</a></div>
   <a class="post" href="post.html">＋ 免费发房源</a>
 </div></nav>
-<header class="hero"><div class="in"><h1>免费发布房源</h1><p>拍照 → 点几下 → 发布。不用注册，照片自动美化，3 分钟搞定，审核后上线。</p></div></header>
+<header class="hero"><div class="in"><h1>免费发布房源</h1><p>拍照 → 点几下 → 发布。不用注册，3 分钟搞定，审核后上线。</p></div></header>
 <main id="main">
   <div class="closed" id="closed" hidden>发布功能马上开放，现在提交的内容还不会保存。</div>
 
-  <section class="card demo">
-    <div class="demo-txt"><b>✨ 上传就自动美化</b><span>暗、黄、灰的手机照片，自动调亮、校正颜色、更通透，比自己拍的好看。<br>不用修图，不用会拍照。左右拖动看对比 👉</span></div>
-    <div class="ba" id="ba"><img src="img/demo-after.jpg" alt="美化后"><div class="ba-b" id="baB"><img src="img/demo-before.jpg" alt="原图"></div><span class="ba-l">手机原图</span><span class="ba-r">好租美化后</span><div class="ba-h" id="baH"></div><input type="range" min="0" max="100" value="50" id="baR" aria-label="对比"></div>
-  </section>
   <section class="card">
     <h2><span class="n">1</span>上传照片 <span class="opt">最多 15 张，第一张是封面</span></h2>
     <div class="drop" id="drop"><b>📷 点这里选照片</b>可以一次选多张，手机会自动压缩</div>
     <input type="file" id="file" accept="image/*" multiple hidden>
     <div class="grid" id="grid"></div>
-    <div class="hint">✨ 照片已自动调亮、校正偏色、增加通透感。点照片右上角的「✨美化」可以切换回原图对比。<br>建议拍：客厅、卧室、厨房整体、浴室、窗外景色、楼里泳池/健身房。白天开灯、横着拍更好看，不用拍锅碗瓢盆。</div>
+    <div class="hint">建议拍：客厅、卧室、厨房整体、浴室、窗外景色、楼里泳池/健身房。白天开灯、横着拍更好看，不用拍锅碗瓢盆。</div>
   </section>
 
   <section class="card">
@@ -162,9 +158,6 @@ const S = { photos: [], beds: 2, baths: 1, cars: 0, unit: "w", lat: null, lng: n
 const LIM = { beds: [0, 10], baths: [1, 10], cars: [0, 10] };
 
 // ---------- before/after demo ----------
-{const r=document.getElementById("baR"),b=document.getElementById("baB"),h=document.getElementById("baH"),ba=document.getElementById("ba");
- const fit=()=>{b.querySelector("img").style.width=ba.clientWidth+"px";};
- const set=v=>{b.style.width=v+"%";h.style.left=v+"%";}; r.oninput=()=>set(r.value); addEventListener("resize",fit); fit();}
 // ---------- photos ----------
 $("#drop").onclick = () => $("#file").click();
 $("#file").onchange = e => { addFiles([...e.target.files]); e.target.value = ""; };
@@ -228,7 +221,7 @@ async function addFiles(files) {
 }
 function setUse(p, orig) { p.useOrig = orig; p.blob = orig ? p.orig : p.enh; p.url = orig ? p.ourl : p.eurl; }
 function render() {
-  $("#grid").innerHTML = S.photos.map((p, i) => `<div class="ph"><img src="${p.url}">${i === 0 ? '<span class="cover">封面</span>' : ""}${!p.blob ? '<div class="busy">美化中…</div>' : ""}${p.eurl ? `<button class="fx${p.useOrig ? " off" : ""}" data-fx="${i}">${p.useOrig ? "原图" : "✨美化"}</button>` : ""}${i ? `<button class="mv" data-mv="${i}" title="设为封面">★</button>` : ""}<button class="x" data-x="${i}">✕</button></div>`).join("");
+  $("#grid").innerHTML = S.photos.map((p, i) => `<div class="ph"><img src="${p.url}">${i === 0 ? '<span class="cover">封面</span>' : ""}${!p.blob ? '<div class="busy">处理中…</div>' : ""}${i ? `<button class="mv" data-mv="${i}" title="设为封面">★</button>` : ""}<button class="x" data-x="${i}">✕</button></div>`).join("");
   progress();
 }
 $("#grid").onclick = e => {
