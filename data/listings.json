@@ -12,12 +12,26 @@
       "title": "Spencer St · 两房一卫公寓",
       "address": "2110/138 Spencer St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": 2, "baths": 1, "cars": 0,
+      "beds": 2,
+      "baths": 1,
+      "cars": 0,
       "rentWeekly": null,
       "available": "尽快",
       "furnished": null,
-      "photos": [],
-      "highlights": ["Southern Cross 火车站步行可达", "免费电车区内"],
+      "photos": [
+        "photos/2110-spencer-1.jpg",
+        "photos/2110-spencer-2.jpg",
+        "photos/2110-spencer-3.jpg",
+        "photos/2110-spencer-4.jpg",
+        "photos/2110-spencer-5.jpg",
+        "photos/2110-spencer-6.jpg",
+        "photos/2110-spencer-7.jpg",
+        "photos/2110-spencer-8.jpg"
+      ],
+      "highlights": [
+        "Southern Cross 火车站步行可达",
+        "免费电车区内"
+      ],
       "desc": ""
     },
     {
@@ -26,26 +40,46 @@
       "title": "La Trobe St · 一房一卫公寓",
       "address": "3005/327 La Trobe St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": 1, "baths": 1, "cars": 0,
+      "beds": 1,
+      "baths": 1,
+      "cars": 0,
       "rentWeekly": null,
       "available": "尽快",
       "furnished": null,
       "photos": [],
-      "highlights": ["免费电车区内", "近 RMIT、墨大、State Library"],
+      "highlights": [
+        "免费电车区内",
+        "近 RMIT、墨大、State Library"
+      ],
       "desc": ""
     },
     {
       "id": "4803b-wsp",
       "status": "draft",
-      "title": "West Side Place 高层公寓",
+      "title": "West Side Place · 两房一卫高层公寓",
       "address": "4803B/639 Little Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": null, "baths": null, "cars": null,
+      "beds": 2,
+      "baths": 1,
+      "cars": null,
       "rentWeekly": null,
       "available": "尽快",
       "furnished": null,
-      "photos": [],
-      "highlights": ["West Side Place 酒店式公寓楼", "近 Southern Cross 站"],
+      "photos": [
+        "photos/4803b-wsp-1.jpg",
+        "photos/4803b-wsp-2.jpg",
+        "photos/4803b-wsp-3.jpg",
+        "photos/4803b-wsp-4.jpg",
+        "photos/4803b-wsp-5.jpg",
+        "photos/4803b-wsp-6.jpg",
+        "photos/4803b-wsp-7.jpg",
+        "photos/4803b-wsp-8.jpg",
+        "photos/4803b-wsp-9.jpg"
+      ],
+      "highlights": [
+        "West Side Place 酒店式公寓楼",
+        "近 Southern Cross 站"
+      ],
       "desc": ""
     },
     {
@@ -54,12 +88,16 @@
       "title": "Lonsdale St 高层公寓",
       "address": "6309D/648 Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": null, "baths": null, "cars": null,
+      "beds": null,
+      "baths": null,
+      "cars": null,
       "rentWeekly": null,
       "available": "2027 年 1 月",
       "furnished": null,
       "photos": [],
-      "highlights": ["免费电车区内"],
+      "highlights": [
+        "免费电车区内"
+      ],
       "desc": ""
     },
     {
@@ -68,12 +106,17 @@
       "title": "Carlton · Victoria St 公寓",
       "address": "3817/160 Victoria St, Carlton VIC 3053",
       "suburb": "Carlton",
-      "beds": null, "baths": null, "cars": null,
+      "beds": null,
+      "baths": null,
+      "cars": null,
       "rentWeekly": null,
       "available": "2027 年 1 月",
       "furnished": null,
       "photos": [],
-      "highlights": ["步行到墨尔本大学", "近 Queen Victoria Market"],
+      "highlights": [
+        "步行到墨尔本大学",
+        "近 Queen Victoria Market"
+      ],
       "desc": ""
     },
     {
@@ -82,12 +125,17 @@
       "title": "West Side Place · 一房一卫",
       "address": "2801B/639 Little Lonsdale St, Melbourne VIC 3000",
       "suburb": "Melbourne CBD",
-      "beds": 1, "baths": 1, "cars": 0,
+      "beds": 1,
+      "baths": 1,
+      "cars": 0,
       "rentWeekly": null,
       "available": "2027 年 1 月",
       "furnished": null,
       "photos": [],
-      "highlights": ["West Side Place 酒店式公寓楼", "近 Southern Cross 站"],
+      "highlights": [
+        "West Side Place 酒店式公寓楼",
+        "近 Southern Cross 站"
+      ],
       "desc": ""
     }
   ]
