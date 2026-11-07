@@ -114,6 +114,29 @@ ok("毛租金回报率 = 600×52/650k", Math.abs(res.metrics.grossYield - 600 * 
   const want = r.sale.gross > 0 ? E.incomeTax(last.taxableIncome + Math.max(0, r.sale.assessable - leftover), b, 0) - E.incomeTax(last.taxableIncome, b, 0) : 0;
   eq("CGT 税额基于抵扣后收入", r.sale.cgtTax, want, 1);
 }
+// ---- 借款费用（ATO：>$100 按 5 年或贷款期较短者摊销；卖房还贷时余额一次抵扣） ----
+{
+  const r5 = E.run(inputs({ buyerType: "resident", propType: "new", loanSetup: 1000, hold: 10 }));
+  eq("借款费用第 1 年抵 1/5", r5.years[0].borrowCost, 200, 0.01);
+  eq("借款费用第 5 年抵 1/5", r5.years[4].borrowCost, 200, 0.01);
+  eq("借款费用第 6 年不再抵", r5.years[5].borrowCost, 0, 0.01);
+  const r3 = E.run(inputs({ buyerType: "resident", propType: "new", loanSetup: 1000, hold: 3 }));
+  eq("持有 3 年卖房：第 3 年抵剩余 3/5", r3.years[2].borrowCost, 600, 0.01);
+  eq("借款费用合计 = 全额", r3.years.reduce((s, y) => s + y.borrowCost, 0), 1000, 0.01);
+  const rs = E.run(inputs({ buyerType: "resident", propType: "new", loanSetup: 80 }));
+  eq("借款费用 ≤ $100 第 1 年全抵", rs.years[0].borrowCost, 80, 0.01);
+  const r0 = E.run(inputs({ buyerType: "resident", propType: "new", loanSetup: 1000, lvr: 0 }));
+  eq("没贷款就没有借款费用抵扣", r0.years[0].borrowCost, 0, 0.01);
+}
+// ---- VRLT（SRO 现行税率：连续空置第 1 年 1%、第 2 年 2%、第 3 年起 3%，按 CIV） ----
+{
+  const r = E.run(inputs({ buyerType: "resident", propType: "new", vacancyWeeks: 30, hold: 4 }));
+  const v = (i) => (r.years[i].exp.find(e => e[0].includes("VRLT")) || [0, 0])[1];
+  eq("VRLT 第 1 年 1% CIV", v(0), r.years[0].value * 0.01, 0.01);
+  eq("VRLT 第 2 年 2% CIV", v(1), r.years[1].value * 0.02, 0.01);
+  eq("VRLT 第 3 年 3% CIV", v(2), r.years[2].value * 0.03, 0.01);
+  eq("VRLT 第 4 年仍 3% CIV", v(3), r.years[3].value * 0.03, 0.01);
+}
 // 零收入 / LVR 0% / 持有 1 年 / 持有 30 年都跑得通
 for (const over of [{ otherIncome: 0 }, { lvr: 0 }, { hold: 1 }, { hold: 30 }, { growth: -5 }]) {
   const r = E.run(inputs({ buyerType: "resident", propType: "new", ...over }));

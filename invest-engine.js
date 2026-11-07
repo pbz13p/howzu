@@ -26,7 +26,10 @@
       return 31650 + (v - 3000000) * 0.0265;
     },
     absenteeRate: 0.04, // Absentee owner surcharge on taxable land value
-    vrltRate: 0.01, // Vacant residential land tax (first year vacant), on capital improved value
+    vrltRate: 0.01, // VRLT first consecutive year vacant, on capital improved value
+    // VRLT by consecutive years liable: 1st 1%, 2nd 2%, 3rd+ 3% of CIV (before 2025 flat 1%).
+    // Source: https://www.sro.vic.gov.au/about-us/rates-and-statistics/current-rates/vacant-residential-land-tax-current-rates (checked 2026-11-07)
+    vrltRateFor(consecutiveYears) { return consecutiveYears >= 3 ? 0.03 : consecutiveYears === 2 ? 0.02 : 0.01; },
     // FIRB application fees 1 Jul 2026 – 30 Jun 2027 (ATO). new = Table 1, est = Table 2 (x3)
     firbFee(price, established) {
       let f;
@@ -180,7 +183,8 @@
       const lt = RULES.landTax(land + inp.otherVicLand) - RULES.landTax(inp.otherVicLand);
       const aos = buyer.absentee ? land * RULES.absenteeRate : 0;
       const vacantLong = vacancyWeeks >= 26;
-      const vrlt = vacantLong ? value * RULES.vrltRate : 0;
+      // Vacancy pattern is the same every year in this model, so year y = y-th consecutive vacant year
+      const vrlt = vacantLong ? value * RULES.vrltRateFor(y) : 0;
       const vacancyFee = buyer.foreign && vacantLong ? firb * 2 : 0;
       const exp = [
         ["中介管理费（含 GST）", mgmt, true],
@@ -194,7 +198,7 @@
         ["燃气/电器安全检查等合规", inp.compliance * infl, true],
         ["土地税（含 COVID 附加）", lt, true],
         ["海外业主附加土地税 4%", aos, true],
-        ["空置住宅税 VRLT", vrlt, true],
+        ["空置住宅税 VRLT（连续空置第 1/2/3+ 年：1%/2%/3%）", vrlt, true],
         ["FIRB 空置费", vacancyFee, false], // not deductible
         ["记账/报税费", inp.accounting * infl, true],
       ].filter(e => e[1] > 0.5);
@@ -203,7 +207,18 @@
       const div43 = buildCost > 0 && cumDiv43 + buildCost * RULES.div43 <= buildCost ? buildCost * RULES.div43 : 0;
       cumDiv43 += div43;
       const div40 = y <= 5 ? inp.div40 / 5 : 0;
-      const taxableProperty = grossRent - deductibleOpex - ln.interest - div43 - div40;
+      // Borrowing expenses (ATO, s25-25 ITAA97): if > $100, deduct over 5 years or the loan term if shorter;
+      // any undeducted balance is deductible when the loan is repaid (sale year). <= $100: deduct in year 1.
+      // https://www.ato.gov.au/individuals-and-families/investments-and-assets/residential-rental-properties/rental-expenses-to-claim/borrowing-expenses
+      // Simplification: equal annual instalments (ATO apportions by days in the first year).
+      let borrowCost = 0;
+      if (inp.loanSetup > 0 && loan0 > 0) {
+        const n = inp.loanSetup > 100 ? Math.max(1, Math.min(5, inp.loanYears)) : 1;
+        const per = inp.loanSetup / n;
+        if (y < n) borrowCost = y === inp.hold ? inp.loanSetup - per * (y - 1) : per;
+        else if (y === n) borrowCost = per;
+      }
+      const taxableProperty = grossRent - deductibleOpex - ln.interest - div43 - div40 - borrowCost;
       // Rental losses offset other Australian income; any unused loss is carried forward
       const other = inp.otherIncome * infl;
       const taxBefore = incomeTax(other, buyer, 0);
@@ -215,7 +230,7 @@
       const taxEffect = taxAfter - taxBefore;
       const preTaxCF = grossRent - opex - ln.interest - ln.principal;
       const afterTaxCF = preTaxCF - taxEffect;
-      years.push({ y, grossRent, exp, opex, interest: ln.interest, principal: ln.principal, div43, div40,
+      years.push({ y, grossRent, exp, opex, interest: ln.interest, principal: ln.principal, div43, div40, borrowCost,
         taxableProperty, carryIn, taxableIncome: Math.max(0, total), taxEffect, preTaxCF, afterTaxCF, value, land, balance: ln.balance, noi: grossRent - opex });
       cfs.push(afterTaxCF);
       bal = ln.balance;

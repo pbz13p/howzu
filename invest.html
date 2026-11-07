@@ -150,7 +150,7 @@ tr.total td{font-weight:700;border-top:2px solid var(--ink)}
   </div>
 
   <div class="card note">
-    <p><b>计算依据（2026 年 11 月核实）</b>：维州印花税、海外买家附加税 8%、楼花印花税临时优惠（2027-4-21 前签约）、土地税 2024–2033 税率表（含 COVID 附加费）、海外业主附加土地税 4%、空置住宅税 —— <a href="https://www.sro.vic.gov.au" target="_blank" rel="noopener">SRO Victoria</a>；FIRB 申请费 2026-27、空置费（申请费 2 倍）、外国人二手房购买禁令至 2029-6-30、个人所得税 2026-27 税率、外国居民资本利得税预扣 15% —— <a href="https://www.ato.gov.au" target="_blank" rel="noopener">ATO</a>。</p>
+    <p><b>计算依据（2026 年 11 月核实）</b>：维州印花税、海外买家附加税 8%、楼花印花税临时优惠（2027-4-21 前签约）、土地税 2024–2033 税率表（含 COVID 附加费）、海外业主附加土地税 4%、空置住宅税 VRLT（按房产总值 CIV：连续空置第 1 年 1%、第 2 年 2%、第 3 年起 3%；每年空置满 6 个月才征）、借款费用按 ATO 规定 5 年摊销抵税 —— <a href="https://www.sro.vic.gov.au" target="_blank" rel="noopener">SRO Victoria</a>；FIRB 申请费 2026-27、空置费（申请费 2 倍）、外国人二手房购买禁令至 2029-6-30、个人所得税 2026-27 税率、外国居民资本利得税预扣 15% —— <a href="https://www.ato.gov.au" target="_blank" rel="noopener">ATO</a>。</p>
     <p><b>税务处理</b>：学生（课程 6 个月以上）和在澳 6 个月以上的工签持有人，ATO 一般视为税务居民，按居民税率并享受 LITO，但作为临时居民，出售投资房<b>没有 50% 资本利得折扣</b>；打工度假和短期签证一般是外国居民，按打工度假税率，出售时有 15% 预扣；海外人士按外国居民税率，没有免税额。租金亏损（收入税亏损）先抵扣当年其他澳洲收入，用不完的无限期结转，出售当年可抵扣资本利得（先算 50% 折扣再抵亏损）。已计入 LITO、Medicare 及低收入减免、Medicare 附加税（按单身门槛，投资亏损加回计算）。FIRB 申请费、FPAD 计入成本基数。税务居民身份最终以 ATO 居住测试为准。</p>
     <p><b>重要提示</b>：本工具提供的是一般性测算，不构成税务、财务或法律建议。具体情况请咨询注册税务代理、律师或持牌贷款经纪。</p>
   </div>
@@ -234,7 +234,7 @@ function render(){
     <tr><td>− 贷款利息</td><td>${money(-y1.interest)}</td></tr>
     ${y1.principal>1?`<tr><td>− 还本金</td><td>${money(-y1.principal)}</td></tr>`:""}
     <tr class="total"><td>税前现金流</td><td${cls(y1.preTaxCF)}>${money(y1.preTaxCF)}</td></tr>
-    <tr><td class="small">报税时：租金净额 ${money(y1.taxableProperty)}（已扣折旧 Div 43 ${money(y1.div43)}、Div 40 ${money(y1.div40)}，折旧不花现金）</td><td></td></tr>
+    <tr><td class="small">报税时：租金净额 ${money(y1.taxableProperty)}（已扣折旧 Div 43 ${money(y1.div43)}、Div 40 ${money(y1.div40)}、借款费用摊销 ${money(y1.borrowCost)}，这些不花现金）</td><td></td></tr>
     <tr><td>${y1.taxEffect<0?"+ 负扣税退税":"− 多交的税"}</td><td${cls(-y1.taxEffect)}>${money(-y1.taxEffect)}</td></tr>
     <tr class="total"><td>税后现金流</td><td${cls(y1.afterTaxCF)}>${money(y1.afterTaxCF)}<div class="small">每周 ${money(y1.afterTaxCF/52)}</div></td></tr></tbody>`;
 
