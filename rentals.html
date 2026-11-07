@@ -25,7 +25,8 @@ main{max-width:1240px;margin:0 auto;padding:22px 20px}
 .ph{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#dfe9e4,#f1ede4);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;position:relative}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ph .n{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:2px 8px;border-radius:10px}
-.strip{display:flex;gap:4px;overflow-x:auto;padding:4px}
+.strip{display:flex;gap:4px;overflow-x:auto;padding:4px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
 .strip img{height:64px;width:86px;flex:none;object-fit:cover;border-radius:6px;cursor:pointer}
 .body{padding:14px 16px}
 .price{font-size:22px;font-weight:700;color:var(--accent)}
@@ -40,7 +41,12 @@ main{max-width:1240px;margin:0 auto;padding:22px 20px}
 .desc{font-size:14px;margin:6px 0;white-space:pre-wrap}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .btn{font-size:14px;padding:10px 14px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;border:0;cursor:pointer}
-.btn.share{background:#fff;color:#0f6b4f;border:1px solid #b9cfc5}
+.sharefab{position:absolute;top:10px;right:10px;z-index:2;border:0;border-radius:20px;padding:7px 12px;background:rgba(255,255,255,.95);color:#0f6b4f;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.sharefab:hover{background:#fff}
+.acts{flex-wrap:nowrap}
+.acts .btn{white-space:nowrap;padding:10px 12px}
+.desk{display:none}
+@media (hover:hover) and (pointer:fine){.mob{display:none}.desk{display:inline}}
 .btn.ghost{background:var(--accent2);color:var(--accent)}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
 .note{font-size:12px;color:var(--muted)}
@@ -84,13 +90,14 @@ function card(x){
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");
   const msg=encodeURIComponent(`你好，我在好租 Howzu 看到房源：${x.title}`);
   const tel=x.phone||C.phone, wx=x.wechat||C.wechat;
-  const contact=(tel?`<a class="btn" href="sms:${esc(tel)}?&body=${msg}">💬 发短信</a><a class="btn ghost" href="tel:${esc(tel)}">📞 打电话</a>`:"")+(wx?`<button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(wx)}');this.textContent='已复制微信号 ${esc(wx)}'">微信：${esc(wx)}</button>`:"");
-  return `<div class="card" id="L-${esc(x.id)}"><div class="ph">${ph}</div>${strip}<div class="body">
+  const telTxt=tel?String(tel).replace(/^(\d{4})(\d{3})(\d{3})$/,"$1 $2 $3"):"";
+  const contact=(tel?`<a class="btn mob" href="sms:${esc(tel)}?&body=${msg}">💬 发短信</a><a class="btn" href="tel:${esc(tel)}">📞 <span class="mob">打电话</span><span class="desk">${esc(telTxt)}</span></a>`:"")+(wx?`<button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(wx)}');this.textContent='已复制微信号 ${esc(wx)}'">微信：${esc(wx)}</button>`:"");
+  return `<div class="card" id="L-${esc(x.id)}"><div class="ph">${ph}<button class="sharefab" data-share="${esc(x.id)}" title="分享到微信、小红书">📤 分享</button></div>${strip}<div class="body">
     <div class="price">${price}</div><div class="t">${esc(x.title)}</div><div class="addr">${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
     <div class="tags"><span class="tag when">${isNow(x)?"🔑 ":"📅 "}${esc(x.available||"")}入住</span>${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':""}${(x.highlights||[]).map(h=>`<span class="tag">${esc(h)}</span>`).join("")}${x.status!=="live"?'<span class="tag draft">草稿·未公开</span>':""}</div>
     ${x.desc?`<div class="desc">${esc(x.desc)}</div>`:""}
-    <div class="acts">${contact}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a><button class="btn share" data-share="${esc(x.id)}">📤 分享</button></div>
+    <div class="acts">${contact}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a></div>
   </div></div>`;
 }
 const one=new URLSearchParams(location.search).get("id");
