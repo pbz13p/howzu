@@ -262,7 +262,7 @@ function itemHTML(s, extra){
   const yrs = YEARS[s.type] ? ` · ${YEARS[s.type]}` : "";
   return `<div class="item"><div class="l"><div class="n">${s.name}</div>
     <div class="chips"><span class="chip ${s.sector}">${SECTOR_LONG[s.sector]||s.sector}</span><span class="chip">${TYPE[s.type]||s.type}</span></div>
-    <div class="s">${yrs.slice(3)}${extra?" · "+extra:""}</div></div>
+    <div class="s">${[YEARS[s.type],extra].filter(Boolean).join(" · ")}</div></div>
     <div class="r">${r}</div></div>`;
 }
 
