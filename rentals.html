@@ -40,6 +40,7 @@ main{max-width:1240px;margin:0 auto;padding:22px 20px}
 .desc{font-size:14px;margin:6px 0;white-space:pre-wrap}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .btn{font-size:14px;padding:10px 14px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;border:0;cursor:pointer}
+.btn.share{background:#fff;color:#0f6b4f;border:1px solid #b9cfc5}
 .btn.ghost{background:var(--accent2);color:var(--accent)}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
 .note{font-size:12px;color:var(--muted)}
@@ -68,6 +69,8 @@ footer{max-width:1240px;margin:0 auto;padding:4px 14px 30px}
 <div class="contact" id="contactBar"></div>
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="js/share.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -82,18 +85,22 @@ function card(x){
   const msg=encodeURIComponent(`你好，我在好租 Howzu 看到房源：${x.title}`);
   const tel=x.phone||C.phone, wx=x.wechat||C.wechat;
   const contact=(tel?`<a class="btn" href="sms:${esc(tel)}?&body=${msg}">💬 发短信</a><a class="btn ghost" href="tel:${esc(tel)}">📞 打电话</a>`:"")+(wx?`<button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(wx)}');this.textContent='已复制微信号 ${esc(wx)}'">微信：${esc(wx)}</button>`:"");
-  return `<div class="card"><div class="ph">${ph}</div>${strip}<div class="body">
+  return `<div class="card" id="L-${esc(x.id)}"><div class="ph">${ph}</div>${strip}<div class="body">
     <div class="price">${price}</div><div class="t">${esc(x.title)}</div><div class="addr">${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
     <div class="tags"><span class="tag when">${isNow(x)?"🔑 ":"📅 "}${esc(x.available||"")}入住</span>${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':""}${(x.highlights||[]).map(h=>`<span class="tag">${esc(h)}</span>`).join("")}${x.status!=="live"?'<span class="tag draft">草稿·未公开</span>':""}</div>
     ${x.desc?`<div class="desc">${esc(x.desc)}</div>`:""}
-    <div class="acts">${contact}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看这套房的学区</a></div>
+    <div class="acts">${contact}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a><button class="btn share" data-share="${esc(x.id)}">📤 分享</button></div>
   </div></div>`;
 }
+const one=new URLSearchParams(location.search).get("id");
 function render(){
-  const list=L.filter(x=>preview||x.status==="live").filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2));
+  let list=L.filter(x=>preview||x.status==="live"||x.id===one);
+  if(one&&list.some(x=>x.id===one)){list=list.filter(x=>x.id===one);document.querySelector("#filters").innerHTML='<a href="rentals.html" style="color:#0f6b4f;font-weight:600">‹ 查看全部房源</a>';}
+  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2));
   $("#list").innerHTML=list.length?list.map(card).join(""):`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？在<a href="index.html#leadCard">学区页</a>留下需求。</div>`;
 }
+document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.share);if(x&&window.HowzuShare)HowzuShare.open(x);});
 $("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F=b.dataset.f;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));render();});
 const hideUnit=a=>String(a||"").replace(/^\s*[\w-]+\s*\/\s*/,"");
 async function userListings(){
