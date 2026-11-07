@@ -208,6 +208,7 @@
       const other = inp.otherIncome * infl;
       const taxBefore = incomeTax(other, buyer, 0);
       const nil = Math.max(0, -taxableProperty);
+      const carryIn = carry;
       let total = other + taxableProperty - carry;
       let taxAfter;
       if (total < 0) { carry = -total; taxAfter = 0; } else { carry = 0; taxAfter = incomeTax(total, buyer, nil); }
@@ -215,7 +216,7 @@
       const preTaxCF = grossRent - opex - ln.interest - ln.principal;
       const afterTaxCF = preTaxCF - taxEffect;
       years.push({ y, grossRent, exp, opex, interest: ln.interest, principal: ln.principal, div43, div40,
-        taxableProperty, taxEffect, preTaxCF, afterTaxCF, value, land, balance: ln.balance, noi: grossRent - opex });
+        taxableProperty, carryIn, taxableIncome: Math.max(0, total), taxEffect, preTaxCF, afterTaxCF, value, land, balance: ln.balance, noi: grossRent - opex });
       cfs.push(afterTaxCF);
       bal = ln.balance;
       value *= 1 + inp.growth;
@@ -230,8 +231,9 @@
     const gross = salePrice - sellCost - costBase;
     const discount = buyer.cgtDiscount && gross > 0 && inp.hold >= 1 ? 0.5 : 0;
     const assessable = Math.max(0, gross * (1 - discount));
-    // Tax on the gain at marginal rates in the sale year, after any carried-forward rental losses
-    const lastInc = Math.max(0, inp.otherIncome * Math.pow(1 + inp.cpi, inp.hold - 1) + years[years.length - 1].taxableProperty);
+    // Tax on the gain at marginal rates in the sale year, after any carried-forward rental losses.
+    // Base = sale-year taxable income AFTER prior losses already used that year (not double-counted).
+    const lastInc = years[years.length - 1].taxableIncome;
     const cgtTax = gross > 0 ? incomeTax(lastInc + Math.max(0, assessable - carry), buyer, 0) - incomeTax(lastInc, buyer, 0) : 0;
     const frcgw = buyer.taxResident ? 0 : salePrice * RULES.frcgw; // foreign residents for tax (incl. WHM)
     const netSale = salePrice - sellCost - bal - cgtTax;

@@ -102,5 +102,23 @@ ok("居民有 CGT 折扣（赚钱时）", res.sale.gross <= 0 || res.sale.discou
 ok("海外买家卖房扣 FRCGW", fa.sale.frcgw > 0);
 ok("毛租金回报率 = 600×52/650k", Math.abs(res.metrics.grossYield - 600 * 52 / 650000) < 1e-9);
 
+// ---- 边界：前几年亏损结转、卖房那年部分抵扣 → CGT 按抵扣后的应税收入算（不能重复计算） ----
+{
+  const r = E.run(inputs({ buyerType: "resident", propType: "new", otherIncome: 30000, lvr: 90, rate: 8, hold: 3, rentGrowth: 40 }));
+  ok("测试场景：卖房年有上年结转亏损且部分抵扣", r.years[2].carryIn > 0 && r.years[2].taxableIncome > 0);
+  const last = r.years[r.years.length - 1];
+  const other = 30000 * Math.pow(1 + D.cpi / 100, 2);
+  eq("卖房年应税收入 = 其他收入 + 房产净额 − 上年结转亏损", last.taxableIncome, Math.max(0, other + last.taxableProperty - last.carryIn), 1);
+  const leftover = Math.max(0, last.carryIn - other - last.taxableProperty);
+  const b = r.buyer;
+  const want = r.sale.gross > 0 ? E.incomeTax(last.taxableIncome + Math.max(0, r.sale.assessable - leftover), b, 0) - E.incomeTax(last.taxableIncome, b, 0) : 0;
+  eq("CGT 税额基于抵扣后收入", r.sale.cgtTax, want, 1);
+}
+// 零收入 / LVR 0% / 持有 1 年 / 持有 30 年都跑得通
+for (const over of [{ otherIncome: 0 }, { lvr: 0 }, { hold: 1 }, { hold: 30 }, { growth: -5 }]) {
+  const r = E.run(inputs({ buyerType: "resident", propType: "new", ...over }));
+  ok(`边界 ${JSON.stringify(over)} 没有 NaN`, !finiteDeep(r));
+}
+
 console.log(`\n${pass} 项通过，${fail} 项失败`);
 process.exit(fail ? 1 : 0);
