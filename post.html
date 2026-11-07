@@ -56,6 +56,13 @@ textarea{resize:vertical;min-height:110px}
 .done b{font-size:20px;display:block;margin:10px 0}
 .closed{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:12px;font-size:14px;margin-bottom:12px}
 .hp{position:absolute;left:-9999px}
+.aibox{margin-top:10px;border:1px solid #cfe3d8;background:#f4faf6;border-radius:12px;padding:12px}
+.ai-h{font-size:13px;color:#0f6b4f;font-weight:600;margin-bottom:6px}
+.ai-t{font-weight:600;font-size:15px;margin-bottom:6px}
+.ai-d{white-space:pre-wrap;font-size:14px;line-height:1.7;color:#2b322f}
+.ai-a{display:flex;gap:8px;margin-top:10px}
+.ai-a button{font-size:14px;padding:8px 14px;border-radius:10px;border:1px solid #cfe3d8;background:#fff;cursor:pointer;color:#0f6b4f}
+.ai-a button.use{background:#0f6b4f;color:#fff;border-color:#0f6b4f}
 .demo{display:grid;grid-template-columns:1fr;gap:12px;background:linear-gradient(135deg,#fffaf0,#eef7f2)}
 .demo-txt b{display:block;font-size:18px;color:#0f6b4f;margin-bottom:4px}
 .demo-txt span{font-size:14px;color:#3b4340}
@@ -129,10 +136,15 @@ textarea{resize:vertical;min-height:110px}
   </section>
 
   <section class="card">
-    <h2><span class="n">4</span>标题和介绍 <span class="opt">不会写就点"帮我写"</span></h2>
+    <h2><span class="n">4</span>标题和介绍 <span class="opt">不会写就让 AI 帮你写</span></h2>
     <input type="text" id="title" maxlength="60" placeholder="如 CBD 两房一卫 · 近南十字星站 · 马上入住">
     <textarea id="desc" maxlength="2000" placeholder="交通、周边、房子的好处、对租客的要求…" style="margin-top:8px"></textarea>
-    <button class="ghost" id="auto">✨ 帮我写标题和介绍</button>
+    <button class="ghost" id="ai">✨ AI 帮我写（先预览，你同意才用）</button>
+    <div class="aibox" id="aibox" hidden>
+      <div class="ai-h">✨ AI 写的建议 <span class="opt">只用了你填的信息，可以改</span></div>
+      <div class="ai-t" id="aiT"></div><div class="ai-d" id="aiD"></div>
+      <div class="ai-a"><button class="use" id="aiUse">用这段</button><button id="aiAgain">换一个</button><button id="aiNo">不用</button></div>
+    </div>
   </section>
 
   <section class="card">
@@ -268,22 +280,40 @@ $("#sug").onclick = e => {
 };
 
 // ---------- auto write ----------
-$("#auto").onclick = () => {
-  const kind = chips("kind")[0] || "整套出租", hl = chips("highlights"), when = chips("when")[0], fur = chips("furnished")[0];
-  const area = S.suburb || ($("#addr").value.split(",")[1] || "").trim() || "墨尔本";
-  const room = kind === "单间出租" ? "单间" : `${S.beds} 房 ${S.baths} 卫${S.cars ? " " + S.cars + " 车位" : ""}`;
-  const whenTxt = when === "选日期" && $("#date").value ? $("#date").value + " 起入住" : (when === "马上" ? "马上入住" : when + "入住");
-  if (!$("#title").value.trim()) $("#title").value = [area, room, hl[0], whenTxt].filter(Boolean).join(" · ").slice(0, 60);
-  const lines = [
-    `${area} ${kind === "转租 / 顶租约" ? "转租" : "出租"}：${room}${fur ? "，" + fur : ""}。`,
-    weekly() ? `租金每周 $${weekly()}（约每月 $${Math.round(weekly() * 52 / 12)}）。` : "",
-    `${whenTxt}。`,
-    hl.length ? `亮点：${hl.join("、")}。` : "",
-    "欢迎预约看房，微信或电话联系。"
-  ].filter(Boolean);
-  $("#desc").value = ($("#desc").value.trim() ? $("#desc").value.trim() + "\n\n" : "") + lines.join("\n");
-  save(); progress();
-};
+function factsNow() {
+  const when = chips("when")[0];
+  return { kind: chips("kind")[0] || "整套出租", suburb: S.suburb || (($("#addr").value.split(",")[1]) || "").trim(),
+    street: $("#addr").value.replace(/^\s*[\w-]+\s*\/\s*/, "").split(",")[0], beds: S.beds, baths: S.baths, cars: S.cars,
+    rent: weekly() || null, available: when === "选日期" ? ($("#date").value || "") : when, furnished: chips("furnished")[0] || "",
+    highlights: chips("highlights"), notes: $("#desc").value.trim() };
+}
+function templateWrite(f) {
+  const area = f.suburb || "墨尔本", room = f.kind === "单间出租" ? "单间" : `${f.beds} 房 ${f.baths} 卫${f.cars ? " " + f.cars + " 车位" : ""}`;
+  const whenTxt = f.available ? (f.available === "马上" ? "马上入住" : f.available + "入住") : "";
+  const title = [area, room, f.highlights[0], whenTxt].filter(Boolean).join(" · ").slice(0, 30);
+  const d = [`${area}${f.kind === "转租 / 顶租约" ? "转租" : "出租"}，${room}${f.furnished ? "，" + f.furnished : ""}。`, "",
+    "🏠 房子", `· ${room}`, f.rent ? `· 每周 $${f.rent}` : "", whenTxt ? `· ${whenTxt}` : "",
+    f.highlights.length ? "" : null, f.highlights.length ? "✨ 亮点" : null, ...f.highlights.map(h => "· " + h), "", "欢迎联系预约看房。"].filter(v => v !== null && v !== undefined);
+  return { title, description: d.join("\n").replace(/\n{3,}/g, "\n\n") };
+}
+let aiRes = null;
+async function runAI() {
+  const btn = $("#ai"); btn.disabled = true; btn.textContent = "✨ AI 正在写…";
+  const f = factsNow(); let r = null;
+  try {
+    if (C.SUPABASE_URL) {
+      const res = await fetch(C.SUPABASE_URL + "/functions/v1/describe", { method: "POST", headers: { "content-type": "application/json", apikey: C.SUPABASE_ANON_KEY }, body: JSON.stringify(f) });
+      const j = await res.json(); if (res.ok && j.description) r = j;
+    }
+  } catch (_) {}
+  if (!r) r = templateWrite(f);
+  aiRes = r; $("#aiT").textContent = r.title || ""; $("#aiD").textContent = r.description || ""; $("#aibox").hidden = false;
+  btn.disabled = false; btn.textContent = "✨ AI 帮我写（先预览，你同意才用）";
+}
+$("#ai").onclick = runAI;
+$("#aiAgain").onclick = runAI;
+$("#aiNo").onclick = () => { $("#aibox").hidden = true; aiRes = null; };
+$("#aiUse").onclick = () => { if (!aiRes) return; if (aiRes.title) $("#title").value = aiRes.title; $("#desc").value = aiRes.description; $("#aibox").hidden = true; save(); progress(); };
 
 // ---------- progress / validation ----------
 function missing() {
