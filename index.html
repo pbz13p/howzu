@@ -48,6 +48,7 @@ h2{font-size:17px;margin:0 0 10px}
 .list .r small{color:var(--muted)}
 .nr{color:var(--muted);font-weight:600}
 details.fee{margin-top:4px;font-size:13px}
+.feelink{display:inline-block;margin-top:3px;font-size:13px;color:#a24b0b;text-decoration:none;font-weight:600}
 details.fee summary{cursor:pointer;color:#a24b0b;font-weight:600}
 details.fee table{width:100%;max-width:320px;border-collapse:collapse;margin:6px 0;font-size:13px}
 details.fee td{padding:2px 0;border-bottom:1px solid var(--line)}
@@ -132,7 +133,7 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
       </select>
     </form>
     <div id="feeOut" style="margin-top:12px"></div>
-    <p class="note">学费来源：维州教育部 International Student Program 2026、2027 年官方收费表，及“签证类型对照表”。具体以 <a href="https://www.study.vic.gov.au/en/international-student-program/support-and-payments/school-fees" target="_blank" rel="noopener">study.vic.gov.au</a> 为准。私立学校学费正在收集中。</p>
+    <p class="note">学费来源：维州教育部 International Student Program 2026、2027 年官方收费表，及“签证类型对照表”。具体以 <a href="https://www.study.vic.gov.au/en/international-student-program/support-and-payments/school-fees" target="_blank" rel="noopener">study.vic.gov.au</a> 为准。私立学校学费各校不同，在学校列表里点“查学费”。</p>
   </section>
 
   <section class="card" id="leadCard">
@@ -305,6 +306,11 @@ function feeHTML(s){
     ${f.note_zh?`<div class="note">${f.note_zh}</div>`:""}
     <div class="note">${f.includes||""} · <a href="${f.source_url}" target="_blank" rel="noopener">学校官网原文</a> · ${f.checked} 收集，以学校为准</div></details>`;
 }
+function feeLink(s){
+  if(s.sector==="Government") return "";
+  const q=encodeURIComponent(`${s.name} ${new Date().getFullYear()+1} fees schedule`);
+  return `<a class="feelink" href="https://www.google.com/search?q=${q}" target="_blank" rel="noopener">查学费 ›</a>`;
+}
 function itemHTML(s, extra){
   let r;
   if(s.vce_rank) r=`<b>第 ${s.vce_rank} 名</b><br>VCE ${s.vce_med} 分`;
@@ -314,7 +320,7 @@ function itemHTML(s, extra){
   const yrs = YEARS[s.type] ? ` · ${YEARS[s.type]}` : "";
   return `<div class="item"><div class="l"><div class="n">${s.name}</div>
     <div class="chips"><span class="chip ${s.sector}">${SECTOR_LONG[s.sector]||s.sector}</span><span class="chip">${TYPE[s.type]||s.type}</span></div>
-    <div class="s">${[YEARS[s.type],extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)}</div>
+    <div class="s">${[YEARS[s.type],extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)||feeLink(s)}</div>
     <div class="r">${r}</div></div>`;
 }
 
