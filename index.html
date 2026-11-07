@@ -197,6 +197,14 @@ const SECTOR = {Government:"公立", Catholic:"天主教", Independent:"私立"}
 const SECTOR_LONG = {Government:"公立", Catholic:"天主教私立", Independent:"私立"};
 const TYPE = {Primary:"小学", Secondary:"中学（含高中）", "Pri/Sec":"一贯制（小学到高中）", Special:"特殊学校", Language:"语言学校"};
 const YEARS = {Primary:"Prep–6 年级", Secondary:"7–12 年级", "Pri/Sec":"Prep–12 年级"};
+// Year levels from the school name when it says so (e.g. "Tarneit P-9 College", "Point Cook Prep - Year 9 College",
+// "Box Hill Senior Secondary College" = senior campus, VCE years only); otherwise fall back to the school type.
+function yearsOf(s){
+  const n=s.name||"", m=n.match(/\b(?:P|Prep)\s*-\s*(?:Year\s*)?(\d{1,2})\b/i);
+  if(m) return `Prep–${m[1]} 年级`;
+  if(s.type==="Secondary" && /\bSenior (Secondary )?College\b|\bSenior Campus\b/i.test(n)) return "高中学院 · 只收 10/11–12 年级";
+  return YEARS[s.type]||"";
+}
 const AREA_TYPES = ["suburb","city","town","village","postcode","neighbourhood","quarter","municipality","city_district","county","hamlet","locality","district"];
 let nearLevel = "all", nearSort = "dist", place = null;
 let D = {}, map, layers = [], nearData = [], nearFilter = "all", rankShown = 30;
@@ -330,10 +338,10 @@ function itemHTML(s, extra){
   else if(s.type==="Primary") r=`<span class="nr">无排名</span><br><small>小学不考 VCE</small>`;
   else if(s.vce_med) r=`<span class="nr">无排名</span><br><small>VCE ${s.vce_med} 分，人数少</small>`;
   else r=`<span class="nr">无排名</span><br><small>无公开 VCE 数据</small>`;
-  const yrs = YEARS[s.type] ? ` · ${YEARS[s.type]}` : "";
+  const yrs = yearsOf(s) ? ` · ${yearsOf(s)}` : "";
   return `<div class="item"><div class="l"><div class="n">${s.name}</div>
     <div class="chips"><span class="chip ${s.sector}">${SECTOR_LONG[s.sector]||s.sector}</span><span class="chip">${TYPE[s.type]||s.type}</span></div>
-    <div class="s">${[YEARS[s.type],extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)||feeLink(s)}</div>
+    <div class="s">${[yearsOf(s),extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)||feeLink(s)}</div>
     <div class="r">${r}</div></div>`;
 }
 
@@ -351,6 +359,8 @@ function drawMap(p,zp,zs){
   $("#map").style.display="block";
   if(!map){ map=L.map("map",{scrollWheelZoom:false});
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map); }
+  // Leaflet needs a view before vector layers are added (else _clipPoints throws on the first search)
+  if(!map._loaded) map.setView([p.lat,p.lng],14);
   layers.forEach(l=>map.removeLayer(l)); layers=[];
   const add=(f,color)=>{const l=L.geoJSON({type:"Feature",geometry:f.geometry},{style:{color,weight:2,fillOpacity:.08}}).addTo(map);layers.push(l);return l;};
   let bounds=null;
