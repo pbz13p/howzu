@@ -5,24 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>好租 Howzu · 墨尔本在租房源</title>
 <meta name="description" content="好租 Howzu 墨尔本在租房源：CBD、Carlton 公寓，房东直租管理，中文服务。每套房一键查对口学区。">
+<link rel="stylesheet" href="css/site.css">
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
-header{background:var(--accent);color:#fff;padding:22px 18px 18px}
-header h1{margin:0;font-size:22px}
-header p{margin:4px 0 0;opacity:.9;font-size:14px}
-header a{color:#fff;font-weight:600}
-main{max-width:760px;margin:0 auto;padding:14px}
+main{max-width:1240px;margin:0 auto;padding:22px 20px}
+#list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+#list .card{margin:0;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+#list .card:hover{box-shadow:0 10px 30px rgba(0,0,0,.08);transform:translateY(-2px)}
+#list .body{flex:1;display:flex;flex-direction:column}
+#list .acts{margin-top:auto;padding-top:10px}
+#list .empty{grid-column:1/-1}
+@media (max-width:720px){main{padding:14px}#list{grid-template-columns:1fr;gap:14px}}
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .filters button{font-size:13px;padding:7px 12px;border:0;border-radius:20px;background:#fff;color:var(--ink);cursor:pointer;border:1px solid var(--line)}
 .filters button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
-.ph{aspect-ratio:16/10;background:linear-gradient(135deg,#dfe9e4,#f1ede4);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;position:relative}
-.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#dfe9e4,#f1ede4);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;position:relative}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .ph .n{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:2px 8px;border-radius:10px}
 .strip{display:flex;gap:4px;overflow-x:auto;padding:4px}
-.strip img{height:64px;border-radius:6px;cursor:pointer}
+.strip img{height:64px;width:86px;flex:none;object-fit:cover;border-radius:6px;cursor:pointer}
 .body{padding:14px 16px}
 .price{font-size:22px;font-weight:700;color:var(--accent)}
 .price small{font-size:13px;color:var(--muted);font-weight:400}
@@ -40,16 +44,16 @@ main{max-width:760px;margin:0 auto;padding:14px}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
 .note{font-size:12px;color:var(--muted)}
 .contact{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:none;gap:8px;justify-content:center}
-footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
+footer{max-width:1240px;margin:0 auto;padding:4px 14px 30px}
 </style>
 </head>
 <body>
-<header>
-  <h1>好租 Howzu · 在租房源</h1>
-  <p>墨尔本 CBD / Carlton 公寓，我们直接管理，中文沟通，看房、签约、维修一条龙。</p>
-  <p style="margin-top:8px"><a href="index.html">🏫 查学区 ›</a>　<a href="invest.html">📈 投资测算 ›</a></p>
-  <p style="margin-top:12px"><a href="post.html" style="display:inline-block;background:#fff;color:#0f6b4f;padding:9px 16px;border-radius:22px;text-decoration:none">＋ 免费发布房源</a></p>
-</header>
+<nav class="nav"><div class="in">
+  <a class="logo" href="index.html"><i>好</i>好租 Howzu<small>墨尔本 · 学区 · 租房 · 投资</small></a>
+  <div class="links"><a href="index.html">🏫 查学区</a><a href="rentals.html" class="on">🏠 在租房源</a><a href="invest.html">📈 投资测算</a></div>
+  <a class="post" href="post.html">＋ 免费发房源</a>
+</div></nav>
+<header class="hero"><div class="in"><h1>在租房源</h1><p>墨尔本 CBD / Carlton 公寓，我们直接管理，中文沟通，看房、签约、维修一条龙。每套房都能一键查学区。</p></div></header>
 <main>
   <div class="filters" id="filters">
     <button data-f="all" class="on">全部</button>
@@ -76,8 +80,8 @@ function card(x){
   const price=x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`;
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");
   const msg=encodeURIComponent(`你好，我在好租 Howzu 看到房源：${x.title}`);
-  const ph=x.phone||C.phone, wx=x.wechat||C.wechat;
-  const contact=(ph?`<a class="btn" href="sms:${esc(ph)}?&body=${msg}">💬 发短信</a><a class="btn ghost" href="tel:${esc(ph)}">📞 打电话</a>`:"")+(wx?`<button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(wx)}');this.textContent='已复制微信号 ${esc(wx)}'">微信：${esc(wx)}</button>`:"");
+  const tel=x.phone||C.phone, wx=x.wechat||C.wechat;
+  const contact=(tel?`<a class="btn" href="sms:${esc(tel)}?&body=${msg}">💬 发短信</a><a class="btn ghost" href="tel:${esc(tel)}">📞 打电话</a>`:"")+(wx?`<button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(wx)}');this.textContent='已复制微信号 ${esc(wx)}'">微信：${esc(wx)}</button>`:"");
   return `<div class="card"><div class="ph">${ph}</div>${strip}<div class="body">
     <div class="price">${price}</div><div class="t">${esc(x.title)}</div><div class="addr">${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}

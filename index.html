@@ -6,14 +6,21 @@
 <title>好租 Howzu · 墨尔本查学区、租房、投资测算</title>
 <meta name="description" content="输入墨尔本地址，马上查对口公立小学、中学学区，周边学校，VCE 成绩和排名。2027 年最新学区数据。">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/site.css">
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
-header{background:var(--accent);color:#fff;padding:22px 18px 18px}
-header h1{margin:0;font-size:22px;letter-spacing:.5px}
-header p{margin:4px 0 0;opacity:.85;font-size:14px}
 main{max-width:760px;margin:0 auto;padding:14px}
+main.wide{max-width:1240px;padding:22px 20px;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:22px;align-items:start}
+.colA,.colB{min-width:0}
+.colB{position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto;scrollbar-width:thin}
+.searchcard{padding:20px;box-shadow:0 6px 24px rgba(15,107,79,.08)}
+.searchcard .search input{font-size:17px;padding:14px 16px}
+.searchcard .search button{padding:14px 22px;font-size:16px}
+.card{box-shadow:0 1px 2px rgba(0,0,0,.03)}
+@media (min-width:1000px){#map{height:420px}}
+@media (max-width:999px){main.wide{grid-template-columns:1fr;max-width:760px;padding:14px}.colB{position:static;max-height:none;overflow:visible}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .search{display:flex;gap:8px}
 .search input{flex:1;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;min-width:0}
@@ -65,17 +72,18 @@ label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
 .ok{background:var(--accent2);color:var(--accent);padding:12px;border-radius:10px;margin-top:10px;font-size:14px;white-space:pre-wrap}
 #rankSearch{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
 .hidden{display:none}
-footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
+footer{max-width:1240px;margin:0 auto;padding:4px 20px 30px}
 </style>
 </head>
 <body>
-<header>
-  <h1>好租 Howzu <span style="font-size:15px;font-weight:400;opacity:.85">· 墨尔本学区查询</span></h1>
-  <p>输入地址，马上知道对口哪所公立学校、周边有哪些学校、VCE 成绩如何</p>
-  <p style="margin-top:8px"><a href="rentals.html" style="color:#fff;font-weight:600">🏠 在租房源 ›</a>　<a href="invest.html" style="color:#fff;font-weight:600">📈 投资房回报测算 ›</a></p>
-</header>
-<main>
-  <section class="card">
+<nav class="nav"><div class="in">
+  <a class="logo" href="index.html"><i>好</i>好租 Howzu<small>墨尔本 · 学区 · 租房 · 投资</small></a>
+  <div class="links"><a href="index.html" class="on">🏫 查学区</a><a href="rentals.html">🏠 在租房源</a><a href="invest.html">📈 投资测算</a></div>
+  <a class="post" href="post.html">＋ 免费发房源</a>
+</div></nav>
+<header class="hero"><div class="in"><h1>在墨尔本找房，先查学区</h1><p>输入地址，马上知道对口哪所公立学校、周边有哪些学校、VCE 成绩和排名。2027 年最新学区数据。</p></div></header>
+<main class="wide"><div class="colA">
+  <section class="card searchcard">
     <div class="search">
       <input id="q" placeholder="输入地址或区名，如 Balwyn North" autocomplete="off" enterkeyhint="search">
       <button id="go">查询</button>
@@ -101,6 +109,15 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
     <div class="list" id="near"></div>
   </section>
 
+
+  <section class="card">
+    <h2>VCE 成绩排名（2025）</h2>
+    <p class="note" style="margin-top:-4px">按 VCAA 公布的 VCE 中位分排序，同分按 40 分以上比例。只计有 VCE 毕业生、20 人以上的学校。</p>
+    <input id="rankSearch" placeholder="搜学校名，如 Balwyn High">
+    <div class="list" id="rank"></div>
+    <div class="row"><button class="ghost" id="more">显示更多</button></div>
+  </section>
+</div><aside class="colB">
   <section class="card" id="feeCard">
     <h2>公立学校学费计算器</h2>
     <p class="note" style="margin-top:-4px">按签证类型算孩子上维州公立学校每年要交多少学费。</p>
@@ -161,13 +178,7 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
     </form>
   </section>
 
-  <section class="card">
-    <h2>VCE 成绩排名（2025）</h2>
-    <p class="note" style="margin-top:-4px">按 VCAA 公布的 VCE 中位分排序，同分按 40 分以上比例。只计有 VCE 毕业生、20 人以上的学校。</p>
-    <input id="rankSearch" placeholder="搜学校名，如 Balwyn High">
-    <div class="list" id="rank"></div>
-    <div class="row"><button class="ghost" id="more">显示更多</button></div>
-  </section>
+</aside>
 </main>
 <footer class="note">
   <p><b>重要提示：</b>学区每年可能调整，入学前请以维州教育部官网 <a href="https://www.findmyschool.vic.gov.au" target="_blank" rel="noopener">findmyschool.vic.gov.au</a> 为准。政府说明学区数据不应作为买房决策的唯一依据。VCE 中位分只反映学校的一个方面，不代表学校整体好坏。</p>

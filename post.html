@@ -5,15 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>免费发布房源 · 好租 Howzu</title>
 <meta name="description" content="3 分钟免费发布墨尔本出租房源：拍照、点选、发布。不用注册，审核后上线。">
+<link rel="stylesheet" href="css/site.css">
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5;--bad:#a12b2b}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:90px}
-header{background:var(--accent);color:#fff;padding:20px 18px 16px}
-header h1{margin:0;font-size:21px}
-header p{margin:4px 0 0;opacity:.9;font-size:14px}
-header a{color:#fff;font-weight:600}
-main{max-width:640px;margin:0 auto;padding:14px}
+main{max-width:720px;margin:0 auto;padding:22px 16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
 h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
 h2 .n{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;align-items:center;justify-content:center}
@@ -60,11 +57,12 @@ textarea{resize:vertical;min-height:110px}
 </style>
 </head>
 <body>
-<header>
-  <h1>免费发布房源</h1>
-  <p>拍照 → 点几下 → 发布。不用注册，3 分钟搞定，审核后上线。</p>
-  <p style="margin-top:6px"><a href="rentals.html">‹ 看在租房源</a></p>
-</header>
+<nav class="nav"><div class="in">
+  <a class="logo" href="index.html"><i>好</i>好租 Howzu<small>墨尔本 · 学区 · 租房 · 投资</small></a>
+  <div class="links"><a href="index.html">🏫 查学区</a><a href="rentals.html">🏠 在租房源</a><a href="invest.html">📈 投资测算</a></div>
+  <a class="post" href="post.html">＋ 免费发房源</a>
+</div></nav>
+<header class="hero"><div class="in"><h1>免费发布房源</h1><p>拍照 → 点几下 → 发布。不用注册，3 分钟搞定，审核后上线。</p></div></header>
 <main id="main">
   <div class="closed" id="closed" hidden>发布功能马上开放，现在提交的内容还不会保存。</div>
 
