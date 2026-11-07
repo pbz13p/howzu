@@ -56,6 +56,19 @@ textarea{resize:vertical;min-height:110px}
 .done b{font-size:20px;display:block;margin:10px 0}
 .closed{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:12px;font-size:14px;margin-bottom:12px}
 .hp{position:absolute;left:-9999px}
+.demo{display:grid;grid-template-columns:1fr;gap:12px;background:linear-gradient(135deg,#fffaf0,#eef7f2)}
+.demo-txt b{display:block;font-size:18px;color:#0f6b4f;margin-bottom:4px}
+.demo-txt span{font-size:14px;color:#3b4340}
+.ba{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/10;user-select:none}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ba-b{position:absolute;inset:0;width:50%;overflow:hidden}
+.ba-b img{width:auto;height:100%;max-width:none}
+.ba-h{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.4);pointer-events:none}
+.ba-h::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:#fff;color:#0f6b4f;display:flex;align-items:center;justify-content:center;font-size:16px}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba-l,.ba-r{position:absolute;top:8px;font-size:12px;padding:2px 8px;border-radius:8px;background:rgba(0,0,0,.55);color:#fff;pointer-events:none}
+.ba-l{left:8px}.ba-r{right:8px;background:rgba(15,107,79,.9)}
+@media(min-width:721px){.demo{grid-template-columns:1fr 1.3fr;align-items:center}}
 </style>
 </head>
 <body>
@@ -64,10 +77,14 @@ textarea{resize:vertical;min-height:110px}
   <div class="links"><a href="index.html">🏫 查学区</a><a href="rentals.html">🏠 在租房源</a><a href="invest.html">📈 投资测算</a></div>
   <a class="post" href="post.html">＋ 免费发房源</a>
 </div></nav>
-<header class="hero"><div class="in"><h1>免费发布房源</h1><p>拍照 → 点几下 → 发布。不用注册，3 分钟搞定，审核后上线。</p></div></header>
+<header class="hero"><div class="in"><h1>免费发布房源</h1><p>拍照 → 点几下 → 发布。不用注册，照片自动美化，3 分钟搞定，审核后上线。</p></div></header>
 <main id="main">
   <div class="closed" id="closed" hidden>发布功能马上开放，现在提交的内容还不会保存。</div>
 
+  <section class="card demo">
+    <div class="demo-txt"><b>✨ 上传就自动美化</b><span>暗、黄、灰的手机照片，自动调亮、校正颜色、更通透，比自己拍的好看。<br>不用修图，不用会拍照。左右拖动看对比 👉</span></div>
+    <div class="ba" id="ba"><img src="img/demo-after.jpg" alt="美化后"><div class="ba-b" id="baB"><img src="img/demo-before.jpg" alt="原图"></div><span class="ba-l">手机原图</span><span class="ba-r">好租美化后</span><div class="ba-h" id="baH"></div><input type="range" min="0" max="100" value="50" id="baR" aria-label="对比"></div>
+  </section>
   <section class="card">
     <h2><span class="n">1</span>上传照片 <span class="opt">最多 15 张，第一张是封面</span></h2>
     <div class="drop" id="drop"><b>📷 点这里选照片</b>可以一次选多张，手机会自动压缩</div>
@@ -144,6 +161,10 @@ const $ = s => document.querySelector(s);
 const S = { photos: [], beds: 2, baths: 1, cars: 0, unit: "w", lat: null, lng: null, suburb: "" };
 const LIM = { beds: [0, 10], baths: [1, 10], cars: [0, 10] };
 
+// ---------- before/after demo ----------
+{const r=document.getElementById("baR"),b=document.getElementById("baB"),h=document.getElementById("baH"),ba=document.getElementById("ba");
+ const fit=()=>{b.querySelector("img").style.width=ba.clientWidth+"px";};
+ const set=v=>{b.style.width=v+"%";h.style.left=v+"%";}; r.oninput=()=>set(r.value); addEventListener("resize",fit); fit();}
 // ---------- photos ----------
 $("#drop").onclick = () => $("#file").click();
 $("#file").onchange = e => { addFiles([...e.target.files]); e.target.value = ""; };
@@ -157,23 +178,26 @@ function enhance(c) {
     if (y > 40 && y < 220) { sr += d[i]; sg += d[i + 1]; sb += d[i + 2]; mc++; }
   }
   const pct = q => { let a = 0, t = N * q; for (let v = 0; v < 256; v++) { a += hist[v]; if (a >= t) return v; } return 255; };
-  const lo = Math.min(pct(0.005), 40), hi = Math.max(pct(0.995), 200);
+  let mean0 = 0; for (let v = 0; v < 256; v++) mean0 += hist[v] * v; mean0 /= N * 255;
+  const need = Math.max(0, Math.min(1, (0.55 - mean0) / 0.2)); // 照片越暗/越灰，调得越多；本来就好的只轻微调
+  const lo = Math.min(pct(0.01), 45), hi = Math.max(pct(need > 0.3 ? 0.985 : 0.997), 185);
   // 白平衡（灰世界，限制幅度，避免偏色过头）
   const avg = mc ? (sr + sg + sb) / (3 * mc) : 128, cl = v => Math.max(0.88, Math.min(1.12, v));
-  const gr = mc ? cl(avg / (sr / mc)) : 1, gg = mc ? cl(avg / (sg / mc)) : 1, gb = mc ? cl(avg / (sb / mc)) : 1;
+  const warm = mc && sb >= sr ? 1 : 0; /* 只有偏冷的照片才加暖 */
+  const gr = (mc ? cl(avg / (sr / mc)) : 1) * (1 + 0.03 * warm), gg = (mc ? cl(avg / (sg / mc)) : 1) * (1 + 0.01 * warm), gb = (mc ? cl(avg / (sb / mc)) : 1) * (1 - 0.04 * warm);
   // 亮度：室内照偏暗就提亮
   let mean = 0; for (let v = 0; v < 256; v++) mean += hist[v] * Math.min(1, Math.max(0, (v - lo) / (hi - lo))); mean /= N;
-  const gamma = mean < 0.5 ? Math.max(0.72, Math.log(0.52) / Math.log(Math.max(mean, 0.05))) : 1;
-  const lut = (gain) => { const t = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) { let x = Math.min(1, Math.max(0, (v * gain - lo) / (hi - lo))); x = Math.pow(x, gamma); x = x + 0.08 * Math.sin(2 * Math.PI * x) * (x * (1 - x)) * 4 * 0.5; t[v] = x * 255; } return t; };
+  const gamma = mean < 0.56 ? Math.max(0.62, Math.log(0.58) / Math.log(Math.max(mean, 0.05))) : 1;
+  const lut = (gain) => { const t = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) { let x = Math.min(1, Math.max(0, (v * gain - lo) / (hi - lo))); x = Math.pow(x, gamma); x = x - (0.025 + 0.035 * need) * Math.sin(2 * Math.PI * x); x = Math.min(1, Math.max(0, x)); /* S 曲线：更通透 */ t[v] = x * 255; } return t; };
   const LR = lut(gr), LG = lut(gg), LB = lut(gb);
   for (let i = 0; i < d.length; i += 4) {
     let r = LR[d[i]], gg2 = LG[d[i + 1]], b = LB[d[i + 2]];
     const y = 0.299 * r + 0.587 * gg2 + 0.114 * b, mx = Math.max(r, gg2, b), mn = Math.min(r, gg2, b);
-    const k = 1 + 0.18 * (1 - (mx - mn) / 255); // 鲜艳度：越灰的颜色加得越多
+    const k = 1 + (0.1 + 0.18 * need) * (1 - (mx - mn) / 255); // 鲜艳度：越灰的颜色加得越多
     d[i] = y + (r - y) * k; d[i + 1] = y + (gg2 - y) * k; d[i + 2] = y + (b - y) * k;
   }
   // 轻度锐化
-  const src = new Uint8ClampedArray(d), amt = 0.35, row = W * 4;
+  const src = new Uint8ClampedArray(d), amt = 0.45, row = W * 4;
   for (let yy = 1; yy < H - 1; yy++) for (let xx = 1; xx < W - 1; xx++) {
     const i = yy * row + xx * 4;
     for (let ch = 0; ch < 3; ch++) { const j = i + ch; const blur = (src[j - 4] + src[j + 4] + src[j - row] + src[j + row]) / 4; d[j] = src[j] + amt * (src[j] - blur); }
