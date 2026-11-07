@@ -48,6 +48,7 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
   <h1>好租 Howzu · 在租房源</h1>
   <p>墨尔本 CBD / Carlton 公寓，我们直接管理，中文沟通，看房、签约、维修一条龙。</p>
   <p style="margin-top:8px"><a href="index.html">🏫 查学区 ›</a>　<a href="invest.html">📈 投资测算 ›</a></p>
+  <p style="margin-top:12px"><a href="post.html" style="display:inline-block;background:#fff;color:#0f6b4f;padding:9px 16px;border-radius:22px;text-decoration:none">＋ 免费发布房源</a></p>
 </header>
 <main>
   <div class="filters" id="filters">
@@ -62,6 +63,7 @@ footer{max-width:760px;margin:0 auto;padding:4px 14px 30px}
 </main>
 <div class="contact" id="contactBar"></div>
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
+<script src="js/config.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -73,8 +75,9 @@ function card(x){
   const strip=x.photos&&x.photos.length>1?`<div class="strip">${x.photos.slice(1).map(p=>`<img src="${esc(p)}" loading="lazy" onclick="this.closest('.card').querySelector('.ph img').src=this.src">`).join("")}</div>`:"";
   const price=x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`;
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");
-  const msg=encodeURIComponent(`你好，我想咨询好租房源：${x.title}（${x.address}）`);
-  const contact=C.phone?`<a class="btn" href="sms:${esc(C.phone)}?&body=${msg}">💬 发短信咨询</a><a class="btn ghost" href="tel:${esc(C.phone)}">📞 打电话</a>`:"";
+  const msg=encodeURIComponent(`你好，我在好租 Howzu 看到房源：${x.title}`);
+  const ph=x.phone||C.phone, wx=x.wechat||C.wechat;
+  const contact=(ph?`<a class="btn" href="sms:${esc(ph)}?&body=${msg}">💬 发短信</a><a class="btn ghost" href="tel:${esc(ph)}">📞 打电话</a>`:"")+(wx?`<button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(wx)}');this.textContent='已复制微信号 ${esc(wx)}'">微信：${esc(wx)}</button>`:"");
   return `<div class="card"><div class="ph">${ph}</div>${strip}<div class="body">
     <div class="price">${price}</div><div class="t">${esc(x.title)}</div><div class="addr">${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
@@ -88,7 +91,16 @@ function render(){
   $("#list").innerHTML=list.length?list.map(card).join(""):`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？在<a href="index.html#leadCard">学区页</a>留下需求。</div>`;
 }
 $("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F=b.dataset.f;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));render();});
-fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).then(j=>{L=j.listings||[];C=j.contact||{};render();}).catch(()=>{$("#list").innerHTML='<div class="empty">房源加载失败，请刷新。</div>'});
+const hideUnit=a=>String(a||"").replace(/^\s*[\w-]+\s*\/\s*/,"");
+async function userListings(){
+  const H=window.HOWZU||{}; if(!H.SUPABASE_URL) return [];
+  try{
+    const r=await fetch(`${H.SUPABASE_URL}/rest/v1/listings?status=eq.live&order=created_at.desc&limit=200`,{headers:{apikey:H.SUPABASE_ANON_KEY,Authorization:"Bearer "+H.SUPABASE_ANON_KEY}});
+    const rows=r.ok?await r.json():[];
+    return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,user:true}));
+  }catch(_){return []}
+}
+Promise.all([fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})),userListings()]).then(([j,u])=>{L=[...(j.listings||[]),...u];C=j.contact||{};render();});
 </script>
 </body>
 </html>
