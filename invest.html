@@ -6,6 +6,15 @@
 <title>墨尔本投资房回报测算 · 好租 Howzu</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" href="/icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#0f6b4f"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="好租"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="description" content="维州投资房完整测算：印花税、海外买家附加税、FIRB、土地税、海外业主附加税、管理费、负扣税、折旧、资本利得税，算出真实税后回报和10年IRR。">
+<link rel="canonical" href="https://howzu.com.au/invest.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="好租 Howzu">
+<meta property="og:title" content="墨尔本投资房回报测算 · 好租 Howzu">
+<meta property="og:description" content="维州投资房完整测算：印花税、海外买家附加税、FIRB、土地税、海外业主附加税、管理费、负扣税、折旧、资本利得税，算出真实税后回报和10年IRR。">
+<meta property="og:url" content="https://howzu.com.au/invest.html">
+<meta property="og:image" content="https://howzu.com.au/apple-touch-icon.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="css/site.css?v=20261107">
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5;--neg:#b42318}
@@ -34,6 +43,7 @@ thead th{color:var(--muted);font-weight:500}
 tr.total td{font-weight:700;border-top:2px solid var(--ink)}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .scroll th:first-child,.scroll td:first-child{position:sticky;left:0;background:var(--card);z-index:1}
+#compare th.me,#compare td.me{background:var(--accent2)}#compare th.me{color:var(--accent)}#compare td:first-child{min-width:70px;font-size:12px;color:var(--muted)}
 .scrollhint{display:none;font-size:11px;color:var(--muted);text-align:right;margin:-4px 0 4px}
 @media(max-width:600px){.scrollhint{display:block}}
 .warn{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:10px;font-size:13px;margin-bottom:8px}
@@ -176,7 +186,7 @@ const DEFAULTS = {
 };
 const money = (n, d=0) => (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-AU",{maximumFractionDigits:d});
 const pct = (n, d=2) => n==null ? "—" : (n*100).toFixed(d) + "%";
-const cls = n => n < 0 ? ' class="neg"' : "";
+const cls = (n, me) => { const c = [n < 0 ? "neg" : "", me ? "me" : ""].filter(Boolean).join(" "); return c ? ` class="${c}"` : ""; };
 
 function readInputs(){
   const o = {};
@@ -215,15 +225,15 @@ function render(){
       otherIncome: t==="foreignAbroad" ? 0 : t==="whm" ? Math.min(inp.otherIncome, 45000) : inp.otherIncome});
     const extra = rr.acq.filter(a=>/FPAD|FIRB/.test(a.label)).reduce((s,a)=>s+a.amt,0);
     const aos = rr.years[0].exp.find(e=>/附加土地税/.test(e[0]));
-    return {n, rr, extra, aos: aos?aos[1]:0};
+    return {n, rr, extra, aos: aos?aos[1]:0, me: t===inp.buyerType};
   });
-  $("#compare").innerHTML = `<thead><tr><th></th>${rows.map(x=>`<th>${x.n}</th>`).join("")}</tr></thead><tbody>
-    <tr><td>海外买家附加税 + FIRB</td>${rows.map(x=>`<td>${money(x.extra)}</td>`).join("")}</tr>
-    <tr><td>买入要准备的现金</td>${rows.map(x=>`<td>${money(x.rr.upfrontCash)}</td>`).join("")}</tr>
-    <tr><td>每年海外业主附加土地税</td>${rows.map(x=>`<td>${money(x.aos)}</td>`).join("")}</tr>
-    <tr><td>第一年税后现金流</td>${rows.map(x=>`<td${cls(x.rr.years[0].afterTaxCF)}>${money(x.rr.years[0].afterTaxCF)}</td>`).join("")}</tr>
-    <tr><td>出售时资本利得税</td>${rows.map(x=>`<td>${money(x.rr.sale.cgtTax)}</td>`).join("")}</tr>
-    <tr><td>${inp.hold} 年税后 IRR</td>${rows.map(x=>`<td${cls(x.rr.metrics.irr)}><b>${pct(x.rr.metrics.irr)}</b></td>`).join("")}</tr>
+  $("#compare").innerHTML = `<thead><tr><th></th>${rows.map(x=>`<th${x.me?' class="me"':""}>${x.n}${x.me?'<div class="small">（你）</div>':""}</th>`).join("")}</tr></thead><tbody>
+    <tr><td>海外买家印花附加税+FIRB</td>${rows.map(x=>`<td${x.me?' class="me"':""}>${money(x.extra)}</td>`).join("")}</tr>
+    <tr><td>买入要准备的现金</td>${rows.map(x=>`<td${x.me?' class="me"':""}>${money(x.rr.upfrontCash)}</td>`).join("")}</tr>
+    <tr><td>海外业主附加土地税/年</td>${rows.map(x=>`<td${x.me?' class="me"':""}>${money(x.aos)}</td>`).join("")}</tr>
+    <tr><td>首年税后现金流</td>${rows.map(x=>`<td${cls(x.rr.years[0].afterTaxCF,x.me)}>${money(x.rr.years[0].afterTaxCF)}</td>`).join("")}</tr>
+    <tr><td>出售时资本利得税</td>${rows.map(x=>`<td${x.me?' class="me"':""}>${money(x.rr.sale.cgtTax)}</td>`).join("")}</tr>
+    <tr><td>${inp.hold} 年税后 IRR</td>${rows.map(x=>`<td${cls(x.rr.metrics.irr,x.me)}><b>${pct(x.rr.metrics.irr)}</b></td>`).join("")}</tr>
   </tbody>`;
 
   $("#acq").innerHTML = `<tbody>
