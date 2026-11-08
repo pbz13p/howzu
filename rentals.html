@@ -41,8 +41,9 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .sub{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #list .price{font-size:15px;color:var(--ink);font-weight:400;margin-top:4px}
 #list .price b{font-weight:600}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.filters button{font-size:13px;padding:7px 12px;border:0;border-radius:20px;background:#fff;color:var(--ink);cursor:pointer;border:1px solid var(--line)}
+.filters{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -16px 12px;padding:0 16px}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;white-space:nowrap;font-size:13px;padding:7px 12px;border-radius:20px;background:#fff;color:var(--ink);cursor:pointer;border:1px solid var(--line)}
 .filters button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
 .ph{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#dfe9e4,#f1ede4);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;position:relative}
@@ -219,7 +220,12 @@ async function userListings(){
     return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,user:true}));
   }catch(_){return []}
 }
-Promise.all([fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})),userListings()]).then(([j,u])=>{L=[...(j.listings||[]).map(x=>({...x,address:hideUnit(x.address)})),...u];C=j.contact||{};render();if(one){const x=L.find(y=>String(y.id)===one);if(x){if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else openDetail(x,true);}}});
+// 先显示自有房源，用户发布的房源（Supabase）到了再补上；Supabase 慢或连不上也不会卡在"加载中"
+let J=[],U=[],opened=false;
+const merge=()=>{L=[...J,...U];render();if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else openDetail(x,true);}}};
+const uP=Promise.race([userListings(),new Promise(r=>setTimeout(()=>r(null),8000))]);
+fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address)}));C=j.contact||{};merge();});
+uP.then(u=>{if(u){U=u;merge();}});
 </script>
 </body>
 </html>

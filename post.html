@@ -53,6 +53,9 @@ textarea{resize:vertical;min-height:110px}
 .submit{font-size:17px;padding:13px 26px;border:0;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;font-weight:600}
 .submit:disabled{opacity:.5}
 .err{color:var(--bad);font-size:13px;margin-top:6px}
+.need{outline:2px solid var(--bad)!important;outline-offset:2px;border-radius:10px;animation:needShake .4s}
+@keyframes needShake{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.prog.bad{color:var(--bad);font-weight:600}
 .done{text-align:center;padding:30px 16px}
 .done b{font-size:20px;display:block;margin:10px 0}
 .closed{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:12px;font-size:14px;margin-bottom:12px}
@@ -337,7 +340,14 @@ progress();
 // ---------- submit ----------
 $("#go").onclick = async () => {
   const m = missing(); $("#err").textContent = "";
-  if (m.length) { $("#err").textContent = "还差：" + m.join("、"); return; }
+  if (m.length) {
+    $("#err").textContent = "还差：" + m.join("、");
+    // 错误提示在页面最底下，手机上看不到：直接带用户去第一个没填的地方
+    const el = $({ 照片: "#drop", 租金: "#rent", 地址: "#addr", 联系方式: "#wechat" }[m[0]]);
+    const pr = $("#prog"); pr.classList.add("bad"); setTimeout(() => pr.classList.remove("bad"), 2500);
+    if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("need"); void el.offsetWidth; el.classList.add("need"); setTimeout(() => el.classList.remove("need"), 2500); if (el.tagName === "INPUT") setTimeout(() => el.focus({ preventScroll: true }), 400); }
+    return;
+  }
   if ($("#website").value) return; // bot
   if (S.photos.some(p => !p.blob)) { $("#err").textContent = "照片还在压缩，稍等几秒再点。"; return; }
   if (!sb) { $("#err").textContent = "发布功能还没开放（后台正在设置），请过几天再来。"; return; }
