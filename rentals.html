@@ -12,9 +12,11 @@
 <meta property="og:title" content="好租 Howzu · 墨尔本在租房源">
 <meta property="og:description" content="好租 Howzu 墨尔本在租房源：CBD、Carlton 公寓，房东直租管理，中文服务。每套房一键查对口学区。">
 <meta property="og:url" content="https://howzu.com.au/rentals.html">
-<meta property="og:image" content="https://howzu.com.au/apple-touch-icon.png">
+<meta property="og:image" content="https://howzu.com.au/icons/og-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="zh_CN">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/site.css?v=20261107">
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
@@ -192,6 +194,7 @@ function openDetail(x,noPush){
     <div class="acts">${contactBtns(x)}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a>${isLet(x)?"":`<button class="btn ghost" data-share="${esc(x.id)}">📤 分享</button>`}</div>
    </div></div>`;
   document.body.appendChild(m);document.body.style.overflow="hidden";
+  window.T0=window.T0||document.title;document.title=`${x.title}${x.rentWeekly&&!isLet(x)?` · $${x.rentWeekly}/周`:""} · 好租 Howzu`;
   if(!noPush)history.pushState({id:x.id},"",`?id=${encodeURIComponent(x.id)}`);
   let sx=null;const g=m.querySelector(".dt-g");
   g.addEventListener("touchstart",e=>{sx=e.touches[0].clientX},{passive:true});
@@ -199,7 +202,7 @@ function openDetail(x,noPush){
 }
 function go(d){const P=DX.photos||[];if(!P.length)return;DI=(DI+d+P.length)%P.length;show();}
 function show(){const P=DX.photos;document.getElementById("dtImg").src=P[DI];const c=document.getElementById("dtC");if(c)c.textContent=`${DI+1} / ${P.length}`;document.querySelectorAll(".dt-th img").forEach((t,i)=>{t.classList.toggle("on",i===DI);if(i===DI)t.scrollIntoView({block:"nearest",inline:"center"});});}
-function closeDetail(back){const m=document.getElementById("dt");if(!m)return;m.remove();document.body.style.overflow="";DX=null;if(back!==false&&new URLSearchParams(location.search).get("id"))history.pushState({},"","rentals.html"+(preview?"?preview=1":""));}
+function closeDetail(back){const m=document.getElementById("dt");if(!m)return;m.remove();if(window.T0)document.title=T0;document.body.style.overflow="";DX=null;if(back!==false&&new URLSearchParams(location.search).get("id"))history.pushState({},"","rentals.html"+(preview?"?preview=1":""));}
 addEventListener("popstate",()=>{const id=new URLSearchParams(location.search).get("id");closeDetail(false);if(id){const x=L.find(y=>String(y.id)===id);if(x)openDetail(x,true);}});
 addEventListener("keydown",e=>{if(!DX)return;if(e.key==="Escape")closeDetail();if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);});
 document.addEventListener("click",e=>{
