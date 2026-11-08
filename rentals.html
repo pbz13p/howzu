@@ -33,6 +33,8 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .card:hover .cnav{opacity:1}
 @media (hover:none){#list .cnav{display:none}}
 #list .badge{position:absolute;top:12px;left:12px;background:#fff;color:#222;font-size:12px;font-weight:600;padding:4px 10px;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#list .badge.let{background:#333;color:#fff}
+#list .card.is-let .sl img{filter:saturate(.85)}
 #list .badge.draft{background:#fde8e8;color:#a12b2b;top:44px}
 #list .body{padding:10px 2px 0}
 #list .t{font-size:15px;font-weight:600;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -111,6 +113,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <button data-f="later">稍后入住</button>
     <button data-f="1">1 房</button>
     <button data-f="2">2 房+</button>
+    <button data-f="let">已租出</button>
   </div>
   <div id="list"><div class="empty">加载中…</div></div>
   <p class="note">房源信息以签约时为准。租约使用维州 CAV 标准租赁合同，押金存入 RTBA（维州租房押金管理局）。</p>
@@ -125,19 +128,25 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all";
-const isNow=x=>/尽快|马上|即|now/i.test(x.available||"");
+const isNow=x=>x.status!=="let"&&/尽快|马上|即|now/i.test(x.available||"");
+const isLet=x=>x.status==="let";
+const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
+function phImg(x){const P=[["#0f6b4f","#1f9a72"],["#1c4e80","#3a7fbf"],["#7a4b1f","#c08540"],["#4b2f6b","#8a5bb8"],["#2f5d50","#5aa08b"],["#6b2f3a","#b45a69"]];let h=0;for(const c of (x.suburb||x.id))h=(h*31+c.charCodeAt(0))>>>0;const [a,b]=P[h%P.length];
+  const t=(x.title||"").split("·")[0].trim().replace(/[<&]/g,"");const r=[x.beds!=null?x.beds+" 房":"",x.baths!=null?x.baths+" 卫":""].filter(Boolean).join(" · ");
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 380"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="380" fill="url(#g)"/><g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="3"><rect x="150" y="70" width="100" height="190" rx="4"/><rect x="250" y="120" width="70" height="140" rx="4"/><rect x="90" y="140" width="60" height="120" rx="4"/></g><g fill="rgba(255,255,255,.2)">${[0,1,2,3,4,5].map(i=>`<rect x="165" y="${88+i*28}" width="22" height="14"/><rect x="213" y="${88+i*28}" width="22" height="14"/>`).join("")}</g><text x="200" y="310" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700" fill="#fff">${t}</text><text x="200" y="345" text-anchor="middle" font-family="sans-serif" font-size="19" fill="rgba(255,255,255,.85)">${r}</text></svg>`;
+  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);}
 function card(x){
   const P=x.photos||[];
-  const imgs=P.length?P.map((p,i)=>`<img src="${esc(p)}" alt="${esc(x.title)}" loading="${i?"lazy":"eager"}">`).join(""):`<div class="noph">照片整理中</div>`;
+  const imgs=P.length?P.map((p,i)=>`<img src="${esc(p)}" alt="${esc(x.title)}" loading="${i?"lazy":"eager"}">`).join(""):`<img src="${phImg(x)}" alt="${esc(x.title)}">`;
   const dots=P.length>1?`<div class="dots">${P.slice(0,5).map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div><button class="cnav l" data-cnav="-1" aria-label="上一张">‹</button><button class="cnav r" data-cnav="1" aria-label="下一张">›</button>`:"";
-  const price=x.rentWeekly?`<b>$${x.rentWeekly}</b> / 周`:`<b>租金面议</b>`;
+  const price=isLet(x)?`<b>已租出</b>`:x.rentWeekly?`<b>$${x.rentWeekly}</b> / 周`:`<b>租金面议</b>`;
   const area=(x.address||"").split(",").slice(-1)[0].replace(/VIC\s*\d+/,"").trim()||"墨尔本";
   const f=[x.beds!=null?`${x.beds} 房`:"",x.baths!=null?`${x.baths} 卫`:"",x.cars?`${x.cars} 车位`:""].filter(Boolean).join(" · ");
-  const when=isNow(x)?"可马上入住":(x.available||"")+"入住";
-  return `<div class="card" id="L-${esc(x.id)}" data-open="${esc(x.id)}">
+  const when=isLet(x)?untilTxt(x):isNow(x)?"可马上入住":(x.available||"")+"入住";
+  return `<div class="card${isLet(x)?" is-let":""}" id="L-${esc(x.id)}" data-open="${esc(x.id)}">
     <div class="ph"><div class="sl">${imgs}</div>${dots}
-      ${isNow(x)?'<span class="badge">马上入住</span>':""}${x.status!=="live"?'<span class="badge draft">草稿·未公开</span>':""}
-      <button class="sharefab" data-share="${esc(x.id)}" title="分享到微信、小红书" aria-label="分享">分享</button></div>
+      ${isNow(x)?'<span class="badge">马上入住</span>':""}${isLet(x)?'<span class="badge let">已租出</span>':x.status!=="live"?'<span class="badge draft">草稿·未公开</span>':""}
+      ${isLet(x)?"":`<button class="sharefab" data-share="${esc(x.id)}" title="分享" aria-label="分享">分享</button>`}</div>
     <div class="body"><div class="t">${esc(x.title)}</div>
       <div class="sub">${esc(area)}${f?" · "+f:""}</div>
       <div class="sub">${esc(when)}</div>
@@ -146,8 +155,9 @@ function card(x){
 const one=new URLSearchParams(location.search).get("id");
 document.addEventListener("scroll",e=>{const sl=e.target;if(!sl.classList||!sl.classList.contains("sl"))return;const n=sl.children.length,i=Math.round(sl.scrollLeft/(sl.clientWidth||1));const d=sl.parentNode.querySelectorAll(".dots i");if(!d.length)return;const k=n<=5?i:Math.min(4,Math.max(0,i<2?i:i>=n-2?5-(n-i):2));d.forEach((el,j)=>el.classList.toggle("on",j===k));},true);
 function render(){
-  let list=L.filter(x=>preview||x.status==="live"||x.id===one);
-  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2));
+  let list=L.filter(x=>preview||x.status==="live"||isLet(x)||x.id===one);
+  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2));
+  list.sort((a,b)=>(isLet(a)?1:0)-(isLet(b)?1:0));
   $("#list").innerHTML=list.length?list.map(card).join(""):`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？在<a href="index.html#leadCard">学区页</a>留下需求。</div>`;
 }
 
@@ -161,15 +171,15 @@ function openDetail(x,noPush){
   const m=document.createElement("div");m.className="dt-mask";m.id="dt";
   m.innerHTML=`<div class="dt" role="dialog" aria-label="${esc(x.title)}">
    <button class="dt-x" data-close aria-label="关闭">✕</button>
-   <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt=""><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<div class="dt-none">照片整理中</div>`}</div>
+   <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt=""><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
    ${P.length>1?`<div class="dt-th">${P.map((p,i)=>`<img src="${esc(p)}" data-i="${i}" class="${i?"":"on"}" loading="lazy">`).join("")}</div>`:""}
    <div class="dt-b">
-    <div class="price">${x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>
+    <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>
     <h2>${esc(x.title)}</h2><div class="addr">📍 ${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
-    <div class="tags"><span class="tag when">${isNow(x)?"🔑 ":"📅 "}${esc(x.available||"")}入住</span>${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':""}${(x.highlights||[]).map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
+    <div class="tags"><span class="tag when">${isLet(x)?"📅 "+esc(untilTxt(x)):(isNow(x)?"🔑 ":"📅 ")+esc(x.available||"")+"入住"}</span>${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':""}${(x.highlights||[]).map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
     ${x.desc?`<div class="dt-desc">${esc(x.desc)}</div>`:`<div class="dt-desc muted">房东还没有写介绍，欢迎直接联系咨询。</div>`}
-    <div class="acts">${contactBtns(x)}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a><button class="btn ghost" data-share="${esc(x.id)}">📤 分享</button></div>
+    <div class="acts">${contactBtns(x)}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a>${isLet(x)?"":`<button class="btn ghost" data-share="${esc(x.id)}">📤 分享</button>`}</div>
    </div></div>`;
   document.body.appendChild(m);document.body.style.overflow="hidden";
   if(!noPush)history.pushState({id:x.id},"",`?id=${encodeURIComponent(x.id)}`);
