@@ -92,8 +92,8 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
     <div class="row">
       <button class="ghost" id="me">📍 用我现在的位置</button>
     </div>
-    <div id="suggest"></div>
     <div class="hint" id="status">数据：2027 年维州政府学区（2027 年 1 月起生效）＋ 2025 年 VCE 成绩</div>
+    <div id="suggest"></div>
     <div id="map"></div>
   </section>
 
@@ -256,7 +256,9 @@ async function search(){
   const q=$("#q").value.trim(); if(!q) return;
   if(!D.sc){ $("#status").textContent="数据加载中，请稍候…"; await ready; }
   $("#status").textContent="正在查找地址…"; $("#suggest").innerHTML="";
-  const res = await geocode(/vic|victoria|\b3\d{3}\b/i.test(q) ? q : q+", Victoria");
+  // 公寓地址 "2110/138 Spencer St" 或 "Unit 5, 12 X St"：学区只看楼的位置，去掉单元号地图服务才找得准
+  const qg=q.replace(/^\s*(unit|apt|apartment|shop|suite)\s*\w+\s*[,/]?\s*/i,"").replace(/^\s*\w+\s*\/\s*(?=\d)/,"");
+  const res = await geocode(/vic|victoria|\b3\d{3}\b/i.test(qg) ? qg : qg+", Victoria");
   if(!res.length){ $("#status").textContent="没找到这个地址，试试加上区名或邮编，比如 “12 Smith St, Box Hill 3128”"; return; }
   if(res.length===1) return show(res[0]);
   $("#status").textContent="请选择你要的地址：";
