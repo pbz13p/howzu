@@ -2,7 +2,7 @@ name: 自动改进机器人（好租）
 
 on:
   schedule:
-    - cron: "41 1,4,7,10,13,16,19,22 * * *"
+    - cron: "41 2,6,10,14,18,22 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   improve:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,8 +38,9 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TOTAL_CAP_USD: "14"
-          RUNS_PER_DAY: "5"
+          TOTAL_CAP_USD: "45"
+          RUNS_PER_DAY: "6"
+          MAX_RUN_USD: "2.5"
           DEADLINE: "2026-11-14T18:00:00+00:00"
           AUTO_MERGE: "1"
           TEST_CMD: "node tools/test-engine.js && node tools/test-data.js"
