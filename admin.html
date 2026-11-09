@@ -26,12 +26,16 @@ main{max-width:720px;margin:0 auto;padding:12px}
 .acts button{font-size:15px;padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
 .ok{background:var(--accent);color:#fff}.no{background:var(--badbg);color:var(--bad)}.gr{background:var(--accent2);color:var(--accent)}
 input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px}
+.iss{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.iss span{font-size:12px;padding:3px 9px;border-radius:12px;background:#fff4e0;color:#8a5a00}
+.iss span.bad{background:var(--badbg);color:var(--bad);font-weight:600}
 .empty{text-align:center;color:var(--muted);padding:30px}
 </style>
 </head>
 <body>
 <header><h1>审核房源</h1></header>
 <main id="app"><div class="empty">加载中…</div></main>
+<script src="js/admin-check.js?v=20261109"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -51,11 +55,13 @@ async function start() {
 }
 async function load() {
   const { data, error } = await sb.from("listings").select("*").eq("status", tab).order("created_at", { ascending: false });
+  const { data: all } = await sb.from("listings").select("id,address,status"); // 用来查重复（只取地址和状态）
   const tabs = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"]];
   $("#app").innerHTML = `<div class="tabs">${tabs.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>` +
     (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">没有</div>' : data.map(x => `<div class="card">
       <div class="strip">${(x.photos || []).map(p => `<a href="${esc(p)}" target="_blank"><img src="${esc(p)}" loading="lazy"></a>`).join("")}</div>
       <div class="t">${esc(x.title)}</div>
+      ${(is => is.length ? `<div class="iss">${is.map(i => `<span class="${i.lv}">${i.lv === "bad" ? "⛔ " : "⚠️ "}${esc(i.t)}</span>`).join("")}</div>` : "")(AdminCheck.listingIssues(x, all || []))}
       <div class="m">${esc(x.kind)} · ${x.beds} 房 ${x.baths} 卫 ${x.cars} 车位 · <b>$${x.rent_weekly}/周</b> · ${esc(x.available || "")} · ${esc(x.furnished || "")}</div>
       <div class="m">📍 ${esc(x.address)}</div>
       <div class="m">👤 ${esc(x.contact_name || "")} · 微信 ${esc(x.contact_wechat || "—")} · 手机 ${esc(x.contact_phone || "—")}</div>

@@ -1,0 +1,24 @@
+// 发房源表单纯函数测试（由 test-data.js 调用）
+const F = require("../js/post-form.js");
+let fail = 0; const ok = (n, c) => { console.log((c ? "✓ " : "✗ ") + n); if (!c) fail++; };
+const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const T = ["整套出租", "单间出租", "短租"];
+ok("草稿：无保存 → 用默认", eq(F.chipState(T, null, true, [true, false, false]), [true, false, false]));
+ok("草稿：单选恢复", eq(F.chipState(T, ["短租"], true, [true, false, false]), [false, false, true]));
+ok("草稿：单选保存值失效 → 用默认", eq(F.chipState(T, ["旧选项"], true, [true, false, false]), [true, false, false]));
+ok("草稿：多选恢复（含全不选）", eq(F.chipState(T, ["整套出租", "短租"], false, [false, false, false]), [true, false, true]) && eq(F.chipState(T, [], false, [false, false, false]), [false, false, false]));
+ok("租期：放到亮点最前", eq(F.withLease(["包网"], "12 个月"), ["租期 12 个月", "包网"]));
+ok("租期：不重复、可清空", eq(F.withLease(["租期 6 个月", "包网"], "12 个月"), ["租期 12 个月", "包网"]) && eq(F.withLease(["租期 6 个月"], ""), []));
+ok("今天日期格式", F.todayISO(new Date(2026, 0, 5)) === "2026-01-05");
+ok("日期显示", F.niceDate("2026-12-01") === "12 月 1 日" && F.niceDate("马上") === "马上");
+// ---- 后台审核自动检查 ----
+const A = require("../js/admin-check.js");
+const good = { id: 1, photos: [1, 2, 3], rent_weekly: 650, contact_phone: "0400", address: "5/138 Spencer St, Melbourne VIC 3000", lat: 1, lng: 2, description: "好房" };
+ok("审核：信息齐全 → 无提示", A.listingIssues(good, []).length === 0);
+const bad = A.listingIssues({ id: 2, photos: [], rent_weekly: 0, address: "x" }, []).map(i => i.t).join("|");
+ok("审核：缺照片/租金/联系方式", /没有照片/.test(bad) && /没填租金/.test(bad) && /没有联系方式/.test(bad));
+ok("审核：租金异常", A.listingIssues({ ...good, rent_weekly: 65000 }, []).some(i => /看起来不对/.test(i.t)));
+ok("审核：同地址（大小写/逗号/邮编不同）算重复", A.listingIssues(good, [{ id: 9, address: "5/138 spencer st melbourne", status: "live" }]).some(i => /可能重复.*已上线/.test(i.t)));
+ok("审核：自己不算重复", !A.listingIssues(good, [{ id: 1, address: good.address, status: "pending" }]).some(i => /重复/.test(i.t)));
+if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
+console.log("发房源表单测试全部通过");

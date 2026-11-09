@@ -47,4 +47,5 @@ for (const [label, feats] of [["小学", zp], ["中学", zs]]) {
   ok(`${label}：学校本身落在自己学区里 ≥ 90%`, r >= 0.9, `(${hit}/${n} = ${(r * 100).toFixed(1)}%)`);
 }
 
+try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, "test-post-form.js")], { stdio: "inherit" }); } catch (_) { fail++; }
 process.exit(fail ? 1 : 0);

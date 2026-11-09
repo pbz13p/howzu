@@ -137,9 +137,13 @@ textarea{resize:vertical;min-height:110px}
     <div class="chips" data-k="furnished" data-single>
       <button>带家具</button><button>不带家具</button><button>部分家具</button>
     </div>
+    <label class="l">租期 <span class="opt">可不选</span></label>
+    <div class="chips" data-k="lease" data-single>
+      <button>12 个月</button><button>6 个月</button><button>灵活可谈</button>
+    </div>
     <label class="l">亮点 <span class="opt">可多选</span></label>
     <div class="chips" data-k="highlights">
-      <button>近火车站</button><button>免费电车区</button><button>近大学</button><button>泳池/健身房</button><button>有阳台</button><button>景观好</button><button>包水费</button><button>包网</button><button>可养宠物</button><button>近华人超市</button><button>学区好</button><button>安静</button>
+      <button>近火车站</button><button>免费电车区</button><button>近大学</button><button>泳池/健身房</button><button>有阳台</button><button>景观好</button><button>包水费</button><button>包电费</button><button>包网</button><button>可养宠物</button><button>近华人超市</button><button>学区好</button><button>安静</button>
     </div>
   </section>
 
@@ -174,6 +178,7 @@ textarea{resize:vertical;min-height:110px}
 </main>
 <div class="bar"><span class="prog" id="prog">还差：照片、租金、地址、联系方式</span><button class="submit" id="go">发布</button></div>
 
+<script src="js/post-form.js?v=20261109"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -270,7 +275,7 @@ const chips = k => [...document.querySelectorAll(`.chips[data-k="${k}"] button.o
 document.querySelectorAll("[data-s]").forEach(b => b.onclick = () => {
   const k = b.dataset.s; S[k] = Math.max(LIM[k][0], Math.min(LIM[k][1], S[k] + +b.dataset.d)); $("#v-" + k).textContent = S[k]; save();
 });
-$("#unit").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.unit = b.dataset.u; $("#unit").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); rentHint(); };
+$("#unit").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.unit = b.dataset.u; $("#unit").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); rentHint(); save(); };
 function weekly() { const v = +$("#rent").value || 0; return S.unit === "m" ? Math.round(v * 12 / 52) : v; }
 function rentHint() { const v = +$("#rent").value || 0; $("#rentHint").textContent = v ? (S.unit === "m" ? `≈ 每周 $${weekly()}` : `≈ 每月 $${Math.round(v * 52 / 12)}`) : ""; progress(); }
 $("#rent").oninput = () => { rentHint(); save(); };
@@ -300,11 +305,11 @@ function factsNow() {
   return { kind: chips("kind")[0] || "整套出租", suburb: S.suburb || (($("#addr").value.split(",")[1]) || "").trim(),
     street: $("#addr").value.replace(/^\s*[\w-]+\s*\/\s*/, "").split(",")[0], beds: S.beds, baths: S.baths, cars: S.cars,
     rent: weekly() || null, available: when === "选日期" ? ($("#date").value || "") : when, furnished: chips("furnished")[0] || "",
-    highlights: chips("highlights"), notes: $("#desc").value.trim() };
+    highlights: PostForm.withLease(chips("highlights"), chips("lease")[0]), notes: $("#desc").value.trim() };
 }
 function templateWrite(f) {
   const area = f.suburb || "墨尔本", room = f.kind === "单间出租" ? "单间" : `${f.beds} 房 ${f.baths} 卫${f.cars ? " " + f.cars + " 车位" : ""}`;
-  const whenTxt = f.available ? (f.available === "马上" ? "马上入住" : f.available + "入住") : "";
+  const whenTxt = f.available ? (f.available === "马上" ? "马上入住" : PostForm.niceDate(f.available) + "入住") : "";
   const title = [area, room, f.highlights[0], whenTxt].filter(Boolean).join(" · ").slice(0, 30);
   const d = [`${area}${f.kind === "转租 / 顶租约" ? "转租" : "出租"}，${room}${f.furnished ? "，" + f.furnished : ""}。`, "",
     "🏠 房子", `· ${room}`, f.rent ? `· 每周 $${f.rent}` : "", whenTxt ? `· ${whenTxt}` : "",
@@ -342,10 +347,18 @@ function missing() {
 function progress() { const m = missing(); $("#prog").textContent = m.length ? "还差：" + m.join("、") : "✅ 都填好了"; }
 ["#wechat", "#phone", "#cname", "#title", "#desc", "#date"].forEach(s => $(s).addEventListener("input", () => { progress(); save(); }));
 
-// ---------- draft (text only) ----------
+// ---------- draft（文字、选项、日期都保存；照片不存） ----------
 const KEY = "howzu-post-draft";
-function save() { try { localStorage.setItem(KEY, JSON.stringify({ beds: S.beds, baths: S.baths, cars: S.cars, unit: S.unit, rent: $("#rent").value, addr: $("#addr").value, title: $("#title").value, desc: $("#desc").value, cname: $("#cname").value, wechat: $("#wechat").value, phone: $("#phone").value, lat: S.lat, lng: S.lng, suburb: S.suburb })); } catch (_) {} }
-try { const d = JSON.parse(localStorage.getItem(KEY) || "null"); if (d) { Object.assign(S, { beds: d.beds, baths: d.baths, cars: d.cars, lat: d.lat, lng: d.lng, suburb: d.suburb }); ["beds", "baths", "cars"].forEach(k => $("#v-" + k).textContent = S[k]); for (const k of ["rent", "addr", "title", "desc", "cname", "wechat", "phone"]) $("#" + k).value = d[k] || ""; rentHint(); } } catch (_) {}
+const CHIPK = ["kind", "when", "furnished", "lease", "highlights"];
+$("#date").min = PostForm.todayISO();
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ beds: S.beds, baths: S.baths, cars: S.cars, unit: S.unit, rent: $("#rent").value, addr: $("#addr").value, title: $("#title").value, desc: $("#desc").value, cname: $("#cname").value, wechat: $("#wechat").value, phone: $("#phone").value, date: $("#date").value, chips: Object.fromEntries(CHIPK.map(k => [k, chips(k)])), lat: S.lat, lng: S.lng, suburb: S.suburb })); } catch (_) {} }
+try { const d = JSON.parse(localStorage.getItem(KEY) || "null"); if (d) { Object.assign(S, { beds: d.beds, baths: d.baths, cars: d.cars, lat: d.lat, lng: d.lng, suburb: d.suburb }); ["beds", "baths", "cars"].forEach(k => $("#v-" + k).textContent = S[k]); for (const k of ["rent", "addr", "title", "desc", "cname", "wechat", "phone"]) $("#" + k).value = d[k] || ""; 
+  if (d.unit === "m" || d.unit === "w") { S.unit = d.unit; $("#unit").querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.u === d.unit)); }
+  $("#date").value = d.date || "";
+  for (const k of CHIPK) { const g = document.querySelector(`.chips[data-k="${k}"]`); if (!g) continue; const bs = [...g.querySelectorAll("button")];
+    const st = PostForm.chipState(bs.map(b => b.textContent), d.chips && d.chips[k], g.hasAttribute("data-single"), bs.map(b => b.classList.contains("on"))); bs.forEach((b, i) => b.classList.toggle("on", st[i])); }
+  $("#date").hidden = !document.querySelector('.chips[data-k="when"] button.on[data-date]');
+  rentHint(); } } catch (_) {}
 progress();
 
 // ---------- submit ----------
@@ -381,7 +394,7 @@ $("#go").onclick = async () => {
       address: $("#addr").value.trim(), suburb: S.suburb || null, lat: S.lat, lng: S.lng,
       beds: S.beds, baths: S.baths, cars: S.cars, rent_weekly: weekly(),
       available: when === "选日期" ? ($("#date").value || "选日期") : when,
-      furnished: chips("furnished")[0] || null, highlights: chips("highlights"),
+      furnished: chips("furnished")[0] || null, highlights: PostForm.withLease(chips("highlights"), chips("lease")[0]),
       description: $("#desc").value.trim() || null,
       contact_name: $("#cname").value.trim() || null, contact_wechat: $("#wechat").value.trim() || null, contact_phone: $("#phone").value.trim() || null,
       photos: urls
