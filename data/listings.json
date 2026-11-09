@@ -208,7 +208,10 @@
    "available": null,
    "leaseEnd": "2027-02",
    "furnished": null,
-   "photos": [],
+   "photos": [
+    "photos/1304a-spencer-1.jpg",
+    "photos/1304a-spencer-2.jpg"
+   ],
    "highlights": [
     "丽思卡尔顿同综合体",
     "25米泳池+桑拿",
@@ -230,7 +233,11 @@
    "available": null,
    "leaseEnd": "2027-03",
    "furnished": null,
-   "photos": [],
+   "photos": [
+    "photos/1419-william-1.jpg",
+    "photos/1419-william-2.jpg",
+    "photos/1419-william-3.jpg"
+   ],
    "highlights": [
     "屋顶泳池",
     "Flagstaff 站步行 4 分钟",
@@ -296,7 +303,15 @@
    "available": null,
    "leaseEnd": "2027-05",
    "furnished": null,
-   "photos": [],
+   "photos": [
+    "photos/1906-littlelonsdale-1.jpg",
+    "photos/1906-littlelonsdale-2.jpg",
+    "photos/1906-littlelonsdale-3.jpg",
+    "photos/1906-littlelonsdale-4.jpg",
+    "photos/1906-littlelonsdale-5.jpg",
+    "photos/1906-littlelonsdale-6.jpg",
+    "photos/1906-littlelonsdale-7.jpg"
+   ],
    "highlights": [
     "Melbourne Central 3 分钟",
     "25米恒温泳池",
@@ -494,7 +509,13 @@
    "available": null,
    "leaseEnd": "2027-06",
    "furnished": null,
-   "photos": [],
+   "photos": [
+    "photos/3918-victoria-1.jpg",
+    "photos/3918-victoria-2.jpg",
+    "photos/3918-victoria-3.jpg",
+    "photos/3918-victoria-4.jpg",
+    "photos/3918-victoria-5.jpg"
+   ],
    "highlights": [
     "墨大/RMIT 步行",
     "高楼城景",
