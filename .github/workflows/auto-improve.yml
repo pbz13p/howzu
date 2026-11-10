@@ -2,7 +2,7 @@ name: 自动改进机器人（好租）
 
 on:
   schedule:
-    - cron: "41 2,6,10,14,18,22 * * *"
+    - cron: "41 * * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -39,7 +39,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TOTAL_CAP_USD: "45"
-          RUNS_PER_DAY: "6"
+          RUNS_PER_DAY: "8"
           MAX_RUN_USD: "2.5"
           DEADLINE: "2026-11-14T18:00:00+00:00"
           AUTO_MERGE: "1"
