@@ -97,7 +97,7 @@ textarea{min-height:180px;line-height:1.55}
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
-import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText, xhsText, yeeyiText, fbText } from "./js/work-core.js?v=20261110c";
+import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText, xhsText, yeeyiText, fbText } from "./js/work-core.js?v=20261110d";
 const H = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
@@ -201,7 +201,7 @@ function renderStats() {
     ${kpi(S.occupancy + "%", "出租率", "长租在租 ÷ 可长租")}
     ${kpi(money(S.rentMonth), "月租金总额", `年 ${money(S.rentMonth * 12)}`)}
     ${kpi(money(S.avgWeekly), "平均周租", "长租公寓/房屋")}
-    ${kpi(money(S.mgmtMonth), "月管理费", `含 GST · 按 PM 实际费率 · ${S.mgmtKnown}/${S.mgmtTotal} 套${S.mgmtMissing.length ? "（缺：" + S.mgmtMissing.map(p => p.addr.split("/")[0]).join("、") + "）" : ""}`)}
+    ${kpi(money(S.mgmtMonth), "月管理费", `含 GST · 按 PM 实际费率 · ${S.mgmtKnown}/${S.mgmtTotal} 套${(S.mgmtMissing||[]).length ? "（缺：" + S.mgmtMissing.map(p => p.addr.split("/")[0]).join("、") + "）" : ""}`)}
     ${kpi(money(S.bonds), "押金总额", "RTBA 托管")}
     ${kpi(S.arrears.length, "欠租", S.arrears.length ? "应收 " + money(S.arrearsAmt) : "全部按时", S.arrears.length ? "bad" : "")}
     ${kpi(S.exp90.length, "90 天内到期", `30 天内 ${S.exp30.length}`, S.exp30.length ? "warn" : "")}
