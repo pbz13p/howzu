@@ -113,34 +113,61 @@ async function start() {
   if (!session) return showLogin();
   me = session.user.email;
   $("#who").innerHTML = `<span class="em">${esc(me)}</span><button id="setpw">设置密码</button><button id="out">退出</button>`;
-  $("#setpw").onclick = setPassword;
+  $("#setpw").onclick = () => setPassword();
   $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
   const [{ data: sa }, { data: mm }, { data: oo }] = await Promise.all([sb.from("super_admins").select("email"), sb.from("members").select("*"), sb.from("orgs").select("*").order("created_at")]);
   SUPER = (sa || []).some(x => x.email === me.toLowerCase()); MY = (mm || []).filter(m => m.email === me.toLowerCase()); ORGS = oo || [];
   await loadProps();
 }
-function showLogin() {
+const pwField = (id, ph, ac) => `<div style="position:relative"><input id="${id}" type="password" autocomplete="${ac}" placeholder="${ph}" style="padding-right:56px"><button type="button" class="pweye" data-for="${id}" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--muted,#6b726f);font-size:13px;padding:6px;cursor:pointer">显示</button></div>`;
+document.addEventListener("click", e => { const b = e.target.closest(".pweye"); if (!b) return; const i = document.getElementById(b.dataset.for); const show = i.type === "password"; i.type = show ? "text" : "password"; b.textContent = show ? "隐藏" : "显示"; });
+function showLogin(mode = "login") {
   $("#nav").innerHTML = "";
+  const em = esc(localStorage.getItem("howzu-em") || H.ADMIN_EMAIL || "");
+  if (mode === "forgot") {
+    $("#app").innerHTML = `<div class="card login"><h3>找回密码</h3><p class="small muted">输入登录邮箱，我们会发一封重设密码的邮件。点邮件里的链接回到这里，就能设新密码。</p>
+    <input id="em" type="email" autocomplete="username" placeholder="邮箱" value="${em}">
+    <button class="btn pri" id="go" style="width:100%">发重设密码邮件</button><p class="small muted" id="msg"></p>
+    <p class="small"><a href="#" id="back">← 返回登录</a></p></div>`;
+    $("#back").onclick = e => { e.preventDefault(); showLogin(); };
+    $("#go").onclick = async () => { const email = $("#em").value.trim(); if (!email) return $("#msg").textContent = "请填邮箱";
+      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.href.split("#")[0].split("?")[0] });
+      $("#msg").textContent = error ? "失败：" + error.message : "已发送。去邮箱点链接（几分钟内没收到看看垃圾邮件）。"; };
+    return;
+  }
+  if (mode === "link") {
+    $("#app").innerHTML = `<div class="card login"><h3>用邮件登录</h3><p class="small muted">第一次使用、还没设密码时用这个。点邮件里的链接进来后，在右上角「设置密码」。</p>
+    <input id="em" type="email" autocomplete="username" placeholder="邮箱" value="${em}">
+    <button class="btn pri" id="go" style="width:100%">发登录邮件</button><p class="small muted" id="msg"></p>
+    <p class="small"><a href="#" id="back">← 返回密码登录</a></p></div>`;
+    $("#back").onclick = e => { e.preventDefault(); showLogin(); };
+    $("#go").onclick = async () => { const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { emailRedirectTo: location.href.split("#")[0].split("?")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（也看看垃圾邮件）。"; };
+    return;
+  }
   $("#app").innerHTML = `<div class="card login"><h3>员工登录</h3>
-  <input id="em" type="email" autocomplete="username" placeholder="邮箱" value="${esc(H.ADMIN_EMAIL || "")}">
-  <input id="pw" type="password" autocomplete="current-password" placeholder="密码">
+  <input id="em" type="email" autocomplete="username" placeholder="邮箱" value="${em}">
+  ${pwField("pw", "密码", "current-password")}
   <button class="btn pri" id="go" style="width:100%">登录</button>
   <p class="small muted" id="msg"></p>
-  <p class="small muted" style="margin-top:14px">第一次登录、还没设密码或忘了密码：<a href="#" id="send">发登录邮件</a>，点邮件里的链接进来后，在右上角「设置密码」设一个，以后就用密码登录。</p></div>`;
-  const go = async () => { $("#msg").textContent = "登录中…"; const { error } = await sb.auth.signInWithPassword({ email: $("#em").value.trim(), password: $("#pw").value }); if (error) { $("#msg").textContent = /Invalid login/i.test(error.message) ? "邮箱或密码不对（还没设过密码的话，先用下面的登录邮件）。" : "失败：" + error.message; return; } location.reload(); };
+  <p class="small" style="display:flex;justify-content:space-between;gap:8px;margin-top:10px"><a href="#" id="forgot">忘记密码？</a><a href="#" id="link">第一次使用 / 用邮件登录</a></p></div>`;
+  const go = async () => { const email = $("#em").value.trim(), password = $("#pw").value; if (!email || !password) return $("#msg").textContent = "请填邮箱和密码";
+    $("#msg").textContent = "登录中…"; const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) { $("#msg").textContent = /Invalid login/i.test(error.message) ? "邮箱或密码不对。忘了密码点「忘记密码？」；还没设过密码用「用邮件登录」。" : /confirm/i.test(error.message) ? "邮箱还没确认，请用「用邮件登录」。" : "失败：" + error.message; return; }
+    try { localStorage.setItem("howzu-em", email); } catch (_) {} location.reload(); };
   $("#go").onclick = go; $("#pw").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
-  $("#send").onclick = async e => { e.preventDefault(); const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { emailRedirectTo: location.href.split("#")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（也看看垃圾邮件）。"; };
+  $("#forgot").onclick = e => { e.preventDefault(); showLogin("forgot"); };
+  $("#link").onclick = e => { e.preventDefault(); showLogin("link"); };
 }
-function setPassword() {
+function setPassword(title = "设置密码", after) {
   const d = document.createElement("div");
   d.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:99;padding:16px";
-  d.innerHTML = `<div class="card login" style="margin:0;width:100%"><h3>设置密码</h3><input id="np1" type="password" autocomplete="new-password" placeholder="新密码（至少 8 位）"><input id="np2" type="password" autocomplete="new-password" placeholder="再输一次"><p class="small muted" id="npm"></p><button class="btn pri" id="npok">保存</button> <button class="btn" id="npx">取消</button></div>`;
+  d.innerHTML = `<div class="card login" style="margin:0;width:100%"><h3>${title}</h3><p class="small muted">至少 8 位，建议字母加数字。</p>${pwField("np1", "新密码", "new-password")}${pwField("np2", "再输一次", "new-password")}<p class="small muted" id="npm"></p><button class="btn pri" id="npok">保存</button> <button class="btn" id="npx">取消</button></div>`;
   document.body.appendChild(d);
   d.querySelector("#npx").onclick = () => d.remove();
   d.querySelector("#npok").onclick = async () => { const a = d.querySelector("#np1").value, b = d.querySelector("#np2").value, m = d.querySelector("#npm");
     if (a.length < 8) return m.textContent = "至少 8 位"; if (a !== b) return m.textContent = "两次不一样";
-    const { error } = await sb.auth.updateUser({ password: a }); if (error) return m.textContent = "没设成功：" + error.message;
-    d.remove(); toast("密码已设置，以后用邮箱 + 密码登录"); };
+    m.textContent = "保存中…"; const { error } = await sb.auth.updateUser({ password: a }); if (error) return m.textContent = "没设成功：" + error.message;
+    d.remove(); toast("密码已设置，以后用邮箱 + 密码登录"); if (after) after(); };
 }
 async function loadProps() {
   const { data, error } = await sb.from("internal_props").select("*").order("id");
@@ -329,7 +356,9 @@ document.addEventListener("click", async e => {
     t.disabled = false;
   }
 });
-start();
+let RECOVERY = /type=recovery/.test(location.hash);
+sb.auth.onAuthStateChange(ev => { if (ev === "PASSWORD_RECOVERY") RECOVERY = true; });
+start().then(() => { if (RECOVERY) { history.replaceState(null, "", location.pathname); setPassword("设置新密码"); } });
 </script>
 </body>
 </html>
