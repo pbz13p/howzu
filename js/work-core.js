@@ -55,6 +55,12 @@ export function stats(props, now = new Date()) {
   S.avgWeekly = leased.filter(p => p.rent_month).length ? leased.filter(p => p.rent_month).reduce((a, p) => a + weekly(p.rent_month), 0) / leased.filter(p => p.rent_month).length : null;
   S.mgmtTotal = rented.length; S.mgmtKnown = rented.filter(p => p.mgmt_pct != null).length;
   S.mgmtMonth = rented.reduce((a, p) => a + p.rent_month * (p.mgmt_pct ?? DEFAULT_MGMT_PCT) / 100, 0);
+  // 下个月预计管理费收入 = 每月管理费 + 下个月到期租约的续约费（按 1 周租金 + GST 估）
+  const nm = new Date(now.getFullYear(), now.getMonth() + 1, 1), nmEnd = new Date(now.getFullYear(), now.getMonth() + 2, 1);
+  S.nextMonthLabel = `${nm.getMonth() + 1} 月`;
+  S.renewNext = rented.filter(p => p.lease_end && new Date(p.lease_end) >= nm && new Date(p.lease_end) < nmEnd);
+  S.renewNextAmt = S.renewNext.reduce((a, p) => a + weekly(p.rent_month) * 1.1, 0);
+  S.nextMonthIncome = S.mgmtMonth + S.renewNextAmt;
   S.bonds = act.filter(p => p.status === "leased").reduce((a, p) => a + (p.bond || 0), 0);
   const tagged = act.map(p => ({ p, t: propTags(p, now) }));
   S.arrears = tagged.filter(x => x.t.arrears).map(x => ({ p: x.p, ...x.t.arrears })).sort((a, b) => b.days - a.days);

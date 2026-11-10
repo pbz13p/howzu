@@ -208,6 +208,7 @@ function renderStats() {
     ${kpi(S.complianceProps, "套缺安全检查记录", `烟雾报警/燃气/电气共 ${S.compliance} 项`, S.complianceProps ? "warn" : "")}
     ${kpi(S.elmaIssues, "管理协议（ELMA）待补", "", S.elmaIssues ? "warn" : "")}
     ${kpi(`${S.pubLive}/${S.pubLet}`, "对外：在租 / 已租展示", `${S.unpublished} 套未发布`)}
+    ${kpi(money(S.nextMonthIncome), `预计 ${S.nextMonthLabel}管理费收入`, `管理费 ${money(S.mgmtMonth)}${S.renewNext.length ? ` + ${S.renewNext.length} 套续约费约 ${money(S.renewNextAmt)}（按 1 周+GST 估）` : " · 下月没有到期续约"}`, "ok")}
   </div>
   <div class="grid2">
     <div class="card"><h3>💸 欠租 <span class="c">交到日已过</span></h3>${list(S.arrears.map(x => ({ p: x.p, r: `欠 ${x.days} 天 · 约 ${money(x.amt)}` })), "没有欠租 👍")}</div>
