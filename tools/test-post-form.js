@@ -11,6 +11,9 @@ ok("租期：放到亮点最前", eq(F.withLease(["包网"], "12 个月"), ["租
 ok("租期：不重复、可清空", eq(F.withLease(["租期 6 个月", "包网"], "12 个月"), ["租期 12 个月", "包网"]) && eq(F.withLease(["租期 6 个月"], ""), []));
 ok("今天日期格式", F.todayISO(new Date(2026, 0, 5)) === "2026-01-05");
 ok("日期显示", F.niceDate("2026-12-01") === "12 月 1 日" && F.niceDate("马上") === "马上");
+ok("押金/看房：结构化标签不重复", eq(F.withTag(F.withTag(["包网"], "押金 ", "4 周"), "看房 ", "视频看房"), ["看房 视频看房", "押金 4 周", "包网"]) && eq(F.withTag(["押金 4 周"], "押金 ", "面议"), ["押金 面议"]));
+ok("照片换顺序", eq(F.move([1, 2, 3, 4], 3, 0), [4, 1, 2, 3]) && eq(F.move([1, 2, 3, 4], 0, 2), [2, 3, 1, 4]) && eq(F.move([1, 2], 0, 5), [1, 2]));
+ok("押金金额", F.bondText(650, "4 周") === "押金 ≈ $2,600" && F.bondText(0, "4 周") === "" && F.bondText(650, "面议") === "");
 // ---- 后台审核自动检查 ----
 const A = require("../js/admin-check.js");
 const good = { id: 1, photos: [1, 2, 3], rent_weekly: 650, contact_phone: "0400", address: "5/138 Spencer St, Melbourne VIC 3000", lat: 1, lng: 2, description: "好房" };
@@ -20,5 +23,9 @@ ok("审核：缺照片/租金/联系方式", /没有照片/.test(bad) && /没填
 ok("审核：租金异常", A.listingIssues({ ...good, rent_weekly: 65000 }, []).some(i => /看起来不对/.test(i.t)));
 ok("审核：同地址（大小写/逗号/邮编不同）算重复", A.listingIssues(good, [{ id: 9, address: "5/138 spencer st melbourne", status: "live" }]).some(i => /可能重复.*已上线/.test(i.t)));
 ok("审核：自己不算重复", !A.listingIssues(good, [{ id: 1, address: good.address, status: "pending" }]).some(i => /重复/.test(i.t)));
+const sx = { id: "ab1", suburb: "Carlton", kind: "整套出租", beds: 2, baths: 1, cars: 1, rent_weekly: 650, available: "2026-12-01", furnished: "带家具", highlights: ["租期 12 个月", "近大学", "微信看房"] };
+const wx = A.shareText(sx, "wx"), xhs = A.shareText(sx, "xhs");
+ok("文案：微信带详情链接", /【Carlton · 2 房 1 卫 1 车位】\$650\/周/.test(wx) && /12 月 1 日入住/.test(wx) && wx.includes("rentals.html?id=ab1"));
+ok("文案：小红书无链接、无微信字样、带话题", !/http|微信|rentals/.test(xhs) && xhs.includes("#Carlton租房") && xhs.includes("私信"));
 if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
 console.log("发房源表单测试全部通过");

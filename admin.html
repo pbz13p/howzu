@@ -22,6 +22,13 @@ main{max-width:720px;margin:0 auto;padding:12px}
 .t{font-weight:600;font-size:16px;margin-top:8px}
 .m{font-size:13px;color:var(--muted)}
 .desc{font-size:14px;white-space:pre-wrap;margin:6px 0}
+.edit{margin-top:12px;padding:12px;border-radius:12px;background:#f6f8f7;border:1px solid var(--line, #e4e8e6)}
+.edit label{display:block;font-size:13px;color:#667;margin:10px 0 4px}.edit label:first-child{margin-top:0}.edit small{color:#99a}
+.edit input,.edit textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px;border:1px solid #d6dcd9;border-radius:10px;background:#fff}
+.eph{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ep{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#e8ecea}.ep img{width:100%;height:100%;object-fit:cover;display:block}
+.ep span,.ep button{position:absolute;left:4px;bottom:4px;font-size:11px;padding:3px 7px;border-radius:9px;border:0;background:rgba(255,255,255,.92);color:#0f6b4f;font-weight:600;cursor:pointer}
+.ep span{background:var(--accent);color:#fff}.ep .rm{left:auto;right:4px;top:4px;bottom:auto;width:24px;height:24px;padding:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .acts button{font-size:15px;padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
 .ok{background:var(--accent);color:#fff}.no{background:var(--badbg);color:var(--bad)}.gr{background:var(--accent2);color:var(--accent)}
@@ -35,7 +42,7 @@ input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border
 <body>
 <header><h1>审核房源</h1></header>
 <main id="app"><div class="empty">加载中…</div></main>
-<script src="js/admin-check.js?v=20261109"></script>
+<script src="js/admin-check.js?v=20261110"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -43,7 +50,7 @@ const C = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 if (!C.SUPABASE_URL) { $("#app").innerHTML = '<div class="empty">后台还没设置好。</div>'; throw 0; }
 const sb = createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
-let tab = "pending";
+let tab = "pending"; let D = {};
 async function start() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) {
@@ -56,9 +63,10 @@ async function start() {
 async function load() {
   const { data, error } = await sb.from("listings").select("*").eq("status", tab).order("created_at", { ascending: false });
   const { data: all } = await sb.from("listings").select("id,address,status"); // 用来查重复（只取地址和状态）
+  D = Object.fromEntries((data || []).map(x => [x.id, x]));
   const tabs = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"]];
   $("#app").innerHTML = `<div class="tabs">${tabs.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>` +
-    (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">没有</div>' : data.map(x => `<div class="card">
+    (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">没有</div>' : data.map(x => `<div class="card" data-card="${esc(x.id)}">
       <div class="strip">${(x.photos || []).map(p => `<a href="${esc(p)}" target="_blank"><img src="${esc(p)}" loading="lazy"></a>`).join("")}</div>
       <div class="t">${esc(x.title)}</div>
       ${(is => is.length ? `<div class="iss">${is.map(i => `<span class="${i.lv}">${i.lv === "bad" ? "⛔ " : "⚠️ "}${esc(i.t)}</span>`).join("")}</div>` : "")(AdminCheck.listingIssues(x, all || []))}
@@ -68,7 +76,7 @@ async function load() {
       <div class="m">${(x.highlights || []).map(esc).join(" · ")}</div>
       <div class="desc">${esc(x.description || "")}</div>
       <div class="m">提交于 ${new Date(x.created_at).toLocaleString("zh-CN")}</div>
-      <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-del="${x.id}">删除</button></div>
+      <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
 document.addEventListener("click", async e => {
@@ -76,8 +84,41 @@ document.addEventListener("click", async e => {
   if (b.dataset.tab) { tab = b.dataset.tab; load(); }
   if (b.hasAttribute("data-out")) { await sb.auth.signOut(); start(); }
   if (b.dataset.set) { b.disabled = true; const { error } = await sb.from("listings").update({ status: b.dataset.set }).eq("id", b.dataset.id); if (error) alert(error.message); load(); }
+  if (b.dataset.copy) {
+    const t = AdminCheck.shareText(D[b.dataset.id], b.dataset.copy), old = b.textContent;
+    try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制"; } catch (_) { prompt("复制下面的文案：", t); }
+    setTimeout(() => b.textContent = old, 1800);
+  }
+  if (b.dataset.edit) editForm(b.dataset.edit);
+  if (b.dataset.save) {
+    const id = b.dataset.save, f = document.querySelector(`[data-card="${CSS.escape(id)}"] .edit`);
+    const rent = Math.round(+f.querySelector("[name=rent]").value || 0);
+    if (!rent) { alert("租金要填数字"); return; }
+    b.disabled = true; b.textContent = "保存中…";
+    const { error } = await sb.from("listings").update({ title: f.querySelector("[name=title]").value.trim().slice(0, 80), rent_weekly: rent, description: f.querySelector("[name=desc]").value.trim() || null, photos: EP }).eq("id", id);
+    if (error) { alert("保存失败：" + error.message); b.disabled = false; b.textContent = "保存"; return; }
+    load();
+  }
+  if (b.hasAttribute("data-cancel")) load();
+  if (b.dataset.cov != null) { EP = [EP[+b.dataset.cov], ...EP.filter((_, i) => i !== +b.dataset.cov)]; drawPh(); }
+  if (b.dataset.rm != null && EP.length > 1) { EP.splice(+b.dataset.rm, 1); drawPh(); }
   if (b.dataset.del && confirm("确定删除？删除后找不回来。")) { await sb.from("listings").delete().eq("id", b.dataset.del); load(); }
 });
+// 审核前直接改：标题、租金、介绍、照片（设封面 / 去掉不合适的）
+let EP = [];
+function drawPh() { const el = document.querySelector(".edit .eph"); if (el) el.innerHTML = EP.map((p, i) => `<div class="ep"><img src="${esc(p)}">${i ? `<button data-cov="${i}">设封面</button>` : '<span>封面</span>'}<button class="rm" data-rm="${i}" title="去掉这张">✕</button></div>`).join(""); }
+function editForm(id) {
+  const x = D[id]; if (!x) return; EP = (x.photos || []).slice();
+  document.querySelectorAll(".edit").forEach(e => e.remove());
+  const card = document.querySelector(`[data-card="${CSS.escape(id)}"]`);
+  card.querySelector(".acts").insertAdjacentHTML("beforebegin", `<div class="edit">
+    <label>标题</label><input name="title" maxlength="80" value="${esc(x.title)}">
+    <label>周租（澳元）</label><input name="rent" type="number" inputmode="numeric" value="${esc(x.rent_weekly)}">
+    <label>介绍</label><textarea name="desc" rows="6">${esc(x.description || "")}</textarea>
+    <label>照片 <small>点「设封面」换第一张，✕ 去掉不合适的</small></label><div class="eph"></div>
+    <div class="acts"><button class="ok" data-save="${esc(id)}">保存</button><button class="gr" data-cancel>取消</button></div></div>`);
+  drawPh(); card.querySelector(".edit input").focus();
+}
 sb.auth.onAuthStateChange(() => start());
 start();
 </script>

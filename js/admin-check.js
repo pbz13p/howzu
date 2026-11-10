@@ -18,6 +18,20 @@
     }
     return out;
   }
-  const api = { listingIssues, normAddr };
+  // 一键生成转发文案。kind："wx" 微信（带链接）/ "xhs" 小红书（不放链接、不写微信/电话等容易被限流的词）
+  const XHS_BAD = /微信|vx|v信|加v|电话|手机|二维码|链接|http|www\.|\.com/gi;
+  function shareText(x, kind) {
+    const area = x.suburb || "墨尔本", room = x.kind === "单间出租" ? "单间" : `${x.beds} 房 ${x.baths} 卫${x.cars ? " " + x.cars + " 车位" : ""}`;
+    const av = /^\d{4}-\d\d-\d\d$/.test(x.available || "") ? `${+x.available.slice(5, 7)} 月 ${+x.available.slice(8, 10)} 日` : (x.available || "");
+    const when = av ? (av === "马上" ? "马上入住" : av + "入住") : "";
+    const hl = (x.highlights || []).slice(0, 8), rent = +x.rent_weekly ? `$${x.rent_weekly}/周` : "租金面议";
+    const L = [`【${area} · ${room}】${rent}`, when && "📅 " + when, x.furnished && "🛋 " + x.furnished, hl.length && "✨ " + hl.join(" · ")];
+    if (kind === "xhs") {
+      const body = L.filter(Boolean).join("\n");
+      return [body, "照片都是实拍，感兴趣的私信我～", `#墨尔本租房 #${area.replace(/\s+/g, "")}租房 #墨尔本找房 #澳洲留学`].join("\n\n").replace(XHS_BAD, "");
+    }
+    return [L.filter(Boolean).join("\n"), `📍 ${area}`, "", `👉 照片和详情：https://howzu.com.au/rentals.html?id=${encodeURIComponent(x.id)}`].join("\n");
+  }
+  const api = { listingIssues, normAddr, shareText };
   if (typeof module === "object" && module.exports) module.exports = api; else root.AdminCheck = api;
 })(this);

@@ -57,6 +57,11 @@ textarea{resize:vertical;min-height:110px}
 .ph .x{right:4px}.ph .mv{left:4px}
 .ph .fx{position:absolute;right:4px;top:4px;border:0;border-radius:10px;font-size:11px;padding:2px 7px;background:rgba(255,255,255,.92);color:#0f6b4f;cursor:pointer;font-weight:600}
 .ph .fx.off{background:rgba(0,0,0,.55);color:#fff}
+.ph.sel{outline:3px solid var(--accent);outline-offset:-3px}
+.ph.sel img{opacity:.75}
+.ph .tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:#fff;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:1;pointer-events:none;white-space:nowrap}
+.grid.picking .ph:not(.sel){cursor:copy}
+.sorthint{color:var(--accent)}
 .ph .busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.7);font-size:12px}
 #sug div{padding:10px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
 #sug div:active{background:var(--accent2)}
@@ -111,6 +116,7 @@ textarea{resize:vertical;min-height:110px}
     <div class="drop" id="drop"><b>📷 点这里选照片</b>可以一次选多张，手机会自动压缩</div>
     <input type="file" id="file" accept="image/*" multiple hidden>
     <div class="grid" id="grid"></div>
+    <div class="hint sorthint" id="sortHint" hidden></div>
     <div class="hint">建议拍：客厅、卧室、厨房整体、浴室、窗外景色、楼里泳池/健身房。白天开灯、横着拍更好看，不用拍锅碗瓢盆。</div>
   </section>
 
@@ -141,9 +147,14 @@ textarea{resize:vertical;min-height:110px}
       <button>带家具</button><button>不带家具</button><button>部分家具</button>
     </div>
     <label class="l">租期 <span class="opt">可不选</span></label>
-    <div class="chips" data-k="lease" data-single>
+    <div class="chips" data-k="lease" data-single data-opt>
       <button>12 个月</button><button>6 个月</button><button>灵活可谈</button>
     </div>
+    <label class="l">押金 <span class="opt">维州一般 4 周</span></label>
+    <div class="chips" data-k="bond" data-single data-opt>
+      <button class="on">4 周</button><button>面议</button>
+    </div>
+    <div class="hint" id="bondHint"></div>
     <label class="l">亮点 <span class="opt">可多选</span></label>
     <div class="chips" data-k="highlights">
       <button>近火车站</button><button>免费电车区</button><button>近大学</button><button>泳池/健身房</button><button>有阳台</button><button>景观好</button><button>包水费</button><button>包电费</button><button>包网</button><button>可养宠物</button><button>近华人超市</button><button>学区好</button><button>安静</button>
@@ -174,6 +185,10 @@ textarea{resize:vertical;min-height:110px}
     <label class="l">称呼</label><input type="text" id="cname" maxlength="30" placeholder="如 王先生">
     <label class="l">微信号</label><input type="text" id="wechat" maxlength="40" placeholder="微信号">
     <label class="l">手机</label><input type="tel" id="phone" maxlength="20" placeholder="如 04xx xxx xxx">
+    <label class="l">怎么看房 <span class="opt">可不选</span></label>
+    <div class="chips" data-k="viewing" data-single data-opt>
+      <button>随时可约</button><button>周末看房</button><button>视频看房</button>
+    </div>
     <input type="text" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="hint">提交即表示房源信息真实，你有权出租这套房。虚假房源会被删除。</div>
   </section>
@@ -181,7 +196,7 @@ textarea{resize:vertical;min-height:110px}
 </main>
 <div class="bar"><span class="prog" id="prog">还差：照片、租金、地址、联系方式</span><button class="submit" id="go">发布</button></div>
 
-<script src="js/post-form.js?v=20261109"></script>
+<script src="js/post-form.js?v=20261110"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -256,31 +271,43 @@ async function addFiles(files) {
 }
 function setUse(p, orig) { p.useOrig = orig; p.blob = orig ? p.orig : p.enh; p.url = orig ? p.ourl : p.eurl; }
 function render() {
-  $("#grid").innerHTML = S.photos.map((p, i) => `<div class="ph"><img src="${p.url}">${i === 0 ? '<span class="cover">封面</span>' : ""}${!p.blob ? '<div class="busy">处理中…</div>' : ""}${i ? `<button class="mv" data-mv="${i}" title="设为封面">★</button>` : ""}<button class="x" data-x="${i}">✕</button></div>`).join("");
+  if (S.sel != null && S.sel >= S.photos.length) S.sel = null;
+  $("#grid").classList.toggle("picking", S.sel != null);
+  const sh = $("#sortHint"); sh.hidden = S.photos.length < 2;
+  sh.textContent = S.sel != null ? "已选中这张 → 再点要放的位置（点它自己取消）" : "想换顺序？点一张照片，再点要放的位置。★ 直接设为封面";
+  $("#grid").innerHTML = S.photos.map((p, i) => `<div class="ph${S.sel === i ? " sel" : ""}" data-i="${i}">${S.sel === i ? '<span class="tag">已选中</span>' : ""}<img src="${p.url}">${i === 0 ? '<span class="cover">封面</span>' : ""}${!p.blob ? '<div class="busy">处理中…</div>' : ""}${i ? `<button class="mv" data-mv="${i}" title="设为封面">★</button>` : ""}<button class="x" data-x="${i}">✕</button></div>`).join("");
   progress();
 }
 $("#grid").onclick = e => {
   const x = e.target.dataset.x, mv = e.target.dataset.mv, fx = e.target.dataset.fx;
   if (fx != null) { const p = S.photos[+fx]; setUse(p, !p.useOrig); render(); return; }
-  if (x != null) { S.photos.splice(+x, 1); render(); }
-  if (mv != null) { const [p] = S.photos.splice(+mv, 1); S.photos.unshift(p); render(); }
+  if (x != null) { S.photos.splice(+x, 1); S.sel = null; render(); }
+  if (mv != null) { const [p] = S.photos.splice(+mv, 1); S.photos.unshift(p); S.sel = null; render(); return; }
+  if (x != null) return;
+  const ph = e.target.closest(".ph"); if (!ph || S.photos.length < 2) return;
+  const i = +ph.dataset.i;
+  if (S.sel == null) S.sel = i; else { S.photos = PostForm.move(S.photos, S.sel, i); S.sel = null; }
+  render();
 };
 
 // ---------- chips & steppers ----------
 document.querySelectorAll(".chips").forEach(g => g.addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
-  if (g.hasAttribute("data-single")) { g.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); }
+  if (g.hasAttribute("data-single")) { const off = g.hasAttribute("data-opt") && b.classList.contains("on"); g.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b && !off)); }
   else b.classList.toggle("on");
   if (g.dataset.k === "when") $("#date").hidden = !b.hasAttribute("data-date");
+  if (g.dataset.k === "bond") rentHint();
   save(); progress();
 }));
+// 租期、押金、看房方式都作为结构化标签放进已有的 highlights 字段（不改数据库）
+const tags = () => PostForm.withLease(PostForm.withTag(PostForm.withTag(chips("highlights"), "看房 ", chips("viewing")[0]), "押金 ", chips("bond")[0]), chips("lease")[0]);
 const chips = k => [...document.querySelectorAll(`.chips[data-k="${k}"] button.on`)].map(b => b.textContent);
 document.querySelectorAll("[data-s]").forEach(b => b.onclick = () => {
   const k = b.dataset.s; S[k] = Math.max(LIM[k][0], Math.min(LIM[k][1], S[k] + +b.dataset.d)); $("#v-" + k).textContent = S[k]; save();
 });
 $("#unit").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.unit = b.dataset.u; $("#unit").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); rentHint(); save(); };
 function weekly() { const v = +$("#rent").value || 0; return S.unit === "m" ? Math.round(v * 12 / 52) : v; }
-function rentHint() { const v = +$("#rent").value || 0; $("#rentHint").textContent = v ? (S.unit === "m" ? `≈ 每周 $${weekly()}` : `≈ 每月 $${Math.round(v * 52 / 12)}`) : ""; progress(); }
+function rentHint() { const v = +$("#rent").value || 0; $("#rentHint").textContent = v ? (S.unit === "m" ? `≈ 每周 $${weekly()}` : `≈ 每月 $${Math.round(v * 52 / 12).toLocaleString("en-AU")}`) : ""; $("#bondHint").textContent = PostForm.bondText(weekly(), chips("bond")[0]); progress(); }
 $("#rent").oninput = () => { rentHint(); save(); };
 
 // ---------- address autocomplete (Photon / OSM) ----------
@@ -308,7 +335,7 @@ function factsNow() {
   return { kind: chips("kind")[0] || "整套出租", suburb: S.suburb || (($("#addr").value.split(",")[1]) || "").trim(),
     street: $("#addr").value.replace(/^\s*[\w-]+\s*\/\s*/, "").split(",")[0], beds: S.beds, baths: S.baths, cars: S.cars,
     rent: weekly() || null, available: when === "选日期" ? ($("#date").value || "") : when, furnished: chips("furnished")[0] || "",
-    highlights: PostForm.withLease(chips("highlights"), chips("lease")[0]), notes: $("#desc").value.trim() };
+    highlights: tags(), notes: $("#desc").value.trim() };
 }
 function templateWrite(f) {
   const area = f.suburb || "墨尔本", room = f.kind === "单间出租" ? "单间" : `${f.beds} 房 ${f.baths} 卫${f.cars ? " " + f.cars + " 车位" : ""}`;
@@ -352,7 +379,7 @@ function progress() { const m = missing(); $("#prog").textContent = m.length ? "
 
 // ---------- draft（文字、选项、日期都保存；照片不存） ----------
 const KEY = "howzu-post-draft";
-const CHIPK = ["kind", "when", "furnished", "lease", "highlights"];
+const CHIPK = ["kind", "when", "furnished", "lease", "bond", "viewing", "highlights"];
 $("#date").min = PostForm.todayISO();
 function save() { try { localStorage.setItem(KEY, JSON.stringify({ beds: S.beds, baths: S.baths, cars: S.cars, unit: S.unit, rent: $("#rent").value, addr: $("#addr").value, title: $("#title").value, desc: $("#desc").value, cname: $("#cname").value, wechat: $("#wechat").value, phone: $("#phone").value, date: $("#date").value, chips: Object.fromEntries(CHIPK.map(k => [k, chips(k)])), lat: S.lat, lng: S.lng, suburb: S.suburb })); } catch (_) {} }
 try { const d = JSON.parse(localStorage.getItem(KEY) || "null"); if (d) { Object.assign(S, { beds: d.beds, baths: d.baths, cars: d.cars, lat: d.lat, lng: d.lng, suburb: d.suburb }); ["beds", "baths", "cars"].forEach(k => $("#v-" + k).textContent = S[k]); for (const k of ["rent", "addr", "title", "desc", "cname", "wechat", "phone"]) $("#" + k).value = d[k] || ""; 
@@ -397,7 +424,7 @@ $("#go").onclick = async () => {
       address: $("#addr").value.trim(), suburb: S.suburb || null, lat: S.lat, lng: S.lng,
       beds: S.beds, baths: S.baths, cars: S.cars, rent_weekly: weekly(),
       available: when === "选日期" ? ($("#date").value || "选日期") : when,
-      furnished: chips("furnished")[0] || null, highlights: PostForm.withLease(chips("highlights"), chips("lease")[0]),
+      furnished: chips("furnished")[0] || null, highlights: tags(),
       description: $("#desc").value.trim() || null,
       contact_name: $("#cname").value.trim() || null, contact_wechat: $("#wechat").value.trim() || null, contact_phone: $("#phone").value.trim() || null,
       photos: urls

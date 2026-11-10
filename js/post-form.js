@@ -14,10 +14,25 @@
     const h = (highlights || []).filter(x => !String(x).startsWith(LEASE_PREFIX));
     return lease ? [LEASE_PREFIX + lease, ...h] : h;
   }
+  // 通用：某类结构化标签（"押金 4 周"、"看房 视频看房"）放进 highlights，同前缀只留一个
+  function withTag(highlights, prefix, value) {
+    const h = (highlights || []).filter(x => !String(x).startsWith(prefix));
+    return value ? [prefix + value, ...h] : h;
+  }
+  // 照片换顺序：把第 from 张挪到第 to 个位置（返回新数组）
+  function move(arr, from, to) {
+    const a = arr.slice(); if (from === to || from < 0 || to < 0 || from >= a.length || to >= a.length) return a;
+    const [x] = a.splice(from, 1); a.splice(to, 0, x); return a;
+  }
+  // 押金金额提示：周租 × 周数
+  function bondText(weekly, choice) {
+    const w = +weekly || 0, m = /^(\d+) 周/.exec(choice || "");
+    return m && w ? `押金 ≈ $${(w * +m[1]).toLocaleString("en-AU")}` : "";
+  }
   // 日期框最早可选今天（本地时间）
   function todayISO(d) { d = d || new Date(); const p = n => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; }
   // "2026-12-01" → "12 月 1 日"（其他文字原样返回）
   function niceDate(v) { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ""); return m ? `${+m[2]} 月 ${+m[3]} 日` : (v || ""); }
-  const api = { chipState, withLease, todayISO, niceDate, LEASE_PREFIX };
+  const api = { chipState, withLease, withTag, move, bondText, todayISO, niceDate, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);

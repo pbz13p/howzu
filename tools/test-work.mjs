@@ -18,10 +18,10 @@ ok("出租率 = 长租 ÷ (长租+空置)", Math.abs(S.occupancy - 66.7) < 0.01,
 ok("月租总额含车位、不含停管", S.rentMonth === 2600 + 3900 + 260, S.rentMonth);
 ok("周租换算 = 月×12÷52", Math.abs(weekly(2600) - 600) < 1e-9);
 ok("平均周租只算长租房屋", Math.abs(S.avgWeekly - (600 + 900) / 2) < 1e-9, S.avgWeekly);
-ok("管理费：有费率用费率，没有按 4.4%", Math.abs(S.mgmtMonth - (2600 * .055 + 3900 * .044 + 260 * .044)) < 1e-9);
+ok("管理费：只按实际费率算，缺费率的单独列出", Math.abs(S.mgmtMonth - 2600 * .055) < 1e-9 && S.mgmtMissing.length === 2);
 ok("押金总额", S.bonds === 6000);
 ok("欠租识别", S.arrears.length === 1 && S.arrears[0].p.id === "b" && S.arrears[0].days === 5, JSON.stringify(S.arrears.map(x => [x.p.id, x.days])));
-ok("欠租金额 ≈ 月租×12÷365×天数", Math.abs(S.arrears[0].amt - 3900 * 12 / 365 * 5) < 1e-6);
+ok("欠租金额 = 欠了几期 × 月租（交到日一过就欠一整期）", S.arrears[0].periods === 1 && S.arrears[0].amt === 3900);
 ok("30 天内到期", S.exp30.length === 1 && S.exp30[0].p.id === "a");
 ok("常迟交", S.late.length === 1 && S.late[0].id === "b");
 ok("ELMA 待补 / 安全检查待办", S.elmaIssues === 1 && S.compliance === 1);
