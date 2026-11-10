@@ -30,7 +30,9 @@ export function fromTracker(doc) {
     late_rate: d.payHabit?.lateRate ?? null,
     flags: F,
   };
-  if (m) row.mgmt_pct = Number(m[1]);
+  // 费率以 PM 实际收取的为准（tracker 的 mgmtPct），没有才看 ELMA 摘要
+  if (d.mgmtPct != null) row.mgmt_pct = Number(d.mgmtPct);
+  else if (m) row.mgmt_pct = Number(m[1]);
   if (/^car\s*park/i.test(addr)) row.kind = "车位";
   return row;
 }

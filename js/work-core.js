@@ -19,7 +19,8 @@ export function propTags(p, now = new Date()) {
   let arrears = null, expDays = null;
   if (p.status === "leased" && p.paid_to) {
     const d = daysBetween(toDate(p.paid_to), now);
-    if (d > 0) { arrears = { days: d, amt: (p.rent_month || 0) * 12 / 365 * d }; chips.push({ t: `欠租 ${d} 天`, c: "bad" }); }
+    // 租金按月预付：交到日一过，就欠一整期（过了几期算几期）
+    if (d > 0) { const periods = Math.ceil(d / (365 / 12)); arrears = { days: d, periods, amt: (p.rent_month || 0) * periods }; chips.push({ t: `欠租 ${d} 天`, c: "bad" }); }
     else chips.push({ t: `交到 ${fmtDate(p.paid_to)}`, c: "" });
   }
   if (p.status === "leased" && p.lease_end) {
@@ -54,8 +55,10 @@ export function stats(props, now = new Date()) {
   S.rentMonth = rented.reduce((a, p) => a + p.rent_month, 0);
   S.avgWeekly = leased.filter(p => p.rent_month).length ? leased.filter(p => p.rent_month).reduce((a, p) => a + weekly(p.rent_month), 0) / leased.filter(p => p.rent_month).length : null;
   S.mgmtTotal = rented.length; S.mgmtKnown = rented.filter(p => p.mgmt_pct != null).length;
-  S.mgmtMonth = rented.reduce((a, p) => a + p.rent_month * (p.mgmt_pct ?? DEFAULT_MGMT_PCT) / 100, 0);
-  // 下个月预计管理费收入 = 每月管理费 + 下个月到期租约的续约费（按 1 周租金 + GST 估）
+  // 只按 PM 里的实际费率算，不估；缺费率的单独列出
+  S.mgmtMissing = rented.filter(p => p.mgmt_pct == null);
+  S.mgmtMonth = rented.reduce((a, p) => a + (p.mgmt_pct != null ? p.rent_month * p.mgmt_pct / 100 : 0), 0);
+  // 下个月管理费收入 = 每月管理费 + 下个月到期租约的续约费（1 周租金 + GST）
   const nm = new Date(now.getFullYear(), now.getMonth() + 1, 1), nmEnd = new Date(now.getFullYear(), now.getMonth() + 2, 1);
   S.nextMonthLabel = `${nm.getMonth() + 1} 月`;
   S.renewNext = rented.filter(p => p.lease_end && new Date(p.lease_end) >= nm && new Date(p.lease_end) < nmEnd);
