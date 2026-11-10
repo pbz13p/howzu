@@ -11,6 +11,8 @@
 .nav .links a.on{color:#0f6b4f;font-weight:600;background:#e8f3ee}
 .nav .post{background:#0f6b4f;color:#fff;text-decoration:none;padding:9px 16px;border-radius:10px;font-size:15px;font-weight:600;white-space:nowrap}
 .nav .post:hover{background:#0c5a42}
+.nav .login{border:1.5px solid #0f6b4f;color:#0f6b4f;text-decoration:none;padding:7.5px 14px;border-radius:10px;font-size:15px;font-weight:600;white-space:nowrap}
+.nav .login:hover{background:#e8f3ee}
 .hero{background:linear-gradient(135deg,#0f6b4f 0%,#13805e 60%,#1b9670 100%);color:#fff}
 .hero .in{max-width:2200px;margin:0 auto;padding:34px clamp(16px,4.2vw,80px) 30px}
 .hero h1{margin:0;font-size:30px;letter-spacing:.5px;line-height:1.25}
@@ -22,6 +24,7 @@
   .nav .links{order:3;flex-basis:100%;margin:0 -4px}
   .nav .links a{padding:6px 10px;font-size:14px}
   .nav .post{margin-left:auto;padding:7px 12px;font-size:14px}
+  .nav .login{padding:6px 10px;font-size:14px}
   .hero .in{padding:20px 16px 18px}
   .hero h1{font-size:22px}
   .hero p{font-size:14px}
