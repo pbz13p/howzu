@@ -128,6 +128,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .perks .pk{background:#fff;border:1px solid #e6e2d8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .perks b{font-size:14px}.perks span{font-size:12.5px;color:#6b726f;line-height:1.4}
 @media (max-width:950px){.perks{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}.perks .pk{flex:0 0 72%;scroll-snap-align:start}}
+.dt .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin:12px 0 10px}.dt .kf div{padding:9px 4px;text-align:center;min-width:0}.dt .kf div+div{border-left:1px solid var(--line)}.dt .kf small{display:block;font-size:12px;color:var(--muted);line-height:1.3}.dt .kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .kf b.m{color:#9aa09d;font-weight:500}
 </style>
 </head>
 <body>
@@ -160,7 +161,8 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/share.js?v=20261107h"></script>
+<script src="js/listing-page.js?v=20261110"></script>
+<script src="js/share.js?v=20261110"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -209,6 +211,7 @@ function openDetail(x,noPush){
   DX=x;DI=0;const P=x.photos||[];
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");
   const m=document.createElement("div");m.className="dt-mask";m.id="dt";
+  const KF=window.ListingPage?ListingPage.keyFacts(x):{cells:[],rest:x.highlights||[]};
   m.innerHTML=`<div class="dt" role="dialog" aria-label="${esc(x.title)}">
    <button class="dt-x" data-close aria-label="关闭">✕</button>
    <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt=""><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
@@ -217,7 +220,8 @@ function openDetail(x,noPush){
     <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>
     <h2>${esc(x.title)}</h2><div class="addr">📍 ${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
-    <div class="tags"><span class="tag when">${isLet(x)?"📅 "+esc(untilTxt(x)):(isNow(x)?"🔑 ":"📅 ")+esc(x.available||"")+"入住"}</span>${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':x.furnished==="部分家具"?'<span class="tag">部分家具</span>':""}${(x.highlights||[]).map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
+    ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div><small>${esc(k)}</small><b${v==="咨询"?' class="m"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}</b></div>`).join("")}</div>`}
+    <div class="tags">${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':x.furnished==="部分家具"?'<span class="tag">部分家具</span>':""}${KF.rest.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
     ${x.desc?`<div class="dt-desc">${esc(x.desc)}</div>`:`<div class="dt-desc muted">房东还没有写介绍，欢迎直接联系咨询。</div>`}
     <div class="acts">${contactBtns(x)}<a class="btn ghost" href="index.html?q=${encodeURIComponent(x.address)}">🏫 看学区</a>${isLet(x)?"":`<button class="btn ghost" data-share="${esc(x.id)}">📤 分享</button>`}</div>
    </div></div>`;
@@ -270,7 +274,7 @@ async function orgListings(){
 let J=[],U=[],I=[],opened=false;
 const merge=()=>{const ids=new Set(I.map(x=>String(x.id)));L=[...J.filter(x=>!ids.has(String(x.id))),...I,...U];render();if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else openDetail(x,true);}}};
 const uP=Promise.race([userListings(),new Promise(r=>setTimeout(()=>r(null),8000))]);
-fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address)}));C=j.contact||{};merge();});
+fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address),_page:/^[\w-]+$/.test(x.id)}));C=j.contact||{};merge();});
 uP.then(u=>{if(u){U=u;merge();}});
 Promise.race([orgListings(),new Promise(r=>setTimeout(()=>r(null),8000))]).then(u=>{if(u&&u.length){I=u;merge();}});
 </script>

@@ -38,7 +38,7 @@
 
   function toast(t) { const d = document.createElement("div"); d.className = "sh-toast"; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
   async function copy(t) { try { await navigator.clipboard.writeText(t); return true; } catch (_) { const a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); const ok = document.execCommand("copy"); a.remove(); return ok; } }
-  const url = x => `${SITE}/rentals.html?id=${encodeURIComponent(x.id)}`;
+  const url = x => x._page ? `${SITE}/rent/${encodeURIComponent(x.id)}.html` : `${SITE}/rentals.html?id=${encodeURIComponent(x.id)}`;
   const area = x => x.suburb || (String(x.address || "").split(",")[1] || "墨尔本").trim();
   const roomTxt = x => [x.beds != null ? `${x.beds}房` : "", x.baths != null ? `${x.baths}卫` : "", x.cars ? `${x.cars}车位` : ""].join("");
 
