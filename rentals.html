@@ -124,6 +124,10 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 .note{font-size:12px;color:var(--muted)}
 .contact{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:none;gap:8px;justify-content:center}
 footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
+.perks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.perks .pk{background:#fff;border:1px solid #e6e2d8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.perks b{font-size:14px}.perks span{font-size:12.5px;color:#6b726f;line-height:1.4}
+@media (max-width:950px){.perks{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}.perks .pk{flex:0 0 72%;scroll-snap-align:start}}
 </style>
 </head>
 <body>
@@ -135,6 +139,13 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 </div></nav>
 <header class="hero"><div class="in"><h1>在租房源</h1><p>墨尔本 CBD / Carlton 公寓，我们直接管理，中文沟通，看房、签约、维修一条龙。房东和转租的朋友也可以 <a href="post.html" style="font-weight:600">免费发房源</a>。</p></div></header>
 <main>
+  <section class="perks" aria-label="租客福利">
+    <div class="pk"><b>💸 租客零中介费</b><span>看房、申请、签约都不用付中介费</span></div>
+    <div class="pk"><b>🗣 全程中文</b><span>看房、签约、报修都能用中文沟通</span></div>
+    <div class="pk"><b>🔒 押金政府托管</b><span>押金存进维州 RTBA，退租按法规退还</span></div>
+    <div class="pk"><b>🔁 提前搬走不慌</b><span>帮你办转租（lease transfer），尽量不付违约金</span></div>
+    <div class="pk"><b>🔔 空房优先通知</b><span>登记需求，同楼或附近有房第一时间告诉你</span></div>
+  </section>
   <div class="filters" id="filters">
     <button data-f="all" class="on">全部</button>
     <button data-f="now">马上入住</button>
