@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /work.html
 
 Sitemap: https://howzu.com.au/sitemap.xml

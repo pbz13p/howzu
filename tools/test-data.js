@@ -48,4 +48,5 @@ for (const [label, feats] of [["小学", zp], ["中学", zs]]) {
 }
 
 try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, "test-post-form.js")], { stdio: "inherit" }); } catch (_) { fail++; }
+try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, "test-work.mjs")], { stdio: "inherit" }); } catch (_) { fail++; }
 process.exit(fail ? 1 : 0);

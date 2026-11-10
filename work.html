@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>内部工作台 · 好租 Howzu</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" href="/icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#0f6b4f">
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e6e2d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#8a5a00;--warnbg:#fff4e0;--bad:#a12b2b;--badbg:#fde8e8;--blue:#1c4e80;--bluebg:#e7eef7}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+header{background:var(--accent);color:#fff;position:sticky;top:0;z-index:5}
+.hd{max-width:1280px;margin:0 auto;padding:12px clamp(12px,3vw,32px);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hd h1{margin:0;font-size:18px;font-weight:700;white-space:nowrap}
+.hd h1 small{font-weight:400;opacity:.75;font-size:12px;margin-left:6px}
+nav{display:flex;gap:4px;overflow-x:auto;flex:1}
+nav button{background:transparent;border:0;color:#fff;opacity:.75;font-size:14px;padding:8px 12px;border-radius:18px;cursor:pointer;white-space:nowrap}
+nav button.on{background:rgba(255,255,255,.18);opacity:1;font-weight:600}
+.who{font-size:12px;opacity:.8;white-space:nowrap}
+.who button{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:12px;padding:2px 8px;margin-left:6px;cursor:pointer}
+main{max-width:1280px;margin:0 auto;padding:16px clamp(12px,3vw,32px) 60px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi.bad .v{color:var(--bad)}.kpi.warn .v{color:var(--warn)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.card h3{margin:0 0 8px;font-size:15px}
+.card h3 .c{color:var(--muted);font-weight:400;font-size:13px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid #f1eee6;font-size:14px;align-items:center}
+.row:first-of-type{border-top:0}
+.row .r{color:var(--muted);font-size:13px;text-align:right;white-space:nowrap}
+.row a,.lnk{color:var(--accent);cursor:pointer;text-decoration:none}
+.bar{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+.bar .n{width:110px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .b{height:10px;border-radius:5px;background:var(--accent);opacity:.85}
+.bar .t{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}.small{font-size:12px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.chip{font-size:13px;padding:6px 12px;border-radius:16px;border:1px solid var(--line);background:#fff;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tools input{flex:1;min-width:160px;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:18px}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.p{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:box-shadow .15s}
+.p:hover{box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.p .ph{aspect-ratio:16/9;background:#e9e6de center/cover no-repeat;position:relative}
+.p .ph .pubb{position:absolute;left:8px;top:8px}
+.p .bd{padding:10px 12px}
+.p .ad{font-weight:600;font-size:15px}
+.p .mt{font-size:13px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.tg{font-size:11.5px;padding:2px 8px;border-radius:10px;background:#f1eee6;color:#555;white-space:nowrap}
+.tg.ok{background:var(--accent2);color:var(--accent)}.tg.warn{background:var(--warnbg);color:var(--warn)}.tg.bad{background:var(--badbg);color:var(--bad);font-weight:600}.tg.blue{background:var(--bluebg);color:var(--blue)}
+.empty{text-align:center;color:var(--muted);padding:40px}
+/* 抽屉 */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20;display:none}
+.ov.on{display:block}
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--bg);z-index:21;overflow-y:auto;transform:translateX(100%);transition:transform .2s}
+.dr.on{transform:none}
+.dr .top{position:sticky;top:0;background:var(--bg);padding:12px 16px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;z-index:2}
+.dr .top b{flex:1;font-size:16px}
+.dr .x{border:0;background:#fff;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer}
+.dr .in{padding:14px 16px 90px}
+.sec{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.sec h4{margin:0 0 8px;font-size:14px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+label.l{font-size:12px;color:var(--muted);display:block}
+.f input,.f select,textarea{width:100%;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:#fff;font-family:inherit}
+textarea{min-height:180px;line-height:1.55}
+.fl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13px}
+.fl .k{color:var(--muted);white-space:nowrap}
+.phs{display:flex;gap:6px;flex-wrap:wrap}
+.phs .it{position:relative;width:104px}
+.phs img{width:104px;height:78px;object-fit:cover;border-radius:8px;display:block}
+.phs .it .ctl{display:flex;justify-content:space-between;margin-top:2px}
+.phs .it button{border:0;background:#f1eee6;border-radius:6px;font-size:12px;padding:2px 6px;cursor:pointer}
+.phs .it .cv{position:absolute;left:4px;top:4px;background:var(--accent);color:#fff;font-size:11px;padding:0 6px;border-radius:8px}
+.addph{width:104px;height:78px;border:2px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;font-size:13px;text-align:center}
+.bbar{position:fixed;bottom:0;right:0;width:min(640px,100%);background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;z-index:22;transform:translateX(100%);transition:transform .2s}
+.bbar.on{transform:none}
+.btn{font-size:14px;padding:9px 14px;border-radius:10px;border:0;cursor:pointer;background:var(--accent2);color:var(--accent);font-weight:600}
+.btn.pri{background:var(--accent);color:#fff}.btn.bad{background:var(--badbg);color:var(--bad)}
+.btn:disabled{opacity:.5}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#1d2321;color:#fff;padding:9px 16px;border-radius:20px;font-size:14px;z-index:40;display:none}
+.login{max-width:420px;margin:60px auto}
+.login input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin:8px 0}
+@media (max-width:700px){.kpi .v{font-size:22px}.hd h1 small{display:none}.hd{gap:6px}nav{order:3;flex-basis:100%;margin:0 -6px}.who .em{display:none}.who{margin-left:auto}}
+</style>
+</head>
+<body>
+<header><div class="hd"><h1>好租 · 内部工作台<small>只限公司员工</small></h1><nav id="nav"></nav><div class="who" id="who"></div></div></header>
+<main id="app"><div class="empty">加载中…</div></main>
+<div class="ov" id="ov"></div><div class="dr" id="dr"></div><div class="bbar" id="bbar"></div><div class="toast" id="toast"></div>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import "./js/config.js";
+import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText } from "./js/work-core.js";
+const H = window.HOWZU || {}; const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY);
+const PUBLIC_IMG = p => /^https?:|^data:/.test(p) ? p : "/" + String(p).replace(/^\//, "");
+let ALL = [], P = [], tab = "stats", filt = "all", q = "", cur = null, me = "", SUPER = false, MY = [], ORGS = [], org = "all";
+const canWrite = o => SUPER || MY.some(m => m.org_id === o && m.role !== "viewer");
+const toast = t => { const e = $("#toast"); e.textContent = t; e.style.display = "block"; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = "none", 2200); };
+const tabs = () => [["stats", "📊 统计"], ["props", "🏠 房源"], ...(SUPER ? [["review", "📝 用户发布审核"], ["staff", "👥 账号与区块"]] : [])];
+
+async function start() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return showLogin();
+  me = session.user.email;
+  $("#who").innerHTML = `<span class="em">${esc(me)}</span><button id="out">退出</button>`;
+  $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+  const [{ data: sa }, { data: mm }, { data: oo }] = await Promise.all([sb.from("super_admins").select("email"), sb.from("members").select("*"), sb.from("orgs").select("*").order("created_at")]);
+  SUPER = (sa || []).some(x => x.email === me.toLowerCase()); MY = (mm || []).filter(m => m.email === me.toLowerCase()); ORGS = oo || [];
+  await loadProps();
+}
+function showLogin() {
+  $("#nav").innerHTML = "";
+  $("#app").innerHTML = `<div class="card login"><h3>员工登录</h3><p class="muted small">输入公司员工邮箱，会收到一封登录邮件，点里面的链接就进来了。不在员工名单里的邮箱登录后什么也看不到。</p><input id="em" type="email" placeholder="you@example.com" value="${esc(H.ADMIN_EMAIL || "")}"><button class="btn pri" id="send">发登录邮件</button><p class="small muted" id="msg"></p></div>`;
+  $("#send").onclick = async () => { const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { emailRedirectTo: location.href.split("#")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（也看看垃圾邮件）。"; };
+}
+async function loadProps() {
+  const { data, error } = await sb.from("internal_props").select("*").order("id");
+  if (error) { $("#app").innerHTML = `<div class="empty">读取失败：${esc(error.message)}<br><span class="small">如果是"relation does not exist"，说明数据库还没建内部表（supabase/internal.sql）。</span></div>`; return; }
+  if (!data.length) { $("#app").innerHTML = `<div class="empty">看不到任何内部房源。<br>可能你的邮箱（${esc(me)}）还不在员工名单里，请让管理员在「员工」里加上你。</div>`; renderNav(); return; }
+  ALL = data; applyOrg(); render();
+}
+function applyOrg() { P = org === "all" ? ALL : ALL.filter(p => p.org_id === org); }
+function renderNav() {
+  const seen = [...new Set(ALL.map(p => p.org_id))];
+  const sel = (SUPER || seen.length > 1) && ORGS.length > 1 ? `<select id="orgsel" style="margin-left:6px;border-radius:14px;padding:4px 8px;border:0">${[["all", "全部区块"], ...ORGS.map(o => [o.id, o.name])].map(([k, l]) => `<option value="${k}" ${k === org ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>` : "";
+  $("#nav").innerHTML = tabs().map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("") + sel;
+  const os = $("#orgsel"); if (os) os.onchange = () => { org = os.value; applyOrg(); render(); };
+}
+function render() {
+  renderNav();
+  if (tab === "stats") return renderStats();
+  if (tab === "props") return renderProps();
+  if (tab === "review") { $("#app").innerHTML = `<div class="card"><h3>用户自己发的房源</h3><p class="muted">房东/租客在「免费发房源」提交的，审核在原来的审核页做。</p><a class="btn pri" href="admin.html">打开审核页 →</a></div>`; return; }
+  if (tab === "staff" && SUPER) return renderStaff();
+}
+
+function renderStats() {
+  const S = stats(P, new Date());
+  const kpi = (v, l, s = "", cls = "") => `<div class="kpi ${cls}"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
+  const list = (rows, empty) => rows.length ? rows.map(x => `<div class="row"><a data-open="${esc(x.p.id)}">${esc(x.p.addr)}</a><span class="r">${x.r}</span></div>`).join("") : `<div class="muted small">${empty}</div>`;
+  const maxC = Math.max(1, ...S.bySuburb.map(x => x.n));
+  $("#app").innerHTML = `
+  <div class="kpis">
+    ${kpi(S.managed, "在管物业", `长租 ${S.leased} · 短租 ${S.airbnb} · 空置 ${S.vacant}${S.carparks ? ` · 另有车位 ${S.carparks}` : ""}`)}
+    ${kpi(S.occupancy + "%", "出租率", "长租在租 ÷ 可长租")}
+    ${kpi(money(S.rentMonth), "月租金总额", `年 ${money(S.rentMonth * 12)}`)}
+    ${kpi(money(S.avgWeekly), "平均周租", "长租公寓/房屋")}
+    ${kpi(money(S.mgmtMonth), "预计月管理费", `含 GST · ${S.mgmtKnown}/${S.mgmtTotal} 套有确切费率，其余按 4.4% 估`)}
+    ${kpi(money(S.bonds), "押金总额", "RTBA 托管")}
+    ${kpi(S.arrears.length, "欠租", S.arrears.length ? "约 " + money(S.arrearsAmt) : "全部按时", S.arrears.length ? "bad" : "")}
+    ${kpi(S.exp90.length, "90 天内到期", `30 天内 ${S.exp30.length}`, S.exp30.length ? "warn" : "")}
+    ${kpi(S.complianceProps, "套缺安全检查记录", `烟雾报警/燃气/电气共 ${S.compliance} 项`, S.complianceProps ? "warn" : "")}
+    ${kpi(S.elmaIssues, "管理协议（ELMA）待补", "", S.elmaIssues ? "warn" : "")}
+    ${kpi(`${S.pubLive}/${S.pubLet}`, "对外：在租 / 已租展示", `${S.unpublished} 套未发布`)}
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>💸 欠租 <span class="c">交到日已过</span></h3>${list(S.arrears.map(x => ({ p: x.p, r: `欠 ${x.days} 天 · 约 ${money(x.amt)}` })), "没有欠租 👍")}</div>
+    <div class="card"><h3>📅 租约即将到期 <span class="c">180 天内</span></h3>${list(S.exp180.map(x => ({ p: x.p, r: `${fmtDate(x.p.lease_end)} · ${x.days} 天后` })), "半年内没有到期")}</div>
+    <div class="card"><h3>⏰ 常迟交 <span class="c">近几个月一半以上迟交</span></h3>${list(S.late.map(p => ({ p, r: Math.round(p.late_rate * 100) + "% 迟交" })), "没有")}</div>
+    <div class="card"><h3>⚠️ 需要处理 <span class="c">标红的事项</span></h3>${list(S.issues.map(x => ({ p: x.p, r: esc(x.t) })), "没有")}</div>
+    <div class="card"><h3>📍 按区域</h3>${S.bySuburb.map(x => `<div class="bar"><span class="n">${esc(x.k)}</span><span class="b" style="width:${Math.max(6, x.n / maxC * 160)}px"></span><span class="t">${x.n} 套 · 均 ${money(x.avgW)}/周</span></div>`).join("")}</div>
+    <div class="card"><h3>🛏 按房型</h3>${S.byBeds.map(x => `<div class="bar"><span class="n">${esc(x.k)}</span><span class="b" style="width:${Math.max(6, x.n / maxC * 160)}px"></span><span class="t">${x.n} 套 · 均 ${money(x.avgW)}/周</span></div>`).join("")}</div>
+  </div>
+  <p class="small muted">租金交到日、租约日期来自 PropertyMe / 账单 tracker 的同步，以最近一次同步为准（最近更新：${fmtDate(S.lastUpdate)}）。钱的正式账本以 PropertyMe 为准。</p>`;
+}
+
+const FILTERS = [["all", "全部"], ["arrears", "欠租"], ["expiring", "90 天内到期"], ["todo", "有待办"], ["pub", "已发布"], ["unpub", "未发布"], ["nophoto", "缺照片"]];
+function renderProps() {
+  const now = new Date();
+  const L = P.filter(p => p.status !== "archived").filter(p => {
+    const t = propTags(p, now);
+    if (filt === "arrears" && !t.arrears) return false;
+    if (filt === "expiring" && !(t.expDays != null && t.expDays <= 90)) return false;
+    if (filt === "todo" && !t.issues.length) return false;
+    if (filt === "pub" && !p.published) return false;
+    if (filt === "unpub" && p.published) return false;
+    if (filt === "nophoto" && (p.pub?.photos || []).length) return false;
+    if (q && !(p.addr + " " + (p.owner || "") + " " + (p.suburb || "")).toLowerCase().includes(q.toLowerCase())) return false;
+    return true;
+  });
+  $("#app").innerHTML = `<div class="tools">${FILTERS.map(([k, l]) => `<button class="chip ${k === filt ? "on" : ""}" data-filt="${k}">${l}</button>`).join("")}<input id="q" placeholder="搜地址 / 业主 / 区域" value="${esc(q)}"></div>
+  <div class="small muted" style="margin-bottom:8px">${L.length} 套</div>
+  <div class="plist">${L.map(p => card(p, now)).join("") || '<div class="empty">没有符合的房源</div>'}</div>`;
+  const qi = $("#q"); qi.oninput = () => { q = qi.value; const pos = qi.selectionStart; renderProps(); const n = $("#q"); n.focus(); n.setSelectionRange(pos, pos); };
+}
+function card(p, now) {
+  const t = propTags(p, now), ph = (p.pub?.photos || [])[0];
+  const pubb = p.published ? `<span class="tg ${p.pub?.status === "let" ? "blue" : "ok"} pubb">${p.pub?.status === "let" ? "对外：已租展示" : "对外：在租"}</span>` : `<span class="tg pubb">未发布</span>`;
+  return `<div class="p" data-open="${esc(p.id)}"><div class="ph" style="${ph ? `background-image:url('${esc(PUBLIC_IMG(ph))}')` : ""}">${pubb}</div><div class="bd">
+    <div class="ad">${esc(p.addr)}</div>
+    <div class="mt">${esc(p.kind)} · ${p.beds ?? "?"} 房 ${p.baths ?? "?"} 卫 ${p.cars ?? 0} 车位${p.rent_month ? ` · ${money(weekly(p.rent_month))}/周` : ""}${p.owner ? ` · 业主 ${esc(p.owner)}` : ""}</div>
+    <div class="tags">${t.chips.map(c => `<span class="tg ${c.c}">${esc(c.t)}</span>`).join("")}</div></div></div>`;
+}
+
+const STATUS = [["leased", "长租在租"], ["vacant", "空置"], ["airbnb", "短租"], ["archived", "不再管理"]];
+const FLAG_NAMES = { lease: "租约", rent: "租金", elma: "管理协议", rtba: "押金", insp: "检查", smoke: "烟雾报警", gas: "燃气", elec: "电气", oc: "物业费" };
+function openProp(id) {
+  cur = structuredClone(P.find(p => p.id === id)); if (!cur) return;
+  cur.pub = cur.pub || {}; const u = cur.pub;
+  const fl = Object.entries(cur.flags || {}).map(([k, v]) => `<span class="k">${FLAG_NAMES[k] || k}</span><span><span class="tg ${v.s === "ok" ? "ok" : v.s === "issue" ? "bad" : v.s === "na" || v.s === "owner" ? "" : "warn"}">${esc(v.s)}</span> ${esc(v.why || "")}</span>`).join("");
+  $("#dr").innerHTML = `<div class="top"><b>${esc(cur.addr)}</b><button class="x" data-close>×</button></div><div class="in">
+   <div class="sec"><h4>内部信息</h4>
+    <div class="f">
+      <div><label class="l">状态</label><select id="i_status">${STATUS.map(([k, l]) => `<option value="${k}" ${cur.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+      <div><label class="l">月租（PM）</label><input id="i_rent" type="number" step="0.01" value="${cur.rent_month ?? ""}"></div>
+      <div><label class="l">租约开始</label><input id="i_ls" type="date" value="${cur.lease_start ?? ""}"></div>
+      <div><label class="l">租约结束</label><input id="i_le" type="date" value="${cur.lease_end ?? ""}"></div>
+      <div><label class="l">租金交到</label><input id="i_pt" type="date" value="${cur.paid_to ?? ""}"></div>
+      <div><label class="l">管理费率 %</label><input id="i_pct" type="number" step="0.1" value="${cur.mgmt_pct ?? ""}"></div>
+    </div>
+    <div class="fl" style="margin-top:10px"><span class="k">业主</span><span>${esc(cur.owner || "—")}</span><span class="k">押金</span><span>${cur.bond ? money(cur.bond) : "—"}</span><span class="k">管理起始</span><span>${fmtDate(cur.mgmt_since)}</span>${fl}</div>
+    <div style="margin-top:8px"><label class="l">内部备注</label><textarea id="i_notes" style="min-height:60px">${esc(cur.notes || "")}</textarea></div>
+   </div>
+   <div class="sec"><h4>对外展示 <span class="small muted">（只有这里的内容会出现在公开房源页，门牌号自动隐藏）</span></h4>
+    <div class="f">
+      <div style="grid-column:1/-1"><label class="l">标题</label><input id="u_title" value="${esc(u.title || "")}" placeholder="例：Swanston Central · 一房一卫高层公寓"></div>
+      <div><label class="l">周租（澳元，空 = 面议）</label><input id="u_rent" type="number" value="${u.rentWeekly ?? ""}"></div>
+      <div><label class="l">入住时间</label><input id="u_av" value="${esc(u.available || "")}" placeholder="尽快 / 2027 年 2 月"></div>
+      <div><label class="l">家具</label><select id="u_furn"><option value="">不写</option><option value="true" ${u.furnished === true ? "selected" : ""}>带家具</option><option value="false" ${u.furnished === false ? "selected" : ""}>不带家具</option><option value="部分家具" ${u.furnished === "部分家具" ? "selected" : ""}>部分家具</option></select></div>
+      <div><label class="l">区域（显示用）</label><input id="u_sub" value="${esc(u.suburb || cur.suburb || "")}"></div>
+      <div style="grid-column:1/-1"><label class="l">亮点（用逗号或换行分开）</label><input id="u_hl" value="${esc((u.highlights || []).join("，"))}"></div>
+    </div>
+    <div style="margin-top:8px"><label class="l">介绍</label><textarea id="u_desc">${esc(u.desc || "")}</textarea></div>
+    <div style="margin-top:8px"><label class="l">照片（第一张 = 封面；点 ◀ ▶ 调顺序）</label><div class="phs" id="phs"></div><input type="file" id="file" accept="image/*" multiple hidden></div>
+   </div></div>`;
+  drawPhotos();
+  $("#bbar").innerHTML = !canWrite(cur.org_id) ? `<span class="muted small">你在这个区块是只读账号</span><button class="btn" data-act="wechat">📋 复制微信文案</button>` : `<button class="btn pri" data-act="save">💾 保存</button>
+    ${cur.published && u.status !== "let" ? "" : `<button class="btn" data-act="live">🟢 发布为在租</button>`}
+    ${cur.published && u.status === "let" ? "" : `<button class="btn" data-act="let">🔵 发布为已租出</button>`}
+    ${cur.published ? `<button class="btn bad" data-act="unpub">下架</button><a class="btn" target="_blank" href="rentals.html?id=${encodeURIComponent(cur.pub_id || cur.id)}">看对外页面 ↗</a>` : ""}
+    <button class="btn" data-act="wechat">📋 复制微信文案</button>`;
+  ["#ov", "#dr", "#bbar"].forEach(s => $(s).classList.add("on"));
+}
+function drawPhotos() {
+  const ps = cur.pub.photos || [];
+  $("#phs").innerHTML = ps.map((p, i) => `<div class="it">${i === 0 ? '<span class="cv">封面</span>' : ""}<img src="${esc(PUBLIC_IMG(p))}"><div class="ctl"><button data-mv="${i}" data-d="-1">◀</button><button data-rm="${i}">✕</button><button data-mv="${i}" data-d="1">▶</button></div></div>`).join("") + `<div class="addph" id="add">＋ 加照片</div>`;
+}
+function closeDr() { ["#ov", "#dr", "#bbar"].forEach(s => $(s).classList.remove("on")); cur = null; }
+function collect() {
+  const v = id => $(id).value.trim(), num = id => v(id) === "" ? null : Number(v(id));
+  cur.status = v("#i_status"); cur.rent_month = num("#i_rent"); cur.lease_start = v("#i_ls") || null; cur.lease_end = v("#i_le") || null; cur.paid_to = v("#i_pt") || null; cur.mgmt_pct = num("#i_pct"); cur.notes = v("#i_notes") || null;
+  const u = cur.pub, f = v("#u_furn");
+  Object.assign(u, { title: v("#u_title"), rentWeekly: num("#u_rent"), available: v("#u_av"), suburb: v("#u_sub"), highlights: v("#u_hl").split(/[，,\n]/).map(s => s.trim()).filter(Boolean), desc: $("#u_desc").value.trim(), furnished: f === "" ? null : f === "true" ? true : f === "false" ? false : f });
+  u.address = cur.addr.replace(/^\s*[\w-]+\s*\/\s*/, "");
+  u.beds = cur.beds; u.baths = cur.baths; u.cars = cur.cars;
+  if (cur.lease_end) u.leaseEnd = cur.lease_end.slice(0, 7);
+}
+async function save(extra = {}) {
+  collect(); Object.assign(cur, extra);
+  if (extra.published && !cur.pub.title) { toast("先写标题再发布"); return false; }
+  const row = { status: cur.status, rent_month: cur.rent_month, lease_start: cur.lease_start, lease_end: cur.lease_end, paid_to: cur.paid_to, mgmt_pct: cur.mgmt_pct, notes: cur.notes, pub: cur.pub, published: cur.published };
+  const { data, error } = await sb.from("internal_props").update(row).eq("id", cur.id).select().single();
+  if (error) { toast("保存失败：" + error.message); return false; }
+  P = P.map(p => p.id === data.id ? data : p); toast("已保存"); return true;
+}
+async function compress(file) {
+  const img = await createImageBitmap(file); const s = Math.min(1, 1600 / Math.max(img.width, img.height));
+  const c = document.createElement("canvas"); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+  return await new Promise(r => c.toBlob(r, "image/jpeg", 0.82));
+}
+async function upload(files) {
+  for (const f of files) {
+    toast("上传中…");
+    const blob = await compress(f), path = `internal/${cur.id}/${Date.now()}-${Math.random().toString(36).slice(2, 6)}.jpg`;
+    const { error } = await sb.storage.from(H.BUCKET || "listing-photos").upload(path, blob, { contentType: "image/jpeg" });
+    if (error) { toast("上传失败：" + error.message); return; }
+    (cur.pub.photos = cur.pub.photos || []).push(sb.storage.from(H.BUCKET || "listing-photos").getPublicUrl(path).data.publicUrl);
+    drawPhotos();
+  }
+  toast("上传好了，记得点保存");
+}
+
+function renderStaff() {
+  $("#app").innerHTML = `<div class="grid2"><div class="card"><h3>账号 <span class="c">谁能进哪个区块</span></h3><p class="small muted">你是总管理员，能看所有区块。其他人只能看到自己所在区块的房源：admin/staff 能改，viewer 只能看。</p><div id="ml">加载中…</div>
+  <div class="tools" style="margin-top:10px"><input id="me_em" type="email" placeholder="邮箱"><input id="me_nm" placeholder="称呼" style="max-width:110px"><select id="me_org" class="chip">${ORGS.map(o => `<option value="${o.id}">${esc(o.name)}</option>`).join("")}</select><select id="me_role" class="chip"><option value="staff">staff 可改</option><option value="viewer">viewer 只看</option><option value="admin">admin</option></select><button class="btn pri" id="me_add">添加</button></div></div>
+  <div class="card"><h3>区块 <span class="c">公司 / 合作方 / 其他中介，各自独立</span></h3>${ORGS.map(o => `<div class="row"><span>${esc(o.name)} <span class="muted small">${esc(o.id)}</span></span><span class="r">${ALL.filter(p => p.org_id === o.id).length} 套</span></div>`).join("")}
+  <div class="tools" style="margin-top:10px"><input id="og_id" placeholder="英文编号，如 partner-a"><input id="og_nm" placeholder="显示名称"><button class="btn pri" id="og_add">新建区块</button></div></div></div>`;
+  const load = async () => { const { data, error } = await sb.from("members").select("*").order("added_at"); $("#ml").innerHTML = error ? esc(error.message) : (data.length ? data.map(m => `<div class="row"><span>${esc(m.name || "")} <span class="muted">${esc(m.email)}</span></span><span class="r">${esc((ORGS.find(o => o.id === m.org_id) || {}).name || m.org_id)} · ${m.role} · <a data-rmmem="${esc(m.email)}|${esc(m.org_id)}">移除</a></span></div>`).join("") : '<div class="muted small">还没有其他成员，只有你。</div>'); };
+  $("#me_add").onclick = async () => { const email = $("#me_em").value.trim().toLowerCase(); if (!/^\S+@\S+\.\S+$/.test(email)) return toast("邮箱格式不对"); const { error } = await sb.from("members").insert({ email, org_id: $("#me_org").value, role: $("#me_role").value, name: $("#me_nm").value.trim() || null }); if (error) toast(error.message); else { toast("已添加"); load(); } };
+  $("#og_add").onclick = async () => { const id = $("#og_id").value.trim().toLowerCase(), name = $("#og_nm").value.trim(); if (!/^[a-z0-9-]+$/.test(id) || !name) return toast("编号只能用小写英文、数字和横线，名称必填"); const { error } = await sb.from("orgs").insert({ id, name }); if (error) toast(error.message); else { ORGS.push({ id, name }); toast("已新建"); renderStaff(); } };
+  load();
+}
+
+document.addEventListener("click", async e => {
+  const t = e.target.closest("[data-tab],[data-filt],[data-open],[data-close],[data-act],[data-mv],[data-rm],#add,#ov,[data-rmmem]"); if (!t) return;
+  if (t.dataset.tab) { tab = t.dataset.tab; render(); }
+  else if (t.dataset.filt) { filt = t.dataset.filt; renderProps(); }
+  else if (t.dataset.open) openProp(t.dataset.open);
+  else if (t.hasAttribute("data-close") || t.id === "ov") closeDr();
+  else if (t.id === "add") { $("#file").onchange = ev => upload([...ev.target.files]); $("#file").click(); }
+  else if (t.dataset.mv) { const i = +t.dataset.mv, j = i + +t.dataset.d, a = cur.pub.photos; if (j >= 0 && j < a.length) { [a[i], a[j]] = [a[j], a[i]]; drawPhotos(); } }
+  else if (t.dataset.rm) { cur.pub.photos.splice(+t.dataset.rm, 1); drawPhotos(); }
+  else if (t.dataset.rmmem) { const [em, o] = t.dataset.rmmem.split("|"); if (confirm("移除 " + em + "？")) { await sb.from("members").delete().eq("email", em).eq("org_id", o); renderStaff(); } }
+  else if (t.dataset.act) {
+    const a = t.dataset.act; t.disabled = true;
+    if (a === "save") { if (await save()) { render(); openProp(cur.id); } }
+    if (a === "live" || a === "let") { collect(); cur.pub.status = a; if (await save({ published: true })) { render(); openProp(cur.id); toast(a === "live" ? "已发布到对外页面（在租）" : "已发布为已租出展示"); } }
+    if (a === "unpub" && confirm("从对外页面下架？内部数据不会删。")) { if (await save({ published: false })) { render(); openProp(cur.id); } }
+    if (a === "wechat") { collect(); try { await navigator.clipboard.writeText(wechatText(cur.pub, location.origin + "/rentals.html?id=" + encodeURIComponent(cur.pub_id || cur.id))); toast("已复制，去微信粘贴"); } catch (_) { toast("复制失败，请手动复制"); } }
+    t.disabled = false;
+  }
+});
+start();
+</script>
+</body>
+</html>
