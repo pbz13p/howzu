@@ -55,7 +55,7 @@ async function start() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) {
     $("#app").innerHTML = `<div class="card"><p>用管理员邮箱登录，会收到一封登录邮件，点里面的链接就进来了。</p><input id="em" type="email" value="${esc(C.ADMIN_EMAIL)}"><div class="acts"><button class="ok" id="send">发登录邮件</button></div><p class="m" id="msg"></p></div>`;
-    $("#send").onclick = async () => { const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { emailRedirectTo: location.href.split("#")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（看看垃圾邮件）。"; };
+    $("#send").onclick = async () => { const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { shouldCreateUser: false, emailRedirectTo: location.href.split("#")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（看看垃圾邮件）。"; };
     return;
   }
   load();
