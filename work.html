@@ -100,7 +100,7 @@ import "./js/config.js";
 import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText } from "./js/work-core.js";
 const H = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY);
+const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
 window.HOWZU_SB = sb; // 给 tracker 同步脚本用（js/work-sync.js）
 const PUBLIC_IMG = p => /^https?:|^data:/.test(p) ? p : "/" + String(p).replace(/^\//, "");
 let ALL = [], P = [], tab = "stats", filt = "all", q = "", cur = null, me = "", SUPER = false, MY = [], ORGS = [], org = "all";
@@ -112,7 +112,8 @@ async function start() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return showLogin();
   me = session.user.email;
-  $("#who").innerHTML = `<span class="em">${esc(me)}</span><button id="out">退出</button>`;
+  $("#who").innerHTML = `<span class="em">${esc(me)}</span><button id="setpw">设置密码</button><button id="out">退出</button>`;
+  $("#setpw").onclick = setPassword;
   $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
   const [{ data: sa }, { data: mm }, { data: oo }] = await Promise.all([sb.from("super_admins").select("email"), sb.from("members").select("*"), sb.from("orgs").select("*").order("created_at")]);
   SUPER = (sa || []).some(x => x.email === me.toLowerCase()); MY = (mm || []).filter(m => m.email === me.toLowerCase()); ORGS = oo || [];
@@ -120,8 +121,26 @@ async function start() {
 }
 function showLogin() {
   $("#nav").innerHTML = "";
-  $("#app").innerHTML = `<div class="card login"><h3>员工登录</h3><p class="muted small">输入公司员工邮箱，会收到一封登录邮件，点里面的链接就进来了。不在员工名单里的邮箱登录后什么也看不到。</p><input id="em" type="email" placeholder="you@example.com" value="${esc(H.ADMIN_EMAIL || "")}"><button class="btn pri" id="send">发登录邮件</button><p class="small muted" id="msg"></p></div>`;
-  $("#send").onclick = async () => { const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { emailRedirectTo: location.href.split("#")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（也看看垃圾邮件）。"; };
+  $("#app").innerHTML = `<div class="card login"><h3>员工登录</h3>
+  <input id="em" type="email" autocomplete="username" placeholder="邮箱" value="${esc(H.ADMIN_EMAIL || "")}">
+  <input id="pw" type="password" autocomplete="current-password" placeholder="密码">
+  <button class="btn pri" id="go" style="width:100%">登录</button>
+  <p class="small muted" id="msg"></p>
+  <p class="small muted" style="margin-top:14px">第一次登录、还没设密码或忘了密码：<a href="#" id="send">发登录邮件</a>，点邮件里的链接进来后，在右上角「设置密码」设一个，以后就用密码登录。</p></div>`;
+  const go = async () => { $("#msg").textContent = "登录中…"; const { error } = await sb.auth.signInWithPassword({ email: $("#em").value.trim(), password: $("#pw").value }); if (error) { $("#msg").textContent = /Invalid login/i.test(error.message) ? "邮箱或密码不对（还没设过密码的话，先用下面的登录邮件）。" : "失败：" + error.message; return; } location.reload(); };
+  $("#go").onclick = go; $("#pw").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+  $("#send").onclick = async e => { e.preventDefault(); const { error } = await sb.auth.signInWithOtp({ email: $("#em").value.trim(), options: { emailRedirectTo: location.href.split("#")[0] } }); $("#msg").textContent = error ? "失败：" + error.message : "已发送，去邮箱点链接（也看看垃圾邮件）。"; };
+}
+function setPassword() {
+  const d = document.createElement("div");
+  d.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:99;padding:16px";
+  d.innerHTML = `<div class="card login" style="margin:0;width:100%"><h3>设置密码</h3><input id="np1" type="password" autocomplete="new-password" placeholder="新密码（至少 8 位）"><input id="np2" type="password" autocomplete="new-password" placeholder="再输一次"><p class="small muted" id="npm"></p><button class="btn pri" id="npok">保存</button> <button class="btn" id="npx">取消</button></div>`;
+  document.body.appendChild(d);
+  d.querySelector("#npx").onclick = () => d.remove();
+  d.querySelector("#npok").onclick = async () => { const a = d.querySelector("#np1").value, b = d.querySelector("#np2").value, m = d.querySelector("#npm");
+    if (a.length < 8) return m.textContent = "至少 8 位"; if (a !== b) return m.textContent = "两次不一样";
+    const { error } = await sb.auth.updateUser({ password: a }); if (error) return m.textContent = "没设成功：" + error.message;
+    d.remove(); toast("密码已设置，以后用邮箱 + 密码登录"); };
 }
 async function loadProps() {
   const { data, error } = await sb.from("internal_props").select("*").order("id");
