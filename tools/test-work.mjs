@@ -1,5 +1,6 @@
 // 内部工作台统计函数测试：node tools/test-work.mjs
 import { stats, propTags, weekly, wechatText } from "../js/work-core.js";
+import { fromTracker, clean } from "../js/work-sync.js";
 let fail = 0; const ok = (n, c, x = "") => { console.log((c ? "✓ " : "✗ ") + n + " " + x); if (!c) fail++; };
 const now = new Date("2026-11-10T09:00:00");
 const P = [
@@ -29,4 +30,12 @@ ok("propTags 欠租天数", propTags(P[1], now).arrears.days === 5);
 const t = wechatText({ title: "测试", suburb: "Carlton", beds: 1, baths: 1, rentWeekly: 600, available: "尽快", highlights: ["近墨大"] }, "https://howzu.com.au/rentals.html?id=a");
 ok("微信文案有标题、租金、链接", /【测试】/.test(t) && /\$600\/周/.test(t) && /howzu\.com\.au/.test(t));
 ok("已租出文案不写租金", !/\$/.test(wechatText({ title: "x", status: "let", leaseEnd: "2027-02" })));
+const tr = fromTracker({ id: "x1", data: { addr: "1906/371 Little Lonsdale St, Melbourne", beds: 2, baths: 2, cars: 0, rentAmt: 3694, bondAmt: 3400, leaseEnd: "2027-05-30", paidTo: "2026-10-30", owner: "O", tenant: "不该同步", payHabit: { lateRate: 1 }, elma: { status: "issue", why: "Let 1wk · Mgmt 5.5% · Ads $330" }, oc: { status: "ok", note: "BPAY 96503 / 27282899790000202353", why: "#1726 due 01/12 ref 27282899790000202353" }, rent: { status: "issue", note: "未付 $3,694" } } });
+ok("tracker 同步：基本字段", tr.rent_month === 3694 && tr.paid_to === "2026-10-30" && tr.suburb === "Melbourne" && tr.late_rate === 1 && tr.status === "leased");
+ok("tracker 同步：从 ELMA 读管理费率", tr.mgmt_pct === 5.5);
+ok("tracker 同步：不带租客名字", !JSON.stringify(tr).includes("不该同步"));
+ok("tracker 同步：长数字参考号被抹掉", !JSON.stringify(tr).includes("27282899790000202353"), tr.flags.oc.why);
+ok("tracker 同步：短租识别", fromTracker({ id: "a", data: { addr: "x, Melbourne", lease: { status: "na" }, rent: { status: "na" } } }).status === "airbnb");
+ok("tracker 同步：停管识别", fromTracker({ id: "a", data: { addr: "x", archived: true } }).status === "archived");
+ok("tracker 同步：车位", fromTracker({ id: "p", data: { addr: "Car park P227 & Storage, 23 Mackenzie St" } }).kind === "车位");
 process.exit(fail ? 1 : 0);
