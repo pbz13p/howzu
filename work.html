@@ -97,7 +97,7 @@ textarea{min-height:180px;line-height:1.55}
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
-import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText } from "./js/work-core.js";
+import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText, xhsText, yeeyiText, fbText } from "./js/work-core.js";
 const H = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
@@ -278,6 +278,12 @@ function openProp(id) {
     </div>
     <div style="margin-top:8px"><label class="l">介绍</label><textarea id="u_desc">${esc(u.desc || "")}</textarea></div>
     <div style="margin-top:8px"><label class="l">照片（第一张 = 封面；点 ◀ ▶ 调顺序）</label><div class="phs" id="phs"></div><input type="file" id="file" accept="image/*" multiple hidden></div>
+   </div>
+   <div class="sec"><h4>✍️ 创作室 <span class="small muted">（用上面的标题、租金、亮点、介绍自动生成各渠道文案，先保存再生成）</span></h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" data-gen="xhs">小红书</button><button class="btn" data-gen="yeeyi">亿忆网</button><button class="btn" data-gen="wx">微信</button><button class="btn" data-gen="fb">Facebook（英文）</button><button class="btn" data-gen="poster">🖼 生成海报</button></div>
+    <textarea id="gen_out" style="min-height:140px;margin-top:8px" placeholder="点上面的渠道，文案会出现在这里，可以改，再点复制"></textarea>
+    <div style="margin-top:6px"><button class="btn pri" data-gen="copy">📋 复制</button> <span class="small muted" id="gen_tip"></span></div>
+    <canvas id="gen_cv" width="1080" height="1440" style="display:none;width:100%;max-width:360px;margin-top:8px;border-radius:10px"></canvas>
    </div></div>`;
   drawPhotos();
   $("#bbar").innerHTML = !canWrite(cur.org_id) ? `<span class="muted small">你在这个区块是只读账号</span><button class="btn" data-act="wechat">📋 复制微信文案</button>` : `<button class="btn pri" data-act="save">💾 保存</button>
@@ -356,6 +362,30 @@ document.addEventListener("click", async e => {
     t.disabled = false;
   }
 });
+async function genPoster() {
+  collect(); const u = cur.pub, cv = $("#gen_cv"), x = cv.getContext("2d"); cv.style.display = "block";
+  x.fillStyle = "#0d1b3d"; x.fillRect(0, 0, 1080, 1440);
+  const src = (u.photos || [])[0];
+  if (src) { await new Promise(res => { const im = new Image(); im.crossOrigin = "anonymous"; im.onload = () => { const r = Math.max(1080 / im.width, 900 / im.height), w = im.width * r, h = im.height * r; x.drawImage(im, (1080 - w) / 2, (900 - h) / 2, w, h); res(); }; im.onerror = res; im.src = PUBLIC_IMG(src); }); }
+  const g = x.createLinearGradient(0, 600, 0, 900); g.addColorStop(0, "rgba(13,27,61,0)"); g.addColorStop(1, "rgba(13,27,61,1)"); x.fillStyle = g; x.fillRect(0, 600, 1080, 300);
+  x.fillStyle = "#ffd166"; x.font = "bold 40px sans-serif"; x.fillText("好租 Howzu · 墨尔本租房", 70, 960);
+  x.fillStyle = "#fff"; x.font = "900 64px sans-serif"; const t = u.title || "好租房源"; x.fillText(t.length > 15 ? t.slice(0, 15) + "…" : t, 70, 1050);
+  x.font = "bold 56px sans-serif"; x.fillStyle = "#ffd166"; x.fillText(u.rentWeekly ? `$${u.rentWeekly}/周` : "租金私信咨询", 70, 1150);
+  x.fillStyle = "#d6defa"; x.font = "40px sans-serif"; x.fillText([u.suburb, u.beds != null ? `${u.beds}房${u.baths ?? "?"}卫` : "", u.available ? u.available + "入住" : ""].filter(Boolean).join(" · "), 70, 1230);
+  if ((u.highlights || []).length) { x.font = "34px sans-serif"; x.fillText("✨ " + u.highlights.slice(0, 3).join(" / ").slice(0, 34), 70, 1300); }
+  x.fillStyle = "#9fb6ff"; x.font = "30px sans-serif"; x.fillText("howzu.com.au", 70, 1380);
+  try { const a = document.createElement("a"); a.download = (cur.pub_id || cur.id) + "-海报.png"; a.href = cv.toDataURL("image/png"); a.click(); $("#gen_tip").textContent = "海报已下载"; }
+  catch (_) { $("#gen_tip").textContent = "照片跨域，海报只能在页面上长按/右键保存"; }
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-gen]"); if (!b || !cur) return; const k = b.dataset.gen;
+  if (k === "copy") { try { await navigator.clipboard.writeText($("#gen_out").value); $("#gen_tip").textContent = "已复制"; } catch (_) { $("#gen_tip").textContent = "复制失败，请手动选中复制"; } return; }
+  if (k === "poster") return genPoster();
+  collect(); const u = { beds: cur.beds, baths: cur.baths, cars: cur.cars, ...cur.pub }, link = location.origin + "/rentals.html?id=" + encodeURIComponent(cur.pub_id || cur.id);
+  $("#gen_out").value = k === "xhs" ? xhsText(u) : k === "yeeyi" ? yeeyiText(u) : k === "fb" ? fbText(u) + "\n" + link : wechatText(u, link);
+  $("#gen_tip").textContent = k === "xhs" ? "小红书：不写名字电话，让人私信" : k === "yeeyi" ? "亿忆：联系人一栏填 Bozeng" : "";
+});
+
 let RECOVERY = /type=recovery/.test(location.hash);
 sb.auth.onAuthStateChange(ev => { if (ev === "PASSWORD_RECOVERY") RECOVERY = true; });
 start().then(() => { if (RECOVERY) { history.replaceState(null, "", location.pathname); setPassword("设置新密码"); } });

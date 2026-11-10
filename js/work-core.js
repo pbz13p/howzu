@@ -92,3 +92,43 @@ export function wechatText(u, link) {
   if (link) lines.push("👉 照片和详情：" + link);
   return lines.join("\n");
 }
+
+// ---------- 创作室：各渠道文案 ----------
+// 规则（Cendant 广告约定）：小红书不写名字和电话，让人私信；亿忆联系人写 Bozeng，正文只写短信联系；
+// 带家具的写「拎包入住」（床、桌子、电器、洗衣机，按现状提供）；名楼写楼名。
+const furnTxt = u => u.furnished === true ? "拎包入住（床、桌子、电器、洗衣机都有，按现状提供）" : u.furnished === "部分家具" ? "部分家具" : u.furnished === false ? "不带家具" : "";
+const rentTxt = u => u.rentWeekly ? `$${u.rentWeekly}/周` : "租金私信咨询";
+const roomTxt = u => u.beds != null ? `${u.beds}房${u.baths ?? "?"}卫${u.cars ? u.cars + "车位" : ""}` : "";
+export function xhsText(u) {
+  const t = `${u.suburb || "墨尔本"}｜${u.title || roomTxt(u)}${u.available ? "｜" + u.available + "入住" : ""}`;
+  const L = [t, ""];
+  L.push(`🏠 ${[roomTxt(u), u.suburb].filter(Boolean).join(" · ")}`);
+  L.push(`💰 ${rentTxt(u)}`);
+  if (u.available) L.push(`🗓 ${u.available} 可入住`);
+  if (furnTxt(u)) L.push(`🛋 ${furnTxt(u)}`);
+  (u.highlights || []).slice(0, 5).forEach(h => L.push(`✨ ${h}`));
+  if (u.desc) L.push("", u.desc.slice(0, 300));
+  L.push("", "感兴趣的直接私信我，可以约看房～");
+  L.push("", ["#墨尔本租房", u.suburb ? "#" + u.suburb.replace(/\s+/g, "") + "租房" : "", "#墨尔本找房", "#留学生租房", "#墨尔本公寓"].filter(Boolean).join(" "));
+  return L.join("\n");
+}
+export function yeeyiText(u) {
+  const L = [`【${u.title || roomTxt(u)}】`];
+  L.push(`户型：${roomTxt(u) || "—"}　区域：${u.suburb || "—"}`);
+  L.push(`租金：${rentTxt(u)}${u.available ? "　入住：" + u.available : ""}`);
+  if (furnTxt(u)) L.push(`家具：${furnTxt(u)}`);
+  if ((u.highlights || []).length) L.push("亮点：" + u.highlights.join("；"));
+  if (u.desc) L.push("", u.desc);
+  L.push("", "请先发短信联系 0431 438 595");
+  return L.join("\n");
+}
+export function fbText(u) {
+  const beds = u.beds != null ? `${u.beds} bed ${u.baths ?? "?"} bath${u.cars ? " " + u.cars + " car" : ""}` : "";
+  const L = [`For lease – ${[beds, u.suburb].filter(Boolean).join(", ")}`];
+  L.push(u.rentWeekly ? `$${u.rentWeekly} per week` : "Rent on enquiry");
+  if (u.available) L.push(`Available: ${u.available}`);
+  if (u.furnished === true) L.push("Fully furnished – bed, desk, appliances and washing machine included (as is).");
+  if (u.descEn) L.push("", u.descEn);
+  L.push("", "Message me or SMS 0431 438 595 to arrange an inspection.");
+  return L.join("\n");
+}
