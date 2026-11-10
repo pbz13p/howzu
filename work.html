@@ -97,7 +97,7 @@ textarea{min-height:180px;line-height:1.55}
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
-import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText, xhsText, yeeyiText, fbText } from "./js/work-core.js";
+import { stats, propTags, money, fmtDate, daysBetween, weekly, wechatText, xhsText, yeeyiText, fbText } from "./js/work-core.js?v=20261110c";
 const H = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
