@@ -13,8 +13,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Micros
 header{background:var(--accent);color:#fff;padding:16px 18px}
 header h1{margin:0;font-size:19px}
 main{max-width:720px;margin:0 auto;padding:12px}
-.tabs{display:flex;gap:6px;margin-bottom:10px}
-.tabs button{font-size:14px;padding:8px 12px;border-radius:20px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.tabs{display:flex;gap:6px;margin:0 -12px 10px;padding:0 12px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;white-space:nowrap;font-size:14px;padding:8px 12px;border-radius:20px;border:1px solid var(--line);background:#fff;cursor:pointer}
 .tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
 .strip{display:flex;gap:4px;overflow-x:auto}
@@ -33,6 +33,10 @@ main{max-width:720px;margin:0 auto;padding:12px}
 .acts button{font-size:15px;padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
 .ok{background:var(--accent);color:#fff}.no{background:var(--badbg);color:var(--bad)}.gr{background:var(--accent2);color:var(--accent)}
 input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px}
+.just{background:#eef7f1;border:1px solid #cfe6d8;border-radius:14px;padding:14px;margin-bottom:12px}
+.just b{display:block;font-size:16px;margin-bottom:4px}
+.just .m{margin-bottom:2px}
+.just .acts{margin-top:10px}
 .iss{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
 .iss span{font-size:12px;padding:3px 9px;border-radius:12px;background:#fff4e0;color:#8a5a00}
 .iss span.bad{background:var(--badbg);color:var(--bad);font-weight:600}
@@ -42,7 +46,7 @@ input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border
 <body>
 <header><h1>审核房源</h1></header>
 <main id="app"><div class="empty">加载中…</div></main>
-<script src="js/admin-check.js?v=20261110"></script>
+<script src="js/admin-check.js?v=20261111"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -50,7 +54,7 @@ const C = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 if (!C.SUPABASE_URL) { $("#app").innerHTML = '<div class="empty">后台还没设置好。</div>'; throw 0; }
 const sb = createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
-let tab = "pending"; let D = {};
+let tab = "pending"; let D = {}; let JUST = null; // 刚通过上线的房源：顶部提示"通知房东"
 async function start() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) {
@@ -65,7 +69,10 @@ async function load() {
   const { data, error } = await sb.from("listings").select("*").eq("status", tab).neq("kind", "求租需求").order("created_at", { ascending: false });
   const { data: all } = await sb.from("listings").select("id,address,status").neq("kind", "求租需求"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
-  $("#app").innerHTML = tabsHtml() +
+  const J = JUST; JUST = null;
+  const just = J ? `<div class="just" role="status"><b>✅ 已通过上线</b><div class="m">「${esc(J.title || J.address || "")}」</div><div class="m">下一步：把上线消息发给房东 ${esc(J.contact_name || "")}（微信 ${esc(J.contact_wechat || "—")} · 手机 ${esc(J.contact_phone || "—")}）</div><div class="acts"><button class="ok" data-notice="${esc(J.id)}">📨 复制「已上线 + 链接」</button>${J.contact_phone ? `<a class="gr" style="font-size:15px;padding:10px 14px;border-radius:10px;text-decoration:none" href="sms:${esc(J.contact_phone)}?&body=${encodeURIComponent(AdminCheck.ownerNotice(J))}">💬 直接发短信</a>` : ""}</div></div>` : "";
+  if (J) D[J.id] = J;
+  $("#app").innerHTML = tabsHtml() + just +
     (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">没有</div>' : data.map(x => `<div class="card" data-card="${esc(x.id)}">
       <div class="strip">${(x.photos || []).map(p => `<a href="${esc(p)}" target="_blank"><img src="${esc(p)}" loading="lazy"></a>`).join("")}</div>
       <div class="t">${esc(x.title)}</div>
@@ -76,7 +83,7 @@ async function load() {
       <div class="m">${(x.highlights || []).map(esc).join(" · ")}</div>
       <div class="desc">${esc(x.description || "")}</div>
       <div class="m">提交于 ${new Date(x.created_at).toLocaleString("zh-CN")}</div>
-      <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
+      <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-notice="${esc(x.id)}">📨 通知房东</button><button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
 const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求"]];
@@ -100,7 +107,12 @@ document.addEventListener("click", async e => {
   if (b.dataset.lc) { const x = D[b.dataset.lc] || {}, t = x.contact_wechat || x.contact_phone || ""; try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制"; } catch (_) { prompt("联系方式：", t); } }
   if (b.dataset.tab) { tab = b.dataset.tab; load(); }
   if (b.hasAttribute("data-out")) { await sb.auth.signOut(); start(); }
-  if (b.dataset.set) { b.disabled = true; const { error } = await sb.from("listings").update({ status: b.dataset.set }).eq("id", b.dataset.id); if (error) alert(error.message); load(); }
+  if (b.dataset.set) { b.disabled = true; const x = D[b.dataset.id]; const { error } = await sb.from("listings").update({ status: b.dataset.set }).eq("id", b.dataset.id); if (error) alert(error.message); else if (b.dataset.set === "live" && x && x.kind !== "求租需求") JUST = x; load(); }
+  if (b.dataset.notice) {
+    const t = AdminCheck.ownerNotice(D[b.dataset.notice] || { id: b.dataset.notice }), old = b.textContent;
+    try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制，去微信粘贴给房东"; } catch (_) { prompt("复制下面这段发给房东：", t); }
+    setTimeout(() => b.textContent = old, 2200);
+  }
   if (b.dataset.copy) {
     const t = AdminCheck.shareText(D[b.dataset.id], b.dataset.copy), old = b.textContent;
     try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制"; } catch (_) { prompt("复制下面的文案：", t); }

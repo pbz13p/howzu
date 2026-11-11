@@ -14,6 +14,10 @@ ok("日期显示", F.niceDate("2026-12-01") === "12 月 1 日" && F.niceDate("�
 ok("押金/看房：结构化标签不重复", eq(F.withTag(F.withTag(["包网"], "押金 ", "4 周"), "看房 ", "视频看房"), ["看房 视频看房", "押金 4 周", "包网"]) && eq(F.withTag(["押金 4 周"], "押金 ", "面议"), ["押金 面议"]));
 ok("照片换顺序", eq(F.move([1, 2, 3, 4], 3, 0), [4, 1, 2, 3]) && eq(F.move([1, 2, 3, 4], 0, 2), [2, 3, 1, 4]) && eq(F.move([1, 2], 0, 5), [1, 2]));
 ok("押金金额", F.bondText(650, "4 周") === "押金 ≈ $2,600" && F.bondText(0, "4 周") === "" && F.bondText(650, "面议") === "");
+const pv = F.previewLines({ kind: "整套出租", beds: 2, baths: 1, cars: 1, suburb: "Carlton", rent_weekly: 650, title: "Carlton 两房", available: "2026-12-01", furnished: "带家具", highlights: ["a", "b", "c", "d", "e"] });
+ok("预览：价格/房型/入住", pv.price === "$650" && pv.facts === "2 房 · 1 卫 · 1 车位 · Carlton" && pv.meta === "12 月 1 日入住 · 带家具" && pv.tags.length === 4);
+ok("预览：单间 + 马上 + 没租金", (q => q.facts === "单间" && q.meta === "马上入住" && q.price === "租金面议")(F.previewLines({ kind: "单间出租", beds: 1, baths: 1, available: "马上" })));
+ok("预览：没选日期不显示", F.previewLines({ beds: 1, baths: 1, available: "选日期" }).meta === "");
 // ---- 后台审核自动检查 ----
 const A = require("../js/admin-check.js");
 const good = { id: 1, photos: [1, 2, 3], rent_weekly: 650, contact_phone: "0400", address: "5/138 Spencer St, Melbourne VIC 3000", lat: 1, lng: 2, description: "好房" };
@@ -27,6 +31,9 @@ const sx = { id: "ab1", suburb: "Carlton", kind: "整套出租", beds: 2, baths:
 const wx = A.shareText(sx, "wx"), xhs = A.shareText(sx, "xhs");
 ok("文案：微信带详情链接", /【Carlton · 2 房 1 卫 1 车位】\$650\/周/.test(wx) && /12 月 1 日入住/.test(wx) && wx.includes("rentals.html?id=ab1"));
 ok("文案：小红书无链接、无微信字样、带话题", !/http|微信|rentals/.test(xhs) && xhs.includes("#Carlton租房") && xhs.includes("私信"));
+const on = A.ownerNotice({ id: "ab 1", contact_name: "王先生", title: "Carlton 两房" });
+ok("通知房东：带称呼、标题、链接", on.startsWith("王先生，您好") && on.includes("「Carlton 两房」") && on.includes("rentals.html?id=ab%201"));
+ok("通知房东：没名字也通顺", A.ownerNotice({ id: 3, title: "" }).startsWith("您好！") && A.ownerNotice({ id: 3 }).includes("「您的房源」"));
 // ---- 租客留需求 ----
 const Ld = require("../js/lead.js");
 const lr = Ld.leadRow({ area: "Carlton", budget: "$600", beds: "2 房", when: "2 月初", contact: "wx_abc123", ref: "rentals.html" });

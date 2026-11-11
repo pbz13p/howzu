@@ -66,6 +66,18 @@ textarea{resize:vertical;min-height:110px}
 #sug div{padding:10px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
 #sug div:active{background:var(--accent2)}
 .ghost{font-size:14px;padding:8px 12px;border-radius:10px;border:0;background:var(--accent2);color:var(--accent);cursor:pointer;margin-top:8px}
+.pv{position:fixed;inset:0;z-index:50;background:rgba(20,24,22,.45);display:flex;align-items:flex-end;justify-content:center;animation:pvf .2s ease}
+.pv[hidden]{display:none}
+.pv .sh{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:18px 18px calc(16px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:pvu .28s cubic-bezier(.2,.8,.2,1)}
+.pv h3{margin:0;font-size:17px}.pv .sub{font-size:13px;color:var(--muted);margin:3px 0 14px}
+.pv .im{position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#eef1ef}.pv .im img{width:100%;height:100%;object-fit:cover;display:block}
+.pv .im span{position:absolute;right:10px;bottom:10px;font-size:12px;color:#fff;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:10px}
+.pv .pr{font-size:20px;font-weight:700;margin-top:12px}.pv .pr small{font-size:14px;font-weight:400;color:var(--muted)}
+.pv .tt{font-size:15px;margin-top:2px}.pv .fx{font-size:14px;color:var(--muted);margin-top:4px}
+.pv .tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.pv .tg span{font-size:12px;padding:3px 9px;border-radius:10px;background:var(--accent2);color:var(--accent)}
+.pv .bt{display:flex;gap:10px;margin-top:18px}.pv .bt button{flex:1;font-size:16px;padding:13px;border-radius:12px;border:0;cursor:pointer;font-weight:600}
+.pv .bt .back{flex:0 0 34%;background:#f1f3f2;color:var(--ink)}.pv .bt .yes{background:var(--accent);color:#fff}
+@keyframes pvf{from{opacity:0}}@keyframes pvu{from{transform:translateY(40px);opacity:.4}}
 .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;justify-content:center}
 .bar .prog{font-size:13px;color:var(--muted)}
 .submit{font-size:17px;padding:13px 26px;border:0;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;font-weight:600}
@@ -194,9 +206,15 @@ textarea{resize:vertical;min-height:110px}
   </section>
   <div class="err" id="err"></div>
 </main>
+<div class="pv" id="pv" hidden role="dialog" aria-modal="true" aria-labelledby="pvH"><div class="sh">
+  <h3 id="pvH">上线后长这样</h3><div class="sub">租客在房源列表里会看到这张卡片。没问题就发布，我们审核后上线。</div>
+  <div class="im"><img id="pvImg" alt=""><span id="pvN"></span></div>
+  <div class="pr" id="pvP"></div><div class="tt" id="pvT"></div><div class="fx" id="pvF"></div><div class="fx" id="pvM"></div><div class="tg" id="pvG"></div>
+  <div class="bt"><button class="back" id="pvBack">再改改</button><button class="yes" id="pvYes">确认发布</button></div>
+</div></div>
 <div class="bar"><span class="prog" id="prog">还差：照片、租金、地址、联系方式</span><button class="submit" id="go">发布</button></div>
 
-<script src="js/post-form.js?v=20261110"></script>
+<script src="js/post-form.js?v=20261111"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -392,6 +410,25 @@ try { const d = JSON.parse(localStorage.getItem(KEY) || "null"); if (d) { Object
 progress();
 
 // ---------- submit ----------
+// 提交前预览"上线后长什么样"
+let PV_OK = false;
+function showPreview() {
+  const when = chips("when")[0], p0 = S.photos[0];
+  const v = PostForm.previewLines({ kind: chips("kind")[0] || "整套出租", title: $("#title").value.trim() || `${S.suburb || "墨尔本"} ${S.beds} 房 ${S.baths} 卫`,
+    suburb: S.suburb, beds: S.beds, baths: S.baths, cars: S.cars, rent_weekly: weekly(),
+    available: when === "选日期" ? ($("#date").value || "选日期") : when, furnished: chips("furnished")[0], highlights: tags() });
+  $("#pvImg").src = (p0 && p0.url) || "";
+  $("#pvN").textContent = `1 / ${S.photos.length}`;
+  $("#pvP").innerHTML = v.price === "租金面议" ? v.price : `${v.price}<small> / 周</small>`;
+  $("#pvT").textContent = v.title; $("#pvF").textContent = v.facts; $("#pvM").textContent = v.meta; $("#pvM").hidden = !v.meta;
+  $("#pvG").innerHTML = ""; v.tags.forEach(t => { const e = document.createElement("span"); e.textContent = t; $("#pvG").append(e); });
+  $("#pv").hidden = false; document.body.style.overflow = "hidden"; $("#pvYes").focus({ preventScroll: true });
+}
+const hidePreview = () => { $("#pv").hidden = true; document.body.style.overflow = ""; };
+$("#pvBack").onclick = hidePreview;
+$("#pv").addEventListener("click", e => { if (e.target.id === "pv") hidePreview(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#pv").hidden) hidePreview(); });
+$("#pvYes").onclick = () => { hidePreview(); PV_OK = true; $("#go").onclick(); };
 $("#go").onclick = async () => {
   const m = missing(); $("#err").textContent = "";
   if (m.length) {
@@ -404,6 +441,8 @@ $("#go").onclick = async () => {
   }
   if ($("#website").value) return; // bot
   if (S.photos.some(p => !p.blob)) { $("#err").textContent = "照片还在压缩，稍等几秒再点。"; return; }
+  if (!PV_OK) return showPreview();
+  PV_OK = false;
   if (!sb) { $("#err").textContent = "发布功能还没开放（后台正在设置），请过几天再来。"; return; }
   const go = $("#go"); go.disabled = true;
   try {

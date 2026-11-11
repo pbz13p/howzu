@@ -33,6 +33,18 @@
   function todayISO(d) { d = d || new Date(); const p = n => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; }
   // "2026-12-01" → "12 月 1 日"（其他文字原样返回）
   function niceDate(v) { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ""); return m ? `${+m[2]} 月 ${+m[3]} 日` : (v || ""); }
-  const api = { chipState, withLease, withTag, move, bondText, todayISO, niceDate, LEASE_PREFIX };
+  // 提交前预览：把要提交的房源变成"上线后卡片上显示的几行字"
+  function previewLines(x) {
+    const room = x.kind === "单间出租" ? "单间" : [x.beds + " 房", x.baths + " 卫", x.cars ? x.cars + " 车位" : ""].filter(Boolean).join(" · ");
+    const av = x.available === "马上" ? "马上入住" : x.available && x.available !== "选日期" ? niceDate(x.available) + "入住" : "";
+    return {
+      price: x.rent_weekly ? "$" + x.rent_weekly : "租金面议",
+      title: x.title || "",
+      facts: [room, x.suburb].filter(Boolean).join(" · "),
+      meta: [av, x.furnished].filter(Boolean).join(" · "),
+      tags: (x.highlights || []).slice(0, 4)
+    };
+  }
+  const api = { chipState, withLease, withTag, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);

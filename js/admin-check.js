@@ -32,6 +32,13 @@
     }
     return [L.filter(Boolean).join("\n"), `📍 ${area}`, "", `👉 照片和详情：https://howzu.com.au/rentals.html?id=${encodeURIComponent(x.id)}`].join("\n");
   }
-  const api = { listingIssues, normAddr, shareText };
+  // 审核通过后发给房东的通知（带房源链接）
+  function ownerNotice(x) {
+    const name = String(x.contact_name || "").trim(), t = String(x.title || "").trim() || x.address || "您的房源";
+    return [`${name ? name + "，" : ""}您好！您在好租 Howzu 发布的房源「${t}」已审核通过，现在已经上线：`,
+      `https://howzu.com.au/rentals.html?id=${encodeURIComponent(x.id)}`, "",
+      "把这个链接转发到微信群/朋友圈，租客能直接看到照片和租金。有租客会直接联系您；租出去后请回复我们一声，我们帮您标记“已租出”。", "—— 好租 Howzu"].join("\n");
+  }
+  const api = { listingIssues, normAddr, shareText, ownerNotice };
   if (typeof module === "object" && module.exports) module.exports = api; else root.AdminCheck = api;
 })(this);
