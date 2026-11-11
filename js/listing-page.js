@@ -43,7 +43,7 @@
   }
   const rel = p => /^https?:/.test(p) ? p : "../" + String(p).replace(/^\//, "");
 
-  function render(x, contact) {
+  function render(x, contact, letCount) {
     contact = contact || {};
     const tel = x.phone || contact.phone, wx = x.wechat || contact.wechat;
     const P = x.photos || [];
@@ -93,6 +93,8 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .facts{display:flex;gap:18px;margin:14px 0;font-size:15px;color:#1d2321}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.chips span{background:#e8f3ee;color:#0f6b4f;font-size:13px;padding:4px 10px;border-radius:99px}
 .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #ece9e2;border-radius:12px;margin:0 0 16px}.kf div{padding:10px 4px;text-align:center;min-width:0}.kf div+div{border-left:1px solid #ece9e2}.kf small{display:block;font-size:12px;color:#6b726f}.kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kf b.m{color:#9aa09d;font-weight:500}
+.tr{border-radius:14px;background:#f2f7f4;padding:12px 14px 11px;margin:0 0 18px}.tr-h{font-size:14px;font-weight:600;color:#0f6b4f;margin-bottom:8px}
+.tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tr-g b{display:block;font-size:13px}.tr-g small{display:block;font-size:11.5px;color:#6b726f;line-height:1.35}.tr-n{font-size:12px;color:#6b726f;margin-top:9px;padding-top:8px;border-top:1px solid rgba(15,107,79,.12)}
 .desc{white-space:pre-line;font-size:15px;border-top:1px solid #ece9e2;padding-top:18px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0}.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
 .more{display:block;text-align:center;padding:14px;border:1px solid #e4e1d8;border-radius:12px;text-decoration:none;font-size:15px;margin-top:8px}
@@ -114,6 +116,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 ${tags.length ? `<div class="facts">${tags.map(esc).join("<span></span>")}</div>` : ""}
 <div class="kf">${kf.cells.map(([k, v]) => `<div><small>${esc(k)}</small><b${v === "咨询" ? ' class="m"' : ""}>${esc(v)}</b></div>`).join("")}</div>
 ${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
+${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}</div>`)(trust(x, letCount))}
 ${x.desc ? `<div class="desc">${esc(x.desc)}</div>` : ""}
 ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map(p => `<a href="${esc(full)}"><img src="${esc(rel(p))}" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
 <a class="more" href="${esc(full)}">查看全部照片 · 看对口学区 ›</a>
@@ -140,7 +143,23 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
   }
   const safeId = id => /^[\w-]+$/.test(String(id || ""));
 
-  const api = { keyFacts, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  // 信任信息：自管房源讲清楚我们的保障；个人发布的房源给防骗提醒（不替私人房东做承诺）
+  function trust(x, letCount) {
+    if (x && x.user) return {
+      kind: "user", title: "个人发布 · 好租已审核",
+      items: [["看房前不转账", "不要先付定金或押金"], ["押金交 RTBA", "不交现金给个人"], ["签标准合同", "维州 CAV 标准租约"]],
+      note: "这是房东或租客自己发布的房源，好租只做了信息审核。",
+    };
+    const n = +letCount || 0;
+    return {
+      kind: "own", title: "好租直管 · 持牌物业管理",
+      items: [["零中介费", "看房签约不收费"], ["押金政府托管", "存进维州 RTBA"], ["全程中文", "看房、签约、报修"]],
+      note: n > 0 ? `我们已帮 ${n} 套同类房源找到租客` : "",
+      cases: n,
+    };
+  }
+
+  const api = { keyFacts, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);

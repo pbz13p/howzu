@@ -20,5 +20,10 @@ const kf = LP.keyFacts({ status: "live", available: "12 月 1 日", highlights: 
 ok("关键信息栏：押金/入住/租期/看房", JSON.stringify(kf.cells) === JSON.stringify([["押金", "4 周"], ["可入住", "12 月 1 日"], ["租期", "12 个月"], ["看房", "视频看房"]]));
 ok("关键信息栏：其他亮点保留", JSON.stringify(kf.rest) === '["近电车"]');
 ok("关键信息栏：没填写咨询，不编数据", LP.keyFacts({ status: "live" }).cells[0][1] === "咨询" && LP.keyFacts({ status: "let", available: "尽快" }).cells[1][1] === "已租出");
+
+const tO = LP.trust({ id: "a" }, 22), tU = LP.trust({ id: "b", user: true }, 22);
+ok("信任信息：自管房源显示成交数和 RTBA", tO.kind === "own" && tO.cases === 22 && /22 套/.test(tO.note) && tO.items.some(i => /RTBA/.test(i[1])));
+ok("信任信息：个人发布不冒充直管，给防骗提醒", tU.kind === "user" && !/直管|持牌/.test(tU.title) && tU.items.some(i => /转账/.test(i[0])));
+ok("信任信息：没有成交时不写 0 套", LP.trust({}, 0).note === "");
 console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部通过");
 process.exit(fail ? 1 : 0);
