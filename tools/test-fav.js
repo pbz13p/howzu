@@ -1,0 +1,17 @@
+// 收藏测试。由 test-data.js 自动调用。
+const F = require("../js/fav.js");
+let fail = 0, n = 0;
+const ok = (c, m) => { n++; if (!c) { fail++; console.log("✗ " + m); } };
+ok(F.parse("").length === 0 && F.parse("{bad").length === 0 && F.parse('{"a":1}').length === 0, "坏数据不报错");
+ok(F.parse('["a",1,"b"]').join() === "a,b", "只留字符串");
+let l = F.toggle([], "a"); l = F.toggle(l, "b");
+ok(l.join() === "b,a", "新收藏排前面");
+ok(F.toggle(l, "a").join() === "b", "再点一次取消");
+ok(F.toggle([], 123)[0] === "123", "数字 id 转字符串");
+const big = Array.from({ length: 100 }, (_, i) => "x" + i);
+ok(F.toggle(big, "new").length === 100 && F.toggle(big, "new")[0] === "new", "最多 100 条");
+const mem = { d: {}, getItem(k) { return this.d[k] || null; }, setItem(k, v) { this.d[k] = v; } };
+F.save(mem, ["q"]); ok(F.load(mem).join() === "q", "存取");
+ok(F.load({ getItem() { throw 1; } }).length === 0, "存储不可用时不报错");
+console.log(`收藏：${n - fail}/${n} 通过`);
+process.exit(fail ? 1 : 0);

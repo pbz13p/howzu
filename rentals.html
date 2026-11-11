@@ -163,6 +163,14 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .perks .pk{background:#fff;border:1px solid #e6e2d8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .perks b{font-size:14px}.perks span{font-size:12.5px;color:#6b726f;line-height:1.4}
 @media (max-width:950px){.perks{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}.perks .pk{flex:0 0 72%;scroll-snap-align:start}}
+.dt .cm{margin:14px 0 16px}.dt .cm-h{font-size:14px;font-weight:600;margin-bottom:8px}.dt .cm-h small{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px}.dt .cm-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.dt .cm-g div{background:#f6f8f7;border-radius:12px;padding:10px 10px 9px;min-width:0}.dt .cm-g small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .cm-g i{font-style:normal;opacity:.75}.dt .cm-g b{display:block;font-size:15px;font-weight:600;margin:3px 0 1px;white-space:nowrap}.dt .cm-g span{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap}
+@media (max-width:560px){.dt .cm-g{grid-template-columns:1fr 1fr}}
+.dt .cm-z{display:block;margin-top:8px;background:#f6f8f7;border-radius:12px;padding:10px 12px;color:inherit;text-decoration:none}.dt .cm-z span{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.dt .cm-z b{display:block;font-size:14px;font-weight:600;line-height:1.5}.dt .cm-z b small{font-weight:400;color:var(--muted);font-size:12px;margin-right:8px}.dt .cm-z em{display:block;font-style:normal;font-size:13px;color:var(--accent);margin-top:4px;font-weight:600}
+.favfab{position:absolute;top:8px;right:8px;z-index:2;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.95);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);padding:0}
+.favfab svg{stroke:#222}.favd svg{stroke:currentColor}.favfab svg,.favd svg{fill:none;stroke-width:1.8;transition:transform .2s}.favfab.on svg,.favd.on svg{fill:#e0245e;stroke:#e0245e;transform:scale(1.08)}
+#list .sharefab{right:52px;top:10px}
+.favd{display:inline-flex;align-items:center;gap:5px}.favd svg{width:16px;height:16px}
+.filters .fv i{font-style:normal;opacity:.7}
 .dt .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin:12px 0 10px}.dt .kf div{padding:9px 4px;text-align:center;min-width:0}.dt .kf div+div{border-left:1px solid var(--line)}.dt .kf small{display:block;font-size:12px;color:var(--muted);line-height:1.3}.dt .kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .kf b.m{color:#9aa09d;font-weight:500}
 </style>
 </head>
@@ -188,6 +196,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <button data-f="later">稍后入住</button>
     <button data-f="1">1 房</button>
     <button data-f="2">2 房+</button>
+    <button data-f="fav" class="fv" hidden>♥ 收藏 <i></i></button>
   </div>
   <div id="list"><div class="empty">加载中…</div></div>
   <section class="lead" id="leadCard">
@@ -218,6 +227,8 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="js/share.js?v=20261110"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="js/enquire.js?v=20261111"></script>
+<script src="js/commute.js?v=20261111"></script>
+<script src="js/fav.js?v=20261111"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -230,6 +241,11 @@ function phImg(x){const P=[["#0f6b4f","#1f9a72"],["#1c4e80","#3a7fbf"],["#7a4b1f
   const t=(x.title||"").split("·")[0].trim().replace(/[<&]/g,"");const r=[x.beds!=null?x.beds+" 房":"",x.baths!=null?x.baths+" 卫":""].filter(Boolean).join(" · ");
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 380"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="380" fill="url(#g)"/><g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="3"><rect x="150" y="70" width="100" height="190" rx="4"/><rect x="250" y="120" width="70" height="140" rx="4"/><rect x="90" y="140" width="60" height="120" rx="4"/></g><g fill="rgba(255,255,255,.2)">${[0,1,2,3,4,5].map(i=>`<rect x="165" y="${88+i*28}" width="22" height="14"/><rect x="213" y="${88+i*28}" width="22" height="14"/>`).join("")}</g><text x="200" y="310" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700" fill="#fff">${t}</text><text x="200" y="345" text-anchor="middle" font-family="sans-serif" font-size="19" fill="rgba(255,255,255,.85)">${r}</text></svg>`;
   return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);}
+const HEART='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20.6s-7.6-4.6-9.4-9.3C1.4 8 3.5 4.6 7 4.6c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.5 0 5.6 3.4 4.4 6.7-1.8 4.7-9.4 9.3-9.4 9.3z"/></svg>';
+let FAV=window.HowzuFav?HowzuFav.load(localStorage):[];
+const isFav=x=>FAV.includes(String(x.id));
+function favBtn(x,cls){const on=isFav(x);return `<button class="${cls}${on?" on":""}" data-fav="${esc(x.id)}" data-act="fav" aria-pressed="${on}" aria-label="${on?"取消收藏":"收藏"}">${HEART}${cls==="favfab"?"":`<span>${on?"已收藏":"收藏"}</span>`}</button>`;}
+function favChip(){const b=document.querySelector('#filters [data-f="fav"]');const n=FAV.filter(id=>L.some(y=>String(y.id)===id)).length;if(b){b.hidden=!n&&F!=="fav";b.querySelector("i").textContent=n||"";}}
 function card(x){
   const P=x.photos||[];
   const imgs=P.length?P.map((p,i)=>`<img src="${esc(p)}" alt="${esc(x.title)}" loading="${i?"lazy":"eager"}">`).join(""):`<img src="${phImg(x)}" alt="${esc(x.title)}">`;
@@ -241,7 +257,7 @@ function card(x){
   return `<div class="card${isLet(x)?" is-let":""}" id="L-${esc(x.id)}" data-open="${esc(x.id)}">
     <div class="ph"><div class="sl">${imgs}</div>${dots}
       ${isNow(x)?'<span class="badge">马上入住</span>':""}${isLet(x)?'<span class="badge let">已租出</span>':x.status!=="live"?'<span class="badge draft">草稿·未公开</span>':""}
-      ${isLet(x)?"":`<button class="sharefab" data-share="${esc(x.id)}" title="分享" aria-label="分享">分享</button>`}</div>
+      ${isLet(x)?"":`<button class="sharefab" data-share="${esc(x.id)}" title="分享" aria-label="分享">分享</button>${favBtn(x,"favfab")}`}</div>
     <div class="body"><div class="t">${esc(x.title)}</div>
       <div class="sub">${esc(area)}${f?" · "+f:""}</div>
       <div class="sub">${esc(when)}</div>
@@ -251,11 +267,12 @@ const one=new URLSearchParams(location.search).get("id");
 document.addEventListener("scroll",e=>{const sl=e.target;if(!sl.classList||!sl.classList.contains("sl"))return;const n=sl.children.length,i=Math.round(sl.scrollLeft/(sl.clientWidth||1));const d=sl.parentNode.querySelectorAll(".dots i");if(!d.length)return;const k=n<=5?i:Math.min(4,Math.max(0,i<2?i:i>=n-2?5-(n-i):2));d.forEach((el,j)=>el.classList.toggle("on",j===k));},true);
 function render(){
   let list=L.filter(x=>preview||x.status==="live"||isLet(x)||x.id===one);
-  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2));
+  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2)||(F==="fav"&&isFav(x)));
   list.sort((a,b)=>(isLet(a)?1:0)-(isLet(b)?1:0));
   const live=list.filter(x=>!isLet(x)),done=list.filter(isLet);
   const sec=(live.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
-  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？<a href="#leadCard">在下面留下需求</a>。</div>`;
+  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？<a href="#leadCard">在下面留下需求</a>。</div>`;
+  favChip();
 }
 
 /* ---------- 房源详情 ---------- */
@@ -275,6 +292,20 @@ function bookSheet(x){const D=HowzuEnquire.days(),T=HowzuEnquire.TIMES;
 function bkPick(){const d=document.querySelector("#bkD .on"),t=document.querySelector("#bkT .on");return [d.dataset.d,t.dataset.t];}
 function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";t.setAttribute("role","status");document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("on"),3200);}
 const copy=s=>{try{navigator.clipboard.writeText(s);}catch(_){}};
+// 通勤估算：地址 → 坐标（OpenStreetMap 免费解析，缓存在本机），再算到 CBD/墨大/RMIT/莫纳什 的直线估算
+async function geoPt(addr){const k="howzu-geo:"+addr;try{const c=JSON.parse(localStorage.getItem(k)||"null");if(c)return c;}catch(_){}
+  let p=null;const q=/vic|victoria|\b3\d{3}\b/i.test(addr)?addr:addr+", Victoria";
+  try{const r=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=au&q="+encodeURIComponent(q));if(r.ok){const j=await r.json();if(j[0])p={lat:+j[0].lat,lng:+j[0].lon};}}catch(_){}
+  if(!p)try{const r=await fetch("https://photon.komoot.io/api/?limit=1&lat=-37.81&lon=144.96&q="+encodeURIComponent(q));if(r.ok){const j=await r.json();const c=j.features&&j.features[0]&&j.features[0].geometry.coordinates;if(c)p={lat:c[1],lng:c[0]};}}catch(_){}
+  if(p)try{localStorage.setItem(k,JSON.stringify(p));}catch(_){}
+  return p;}
+async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:await geoPt(x.address);
+  const R=HowzuCommute.rows(pt),box=document.getElementById("cm");if(!R.length||!box||DX!==x)return;
+  document.getElementById("cmG").innerHTML=R.map(r=>`<div><small>${esc(r.name)} <i>${esc(r.sub)}</i></small><b>${r.mode==="walk"?"🚶":"🚆"} ${r.min} 分钟</b><span>${r.km} · ${r.mode==="walk"?"步行":"公共交通"}</span></div>`).join("");box.hidden=false;
+  try{const [zp,zs]=await (window.ZP=window.ZP||Promise.all(["zones_primary","zones_secondary"].map(n=>fetch(`data/${n}.json`).then(r=>r.json()))));
+    const P=HowzuCommute.zonesAt(zp,pt),S=HowzuCommute.zonesAt(zs,pt),a=document.getElementById("cmZ");if(!a||DX!==x||!(P.length||S.length))return;
+    const nm=v=>v.map(z=>esc(z.name)).join("、");
+    a.innerHTML=`<span>🏫 对口公立学校</span>${P.length?`<b><small>小学</small>${nm(P)}</b>`:""}${S.length?`<b><small>中学</small>${nm(S)}</b>`:""}<em>看排名和周边学校 ›</em>`;a.hidden=false;}catch(_){window.ZP=null;}}
 function openDetail(x,noPush){
   DX=x;DI=0;const P=x.photos||[];
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");
@@ -290,11 +321,13 @@ function openDetail(x,noPush){
     ${f?`<div class="facts">${f}</div>`:""}
     ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div><small>${esc(k)}</small><b${v==="咨询"?' class="m"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}</b></div>`).join("")}</div>`}
     <div class="tags">${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':x.furnished==="部分家具"?'<span class="tag">部分家具</span>':""}${KF.rest.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
+    ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a></div>`}
     ${x.desc?`<div class="dt-desc">${esc(x.desc)}</div>`:`<div class="dt-desc muted">房东还没有写介绍，欢迎直接联系咨询。</div>`}
-    <div class="acts2"><a href="index.html?q=${encodeURIComponent(x.address)}">🏫 看对口学区</a>${isLet(x)?"":`<button data-share="${esc(x.id)}">📤 转发给朋友</button>`}</div>
+    <div class="acts2"><a href="index.html?q=${encodeURIComponent(x.address)}">🏫 看对口学区</a>${isLet(x)?"":`<button data-share="${esc(x.id)}">📤 转发给朋友</button>${favBtn(x,"favd")}`}</div>
     <div class="acts">${contactBtns(x)}</div>
    </div></div>`;
   document.body.appendChild(m);document.body.style.overflow="hidden";
+  if(!isLet(x))commute(x);
   window.T0=window.T0||document.title;document.title=`${x.title}${x.rentWeekly&&!isLet(x)?` · $${x.rentWeekly}/周`:""} · 好租 Howzu`;
   if(!noPush)history.pushState({id:x.id},"",`?id=${encodeURIComponent(x.id)}`);
   let sx=null;const g=m.querySelector(".dt-g");
@@ -331,6 +364,9 @@ document.addEventListener("click",e=>{
   const sl=card.querySelector(".sl");const i=sl?Math.round(sl.scrollLeft/(sl.clientWidth||1)):0;
   openDetail(x);if(i){DI=i;show();}
 });
+document.addEventListener("click",e=>{const b=e.target.closest("[data-fav]");if(!b)return;e.stopPropagation();const id=b.dataset.fav;FAV=HowzuFav.toggle(FAV,id);HowzuFav.save(localStorage,FAV);const on=FAV.includes(id);
+  document.querySelectorAll(`[data-fav="${CSS.escape(id)}"]`).forEach(el=>{el.classList.toggle("on",on);el.setAttribute("aria-pressed",on);el.setAttribute("aria-label",on?"取消收藏":"收藏");const sp=el.querySelector("span");if(sp)sp.textContent=on?"已收藏":"收藏";});
+  favChip();toast(on?"已收藏，在列表上方「♥ 收藏」里能找到":"已取消收藏");},true);
 document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.share);if(x&&window.HowzuShare)HowzuShare.open(x);});
 $("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F=b.dataset.f;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));render();});
 // 留需求：存进后台（listings 表 kind=求租需求，公众看不到）
