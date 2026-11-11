@@ -201,10 +201,10 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
   <p id="built"></p>
 </footer>
 
+<script src="js/config.js?v=20261107"></script>
+<script src="js/lead.js?v=20261111"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Where lead submissions go. Empty = show a copyable summary only.
-const LEAD_ENDPOINT = "";
 
 const $ = s => document.querySelector(s);
 const SECTOR = {Government:"公立", Catholic:"天主教", Independent:"私立"};
@@ -416,12 +416,13 @@ $("#more").onclick=()=>{rankShown+=50;renderRank();};
 
 $("#lead").addEventListener("submit", async e=>{
   e.preventDefault();
-  const f=Object.fromEntries(new FormData(e.target));
-  const text=`租学区房需求\n学区：${f.school||"-"}\n房型：${f.beds}\n预算：$${f.budget||"-"}/周\n入住：${f.when||"-"}\n孩子年级：${f.grade||"-"}\n联系方式：${f.contact}\n其他：${f.other||"-"}`;
-  let sent=false;
-  if(LEAD_ENDPOINT){ try{ const r=await fetch(LEAD_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({...f,_subject:"租学区房需求"})}); sent=r.ok; }catch(_){} }
+  const f=Object.fromEntries(new FormData(e.target)); f.ref="学区页";
+  const btn=e.target.querySelector("button[type=submit]"); btn.disabled=true;
+  const r=window.HowzuLead?await HowzuLead.submit(f):{ok:false,error:"暂时提交不了，请直接加微信联系我们"};
+  btn.disabled=false;
   const ok=$("#leadOk"); ok.classList.remove("hidden");
-  ok.textContent = sent ? "已收到！有合适房源会第一时间联系你。" : "已记录。下面是你的需求，可以复制后发给我们：\n\n"+text;
+  ok.textContent = r.ok ? "已收到！有合适房源会第一时间联系你。" : r.error;
+  if(r.ok) e.target.querySelectorAll("input,textarea,select,button").forEach(x=>x.disabled=true);
 });
 
 // Victorian government schools, International Student Program tuition (AUD/year)

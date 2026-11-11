@@ -61,11 +61,11 @@ async function start() {
   load();
 }
 async function load() {
-  const { data, error } = await sb.from("listings").select("*").eq("status", tab).order("created_at", { ascending: false });
-  const { data: all } = await sb.from("listings").select("id,address,status"); // 用来查重复（只取地址和状态）
+  if (tab === "lead") return loadLeads();
+  const { data, error } = await sb.from("listings").select("*").eq("status", tab).neq("kind", "求租需求").order("created_at", { ascending: false });
+  const { data: all } = await sb.from("listings").select("id,address,status").neq("kind", "求租需求"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
-  const tabs = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"]];
-  $("#app").innerHTML = `<div class="tabs">${tabs.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>` +
+  $("#app").innerHTML = tabsHtml() +
     (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">没有</div>' : data.map(x => `<div class="card" data-card="${esc(x.id)}">
       <div class="strip">${(x.photos || []).map(p => `<a href="${esc(p)}" target="_blank"><img src="${esc(p)}" loading="lazy"></a>`).join("")}</div>
       <div class="t">${esc(x.title)}</div>
@@ -79,8 +79,25 @@ async function load() {
       <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
+const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求"]];
+const tabsHtml = () => `<div class="tabs">${TABS.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>`;
+// 租客留的需求：不给"通过上线"（会公开联系方式），只能复制联系方式 / 标记已联系 / 删除
+async function loadLeads() {
+  const { data, error } = await sb.from("listings").select("*").eq("kind", "求租需求").order("created_at", { ascending: false });
+  D = Object.fromEntries((data || []).map(x => [x.id, x]));
+  $("#app").innerHTML = tabsHtml() + `<div class="m" style="margin:0 2px 10px">租客在房源页 / 学区页留的需求。有合适的新房源时，复制联系方式去通知他们。</div>` +
+    (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">还没有人留需求</div>' : data.map(x => `<div class="card"${x.status !== "pending" ? ' style="opacity:.55"' : ""}>
+      <div class="t">${esc(x.title)}${x.status !== "pending" ? " · 已联系" : ""}</div>
+      <div class="m">💰 ${x.rent_weekly ? "$" + x.rent_weekly + "/周" : "预算未填"} · 🗓 ${esc(x.available || "入住时间未填")}</div>
+      <div class="m">📞 <b>${esc(x.contact_wechat || x.contact_phone || "—")}</b></div>
+      <div class="desc">${esc(x.description || "")}</div>
+      <div class="m">提交于 ${new Date(x.created_at).toLocaleString("zh-CN")}</div>
+      <div class="acts"><button class="gr" data-lc="${esc(x.id)}">📋 复制联系方式</button>${x.status === "pending" ? `<button class="ok" data-set="rejected" data-id="${x.id}">✓ 已联系</button>` : `<button class="gr" data-set="pending" data-id="${x.id}">改回未联系</button>`}<button class="gr" data-del="${x.id}">删除</button></div>
+    </div>`).join(""));
+}
 document.addEventListener("click", async e => {
   const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.lc) { const x = D[b.dataset.lc] || {}, t = x.contact_wechat || x.contact_phone || ""; try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制"; } catch (_) { prompt("联系方式：", t); } }
   if (b.dataset.tab) { tab = b.dataset.tab; load(); }
   if (b.hasAttribute("data-out")) { await sb.auth.signOut(); start(); }
   if (b.dataset.set) { b.disabled = true; const { error } = await sb.from("listings").update({ status: b.dataset.set }).eq("id", b.dataset.id); if (error) alert(error.message); load(); }

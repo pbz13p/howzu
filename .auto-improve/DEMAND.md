@@ -1,0 +1,8 @@
+# 租客需求雷达
+
+## 2026-11-11（本次只做了 1 次搜索，预算紧）
+| 需求 / 痛点（大白话） | 证据 | 来源 | 好租可以做什么 |
+|---|---|---|---|
+| 怕退租时押金被乱扣 | 维州 2026-10-13 起：房东/中介没有充分证据就申请扣押金属违法；每两年必须做燃气和电气安全检查 | [CAV 新规](https://www.consumer.vic.gov.au/latest-news/no-more-unsupported-bond-claims-under-new-rental-reforms)、[CAV 规则变化页](https://www.consumer.vic.gov.au/housing/renting/new-changes-to-rental-laws)、[CHOICE](https://www.choice.com.au/money/property/renting/articles/new-rental-reforms-give-tenants-more-power-in-fight-against-dodgy-agent-claims) | 信任栏 / 租房指南写清楚“押金交 RTBA，退租扣押金必须有证据”（第 9、10 条） |
+| 担心“竞价抢房”、广告价不实 | 2025-11-25 起禁止各种形式的租金竞价；广告要写固定租金 | [CAV Housing Statement 改革](https://www.consumer.vic.gov.au/latest-news/more-rights-for-victorias-renters-as-housing-statement-reforms-take-effect) | 检查网站上“租金面议”的写法（见 LOG 待老板确认） |
+| 申请租房被收第三方 App 费用 | 2026-03-31 起新的标准申请表，禁止第三方申请平台收费 | [Beat](https://beat.com.au/from-tomorrow-new-laws-give-vcat-more-power-to-reject-rent-increases/)、[CAV 新规](https://www.consumer.vic.gov.au/latest-news/less-paperwork-more-security-new-rental-rules-begin-today) | 我们申请免费、零中介费可以写进信任栏 |

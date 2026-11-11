@@ -121,6 +121,27 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 @media (hover:hover) and (pointer:fine){.mob{display:none}.desk{display:inline}}
 .btn.ghost{background:var(--accent2);color:var(--accent)}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
+.leadcta{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;background:var(--accent2);color:var(--accent);text-decoration:none;font-size:14px}
+.leadcta b{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+.leadcta i{font-style:normal;font-size:20px}
+html{scroll-behavior:smooth}
+.lead{scroll-margin-top:110px;margin:44px auto 8px;max-width:560px;background:#f7f8f6;border:1px solid var(--line);border-radius:18px;padding:22px 20px}
+.lead h2{margin:0;font-size:19px;letter-spacing:.01em}
+.lead .sub{margin:6px 0 16px;font-size:13px;color:var(--muted)}
+.lead label{display:block;font-size:12px;color:var(--muted);margin:12px 0 6px}
+.lead input{width:100%;font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.lead input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}
+.lead .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lead .seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.lead .seg button{flex:1 0 auto;font:inherit;font-size:13px;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.lead .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.lead .go{width:100%;margin-top:18px;font:inherit;font-size:16px;font-weight:600;padding:13px;border:0;border-radius:14px;background:var(--accent);color:#fff;cursor:pointer}
+.lead .go:disabled{opacity:.6}
+.lead .err{color:#b42318;font-size:13px;margin-top:10px}
+.lead .done{text-align:center;padding:10px 0}
+.lead .done b{display:block;font-size:18px;margin:6px 0}
+.lead .hp{position:absolute;left:-9999px}
+.lead .fine{font-size:11px;color:var(--muted);margin:10px 0 0;text-align:center}
 .note{font-size:12px;color:var(--muted)}
 .contact{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:none;gap:8px;justify-content:center}
 footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
@@ -155,6 +176,24 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <button data-f="2">2 房+</button>
   </div>
   <div id="list"><div class="empty">加载中…</div></div>
+  <section class="lead" id="leadCard">
+    <h2>没找到合适的？</h2>
+    <p class="sub">留下需求，有新房源第一时间通知你。不用注册，30 秒填完。</p>
+    <form id="leadF" novalidate>
+      <div class="two">
+        <div><label for="lArea">想住哪里</label><input id="lArea" name="area" placeholder="如 Carlton"></div>
+        <div><label for="lBudget">每周预算（澳元）</label><input id="lBudget" name="budget" inputmode="numeric" placeholder="如 600"></div>
+      </div>
+      <label>房型</label>
+      <div class="seg" id="lBeds"><button type="button" data-v="单间">单间</button><button type="button" data-v="1 房">1 房</button><button type="button" data-v="2 房" class="on">2 房</button><button type="button" data-v="3 房+">3 房+</button></div>
+      <label for="lWhen">什么时候入住</label><input id="lWhen" name="when" placeholder="如 2 月初 / 越快越好">
+      <label for="lContact">微信号、手机或邮箱</label><input id="lContact" name="contact" autocomplete="email" placeholder="有房时只通过这里联系你">
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="go" type="submit">有新房通知我</button>
+      <div class="err" id="lErr" hidden></div>
+      <p class="fine">联系方式只有好租工作人员能看到，不会公开。</p>
+    </form>
+  </section>
   <p class="note">房源信息以签约时为准。租约使用维州 CAV 标准租赁合同，押金存入 RTBA（维州租房押金管理局）。</p>
 </main>
 <div class="contact" id="contactBar"></div>
@@ -163,6 +202,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script src="js/listing-page.js?v=20261110"></script>
 <script src="js/share.js?v=20261110"></script>
+<script src="js/lead.js?v=20261111"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -199,8 +239,8 @@ function render(){
   list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2));
   list.sort((a,b)=>(isLet(a)?1:0)-(isLet(b)?1:0));
   const live=list.filter(x=>!isLet(x)),done=list.filter(isLet);
-  const sec=done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"";
-  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？在<a href="index.html#leadCard">学区页</a>留下需求。</div>`;
+  const sec=(live.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
+  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？<a href="#leadCard">在下面留下需求</a>。</div>`;
 }
 
 /* ---------- 房源详情 ---------- */
@@ -255,11 +295,18 @@ document.addEventListener("click",e=>{
 });
 document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.share);if(x&&window.HowzuShare)HowzuShare.open(x);});
 $("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F=b.dataset.f;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));render();});
+// 留需求：存进后台（listings 表 kind=求租需求，公众看不到）
+$("#lBeds").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=!b.classList.contains("on");document.querySelectorAll("#lBeds button").forEach(x=>x.classList.remove("on"));b.classList.toggle("on",on);});
+$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on");f.beds=b?b.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:"");
+  const btn=e.target.querySelector(".go"),err=$("#lErr");btn.disabled=true;btn.textContent="提交中…";err.hidden=true;
+  const r=await HowzuLead.submit(f);
+  if(r.ok){$("#leadCard").innerHTML=`<div class="done"><div style="font-size:34px">✓</div><b>收到，有合适的房源会第一时间联系你</b><p class="sub">一般 1 个工作日内回复。也可以先看看上面的在租房源。</p></div>`;return;}
+  btn.disabled=false;btn.textContent="有新房通知我";err.textContent=r.error;err.hidden=false;if(/微信号/.test(r.error))$("#lContact").focus();});
 const hideUnit=a=>String(a||"").replace(/^\s*[\w-]+\s*\/\s*/,"");
 async function userListings(){
   const H=window.HOWZU||{}; if(!H.SUPABASE_URL) return [];
   try{
-    const r=await fetch(`${H.SUPABASE_URL}/rest/v1/listings?status=eq.live&order=created_at.desc&limit=200`,{headers:{apikey:H.SUPABASE_ANON_KEY}});
+    const r=await fetch(`${H.SUPABASE_URL}/rest/v1/listings?status=eq.live&kind=neq.%E6%B1%82%E7%A7%9F%E9%9C%80%E6%B1%82&order=created_at.desc&limit=200`,{headers:{apikey:H.SUPABASE_ANON_KEY}});
     const rows=r.ok?await r.json():[];
     return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:/^\d{4}-\d\d-\d\d$/.test(x.available||"")?`${+x.available.slice(5,7)} 月 ${+x.available.slice(8,10)} 日`:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,user:true}));
   }catch(_){return []}
