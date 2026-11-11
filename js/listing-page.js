@@ -100,7 +100,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid #ece9e2;padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
 .bar div{max-width:880px;margin:0 auto;display:flex;gap:10px}
 .bar a{flex:1;text-align:center;padding:13px 0;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;background:#0f6b4f;color:#fff}
-.bar a.g{background:#fff;color:#0f6b4f;border:1px solid #0f6b4f}
+.bar a.g{background:#e8f3ee;color:#0f6b4f}.bar a.p{flex:1.6}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.hero{aspect-ratio:16/9}}
 </style>
 </head>
@@ -120,7 +120,7 @@ ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map(p => `<a href="${esc(ful
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
 <p class="trust">好租 Howzu · 持牌物业管理 · 全程中文服务</p>
 </main>
-${isLet(x) || !tel ? "" : `<nav class="bar"><div><a class="g" href="sms:${esc(tel)}?&amp;body=${msg}">💬 发短信</a><a href="tel:${esc(tel)}">📞 打电话 ${esc(fmtTel(tel))}</a></div></nav>`}
+${isLet(x) || !tel ? "" : `<nav class="bar"><div><a class="g" href="sms:${esc(tel)}?&amp;body=${msg}" data-act="sms" data-id="${esc(x.id)}">💬 短信</a><a class="g" href="tel:${esc(tel)}" data-act="call" data-id="${esc(x.id)}">📞 电话</a><a class="p" href="${esc(full)}#book" data-act="book" data-id="${esc(x.id)}">📅 预约看房</a></div></nav>`}
 ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信咨询：${esc(wx)}</a></div></nav>` : ""}
 </body>
 </html>
