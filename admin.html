@@ -79,7 +79,7 @@ async function load() {
       <div class="strip">${(x.photos || []).map(p => `<a href="${esc(p)}" target="_blank"><img src="${esc(p)}" loading="lazy"></a>`).join("")}</div>
       <div class="t">${esc(x.title)}</div>
       ${(is => is.length ? `<div class="iss">${is.map(i => `<span class="${i.lv}">${i.lv === "bad" ? "⛔ " : "⚠️ "}${esc(i.t)}</span>`).join("")}</div>` : "")(AdminCheck.listingIssues(x, all || []))}
-      <div class="m">${esc(x.kind)} · ${x.beds} 房 ${x.baths} 卫 ${x.cars} 车位 · <b>$${x.rent_weekly}/周</b> · ${esc(x.available || "")} · ${esc(x.furnished || "")}</div>
+      <div class="m">${esc(x.kind)} · ${x.beds} 房 ${x.baths} 卫 ${x.cars} 车位 · <b>$${x.rent_weekly}/周</b> · ${x.available ? esc(ListingPage.availText(x.available)) + "入住" : "入住时间未填"} · ${esc(x.furnished || "")}</div>
       <div class="m">📍 ${esc(x.address)}</div>
       <div class="m">👤 ${esc(x.contact_name || "")} · 微信 ${esc(x.contact_wechat || "—")} · 手机 ${esc(x.contact_phone || "—")}</div>
       <div class="m">${(x.highlights || []).map(esc).join(" · ")}</div>
@@ -105,7 +105,7 @@ async function loadLeads() {
   $("#app").innerHTML = tabsHtml() + `<div class="m" style="margin:0 2px 10px">租客在房源页 / 学区页留的需求。下面自动列出现在合适的在租房源，一键复制通知话术发给租客。</div>` +
     (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">还没有人留需求</div>' : data.map(x => `<div class="card"${x.status !== "pending" ? ' style="opacity:.55"' : ""}>
       <div class="t">${esc(x.title)}${x.status !== "pending" ? " · 已联系" : ""}</div>
-      <div class="m">💰 ${x.rent_weekly ? "$" + x.rent_weekly + "/周" : "预算未填"} · 🗓 ${esc(x.available || "入住时间未填")}</div>
+      <div class="m">💰 ${x.rent_weekly ? "$" + x.rent_weekly + "/周" : "预算未填"} · 🗓 ${x.available ? esc(ListingPage.availText(x.available)) + "入住" : "入住时间未填"}</div>
       <div class="m">📞 <b>${esc(x.contact_wechat || x.contact_phone || "—")}</b></div>
       <div class="desc">${esc(x.description || "")}</div>
       ${match(x)}

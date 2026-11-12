@@ -94,4 +94,6 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   ok("入住时间：文字原样保留、『马上』归一成『尽快』", A("2027 年 1 月", T) === "2027 年 1 月" && A("马上", T) === "尽快" && A("尽快入住", T) === "尽快" && A("", T) === "");
   const pz = require("fs").readFileSync(require("path").join(__dirname, "../post.html"), "utf8");
   ok("发房源：『两周内』提交时存成具体日期，微信号输入框不自动大写", pz.includes('when === "两周内" ? new Date(Date.now() + 14 * 864e5)') && pz.includes('($("#date").value || null)') && pz.includes("d.showPicker") && /id="wechat"[^>]*autocapitalize="off"/.test(pz)); }
+{ const ad = require("fs").readFileSync(require("path").join(__dirname, "../admin.html"), "utf8");
+  ok("后台：房源和需求的入住时间用中文显示（不再是 2026-11-26）", (ad.match(/ListingPage\.availText\(x\.available\)/g) || []).length === 2 && !ad.includes('esc(x.available ||')); }
 process.exit(fail ? 1 : 0);
