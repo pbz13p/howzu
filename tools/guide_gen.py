@@ -56,6 +56,7 @@ def build(a):
 <p>{disc}</p>
 </section>
 </main>
+<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261113" defer></script>
 </body>
 </html>
 '''
