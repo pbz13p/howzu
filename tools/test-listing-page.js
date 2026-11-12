@@ -108,4 +108,6 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   const bad = Object.values(zg).filter(s => { const f = path.join(root, "guide", s + ".html"); return !fs.existsSync(f) || !fs.readFileSync(f, "utf8").includes('id="zmap"'); });
   ok(`学区租房页 ${Object.keys(zg).length} 个都存在且带地图`, Object.keys(zg).length >= 20 && bad.length === 0);
   ok("查学区结果里接了学区租房页链接", fs.readFileSync(path.join(root, "index.html"), "utf8").includes('data/zone_guides.json') && fs.readFileSync(path.join(root, "index.html"), "utf8").includes('class="zg"')); }
+{ const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
+  ok("详情地图画出对口学区范围、学校位置和图例", /async function zoneLayer\(/.test(r) && r.includes('id="mpZ"') && r.includes("data-zfit") && r.includes("try{await zoneLayer(x,pt);}catch(_){}")); }
 process.exit(fail ? 1 : 0);
