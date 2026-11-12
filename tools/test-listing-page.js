@@ -11,6 +11,9 @@ ok("canonical 指向自己", h.includes('rel="canonical" href="https://howzu.com
 ok("XSS 转义", !LP.render({ ...x, title: "<script>x</script>" }).includes("<script>x"));
 const let_ = LP.render({ ...x, status: "let" }, { phone: "1" });
 ok("已租出：noindex、无电话栏", let_.includes("noindex") && !let_.includes("tel:1"));
+ok("已租出：不显示“预约看房/押金咨询”关键信息栏", !let_.includes('class="kf"') && LP.render(x, { phone: "1" }).includes('class="kf"'));
+ok("已租出：有“留下需求”入口，在租房没有", let_.includes("#leadCard") && !LP.render(x, { phone: "1" }).includes("#leadCard"));
+ok("已租出：留需求链接带区域和房型", LP.leadUrl({ id: "a1", suburb: "Melbourne", beds: 1 }).includes("la=CBD") && decodeURIComponent(LP.leadUrl({ id: "a1", suburb: "Carlton", beds: 4 })).includes("lb=3+房+"));
 ok("没照片用默认分享图", LP.ogImage({}) === "https://howzu.com.au/icons/og-share.jpg");
 ok("描述不超过 110 字", LP.ogDesc({ ...x, desc: "长".repeat(300) }).length <= 110);
 const sm = LP.sitemap([x, { ...x, id: "b", status: "let" }]);

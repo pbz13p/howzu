@@ -513,7 +513,9 @@ $("#filters").addEventListener("change",e=>{const t=e.target;if(t.id==="fArea")S
 document.addEventListener("click",e=>{if(e.target.closest("[data-fclr]")){e.preventDefault();clearF();}});
 // 留需求：存进后台（listings 表 kind=求租需求，公众看不到）
 ["#lBeds","#lWhen"].forEach(g=>$(g).addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=!b.classList.contains("on");document.querySelectorAll(g+" button").forEach(x=>x.classList.remove("on"));b.classList.toggle("on",on);}));
-$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on"),w=document.querySelector("#lWhen .on");f.beds=b?b.dataset.v:"";f.when=w?w.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:"");
+// 从已租出房源页"留下需求"过来：区域、房型按那套房预先填好（?la=CBD&lb=2 房&lf=房源id）
+const LQ=new URLSearchParams(location.search);(()=>{const a=LQ.get("la"),bd=LQ.get("lb");if(a&&!$("#lArea").value)$("#lArea").value=a.slice(0,40);if(bd&&document.querySelector(`#lBeds [data-v="${CSS.escape(bd)}"]`))document.querySelectorAll("#lBeds button").forEach(x=>x.classList.toggle("on",x.dataset.v===bd));})();
+$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on"),w=document.querySelector("#lWhen .on");f.beds=b?b.dataset.v:"";f.when=w?w.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:LQ.get("lf")?"?lf="+LQ.get("lf"):"");
   const btn=e.target.querySelector(".go"),err=$("#lErr");btn.disabled=true;btn.textContent="提交中…";err.hidden=true;
   const r=await HowzuLead.submit(f);
   if(r.ok){$("#leadCard").innerHTML=`<div class="done"><div style="font-size:34px">✓</div><b>收到，有合适的房源会第一时间联系你</b><p class="sub">一般 1 个工作日内回复。也可以先看看上面的在租房源。</p></div>`;return;}
