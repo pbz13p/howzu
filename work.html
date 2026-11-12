@@ -332,7 +332,7 @@ function openProp(id) {
     <div style="margin-top:8px"><label class="l">照片（第一张 = 封面；点 ◀ ▶ 调顺序）</label><div class="phs" id="phs"></div><input type="file" id="file" accept="image/*" multiple hidden></div>
    </div>
    <div class="sec"><h4>✍️ 创作室 <span class="small muted">（用上面的标题、租金、亮点、介绍自动生成各渠道文案，先保存再生成）</span></h4>
-    <div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" data-gen="xhs">小红书</button><button class="btn" data-gen="yeeyi">亿忆网</button><button class="btn" data-gen="wx">微信</button><button class="btn" data-gen="fb">Facebook（英文）</button><button class="btn" data-gen="poster">🖼 生成海报</button></div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" data-gen="geo" title="按地址查对口学区和到各大学的通勤，加到文案末尾">🏫 加学区和通勤</button><button class="btn" data-gen="xhs">小红书</button><button class="btn" data-gen="yeeyi">亿忆网</button><button class="btn" data-gen="wx">微信</button><button class="btn" data-gen="fb">Facebook（英文）</button><button class="btn" data-gen="poster">🖼 生成海报</button></div>
     <textarea id="gen_out" style="min-height:140px;margin-top:8px" placeholder="点上面的渠道，文案会出现在这里，可以改，再点复制"></textarea>
     <div style="margin-top:6px"><button class="btn pri" data-gen="copy">📋 复制</button> <span class="small muted" id="gen_tip"></span></div>
     <canvas id="gen_cv" width="1080" height="1440" style="display:none;width:100%;max-width:360px;margin-top:8px;border-radius:10px"></canvas>
@@ -445,11 +445,33 @@ document.addEventListener("click", async e => {
   const b = e.target.closest("[data-gen]"); if (!b || !cur) return; const k = b.dataset.gen;
   if (k === "copy") { try { await navigator.clipboard.writeText($("#gen_out").value); $("#gen_tip").textContent = "已复制"; } catch (_) { $("#gen_tip").textContent = "复制失败，请手动选中复制"; } return; }
   if (k === "poster") return genPoster();
+  if (k === "geo") return addGeo();
   collect(); const u = { beds: cur.beds, baths: cur.baths, cars: cur.cars, ...cur.pub }, link = location.origin + "/rentals.html?id=" + encodeURIComponent(cur.pub_id || cur.id);
   $("#gen_out").value = k === "xhs" ? xhsText(u) : k === "yeeyi" ? yeeyiText(u) : k === "fb" ? fbText(u) + "\n" + link : wechatText(u, link);
   $("#gen_tip").textContent = k === "xhs" ? "小红书：不写名字电话，让人私信" : k === "yeeyi" ? "亿忆：联系人一栏填 Bozeng" : "";
 });
 
+// 创作室：按地址查对口公立学校（2027 学区）和到各大学的通勤，加到文案末尾——中文租客最看重的卖点
+async function addGeo() {
+  collect(); const tip = $("#gen_tip"), addr = (cur.pub.address || cur.addr || "").replace(/^\s*[\w-]+\s*\/\s*/, "");
+  if (!addr) return tip.textContent = "没有地址"; tip.textContent = "查学区和通勤中…";
+  try {
+    if (!window.HowzuCommute) await new Promise((ok, no) => { const s = document.createElement("script"); s.src = "js/commute.js?v=20261113"; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+    const q = /vic|victoria|\b3\d{3}\b/i.test(addr) ? addr : addr + ", Victoria";
+    const g = await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=au&q=" + encodeURIComponent(q)).then(r => r.json());
+    if (!g[0]) return tip.textContent = "地址定位不到，换个写法试试";
+    const pt = { lat: +g[0].lat, lng: +g[0].lon }, C = window.HowzuCommute;
+    const [zp, zs] = await (window.ZP = window.ZP || Promise.all(["zones_primary", "zones_secondary"].map(n => fetch("data/" + n + ".json").then(r => r.json()))));
+    const P = C.zonesAt(zp, pt), S = C.zonesAt(zs, pt), R = C.rows(pt);
+    const L = [];
+    if (S.length || P.length) L.push("🏫 对口公立学校（2027 学区）：" + [...S.map(z => z.name + "（中学）"), ...P.map(z => z.name + "（小学）")].join("、"));
+    if (R.length) L.push("🚆 通勤：" + R.map(r => `${r.name} ${r.mode === "walk" ? "步行" : "公交"}约 ${r.min} 分钟`).join(" · "));
+    if (!L.length) return tip.textContent = "这个地址查不到学区和通勤";
+    const o = $("#gen_out"), v = o.value.replace(/\s+$/, ""), i = v.search(/\n#\S/); // 小红书话题标签放最后，学区通勤插在标签前面
+    o.value = !v ? L.join("\n") : i >= 0 ? v.slice(0, i) + "\n" + L.join("\n") + "\n" + v.slice(i) : v + "\n\n" + L.join("\n");
+    tip.textContent = "已加进文案（学区以 Find my School 为准，通勤为直线估算）";
+  } catch (_) { tip.textContent = "查询失败，请稍后再试"; }
+}
 let RECOVERY = /type=(recovery|invite)/.test(location.hash);
 sb.auth.onAuthStateChange(ev => { if (ev === "PASSWORD_RECOVERY") RECOVERY = true; });
 start().then(() => { if (RECOVERY) { history.replaceState(null, "", location.pathname); setPassword("设置新密码"); } });
