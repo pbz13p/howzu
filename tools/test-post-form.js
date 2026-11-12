@@ -58,5 +58,22 @@ ok("设施：旧草稿里的“有电梯/泳池/健身房”自动转成新设�
   ok("后台：房屋信息待确认项用详情页同一套规则算", m.join() === "类型" && AC.missingSpecs({ ...row, highlights: [] }, LPx).includes("租期"));
   const t = AC.askOwner(row, ["家具", "租期"]);
   ok("后台：一键复制问房东的话，带称呼、房源名和缺的项", /^王先生，您好/.test(t) && t.includes("「Carlton 两房」") && t.includes("家具、租期") && AC.askOwner(row, []) === ""); }
-if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
 console.log("发房源表单测试全部通过");
+// 租金包含：单独一组选项；“都不包”存成结构化标签，不当亮点；旧草稿迁移
+ok("租金包含：都不包存成“不包水电网”", eq(F.billTags(["都不包"]), ["不包水电网"]) && eq(F.billTags(["包水费", "包网"]), ["包水费", "包网"]));
+ok("租金包含：旧草稿亮点里的包水/电/网搬过来", eq(F.oldBills({ highlights: ["近火车站", "包水费", "包网"] }), ["包水费", "包网"]) && eq(F.oldBills({ bills: ["都不包"], highlights: ["包网"] }), ["都不包"]));
+ok("租金包含：“不包水电网”不当亮点", F.splitTags(["不包水电网", "近火车站"]).real.join() === "近火车站");
+// 后台租客需求：自动配在租房源 + 通知话术
+{ const AC = require("../js/admin-check.js");
+  const L = [{ id: "a", status: "live", suburb: "Melbourne CBD", beds: 2, rentWeekly: null, title: "Spencer St 两房" },
+    { id: "b", status: "let", suburb: "Melbourne CBD", beds: 2, title: "已租出" },
+    { id: "c", status: "live", suburb: "Carlton", beds: 1, rent_weekly: 500, title: "Carlton 一房" },
+    { id: "d", status: "live", suburb: "Carlton", beds: 2, rent_weekly: 900, title: "Carlton 两房贵" },
+    { id: "e", status: "live", kind: "求租需求", suburb: "Carlton", title: "求租" }];
+  const ids = l => AC.leadMatches(l, L).map(x => x.id).join();
+  ok("配房：CBD 两房 → 只配在租的 CBD 两房（租金面议的保留）", ids({ suburb: "CBD", beds: 2, rent_weekly: 700 }) === "a");
+  ok("配房：区域带括号说明也能配、预算超 10% 的不配", ids({ suburb: "Carlton（墨大附近）", rent_weekly: 600 }) === "c");
+  ok("配房：区域不限、单间不限房型", ids({ suburb: "墨尔本（区域不限）", beds: 0 }) === "a,c,d");
+  const t = AC.leadNotice({ title: "求租 · CBD · 2 房" }, AC.leadMatches({ suburb: "CBD", beds: 2 }, L));
+  ok("配房：通知话术带需求和房源链接", t.includes("（CBD · 2 房）") && t.includes("https://howzu.com.au/rentals.html?id=a") && !t.includes("undefined")); }
+if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }

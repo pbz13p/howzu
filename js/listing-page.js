@@ -36,7 +36,7 @@
   const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/], ["楼层", /^楼层\s*/]];
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
-    const rest = hs.filter(h => !/^开放看房 |^不可养宠/.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
+    const rest = hs.filter(h => !/^开放看房 |^不可养宠|^不包水电网$/.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : "咨询";
     const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] === "定好时间" ? "定时开放" : got["看房"] || "预约看房"]];
     return { cells, rest };
@@ -55,14 +55,14 @@
     const furn = x.furnished === true ? "带家具" : x.furnished === false ? "不带家具" : typeof x.furnished === "string" && x.furnished ? x.furnished
       : no(/不带家具|无家具|unfurnished/i) ? "不带家具" : no(/带家具|家具齐全|拎包入住|furnished/i) ? "带家具" : TBC;
     const pets = x.pets === true ? "可以" : x.pets === false ? "不可以" : no(/不可养宠|不能养宠|禁止宠物|no pets/i) ? "不可以" : no(/可养宠|宠物友好|允许宠物|可带宠物|pets? (ok|allowed|friendly)/i) ? "可以" : TBC;
-    const bills = ["水", "电", "网"].filter(k => hs.includes("包" + k + "费") || hs.includes("包" + k) || new RegExp("包[水电网、和]*" + k).test(all));
+    const bills = ["水", "电", "网"].filter(k => hs.includes("包" + k + "费") || hs.includes("包" + k) || new RegExp("(^|[^不])包[水电网、和]*" + k).test(all));
     const floor = (all.match(/(\d{1,3})\s*(?:层|楼(?!下))/) || [])[1];
     const amen = AMEN.filter(([, re]) => re.test(all)).map(([k]) => k);
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : TBC;
     return [
       ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
       ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", tag("押金 ") || TBC],
-      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : TBC], ["楼层", tag("楼层 ") || (floor ? `${floor} 层` : TBC)], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
+      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : hs.includes("不包水电网") ? "不包，租客自付" : TBC], ["楼层", tag("楼层 ") || (floor ? `${floor} 层` : TBC)], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
       ["设施", amen.length ? amen.join("、") : TBC],
     ];
   }

@@ -54,11 +54,14 @@
     };
   }
   // 结构化标签（类型/押金/租期/看房/宠物/楼层）和真正的“亮点”分开：自动写标题只用真亮点，结构化的放进“房子”信息里
-  const INFO_RE = /^(类型|押金|租期|看房|开放看房|楼层) |^不?可养宠物$/;
+  const INFO_RE = /^(类型|押金|租期|看房|开放看房|楼层) |^不?可养宠物$|^不包水电网$/;
   function splitTags(h) { const a = (h || []).map(String); return { real: a.filter(x => !INFO_RE.test(x)), info: a.filter(x => INFO_RE.test(x)) }; }
   // 旧草稿：设施以前混在“亮点”里（有电梯 / 有阳台 / 泳池/健身房），换成新的“设施”选项
   const OLD_AMEN = { "有电梯": ["电梯"], "有阳台": ["阳台"], "泳池/健身房": ["泳池", "健身房"] };
+  // 租金包含：“都不包”存成结构化标签“不包水电网”；旧草稿里放在亮点的“包水费/包电费/包网”搬过来
+  function billTags(a) { return (a || []).map(b => b === "都不包" ? "不包水电网" : b); }
+  function oldBills(c) { return Array.isArray(c && c.bills) ? c.bills : (c && c.highlights || []).filter(h => /^包(水费|电费|网)$/.test(h)); }
   function oldAmen(c) { return Array.isArray(c && c.amen) ? c.amen : (c && c.highlights || []).flatMap(h => OLD_AMEN[h] || []); }
-  const api = { oldAmen, splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
+  const api = { billTags, oldBills, oldAmen, splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);

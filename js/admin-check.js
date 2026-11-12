@@ -52,6 +52,31 @@
     return [`${name ? name + "，" : ""}您好！您在好租 Howzu 发布的「${t}」还差这几项信息：${miss.join("、")}。`,
       "麻烦回复一下（比如：带家具、租期 12 个月、不能养宠物），我们帮您补上。信息越全，租客越愿意咨询。", "—— 好租 Howzu"].join("\n");
   }
-  const api = { listingIssues, normAddr, shareText, ownerNotice, missingSpecs, askOwner };
+  // 租客需求 → 现在在租的房源里哪些合适。lead：一条求租需求（suburb/beds/rent_weekly）；list：房源（listings.json 或 Supabase 行都行）
+  // 规则（宁宽勿漏，最后由人判断）：已租出/求租/没上线的不要；写了几房就要几房（单间不限）；
+  // 预算写了就要租金不超过预算 10%（没标租金的“面议”房源保留）；区域写了就要在区域/地址/标题里找得到（CBD ↔ Melbourne 3000）。
+  const AREA_ALIAS = { cbd: ["cbd", "melbourne vic 3000", "melbourne 3000"], "墨尔本市中心": ["cbd", "melbourne vic 3000", "melbourne 3000"], "市中心": ["cbd", "melbourne vic 3000", "melbourne 3000"] };
+  const rentOf = x => +(x.rentWeekly != null ? x.rentWeekly : x.rent_weekly) || 0;
+  function leadMatches(lead, list) {
+    const raw = String(lead && lead.suburb || ""), area = /不限/.test(raw) ? "" : raw.replace(/[（(][^）)]*[）)]/g, "").trim().toLowerCase();
+    const keys = !area || /不限/.test(area) ? [] : AREA_ALIAS[area] || area.split(/[\s,，/、]+/).filter(k => k.length >= 2);
+    const budget = +(lead && lead.rent_weekly) || 0, beds = lead && lead.beds;
+    return (list || []).filter(x => {
+      if (!x || x.kind === "求租需求" || x.status !== "live") return false;
+      if (beds != null && beds > 0 && x.beds != null && +x.beds !== +beds) return false;
+      if (budget && rentOf(x) && rentOf(x) > budget * 1.1) return false;
+      if (keys.length) { const t = [x.suburb, x.address, x.title].join(" ").toLowerCase(); if (!keys.some(k => t.includes(k))) return false; }
+      return true;
+    });
+  }
+  // 有合适房源时发给租客的话（不含内部信息）
+  function leadNotice(lead, xs, site) {
+    site = site || "https://howzu.com.au";
+    const want = String(lead && lead.title || "").replace(/^求租 · /, "");
+    return [`你好！你在好租 Howzu 留的租房需求（${want}）有合适的房源了：`,
+      ...xs.slice(0, 5).map(x => `· ${String(x.title || x.suburb || "").trim()}${rentOf(x) ? ` $${rentOf(x)}/周` : ""}\n  ${site}/rentals.html?id=${encodeURIComponent(x.id)}`),
+      "想看房的话直接回复我，帮你约时间。"].join("\n");
+  }
+  const api = { leadMatches, leadNotice, listingIssues, normAddr, shareText, ownerNotice, missingSpecs, askOwner };
   if (typeof module === "object" && module.exports) module.exports = api; else root.AdminCheck = api;
 })(this);
