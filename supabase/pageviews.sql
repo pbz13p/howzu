@@ -26,3 +26,4 @@ select date_trunc('day', at at time zone 'Australia/Melbourne')::date as day,
        count(*) filter (where ev <> 'view') as enquiries,
        count(*) filter (where ev = 'view' and mobile) as mobile_views
 from public.pageviews group by 1 order by 1 desc;
+grant select on public.pageviews_daily to authenticated;
