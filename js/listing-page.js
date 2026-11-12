@@ -26,7 +26,7 @@
   }
   function priceText(x) {
     if (isLet(x)) return "已租出";
-    return x.rentWeekly ? `$${x.rentWeekly}/周` : "租金咨询";
+    return x.rentWeekly ? `$${x.rentWeekly}/周` : "租金面议";
   }
   // 分享卡片标题：区 · 几房几卫 · 租金
   function ogTitle(x) {
@@ -156,7 +156,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .tr{border-radius:14px;background:#f2f7f4;padding:12px 14px 11px;margin:0 0 18px}.tr-h{font-size:14px;font-weight:600;color:#0f6b4f;margin-bottom:8px}
 .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tr-g b{display:block;font-size:13px}.tr-g small{display:block;font-size:11.5px;color:#6b726f;line-height:1.35}.tr-n{font-size:12px;color:#6b726f;margin-top:9px;padding-top:8px;border-top:1px solid rgba(15,107,79,.12)}
 .desc{white-space:pre-line;font-size:15px;border-top:1px solid #ece9e2;padding-top:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0}.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0}.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}.grid a:only-child{grid-column:1/-1}.grid a:only-child img{aspect-ratio:16/10}@media(max-width:699px){.grid a:last-child:nth-child(odd){grid-column:1/-1}.grid a:last-child:nth-child(odd) img{aspect-ratio:2/1}}
 .more{display:block;text-align:center;padding:14px;border:1px solid #e4e1d8;border-radius:12px;text-decoration:none;font-size:15px;margin-top:8px}.more.lead{background:#0f6b4f;border-color:#0f6b4f;color:#fff;line-height:1.5;margin-top:16px}.more.lead b{display:block;font-size:16px}
 .trust{font-size:13px;color:#6b726f;margin-top:22px}
 .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid #ece9e2;padding:12px 16px calc(12px + env(safe-area-inset-bottom))}

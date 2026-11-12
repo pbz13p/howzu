@@ -12,7 +12,7 @@
   function card(x) {
     const t = String(x.title || x.suburb || "").split("·")[0].trim();
     const sub = [x.beds != null ? `${x.beds} 房` : "", x.baths != null ? `${x.baths} 卫` : "", String(x.suburb || "").replace(/ CBD$/, "")].filter(Boolean).join(" · ");
-    const price = x.rentWeekly ? `<span class="hr-p">$${esc(x.rentWeekly)}<small>/周</small></span>` : `<span class="hr-p q">租金咨询</span>`;
+    const price = x.rentWeekly ? `<span class="hr-p">$${esc(x.rentWeekly)}<small>/周</small></span>` : `<span class="hr-p q">租金面议</span>`;
     const tag = isNow(x) ? "马上入住" : x.available ? `${x.available}入住` : "";
     return `<a class="hr-c" href="${esc(href(x))}"><span class="hr-i"><img src="${esc((x.photos || [])[0] || "")}" alt="" loading="lazy">${tag ? `<em>${esc(tag)}</em>` : ""}</span><b>${esc(t)}</b><span class="hr-s">${esc(sub)}</span>${price}</a>`;
   }

@@ -215,7 +215,7 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
   <p id="built"></p>
 </footer>
 
-<script src="js/home-rent.js?v=20261112"></script>
+<script src="js/home-rent.js?v=20261112b"></script>
 <script>fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).then(j=>{const R=HomeRent.html(j.listings);if(!R.n)return;document.getElementById("hrR").innerHTML=R.cards;document.getElementById("hrN").textContent=R.n+" 套";document.getElementById("homeRent").classList.remove("hidden");}).catch(()=>{});</script>
 <script src="js/config.js?v=20261107"></script>
 <script src="js/lead.js?v=20261111"></script>
