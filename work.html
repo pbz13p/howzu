@@ -232,7 +232,17 @@ function renderStats() {
 }
 
 const FILTERS = [["all", "全部"], ["arrears", "欠租"], ["expiring", "90 天内到期"], ["todo", "有待办"], ["pub", "已发布"], ["unpub", "未发布"], ["nophoto", "缺照片"]];
+// 每套已发布房源对外页面近 30 天的浏览 / 咨询次数（只有超级管理员读得到 pageviews）
+let WEB = null, WEBL = false;
+async function loadWebByProp() {
+  if (WEBL || !SUPER) return; WEBL = true;
+  const { data, error } = await sb.from("pageviews").select("path,ev").gte("at", new Date(Date.now() - 30 * 864e5).toISOString()).limit(5000);
+  if (error) return; const m = {};
+  (data || []).forEach(r => { let id = ""; if (r.ev === "view") { const a = r.path.match(/[?&]id=([^&#]+)/) || r.path.match(/^\/rent\/([\w-]+)\.html/); id = a ? decodeURIComponent(a[1]) : ""; } else id = (r.ev.split(":")[1] || ""); if (!id) return; const x = m[id] = m[id] || { v: 0, e: 0 }; r.ev === "view" ? x.v++ : x.e++; });
+  WEB = m; if (tab === "props") render();
+}
 function renderProps() {
+  loadWebByProp().catch(() => {});
   const now = new Date();
   const L = P.filter(p => p.status !== "archived").filter(p => {
     const t = propTags(p, now);
@@ -256,7 +266,7 @@ function card(p, now) {
   return `<div class="p" data-open="${esc(p.id)}"><div class="ph" style="${ph ? `background-image:url('${esc(PUBLIC_IMG(ph))}')` : ""}">${pubb}</div><div class="bd">
     <div class="ad">${esc(p.addr)}</div>
     <div class="mt">${esc(p.kind)} · ${p.beds ?? "?"} 房 ${p.baths ?? "?"} 卫 ${p.cars ?? 0} 车位${p.rent_month ? ` · ${money(weekly(p.rent_month))}/周` : ""}${p.owner ? ` · 业主 ${esc(p.owner)}` : ""}</div>
-    <div class="tags">${t.chips.map(c => `<span class="tg ${c.c}">${esc(c.t)}</span>`).join("")}</div></div></div>`;
+    <div class="tags">${t.chips.map(c => `<span class="tg ${c.c}">${esc(c.t)}</span>`).join("")}${p.published && WEB ? (w => `<span class="tg" title="对外页面近 30 天">👁 ${w.v} · 💬 ${w.e}</span>`)(WEB[String(p.pub_id || p.id)] || { v: 0, e: 0 }) : ""}</div></div></div>`;
 }
 
 const STATUS = [["leased", "长租在租"], ["vacant", "空置"], ["airbnb", "短租"], ["archived", "不再管理"]];
