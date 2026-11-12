@@ -32,5 +32,7 @@ const pt = E.viewPlan({ highlights: ["看房 定好时间", "开放看房 2026-1
 ok(pt.mode === "fixed" && pt.slots.length === 2 && pt.slots[0].ymd === "20261114" && pt.slots[0].t === "10:00", "发房源时填的开放看房时间");
 ok(E.timeLabel("18:30") === "晚上 6:30" && E.whenText("20261118", "09:15") === "11 月 18 日 上午 9:15", "带分钟的时间文字");
 ok(E.viewPlan({ highlights: ["看房 定好时间", "开放看房 2026-11-01 11:00"] }, N).note.includes("已过"), "开放时间都过期：退回自选时间并说明");
+{ const m = E.askTbcMsg(x, ["押金", "租期", "宠物"]); ok(m.includes("2110-spencer") && m.includes("押金、租期、宠物"), "待确认项一键提问：带编号和待确认项"); }
+ok(E.askTbcMsg(x, []) === E.askMsg(x), "没有待确认项时退回普通咨询");
 console.log(`enquire: ${n - fail}/${n} 通过`);
 if (fail) process.exit(1);

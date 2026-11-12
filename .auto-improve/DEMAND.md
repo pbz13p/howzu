@@ -15,3 +15,8 @@
 
 ## 2026-11-12（第十六次运行，法规核对）
 - 法规：维州涨租通知期 2025-11-25 起从 60 天改为 90 天；押金上限是"一个月租金"（不是 4 周）；入住检查报告是入住后 5 个工作日内交回。来源：consumer.vic.gov.au 的 Rent increases / Bond amounts / Condition reports 页面。已全站搜索，网站上没有过时说法；新写的《留学生第一次租房》按新规写。
+
+## 2026-11-12（第二十次运行，1 次搜索）
+| 需求 / 痛点（大白话） | 证据 | 来源 | 好租可以做什么 |
+|---|---|---|---|
+| 留学生怕租房被骗：没看房先被要求转定金/押金、押金转到个人账户、人还没到澳洲就付钱结果房子不存在 | 维州政府 Study Melbourne 专页列为常见骗局；SBS 中文报道留学生被骗数千澳元 | [Study Melbourne 租房骗局](https://www.studymelbourne.vic.gov.au/living-here/accommodation/rental-scams)、[SBS 中文](https://www.sbs.com.au/language/chinese/en/article/fake-rental-properties-students-lose-thousands-of-dollars-to-fraudster/blzeap1w8) | 已有：个人发布房源的详情页写了“看房前不转账、押金交 RTBA”。可以做：视频看房（已有）+ 在留学生指南里加“防骗 5 条”。 |

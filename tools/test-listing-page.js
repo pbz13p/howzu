@@ -53,6 +53,9 @@ console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部�
   } }
 // 列表“地图看房”：有开关和地图容器；状态变量要在 render 之前声明（否则首屏渲染报错）
 { const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
+  ok("留需求表单：入住时间用点选（不用打字）并随提交带上，区域有常用建议", r.includes('id="lWhen"') && /class="seg" id="lWhen"/.test(r) && r.includes('f.when=w?w.dataset.v:""') && r.includes('list="lAreas"'));
+  ok("房屋信息表下有『一键问清待确认项』按钮并接了点击", /function tbcAsk\(/.test(r) && r.includes("${tbcAsk(x)}") && r.includes('data-act="ask-tbc"') && r.includes("[data-tbc]")); }
+{ const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
   ok("列表有地图看房开关和地图容器", r.includes('id="mapT"') && r.includes('id="lmap"') && r.includes("function listMap("));
   ok("地图状态变量在 render 之前声明", r.indexOf("let LIVE=") > -1 && r.indexOf("let LIVE=") < r.indexOf("function render("));
   const po = require("fs").readFileSync(require("path").join(__dirname, "..", "post.html"), "utf8");

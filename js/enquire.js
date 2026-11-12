@@ -45,6 +45,12 @@
     return `你好，我在好租 Howzu 看到房源「${x.title}」（房源编号 ${x.id}），想预约 ${whenText(ymd, t)} ${video ? "视频看房（微信视频）" : "看房"}，请帮我确认，谢谢！`;
   }
   function askMsg(x) { return `你好，我在好租 Howzu 看到房源「${x.title}」（房源编号 ${x.id}），想咨询一下。`; }
+  // 把详情页"待确认"的几项拼成一条现成的提问，租客不用自己打字
+  function askTbcMsg(x, items) {
+    const k = (items || []).filter(Boolean);
+    if (!k.length) return askMsg(x);
+    return `你好，我在好租 Howzu 看到房源「${x.title}」（房源编号 ${x.id}），想问一下：${k.join("、")}分别是怎样的？谢谢！`;
+  }
   const icsEsc = s => String(s == null ? "" : s).replace(/\\/g, "\\\\").replace(/[,;]/g, m => "\\" + m).replace(/\r?\n/g, "\\n");
   // 生成 .ics（墨尔本时间，30 分钟，提前 1 小时提醒）
   function ics(x, ymd, t, opts) {
@@ -70,7 +76,7 @@
     ].join("\r\n");
   }
   const smsHref = (tel, body) => `sms:${tel}?&body=${encodeURIComponent(body)}`;
-  const api = { days, viewPlan, TIMES, timeLabel, whenText, bookMsg, askMsg, ics, smsHref };
+  const api = { days, viewPlan, TIMES, timeLabel, whenText, bookMsg, askMsg, askTbcMsg, ics, smsHref };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.HowzuEnquire = api;
 })(this);
