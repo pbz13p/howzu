@@ -39,18 +39,5 @@ find tmp/zones -iname "*.geojson" -o -iname "*.json" | while read -r f; do
 done
 ls -la raw/zones >> raw/_manifest.txt
 
-# Homes Victoria Rental Report: latest "Quarterly median rents by LGA" (suburb groups, RTBA bond data, CC BY 4.0)
-RENT_API="https://discover.data.vic.gov.au/api/3/action/package_show?id=rental-report-quarterly-quarterly-median-rents-by-lga"
-if curl -sSfL --max-time 60 -A "$UA" -o tmp/rent_pkg.json "$RENT_API"; then
-  RENT_URL=$(python3 -c "
-import json;r=json.load(open('tmp/rent_pkg.json'))['result']['resources']
-r=[x for x in r if (x.get('format') or '').upper() in ('XLSX','XLS') or str(x.get('url','')).lower().endswith(('xlsx','excel'))]
-r.sort(key=lambda x:(x.get('period_end') or x.get('temporal_coverage_end') or '', x.get('created') or ''))
-print(r[-1]['url'] if r else '')
-print(r[-1].get('period_end') or '' if r else '')" )
-  echo "== rent ==" >> raw/_manifest.txt; echo "$RENT_URL" >> raw/_manifest.txt
-  U=$(echo "$RENT_URL" | head -1)
-  [ -n "$U" ] && curl -sSfL --http1.1 --max-time 90 --retry 1 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36" -o raw/rent_lga.xlsx "$U" && echo "rent ok: $U" && file raw/rent_lga.xlsx >> raw/_manifest.txt
-  echo "$RENT_URL" | tail -1 > raw/rent_period.txt
-fi
+# 注：Homes Victoria 租金报告（dffh.vic.gov.au）拒绝 GitHub Actions 的连接（11/13 实测超时），暂不自动下载。
 exit 0
