@@ -12,3 +12,6 @@
 |---|---|---|---|
 | 不放心把押金交给房东/中介，想自己直接交政府 | 2026-09-09 起租客可书面要求自己直接付押金给 RTBA；2027-06-01 起房东因此拒租属违法 | [CAV 新规页](https://www.consumer.vic.gov.au/housing/renting/new-changes-to-rental-laws) | 已写进 guide/bond.html；以后签约流程可主动提供"直接付 RTBA"选项 |
 | 申请租房被收申请费、交租手续费 | 2026-10-13 起禁止收申请费和交租手续费 | [CAV 2026-10-13 新闻](https://www.consumer.vic.gov.au/latest-news/no-more-unsupported-bond-claims-under-new-rental-reforms) | 信任栏"零中介费"可以加一句"申请免费"；下一篇指南写申请流程 |
+
+## 2026-11-12（第十六次运行，法规核对）
+- 法规：维州涨租通知期 2025-11-25 起从 60 天改为 90 天；押金上限是"一个月租金"（不是 4 周）；入住检查报告是入住后 5 个工作日内交回。来源：consumer.vic.gov.au 的 Rent increases / Bond amounts / Condition reports 页面。已全站搜索，网站上没有过时说法；新写的《留学生第一次租房》按新规写。

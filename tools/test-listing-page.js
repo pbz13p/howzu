@@ -16,6 +16,8 @@ ok("描述不超过 110 字", LP.ogDesc({ ...x, desc: "长".repeat(300) }).lengt
 const sm = LP.sitemap([x, { ...x, id: "b", status: "let" }]);
 ok("信任卡片链到押金指南", LP.trust({id:"a"},3).guide==="/guide/bond.html" && LP.trust({id:"b",user:1},0).guide==="/guide/bond.html");
 ok("sitemap 收录租房指南", sm.includes("guide/bond.html") && sm.includes("guide/apply.html"));
+const sm2 = LP.sitemap([x], ["cgt-discount.html", "bond.html", "../evil.html"]);
+ok("sitemap 自动收录 guide 目录文章且不重复、不收怪文件名", sm2.includes("guide/cgt-discount.html") && sm2.split("guide/bond.html").length === 2 && !sm2.includes("evil"));
 ok("sitemap 只收在租房源", sm.includes("rent/2110-spencer.html") && !sm.includes("rent/b.html") && sm.includes("<loc>https://howzu.com.au/</loc>"));
 ok("id 安全检查", LP.safeId("a-1_b") && !LP.safeId("../x") && !LP.safeId(""));
 const kf = LP.keyFacts({ status: "live", available: "12 月 1 日", highlights: ["押金 4 周", "租期 12 个月", "近电车", "看房 视频看房"] });
@@ -41,4 +43,11 @@ const CP = LP.compare([x, { suburb: "Carlton", beds: 1, rentWeekly: null, title:
 ok("对比：最多 3 套，第一行租金（面议照写）", CP[0].k === "周租" && CP[0].v.length === 3 && CP[0].v[1] === "面议" && CP[0].v[0] === "$650");
 ok("对比：区域 + 13 项房屋信息，不同的行标出来", CP.length === 15 && CP.find(r => r.k === "卧室").diff === true && CP.find(r => r.k === "类型").diff === false);
 console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部通过");
+// 每篇文章：进了栏目页（文章或租房指南）、带官方来源和免责声明、有分享卡片
+{ const fs = require("fs"), path = require("path"), gd = path.join(__dirname, "..", "guide");
+  const idx = fs.readFileSync(path.join(gd, "property.html"), "utf8");
+  for (const f of fs.readdirSync(gd).filter(f => f.endsWith(".html") && f !== "property.html")) {
+    const h = fs.readFileSync(path.join(gd, f), "utf8");
+    ok(`文章 ${f}：栏目页有入口、有来源、有免责声明、有 og 卡片`, idx.includes(`/guide/${f}"`) && h.includes("官方来源") && /不构成/.test(h) && h.includes(`og:url" content="https://howzu.com.au/guide/${f}"`));
+  } }
 process.exit(fail ? 1 : 0);

@@ -170,11 +170,15 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     ["https://howzu.com.au/rentals.html", "daily", "0.9"],
     ["https://howzu.com.au/invest.html", "monthly", "0.8"],
     ["https://howzu.com.au/post.html", "monthly", "0.6"],
+    ["https://howzu.com.au/guide/property.html", "weekly", "0.7"],
     ["https://howzu.com.au/guide/bond.html", "monthly", "0.7"],
     ["https://howzu.com.au/guide/apply.html", "monthly", "0.7"],
   ];
-  function sitemap(listings) {
-    const rows = STATIC.map(([u, f, p]) => `  <url><loc>${u}</loc><changefreq>${f}</changefreq><priority>${p}</priority></url>`);
+  // guides：guide/ 目录下的其它文章文件名（如 "cgt-discount.html"），由构建脚本读目录传进来，写新文章不用再改这里。
+  function sitemap(listings, guides) {
+    const have = new Set(STATIC.map(r => r[0]));
+    const extra = (guides || []).filter(f => /^[a-z0-9-]+\.html$/.test(f)).sort().map(f => ["https://howzu.com.au/guide/" + f, "monthly", "0.7"]).filter(r => !have.has(r[0]));
+    const rows = STATIC.concat(extra).map(([u, f, p]) => `  <url><loc>${u}</loc><changefreq>${f}</changefreq><priority>${p}</priority></url>`);
     for (const x of listings) if (x.status === "live") rows.push(`  <url><loc>${esc(pageUrl(x))}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
     return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`;
   }
