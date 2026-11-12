@@ -68,8 +68,8 @@ async function start() {
 }
 async function load() {
   if (tab === "lead") return loadLeads();
-  const { data, error } = await sb.from("listings").select("*").eq("status", tab).neq("kind", "求租需求").order("created_at", { ascending: false });
-  const { data: all } = await sb.from("listings").select("id,address,status").neq("kind", "求租需求"); // 用来查重复（只取地址和状态）
+  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询)").order("created_at", { ascending: false });
+  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询)"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   const J = JUST; JUST = null;
   const just = J ? `<div class="just" role="status"><b>✅ 已通过上线</b><div class="m">「${esc(J.title || J.address || "")}」</div><div class="m">下一步：把上线消息发给房东 ${esc(J.contact_name || "")}（微信 ${esc(J.contact_wechat || "—")} · 手机 ${esc(J.contact_phone || "—")}）</div><div class="acts"><button class="ok" data-notice="${esc(J.id)}">📨 复制「已上线 + 链接」</button>${J.contact_phone ? `<a class="gr" style="font-size:15px;padding:10px 14px;border-radius:10px;text-decoration:none" href="sms:${esc(J.contact_phone)}?&body=${encodeURIComponent(AdminCheck.ownerNotice(J))}">💬 直接发短信</a>` : ""}</div></div>` : "";
@@ -89,17 +89,17 @@ async function load() {
       <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-notice="${esc(x.id)}">📨 通知房东</button><button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
-const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求"]];
+const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"]];
 const tabsHtml = () => `<div class="tabs">${TABS.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>`;
 // 租客留的需求：不给"通过上线"（会公开联系方式），只能复制联系方式 / 标记已联系 / 删除
 async function loadLeads() {
-  const { data, error } = await sb.from("listings").select("*").eq("kind", "求租需求").order("created_at", { ascending: false });
+  const { data, error } = await sb.from("listings").select("*").in("kind", ["求租需求", "房东托管咨询"]).order("created_at", { ascending: false });
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   // 现在在租的房源（自管 listings.json + 用户发布已上线的），用来给每条需求配房
   const [own, pub] = await Promise.all([fetch("data/listings.json", { cache: "no-store" }).then(r => r.json()).then(j => j.listings || []).catch(() => []),
     sb.from("listings").select("id,title,suburb,address,beds,rent_weekly,status,kind").eq("status", "live").then(r => r.data || [], () => [])]);
   const ids = new Set(pub.map(x => String(x.id))); LIVE = [...own.filter(x => !ids.has(String(x.id))), ...pub];
-  const match = x => { if (x.status !== "pending") return ""; const m = AdminCheck.leadMatches(x, LIVE);
+  const match = x => { if (x.status !== "pending") return ""; if (x.kind === "房东托管咨询") return `<div class="tbc ok">🔑 房东托管咨询：尽快联系业主，约时间看房评估</div>`; const m = AdminCheck.leadMatches(x, LIVE);
     return m.length ? `<div class="tbc ok">🏠 现在有 ${m.length} 套合适：${m.slice(0, 3).map(y => esc(String(y.title || y.suburb || "").trim())).join("、")}${m.length > 3 ? " 等" : ""} <button class="gr" data-ln="${esc(x.id)}">复制通知租客的话</button></div>`
       : `<div class="tbc none">🏠 现在没有完全合适的在租房源，有新房上线再来看</div>`; };
   $("#app").innerHTML = tabsHtml() + `<div class="m" style="margin:0 2px 10px">租客在房源页 / 学区页留的需求。下面自动列出现在合适的在租房源，一键复制通知话术发给租客。</div>` +

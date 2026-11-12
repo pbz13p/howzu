@@ -23,5 +23,8 @@ const hole = { properties: { name: "H" }, geometry: { type: "Polygon", coordinat
 ok(C.inFeature(hole, 1, 1) && !C.inFeature(hole, 5, 5), "多边形里的洞不算");
 const real = JSON.parse(require("fs").readFileSync(require("path").join(__dirname, "../data/zones_secondary.json"), "utf8"));
 ok(C.zonesAt(real, spencer).length >= 1, "Spencer St 能找到对口公立中学（真实学区数据）");
+{ const r = C.rows(spencer, [C.EXTRA.find(p => p.k === "deakin")]);
+  ok(r.length === C.PLACES.length + 1 && r[r.length - 1].extra === true && r[0].extra === false, "可以加上自选学校，排在固定地点后面并标为自选"); }
+ok(C.EXTRA.length >= 8 && C.EXTRA.every(p => p.lat < -37.3 && p.lat > -38.6 && p.lng > 144.3 && p.lng < 145.8), "可选学校坐标都在墨尔本范围内");
 console.log(`通勤估算：${n - fail}/${n} 通过`);
 process.exit(fail ? 1 : 0);
