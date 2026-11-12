@@ -185,7 +185,7 @@ ${tags.length ? `<div class="facts">${tags.map(esc).join("<span></span>")}</div>
 ${isLet(x) ? "" : `<div class="kf">${kf.cells.map(([k, v]) => `<div><small>${esc(k)}</small><b${v === "咨询" ? ' class="m"' : ""}>${esc(v)}</b></div>`).join("")}</div>`}
 ${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
 ${isLet(x) ? "" : `<div class="sp"><div class="sp-h">房屋信息</div><dl>${specs(x).map(([k, v]) => `<div${k === "设施" ? ' class="w"' : ""}><dt>${esc(k)}</dt><dd${v === TBC ? ' class="m"' : ""}>${esc(v)}</dd></div>`).join("")}</dl></div>`}
-${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}
+${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}${AREA_G[x.suburb] ? `<a class="tr-l" href="/guide/${AREA_G[x.suburb]}.html">住在 ${esc(x.suburb)}：免费电车区、到大学距离、对口学区 ›</a>` : ""}
 ${x.desc ? `<div class="desc">${esc(x.desc)}</div>` : ""}
 ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map(p => `<a href="${esc(full)}"><img src="${esc(rel(p))}" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
 ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</a>` : ""}
@@ -219,6 +219,8 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     for (const x of listings) if (x.status === "live") rows.push(`  <url><loc>${esc(pageUrl(x))}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
     return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`;
   }
+  // 区域租房指南（guide/area-*.html，由 tools/area_pages.py 生成）
+  const AREA_G = { "Melbourne CBD": "area-melbourne-cbd", "Melbourne": "area-melbourne-cbd", "Carlton": "area-carlton", "Southbank": "area-southbank", "Docklands": "area-docklands" };
   const safeId = id => /^[\w-]+$/.test(String(id || ""));
 
   // 信任信息：自管房源讲清楚我们的保障；个人发布的房源给防骗提醒（不替私人房东做承诺）
