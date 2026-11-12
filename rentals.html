@@ -511,8 +511,8 @@ function openDetail(x,noPush){
   const KF=window.ListingPage?ListingPage.keyFacts(x):{cells:[],rest:x.highlights||[]};
   m.innerHTML=`<div class="dt" role="dialog" aria-label="${esc(x.title)}">
    <button class="dt-x" data-close aria-label="关闭">✕</button>
-   <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt=""><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
-   ${P.length>1?`<div class="dt-th">${P.map((p,i)=>`<img src="${esc(p)}" data-i="${i}" class="${i?"":"on"}" loading="lazy">`).join("")}</div>`:""}
+   <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt="${esc(x.title||"房源照片")}"><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
+   ${P.length>1?`<div class="dt-th">${P.map((p,i)=>`<img src="${esc(p)}" data-i="${i}" class="${i?"":"on"}" loading="lazy" alt="">`).join("")}</div>`:""}
    <div class="dt-b">
     <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>
     <h2>${esc(x.title)}</h2><div class="addr">📍 ${esc(x.address)}</div>
