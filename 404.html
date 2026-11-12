@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>页面找不到了 | 好租 Howzu</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><meta name="theme-color" content="#0f6b4f">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1d2321;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7}
+a{color:#0f6b4f}
+main{max-width:560px;margin:0 auto;padding:56px 20px 80px}
+.logo{font-weight:700;text-decoration:none;color:#0f6b4f}
+h1{font-size:24px;margin:28px 0 8px}
+p{color:#5b625f;margin:0 0 20px}
+.hint{background:#eef6f2;border-radius:10px;padding:12px 14px;margin:0 0 20px;display:none}
+.go{display:grid;gap:10px}
+.go a{display:block;border:1px solid #dfe5e2;border-radius:10px;padding:12px 14px;text-decoration:none;color:#1d2321}
+.go a b{color:#0f6b4f}
+.go a span{display:block;font-size:13px;color:#8a908d}
+</style>
+</head>
+<body>
+<main>
+<a class="logo" href="/">好租 Howzu</a>
+<h1>这个页面找不到了</h1>
+<p>可能房源已经租出、下架，或者链接打错了。</p>
+<div class="hint" id="hint"></div>
+<div class="go">
+<a href="/rentals.html"><b>🏠 看在租房源</b><span>墨尔本中文租房，带地图、学区和通勤时间</span></a>
+<a href="/"><b>🏫 查学区</b><span>输入地址，查对口公立中小学</span></a>
+<a href="/guide/property.html"><b>📚 房产干货</b><span>租房指南、房产税务、各区和学区介绍</span></a>
+<a href="/guide/landlord.html"><b>🔑 房东托管</b><span>房子交给我们管理</span></a>
+</div>
+</main>
+<script>
+(function () {
+  var p = location.pathname, h = document.getElementById("hint"), m;
+  if ((m = p.match(/\/rent\/([^\/]+?)(\.html)?$/))) {
+    h.innerHTML = '这套房源可能已经租出了。<a href="/rentals.html">看看现在还在租的房源 →</a>';
+    h.style.display = "block";
+  } else if (/\/guide\//.test(p)) {
+    h.innerHTML = '文章地址可能改过了。<a href="/guide/property.html">到房产干货目录里找找 →</a>';
+    h.style.display = "block";
+  }
+})();
+</script>
+<script src="/js/config.js"></script>
+<script src="/js/track.js"></script>
+<script>try { HowzuTrack.ev("404"); } catch (e) {}</script>
+</body>
+</html>
