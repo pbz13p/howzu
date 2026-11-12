@@ -48,7 +48,7 @@ for A in AREAS:
         f"到墨尔本大学约 <b>{km(A['lat'],A['lng'],UNIS[0][1],UNIS[0][2]):.1f} 公里</b>、到 RMIT 约 <b>{km(A['lat'],A['lng'],UNIS[1][1],UNIS[1][2]):.1f} 公里</b>（直线距离）。",
         f"区中心点对口的公立中学学区：{szl}。不同街道可能不同，签约前按具体地址查。",
         "租房押金一律交政府 RTBA 托管；申请租房不用付任何申请费。",
-        (f"好租现在在 {html.escape(A['name'])} 有 <b>{len(live)} 套</b>在租房源" if live else f"好租在 {html.escape(A['name'])} 暂时没有在租房源")+(f"（之前已帮 {len(let)} 套找到租客）" if let else "")+("。" if live else "，可以留下需求，有新房第一时间通知你。")]
+        f"好租在 {html.escape(A['name'])} 的在租房源见下方（实时更新）；没有合适的可以留下需求，有新房第一时间通知你。"]
     body=f'''<h2>到各大学有多远（直线距离）</h2>
 <div class="ex"><table>{uni}</table></div>
 <p class="meta">按区中心点的直线距离估算，实际路程和时间以地图为准。每套房源详情页有按地址估算的通勤时间。</p>
@@ -56,7 +56,8 @@ for A in AREAS:
 <ul class="dot"><li>中学：{szl}</li><li>小学：{pzl}</li></ul>
 <p>学区按具体地址划分，同一个区不同街道可能对口不同学校。用 <a href="/">好租查学区</a> 输入地址查，签约前再到 Find my School 核对。按学区租房的注意事项见 <a href="/guide/school-zone.html">按学区租房</a>。</p>
 <h2>好租在 {html.escape(A['name'])} 的房源</h2>
-{f"<ul class='dot'>{lst}</ul>" if lst else "<p>暂时没有在租房源。</p>"}
+<ul class="dot" id="areaL"><li>加载中…</li></ul>
+<script>fetch("/data/listings.json").then(r=>r.json()).then(j=>{{const L=(j.listings||[]).filter(x=>x.suburb==={json.dumps(A['sub'])}&&x.status==="live");const e=s=>String(s).replace(/[&<>"]/g,c=>({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}})[c]);document.getElementById("areaL").innerHTML=L.length?L.map(x=>`<li><a href="/rentals.html?id=${{encodeURIComponent(x.id)}}">${{e(x.title)}}</a></li>`).join(""):"<li>暂时没有在租房源，可以留下需求。</li>";}}).catch(()=>{{document.getElementById("areaL").innerHTML='<li><a href="/rentals.html">看全部在租房源</a></li>'}});</script>
 <p><a href="/rentals.html">看全部在租房源 ›</a> · <a href="/rentals.html#leadCard">留下需求，有新房通知你 ›</a></p>
 <h2>在这里租房前，先看这几篇</h2>
 <ul class="dot"><li><a href="/guide/first-rental.html">留学生第一次在墨尔本租房</a></li><li><a href="/guide/apply.html">租房申请新规：哪些钱不该付</a></li><li><a href="/guide/bond.html">押金怎么交、怎么退</a></li><li><a href="/guide/utilities.html">水电煤网谁付</a></li><li><a href="/guide/sublet.html">找二房东租房间安全吗</a></li></ul>'''
