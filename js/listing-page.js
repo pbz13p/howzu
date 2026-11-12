@@ -8,6 +8,19 @@
   const pageUrl = x => `${SITE}/rent/${encodeURIComponent(x.id)}.html`;
   const fmtTel = t => String(t || "").replace(/^(\d{4})(\d{3})(\d{3})$/, "$1 $2 $3");
 
+  // 入住时间：发房源时存的是 ISO 日期（2026-11-26）或文字（尽快 / 2027 年 1 月）。
+  // 日期已到 → 显示“尽快”，未到 → “11 月 26 日”，免得过期的日期或“两周内”一直挂着误导租客。
+  const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+  function availText(v, today) {
+    const s = String(v == null ? "" : v).replace(/入住$/, "").trim(), m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+    if (s === "马上") return "尽快";
+    if (!m) return s;
+    if (s <= (today || todayISO())) return "尽快";
+    const y = m[1] !== (today || todayISO()).slice(0, 4) ? `${m[1]} 年 ` : "";
+    return `${y}${+m[2]} 月 ${+m[3]} 日`;
+  }
+  const availNow = (v, today) => /尽快|马上|即|now/i.test(availText(v, today));
+
   function facts(x) {
     return [x.beds != null ? `${x.beds}房` : "", x.baths != null ? `${x.baths}卫` : "", x.cars ? `${x.cars}车位` : ""].filter(Boolean).join("");
   }
@@ -21,7 +34,7 @@
   }
   // 分享卡片描述：关键信息 + 介绍第一句，限 110 字
   function ogDesc(x) {
-    const head = [x.suburb, facts(x), isLet(x) ? "已租出" : x.available ? `${x.available}入住` : "", x.furnished === true ? "带家具" : ""].filter(Boolean).join(" · ");
+    const head = [x.suburb, facts(x), isLet(x) ? "已租出" : x.available ? `${availText(x.available)}入住` : "", x.furnished === true ? "带家具" : ""].filter(Boolean).join(" · ");
     const first = String(x.desc || "").split(/\n/).map(s => s.trim()).filter(Boolean)[0] || "";
     const s = head + (first ? "。" + first : "") + " 好租 Howzu 中文服务，持牌管理。";
     return s.length > 110 ? s.slice(0, 109) + "…" : s;
@@ -44,7 +57,7 @@
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
     const rest = hs.filter(h => !/^开放看房 |^不可养宠|^不包水电网$/.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
-    const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : "咨询";
+    const avail = isLet(x) ? "已租出" : x.available ? availText(x.available) : "咨询";
     const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] === "定好时间" ? "定时开放" : got["看房"] || "预约看房"]];
     return { cells, rest };
   }
@@ -71,7 +84,7 @@
     const bills = ["水", "电", "网"].filter(k => hs.includes("包" + k + "费") || hs.includes("包" + k) || new RegExp("(^|[^不])包[水电网、和]*" + k).test(all));
     const floor = (all.match(/(\d{1,3})\s*(?:层|楼(?!下))/) || [])[1];
     const amen = AMEN.filter(([, re]) => re.test(all)).map(([k]) => k);
-    const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : TBC;
+    const avail = isLet(x) ? "已租出" : x.available ? availText(x.available) : TBC;
     return [
       ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
       ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", bondWithAmt(tag("押金 "), x.rentWeekly) || TBC],
@@ -226,7 +239,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     if (S["设施"] !== TBC) CARD_AMEN.filter(a => S["设施"].split("、").includes(a)).slice(0, 2).forEach(a => out.push(a));
     return out;
   }
-  const api = { leadUrl, bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  const api = { availText, availNow, leadUrl, bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);

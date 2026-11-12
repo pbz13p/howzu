@@ -219,7 +219,7 @@ textarea{resize:vertical;min-height:110px}
   <section class="card">
     <h2><span class="n">5</span>怎么联系你 <span class="opt">微信和手机至少填一个</span></h2>
     <label class="l">称呼</label><input type="text" id="cname" maxlength="30" autocomplete="name" placeholder="如 王先生">
-    <label class="l">微信号</label><input type="text" id="wechat" maxlength="40" placeholder="微信号">
+    <label class="l">微信号</label><input type="text" id="wechat" maxlength="40" placeholder="微信号" autocapitalize="off" autocorrect="off" spellcheck="false">
     <label class="l">手机</label><input type="tel" id="phone" maxlength="20" autocomplete="tel" placeholder="如 04xx xxx xxx">
     <label class="l">怎么看房 <span class="opt">可不选</span></label>
     <div class="chips" data-k="viewing" data-single data-opt>
@@ -342,7 +342,9 @@ document.querySelectorAll(".chips").forEach(g => g.addEventListener("click", e =
   if (g.hasAttribute("data-single")) { const off = g.hasAttribute("data-opt") && b.classList.contains("on"); g.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b && !off)); }
   else { b.classList.toggle("on"); if (b.classList.contains("on")) g.querySelectorAll("button").forEach(x => { if (x !== b && (b.hasAttribute("data-none") || x.hasAttribute("data-none"))) x.classList.remove("on"); }); }
   if (g.dataset.k === "ptype" || g.dataset.k === "floor") { g.dataset.auto = "-"; $("#unitHint").hidden = true; }
-  if (g.dataset.k === "when") $("#date").hidden = !b.hasAttribute("data-date");
+  if (g.dataset.k === "when") { const d = $("#date"); d.hidden = !b.hasAttribute("data-date");
+    // 点“选日期”直接弹出日历，少点一下；没选日期提交时存空，不会把“选日期”四个字当入住时间
+    if (!d.hidden && b.classList.contains("on") && !d.value) { d.focus(); try { d.showPicker && d.showPicker(); } catch (_) {} } }
   if (g.dataset.k === "bond") rentHint();
   if (g.dataset.k === "viewing") { $("#slots").hidden = !g.querySelector("button.on[data-slots]"); if (!$("#slots").hidden) setTimeout(() => $("#slots input").focus({ preventScroll: true }), 50); }
   save(); progress();
@@ -520,7 +522,8 @@ async function go2() {
       title: ($("#title").value.trim() || `${S.suburb || "墨尔本"} ${S.beds} 房 ${S.baths} 卫`).slice(0, 80),
       address: $("#addr").value.trim(), suburb: S.suburb || null, lat: S.lat, lng: S.lng,
       beds: S.beds, baths: S.baths, cars: S.cars, rent_weekly: weekly(),
-      available: when === "选日期" ? ($("#date").value || "选日期") : when,
+      // “两周内”存成具体日期：过了日期列表自动显示“尽快”，不会一直挂着“两周内”
+      available: when === "选日期" ? ($("#date").value || null) : when === "两周内" ? new Date(Date.now() + 14 * 864e5).toISOString().slice(0, 10) : when,
       furnished: chips("furnished")[0] || null, highlights: tags(),
       description: $("#desc").value.trim() || null,
       contact_name: $("#cname").value.trim() || null, contact_wechat: $("#wechat").value.trim() || null, contact_phone: $("#phone").value.trim() || null,

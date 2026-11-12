@@ -289,7 +289,7 @@ let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
-const isNow=x=>x.status!=="let"&&/尽快|马上|即|now/i.test(x.available||"");
+const isNow=x=>x.status!=="let"&&ListingPage.availNow(x.available);
 const isLet=x=>x.status==="let";
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
 function phImg(x){const P=[["#0f6b4f","#1f9a72"],["#1c4e80","#3a7fbf"],["#7a4b1f","#c08540"],["#4b2f6b","#8a5bb8"],["#2f5d50","#5aa08b"],["#6b2f3a","#b45a69"]];let h=0;for(const c of (x.suburb||x.id))h=(h*31+c.charCodeAt(0))>>>0;const [a,b]=P[h%P.length];
@@ -545,7 +545,7 @@ async function userListings(){
   try{
     const r=await fetch(`${H.SUPABASE_URL}/rest/v1/listings?status=eq.live&kind=neq.%E6%B1%82%E7%A7%9F%E9%9C%80%E6%B1%82&order=created_at.desc&limit=200`,{headers:{apikey:H.SUPABASE_ANON_KEY}});
     const rows=r.ok?await r.json():[];
-    return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:/^\d{4}-\d\d-\d\d$/.test(x.available||"")?`${+x.available.slice(5,7)} 月 ${+x.available.slice(8,10)} 日`:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,createdAt:x.created_at,user:true}));
+    return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:ListingPage.availText(x.available==="两周内"&&x.created_at?new Date(Date.parse(x.created_at)+14*864e5).toISOString().slice(0,10):x.available),furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,createdAt:x.created_at,user:true}));
   }catch(_){return []}
 }
 // 先显示自有房源，用户发布的房源（Supabase）到了再补上；Supabase 慢或连不上也不会卡在"加载中"

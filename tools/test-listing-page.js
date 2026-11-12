@@ -88,4 +88,10 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   ok("租房页：电脑上详情照片限高、咨询按钮固定在弹窗底部（第一屏能看到标题和按钮）", /@media \(min-width:721px\)\{\.dt-g\{aspect-ratio:auto;height:min\(54vh,540px\)\}/.test(r) && r.includes(".dt-b .acts{position:sticky;bottom:0")); }
 { const LPx = require("../js/listing-page.js"), hl = LPx.render({ id: "zz", status: "let", title: "T", address: "1 A St, Carlton", suburb: "Carlton", beds: 1, photos: [] }, { phone: "0400 000 000" }, 3);
   ok("已租出独立页：底部固定栏有『有空房通知我』（带来源）和『看在租房源』，不放电话", hl.includes('<nav class="bar">') && hl.includes("同楼或附近有空房通知我") && hl.includes("lf=zz") && !hl.includes('href="tel:')); }
+{ const A = LP.availText, T = "2026-11-12";
+  ok("入住时间：日期已过显示『尽快』", A("2026-11-01", T) === "尽快" && A("2026-11-12", T) === "尽快" && LP.availNow("2026-10-01", T));
+  ok("入住时间：未来日期显示『11 月 26 日』，跨年带年份", A("2026-11-26", T) === "11 月 26 日" && A("2027-01-05", T) === "2027 年 1 月 5 日" && !LP.availNow("2026-11-26", T));
+  ok("入住时间：文字原样保留、『马上』归一成『尽快』", A("2027 年 1 月", T) === "2027 年 1 月" && A("马上", T) === "尽快" && A("尽快入住", T) === "尽快" && A("", T) === "");
+  const pz = require("fs").readFileSync(require("path").join(__dirname, "../post.html"), "utf8");
+  ok("发房源：『两周内』提交时存成具体日期，微信号输入框不自动大写", pz.includes('when === "两周内" ? new Date(Date.now() + 14 * 864e5)') && pz.includes('($("#date").value || null)') && pz.includes("d.showPicker") && /id="wechat"[^>]*autocapitalize="off"/.test(pz)); }
 process.exit(fail ? 1 : 0);
