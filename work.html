@@ -332,7 +332,7 @@ function openProp(id) {
     <div style="margin-top:8px"><label class="l">照片（第一张 = 封面；点 ◀ ▶ 调顺序）</label><div class="phs" id="phs"></div><input type="file" id="file" accept="image/*" multiple hidden></div>
    </div>
    <div class="sec"><h4>✍️ 创作室 <span class="small muted">（用上面的标题、租金、亮点、介绍自动生成各渠道文案，先保存再生成）</span></h4>
-    <div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" data-gen="geo" title="按地址查对口学区和到各大学的通勤，加到文案末尾">🏫 加学区和通勤</button><button class="btn" data-gen="xhs">小红书</button><button class="btn" data-gen="yeeyi">亿忆网</button><button class="btn" data-gen="wx">微信</button><button class="btn" data-gen="fb">Facebook（英文）</button><button class="btn" data-gen="poster">🖼 生成海报</button></div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn" data-gen="geo" title="按地址查对口学区和到各大学的通勤，加进文案；之后生成的海报也会带上对口学校">🏫 加学区和通勤</button><button class="btn" data-gen="xhs">小红书</button><button class="btn" data-gen="yeeyi">亿忆网</button><button class="btn" data-gen="wx">微信</button><button class="btn" data-gen="fb">Facebook（英文）</button><button class="btn" data-gen="poster">🖼 生成海报</button></div>
     <textarea id="gen_out" style="min-height:140px;margin-top:8px" placeholder="点上面的渠道，文案会出现在这里，可以改，再点复制"></textarea>
     <div style="margin-top:6px"><button class="btn pri" data-gen="copy">📋 复制</button> <span class="small muted" id="gen_tip"></span></div>
     <canvas id="gen_cv" width="1080" height="1440" style="display:none;width:100%;max-width:360px;margin-top:8px;border-radius:10px"></canvas>
@@ -437,6 +437,7 @@ async function genPoster() {
   x.font = "bold 56px sans-serif"; x.fillStyle = "#ffd166"; x.fillText(u.rentWeekly ? `$${u.rentWeekly}/周` : "租金私信咨询", 70, 1150);
   x.fillStyle = "#d6defa"; x.font = "40px sans-serif"; x.fillText([u.suburb, u.beds != null ? `${u.beds}房${u.baths ?? "?"}卫` : "", u.available ? u.available + "入住" : ""].filter(Boolean).join(" · "), 70, 1230);
   if ((u.highlights || []).length) { x.font = "34px sans-serif"; x.fillText("✨ " + u.highlights.slice(0, 3).join(" / ").slice(0, 34), 70, 1300); }
+  if (cur._geo && (cur._geo.s || cur._geo.p)) { x.fillStyle = "#d6defa"; x.font = "30px sans-serif"; x.fillText(("🏫 对口 " + [cur._geo.s, cur._geo.p].filter(Boolean).map(n => n.replace(/ Secondary College$/, " SC").replace(/ High School$/, " High").replace(/ Primary School$/, " PS")).join(" · ")).slice(0, 52), 70, 1345); }
   x.fillStyle = "#9fb6ff"; x.font = "30px sans-serif"; x.fillText("howzu.com.au", 70, 1380);
   try { const a = document.createElement("a"); a.download = (cur.pub_id || cur.id) + "-海报.png"; a.href = cv.toDataURL("image/png"); a.click(); $("#gen_tip").textContent = "海报已下载"; }
   catch (_) { $("#gen_tip").textContent = "照片跨域，海报只能在页面上长按/右键保存"; }
@@ -466,6 +467,7 @@ async function addGeo() {
     const L = [];
     if (S.length || P.length) L.push("🏫 对口公立学校（2027 学区）：" + [...S.map(z => z.name + "（中学）"), ...P.map(z => z.name + "（小学）")].join("、"));
     if (R.length) L.push("🚆 通勤：" + R.map(r => `${r.name} ${r.mode === "walk" ? "步行" : "公交"}约 ${r.min} 分钟`).join(" · "));
+    cur._geo = { s: (S[0] || {}).name || "", p: (P[0] || {}).name || "" };
     if (!L.length) return tip.textContent = "这个地址查不到学区和通勤";
     const o = $("#gen_out"), v = o.value.replace(/\s+$/, ""), i = v.search(/\n#\S/); // 小红书话题标签放最后，学区通勤插在标签前面
     o.value = !v ? L.join("\n") : i >= 0 ? v.slice(0, i) + "\n" + L.join("\n") + "\n" + v.slice(i) : v + "\n\n" + L.join("\n");
