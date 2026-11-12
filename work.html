@@ -9,6 +9,7 @@
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e6e2d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#8a5a00;--warnbg:#fff4e0;--bad:#a12b2b;--badbg:#fde8e8;--blue:#1c4e80;--bluebg:#e7eef7}
 *{box-sizing:border-box}
+html{overflow-x:hidden}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
 header{background:var(--accent);color:#fff;position:sticky;top:0;z-index:5}
 .hd{max-width:1280px;margin:0 auto;padding:12px clamp(12px,3vw,32px);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
@@ -33,6 +34,7 @@ main{max-width:1280px;margin:0 auto;padding:16px clamp(12px,3vw,32px) 60px}
 .row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid #f1eee6;font-size:14px;align-items:center}
 .row:first-of-type{border-top:0}
 .row .r{color:var(--muted);font-size:13px;text-align:right;white-space:nowrap}
+@media (max-width:700px){.row .r{white-space:normal;max-width:62%}}
 .row a,.lnk{color:var(--accent);cursor:pointer;text-decoration:none}
 .bar{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
 .bar .n{width:110px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -88,7 +90,7 @@ textarea{min-height:180px;line-height:1.55}
 .login{max-width:420px;margin:60px auto}
 .login input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin:8px 0}
 @media (max-width:700px){.kpi .v{font-size:22px}.hd h1 small{display:none}.hd{gap:6px}nav{order:3;flex-basis:100%;margin:0 -6px}.who .em{display:none}.who{margin-left:auto}}
-.ext{position:relative;display:inline-block;margin-left:6px}.ext summary{list-style:none;cursor:pointer;color:#fff;font-weight:600;padding:6px 10px;border-radius:14px}.ext summary::-webkit-details-marker{display:none}.ext[open] summary{background:rgba(255,255,255,.18)}.ext>div{position:absolute;right:0;top:110%;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;min-width:200px;z-index:60}.ext a{display:block;padding:8px 10px;border-radius:8px;color:#1d2321;text-decoration:none;font-size:14px;white-space:nowrap}.ext a:hover{background:#eef5f1}
+.ext{position:relative;display:inline-block;margin-left:6px;flex:none}.ext summary{list-style:none;white-space:nowrap;cursor:pointer;color:#fff;font-weight:600;padding:6px 10px;border-radius:14px}.ext summary::-webkit-details-marker{display:none}.ext[open] summary{background:rgba(255,255,255,.18)}.ext>div{position:fixed;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;min-width:200px;z-index:60}.ext a{display:block;padding:8px 10px;border-radius:8px;color:#1d2321;text-decoration:none;font-size:14px;white-space:nowrap}.ext a:hover{background:#eef5f1}
 </style>
 </head>
 <body>
@@ -229,6 +231,13 @@ async function loadWeb() {
     <div style="display:flex;gap:3px;align-items:flex-end;height:44px;margin:8px 0">${days.slice().reverse().map(k => `<div title="${k}：${V.get(k) || 0}" style="flex:1;background:#0f6b4f;border-radius:3px 3px 0 0;height:${Math.round((V.get(k) || 0) / mx * 40) + 2}px"></div>`).join("")}</div>
     ${tl.length ? `<div class="small muted">咨询最多的房源：${tl.map(([id, n]) => `${esc(id)}（${n}）`).join("、")}</div>` : `<div class="small muted">这周还没有咨询记录</div>`}`;
 }
+// 外部网站菜单：导航栏在手机上是横向滚动的，菜单用 fixed 定位贴在按钮下面，免得被裁掉
+document.addEventListener("toggle", e => {
+  const d = e.target; if (!d.classList || !d.classList.contains("ext") || !d.open) return;
+  const r = d.querySelector("summary").getBoundingClientRect(), m = d.querySelector("div");
+  m.style.top = Math.round(r.bottom + 6) + "px"; m.style.right = Math.max(8, Math.round(innerWidth - r.right)) + "px";
+}, true);
+document.addEventListener("click", e => { document.querySelectorAll("details.ext[open]").forEach(d => { if (!d.contains(e.target)) d.open = false; }); });
 function renderStats() {
   const S = stats(P, new Date());
   const kpi = (v, l, s = "", cls = "") => `<div class="kpi ${cls}"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
