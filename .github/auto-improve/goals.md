@@ -18,6 +18,7 @@
 2. 数据一致：同一套房在列表卡片、详情、rent/xxx.html 分享页上的租金、房型、状态是否一致；不一致就修代码（不要改 data/listings.json 内容）。
 3. 文章入口：首页和在租房源页是否有显眼入口能到 guide/property.html（房产干货 + 租房指南共 30 篇）；没有就加一个小入口，别做大改。
 4. guide/ 下的文章由督导写，机器人**不要改 guide/ 里的任何文件**。guide/zone-*.html（38 个学区租房页）和 data/zone_guides.json 由 `python3 tools/zone_pages.py` 生成，也不要手改。
+11/13 督导新加（请保持能用，出问题就修）：访问统计 js/track.js（表 pageviews 需老板建）、房东托管咨询 js/owner-lead.js + guide/landlord.html（存 listings，kind=房东托管咨询，后台在“租客需求 / 房东咨询”标签）、详情地图学区图层 zoneLayer、地图看房“按学区看” lzShow（rentals.html?zone=学校名）、区域页 tools/area_pages.py。
 纯视觉微调（间距、对齐、换个说法）不再做，除非手机上明显错位。
 
 ## 做事方式
