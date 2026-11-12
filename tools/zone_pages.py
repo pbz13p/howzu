@@ -1,6 +1,6 @@
 # 生成 guide/zone-*.html 学区租房页：python3 tools/zone_pages.py（学区或 VCE 数据更新后重跑，再跑 node tools/build-listing-pages.js 更新 sitemap）
 # 注意：增删学校后，guide/property.html 里“热门公立中学学区”的小卡片和 guide/school-zone.html 的链接列表要同步更新
-import json,re,sys,html
+import json,re,sys,html,urllib.parse
 import os
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 import guide_gen as gen
@@ -62,6 +62,7 @@ for name in PICK:
 <li><b>租期覆盖开学第一天</b>：快到期就提前续签。</li>
 <li><b>真的住进去</b>：只挂地址不住，录取可能被撤回。详见 <a href="/guide/school-zone.html">按学区租房：租约能不能报名</a>。</li>
 </ol>
+<p><a href="/rentals.html?zone={urllib.parse.quote(name)}">在地图上看 {html.escape(name)} 学区里的好租在租房源 ›</a></p>
 <div class="note">热门学区的房子往往一出来就被租走。可以在好租<a href="/rentals.html#leadCard">留下需求</a>，写上 {html.escape(name)} 学区，有合适的房源第一时间通知你。</div>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>

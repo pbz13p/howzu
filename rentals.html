@@ -288,7 +288,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="js/nearby.js?v=20261112"></script>
 <script>
 const $=s=>document.querySelector(s);
-let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;let LMGRP={},LZ=null;
+let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;let LMGRP={},LZ=null,LZQ=new URLSearchParams(location.search).get("zone");
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
@@ -347,7 +347,7 @@ function render(){
   const mbK=S.feat.filter(k=>mb.some(x=>HF.unknown(x,k))).map(k=>HF.FEAT[k].label).join("、");
   const mbSec=mb.length?`<div class="sec mb${live.length?"":" top"}"><b>${live.length?"还有 ":""}${mb.length} 套还没写明「${esc(mbK)}」</b><span>不一定没有，点开房源用「一键问清」问我们</span></div>`+mb.map(card).join(""):"";
   LIVE=live;
-  filterUI(base,live.length,act,mb.length);leadSync();if(MAPON)listMap();
+  filterUI(base,live.length,act,mb.length);leadSync();if(MAPON)listMap();else if(LZQ&&live.length){const t=document.getElementById("mapT");if(t)setTimeout(()=>t.click(),0);}
   const sec=(live.length||mb.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
   const cmpN=F==="fav"&&window.ListingPage&&ListingPage.compare?Math.min(3,live.length):0;
   $("#list").innerHTML=live.length||done.length||mb.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+mbSec+sec+(LETALL||done.length<=6?done:done.slice(0,4)).map(card).join("")+(!LETALL&&done.length>6?`<button class="letmore" data-letmore>查看全部 ${done.length} 套成交案例 <i>›</i></button>`:""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
@@ -374,7 +374,7 @@ async function listMap(){const seq=++LMseq,box=$("#lmap"),n=$("#lmapN");box.hidd
       .bindPopup(g.xs.map(y=>`<div class="mpop" data-open="${esc(y.id)}"><img src="${esc((y.photos||[])[0]||phImg(y))}" alt=""><div><b>${esc(y.title||y.suburb||"")}</b><span>${[y.rentWeekly?`$${y.rentWeekly}/周`:"",y.beds!=null?`${y.beds} 房`:"",isNow(y)?"马上入住":""].filter(Boolean).join(" · ")}</span><u>查看详情 ›</u></div></div>`).join('<div class="mpop-s"></div>'),{closeButton:false,offset:[0,-10]});
     n.textContent=`正在标注 ${i+1}/${xs.length}…`;
     if(pts.length===1)LM.setView(pts[0],13);else LM.fitBounds(pts,{padding:[36,36],maxZoom:14});}
-  n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;LMGRP=G;lzFill();if(LZ)lzShow(LZ.name);}
+  n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;LMGRP=G;lzFill();if(LZQ){$("#lzI").value=LZQ;lzShow(LZQ);LZQ=null;}else if(LZ)lzShow(LZ.name);}
 document.addEventListener("click",e=>{const b=e.target.closest("#mapT");if(!b)return;MAPON=!MAPON;b.classList.toggle("on",MAPON);b.setAttribute("aria-pressed",MAPON);b.innerHTML=MAPON?"☰ 收起<span>地图</span>":"🗺 地图<span>看房</span>";
   if(MAPON){listMap();requestAnimationFrame(()=>{const nv=document.querySelector("nav");scrollTo({top:$("#fsum").getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-8,behavior:"smooth"});});}else{LMseq++;$("#lmap").hidden=true;}});
 // 按学区看：选一所公立中学，地图上画出它的学区，算出学区里有几套在租房源
