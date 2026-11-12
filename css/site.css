@@ -22,10 +22,11 @@
   .nav .in{height:auto;flex-wrap:wrap;padding:10px 14px;gap:8px 12px}
   .nav .logo small{display:none}
   .nav .links{order:3;flex-basis:100%;margin:0 -4px}
-  .nav .links a{padding:6px 10px;font-size:14px}
+  .nav .links{gap:0}.nav .links a{padding:6px 8px;font-size:14px}
   .nav .post{margin-left:auto;padding:7px 12px;font-size:14px}
   .nav .login{padding:6px 10px;font-size:14px}
   .hero .in{padding:20px 16px 18px}
   .hero h1{font-size:22px}
   .hero p{font-size:14px}
 }
+@media (max-width:380px){.nav .links a{padding:6px 6px;font-size:13px}}
