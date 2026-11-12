@@ -334,7 +334,7 @@ function zoneHTML(f,tag){
   }
   return `<div class="zone"><span class="tag">${tag}</span>
     <div class="name">${pr.name}${campus}</div>
-    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}${s?feeHTML(s):""}${D.zg&&D.zg[pr.no]?`<a class="zg" href="guide/${D.zg[pr.no]}.html">看这个学区的租房指南：学区地图、学区里的区和小学 ›</a>`:""}</div>`;
+    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}${s?feeHTML(s):""}${D.zg&&D.zg[pr.no]?`<a class="zg" href="guide/${D.zg[pr.no]}.html">看这个学区的租房指南：学区地图、学区里的区和小学 ›</a>`:""}${tag==="中学学区"?`<a class="zg" href="rentals.html?zone=${encodeURIComponent(pr.name)}">在地图上看这个学区里的在租房源 ›</a>`:""}</div>`;
 }
 
 function renderNear(){
