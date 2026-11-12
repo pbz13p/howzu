@@ -114,4 +114,6 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   ok("地图看房可按学区看：输入中学名画出学区并统计学区内在租房源", r.includes('id="lzI"') && /async function lzShow\(/.test(r) && r.includes("LMGRP=G;lzFill();")); }
 { const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
   ok("加了自己的学校/公司后，列表卡片显示到那里的通勤", /function cmChip\(/.test(r) && r.includes('data-cmchip="${esc(x.id)}"') && r.includes("setTimeout(cmFill,0)")); }
+{ const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
+  ok("列表顶部可直接选“我的学校/公司”看每套房通勤", r.includes('id="lcm"') && /function lcmRender\(/.test(r) && r.includes("lcmRender();setTimeout(cmFill,0)")); }
 process.exit(fail ? 1 : 0);
