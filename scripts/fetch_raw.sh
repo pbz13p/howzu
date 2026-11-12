@@ -38,4 +38,19 @@ find tmp/zones -iname "*.geojson" -o -iname "*.json" | while read -r f; do
   mapshaper "$f" -proj wgs84 -simplify interval=20 keep-shapes -o "raw/zones/${base%.*}.json" format=geojson precision=0.00001 >> raw/_manifest.txt 2>&1
 done
 ls -la raw/zones >> raw/_manifest.txt
+
+# Homes Victoria Rental Report: latest "Quarterly median rents by LGA" (suburb groups, RTBA bond data, CC BY 4.0)
+RENT_API="https://discover.data.vic.gov.au/api/3/action/package_show?id=rental-report-quarterly-quarterly-median-rents-by-lga"
+if curl -sSfL -A "$UA" -o tmp/rent_pkg.json "$RENT_API"; then
+  RENT_URL=$(python3 -c "
+import json;r=json.load(open('tmp/rent_pkg.json'))['result']['resources']
+r=[x for x in r if (x.get('format') or '').upper() in ('XLSX','XLS') or str(x.get('url','')).lower().endswith(('xlsx','excel'))]
+r.sort(key=lambda x:(x.get('period_end') or x.get('temporal_coverage_end') or '', x.get('created') or ''))
+print(r[-1]['url'] if r else '')
+print(r[-1].get('period_end') or '' if r else '')" )
+  echo "== rent ==" >> raw/_manifest.txt; echo "$RENT_URL" >> raw/_manifest.txt
+  U=$(echo "$RENT_URL" | head -1)
+  [ -n "$U" ] && curl -sSfL -A "$UA" -o raw/rent_lga.xlsx "$U" && echo "rent ok: $U"
+  echo "$RENT_URL" | tail -1 > raw/rent_period.txt
+fi
 exit 0
