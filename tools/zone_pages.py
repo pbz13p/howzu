@@ -73,4 +73,5 @@ window.addEventListener("load",function(){{try{{var G={json.dumps(geo)};var m=L.
       sources=[("Find my School（维州官方学区查询）","https://www.findmyschool.vic.gov.au"),("DataVic · Victorian Government School Zones 2027","https://discover.data.vic.gov.au/dataset/victorian-government-school-zones-2027"),("VCAA · 2025 Senior Secondary Completion and Achievement Information","https://www.vcaa.vic.edu.au/sites/default/files/2025-12/2025-SeniorSecondaryCompletionandAchievementInformation.xlsx")])
     gen.build(A);out.append((sl,name,x,subs))
 json.dump([(a,b,c["vce_med"],c["vce_rank"],suburb(c["addr"])) for a,b,c,d in out],open(os.path.join(R,"tools","zone_pages.json"),"w"))
+json.dump({str(c["no"]):a for a,b,c,d in out},open(os.path.join(R,"data","zone_guides.json"),"w"),separators=(",",":"))
 print(len(out))

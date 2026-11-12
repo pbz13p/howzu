@@ -94,6 +94,7 @@ label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
 #rankSearch{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
 .hidden{display:none}
 footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
+.zg{display:block;margin-top:10px;font-size:14px;font-weight:600;color:#0f6b4f;text-decoration:none}
 </style>
 </head>
 <body>
@@ -244,6 +245,7 @@ async function load(){
   const zones = Promise.all(["zones_primary","zones_secondary"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
   const [sc, meta] = await Promise.all(["schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
   D = {sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
+  try{ D.zg = await fetch("data/zone_guides.json").then(r=>r.ok?r.json():{}); }catch(_){ D.zg={}; }
   try{ const fees = await fetch("data/fees.json").then(r=>r.ok?r.json():{});
     for(const [no,f] of Object.entries(fees)) if(f.found && f.max_annual_aud && D.byNo[no]) D.byNo[no].fee=f; }catch(_){}
   $("#rt").textContent = meta.vce_ranked_total;
@@ -332,7 +334,7 @@ function zoneHTML(f,tag){
   }
   return `<div class="zone"><span class="tag">${tag}</span>
     <div class="name">${pr.name}${campus}</div>
-    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}${s?feeHTML(s):""}</div>`;
+    <div class="meta">${s?s.addr:""}${s&&s.phone?" · "+s.phone:""}</div>${stats}${s?feeHTML(s):""}${D.zg&&D.zg[pr.no]?`<a class="zg" href="guide/${D.zg[pr.no]}.html">看这个学区的租房指南：学区地图、学区里的区和小学 ›</a>`:""}</div>`;
 }
 
 function renderNear(){

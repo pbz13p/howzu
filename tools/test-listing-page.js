@@ -102,4 +102,10 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   const h = require("../js/listing-page.js").render(A[0], {}, 2, require("../js/listing-page.js").related(A[0], A, 3));
   ok("已租出页面显示『这些现在可以租』卡片并链到对应独立页", h.includes("这些现在可以租") && h.includes('href="d.html"') && h.includes("$650/周"));
   ok("没有其它在租房源时不显示推荐区", !require("../js/listing-page.js").render(A[0], {}, 2, []).includes('class="rel"')); }
+// 学区租房页：查学区结果里的“学区租房指南”链接都指向真实存在的页面，且页面里有地图和官方来源
+{ const fs = require("fs"), path = require("path"), root = path.join(__dirname, "..");
+  const zg = JSON.parse(fs.readFileSync(path.join(root, "data", "zone_guides.json"), "utf8"));
+  const bad = Object.values(zg).filter(s => { const f = path.join(root, "guide", s + ".html"); return !fs.existsSync(f) || !fs.readFileSync(f, "utf8").includes('id="zmap"'); });
+  ok(`学区租房页 ${Object.keys(zg).length} 个都存在且带地图`, Object.keys(zg).length >= 20 && bad.length === 0);
+  ok("查学区结果里接了学区租房页链接", fs.readFileSync(path.join(root, "index.html"), "utf8").includes('data/zone_guides.json') && fs.readFileSync(path.join(root, "index.html"), "utf8").includes('class="zg"')); }
 process.exit(fail ? 1 : 0);
