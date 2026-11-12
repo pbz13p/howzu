@@ -103,7 +103,7 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 .more{font-size:13px;color:#6b726f;margin:8px 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .more b{color:#0f6b4f;font-weight:600}
 .cmpbar{display:flex;align-items:center;justify-content:space-between;width:100%;grid-column:1/-1;background:var(--accent2);border:0;border-radius:14px;padding:12px 14px;margin:0 0 12px;font:inherit;font-size:13px;color:var(--ink);text-align:left;cursor:pointer}.cmpbar b{color:var(--accent);margin-right:6px;font-size:14px}.cmpbar i{font-style:normal;color:var(--accent);font-size:20px}
-.cmp-b{padding:18px 16px 30px;overflow-x:auto}.cmp-b h2{font-size:20px;margin:0 0 2px}.cmp-s{font-size:12px;color:var(--muted);margin:0 0 12px}.cmp table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}.cmp th,.cmp td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:break-word}.cmp tbody th{width:64px;color:var(--muted);font-weight:400}.cmp thead th{vertical-align:bottom;cursor:pointer}.cmp thead th:first-child{width:64px}.cmp thead img{display:block;width:100%;height:68px;object-fit:cover;border-radius:8px;margin-bottom:6px}.cmp thead span{display:block;font-size:12.5px;font-weight:600;line-height:1.35}.cmp tr.d td{background:#fbf6ea;font-weight:600}.cmp td.m{color:#a3a8a5;font-weight:400}
+.cmp-b{padding:18px 16px 30px;overflow-x:auto}.cmp-b h2{font-size:20px;margin:0 0 2px}.cmp-s{font-size:12px;color:var(--muted);margin:0 0 12px}.cmp table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}.cmp th,.cmp td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:break-word}.cmp tbody th{width:64px;color:var(--muted);font-weight:400}.cmp thead th{vertical-align:top;cursor:pointer}.cmp thead th:first-child{width:64px}.cmp thead img{display:block;width:100%;height:68px;object-fit:cover;border-radius:8px;margin-bottom:6px}.cmp thead span{display:block;font-size:12.5px;font-weight:600;line-height:1.35}.cmp tr.d td{background:#fbf6ea;font-weight:600}.cmp td.m{color:#a3a8a5;font-weight:400}
 .dt-mask{position:fixed;inset:0;z-index:90;background:rgba(10,16,14,.6);display:flex;align-items:center;justify-content:center;padding:24px}
 .dt{position:relative;background:#fff;border-radius:18px;width:min(980px,100%);max-height:100%;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .dt-x{position:absolute;top:12px;right:12px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.95);font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
@@ -472,13 +472,21 @@ function openDetail(x,noPush){
 function go(d){const P=DX.photos||[];if(!P.length)return;DI=(DI+d+P.length)%P.length;show();}
 function show(){const P=DX.photos;document.getElementById("dtImg").src=P[DI];const c=document.getElementById("dtC");if(c)c.textContent=`${DI+1} / ${P.length}`;document.querySelectorAll(".dt-th img").forEach((t,i)=>{t.classList.toggle("on",i===DI);if(i===DI)t.scrollIntoView({block:"nearest",inline:"center"});});}
 function openBook(){if(!DX||document.getElementById("bk"))return;document.querySelector("#dt .dt").insertAdjacentHTML("beforeend",bookSheet(DX));}
+async function cmpCommute(C3,m){if(!window.HowzuCommute)return;const tb=m.querySelector("tbody");if(!tb)return;
+  tb.insertAdjacentHTML("beforeend",HowzuCommute.PLACES.map(p=>`<tr data-cm="${p.k}"><th>到${esc(p.name)}</th>${C3.map(()=>`<td class="m">估算中…</td>`).join("")}</tr>`).join(""));
+  const R=[];for(const x of C3){let pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:null;
+    if(!pt&&x.address){let hit=null;try{hit=localStorage.getItem("howzu-geo:"+x.address);}catch(_){}if(!hit&&R.length)await new Promise(r=>setTimeout(r,1100));if(!document.body.contains(m))return;pt=await geoPt(x.address).catch(()=>null);}
+    R.push(pt?HowzuCommute.rows(pt):[]);}
+  if(!document.body.contains(m))return;
+  HowzuCommute.PLACES.forEach(p=>{const tr=tb.querySelector(`tr[data-cm="${p.k}"]`);if(!tr)return;const v=R.map(r=>{const e=r.find(y=>y.k===p.k);return e?(e.mode==="walk"?"🚶 ":"🚆 ")+e.min+" 分钟":ListingPage.TBC;});
+    tr.classList.toggle("d",new Set(v).size>1);tr.querySelectorAll("td").forEach((td,i)=>{td.textContent=v[i];td.className=v[i]===ListingPage.TBC?"m":"";});});}
 function openCmp(){const C3=FAV.map(id=>L.find(y=>String(y.id)===id&&!isLet(y))).filter(Boolean).slice(0,3);if(C3.length<2)return;const R=ListingPage.compare(C3);
   const m=document.createElement("div");m.className="dt-mask";m.id="cmp";
   m.innerHTML=`<div class="dt cmp" role="dialog" aria-label="并排对比"><button class="dt-x" data-cmpx aria-label="关闭">✕</button><div class="cmp-b"><h2>并排对比</h2><p class="cmp-s">底色标出的是几套不一样的地方</p>
   <table><thead><tr><th></th>${C3.map(x=>`<th data-go="${esc(x.id)}"><img src="${esc((x.photos||[])[0]||phImg(x))}" alt=""><span>${esc((x.title||"").split("·")[0].trim())}</span></th>`).join("")}</tr></thead>
   <tbody>${R.map(r=>`<tr class="${r.diff?"d":""}"><th>${esc(r.k)}</th>${r.v.map(v=>`<td class="${v===ListingPage.TBC?"m":""}">${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table>
-  <p class="cmp-s">点上面的照片看详情。“待确认”可以咨询时问。</p></div></div>`;
-  document.body.appendChild(m);document.body.style.overflow="hidden";}
+  <p class="cmp-s">点上面的照片看详情。“待确认”可以咨询时问。通勤按直线距离估算，实际以地图为准。</p></div></div>`;
+  document.body.appendChild(m);document.body.style.overflow="hidden";cmpCommute(C3,m);}
 document.addEventListener("click",e=>{if(e.target.closest("[data-cmp]")){openCmp();return;}const c=document.getElementById("cmp");if(!c)return;const o=e.target.closest("#cmp [data-go]");if(e.target.closest("[data-cmpx]")||e.target===c||o){c.parentNode.removeChild(c);document.body.style.overflow="";if(o){const x=L.find(y=>String(y.id)===o.dataset.go);if(x)openDetail(x);}e.stopPropagation();}},true);
 function closeDetail(back){const m=document.getElementById("dt");if(!m)return;m.remove();if(window.T0)document.title=T0;document.body.style.overflow="";DX=null;recentRow();if(back!==false&&new URLSearchParams(location.search).get("id"))history.pushState({},"","rentals.html"+(preview?"?preview=1":""));}
 addEventListener("popstate",()=>{const id=new URLSearchParams(location.search).get("id");closeDetail(false);if(id){const x=L.find(y=>String(y.id)===id);if(x)openDetail(x,true);}});
