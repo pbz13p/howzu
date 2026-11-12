@@ -37,6 +37,15 @@ AREAS=[
  dict(slug="area-brunswick",name="Brunswick",en="Brunswick",sub="Brunswick",lat=-37.767,lng=144.962,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
  dict(slug="area-caulfield",name="Caulfield East",en="Caulfield East",sub="Caulfield East",lat=-37.876,lng=145.042,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
  dict(slug="area-doncaster",name="Doncaster",en="Doncaster",sub="Doncaster",lat=-37.788,lng=145.124,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-balwyn",name="Balwyn",en="Balwyn",sub="Balwyn",lat=-37.8097,lng=145.082,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-camberwell",name="Camberwell",en="Camberwell",sub="Camberwell",lat=-37.826,lng=145.058,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-kew",name="Kew",en="Kew",sub="Kew",lat=-37.806,lng=145.03,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-mount-waverley",name="Mount Waverley",en="Mount Waverley",sub="Mount Waverley",lat=-37.877,lng=145.129,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-blackburn",name="Blackburn",en="Blackburn",sub="Blackburn",lat=-37.819,lng=145.15,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-richmond",name="Richmond",en="Richmond",sub="Richmond",lat=-37.823,lng=144.998,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-st-kilda",name="St Kilda",en="St Kilda",sub="St Kilda",lat=-37.867,lng=144.98,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-point-cook",name="Point Cook",en="Point Cook",sub="Point Cook",lat=-37.915,lng=144.75,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-bundoora",name="Bundoora",en="Bundoora",sub="Bundoora",lat=-37.698,lng=145.06,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
 ]
 def km(a,b,c,d):
     r=6371;p=math.pi/180;x=(d-b)*p*math.cos((a+c)/2*p);y=(c-a)*p;return r*math.hypot(x,y)
