@@ -96,4 +96,10 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   ok("发房源：『两周内』提交时存成具体日期，微信号输入框不自动大写", pz.includes('when === "两周内" ? new Date(Date.now() + 14 * 864e5)') && pz.includes('($("#date").value || null)') && pz.includes("d.showPicker") && /id="wechat"[^>]*autocapitalize="off"/.test(pz)); }
 { const ad = require("fs").readFileSync(require("path").join(__dirname, "../admin.html"), "utf8");
   ok("后台：房源和需求的入住时间用中文显示（不再是 2026-11-26）", (ad.match(/ListingPage\.availText\(x\.available\)/g) || []).length === 2 && !ad.includes('esc(x.available ||')); }
+{ const A = [{ id: "a", status: "let", suburb: "Carlton", beds: 2 }, { id: "b", status: "live", suburb: "Melbourne", beds: 2 }, { id: "c", status: "live", suburb: "Carlton", beds: 1 }, { id: "d", status: "live", suburb: "Carlton", beds: 2, photos: ["img/x.jpg"], rentWeekly: 650, title: "Carlton · 两房" }, { id: "e", status: "let" }];
+  const R = require("../js/listing-page.js").related(A[0], A, 3).map(y => y.id);
+  ok("独立页底部推荐：只推在租、不推自己、同区同房型优先", R.join() === "d,c,b");
+  const h = require("../js/listing-page.js").render(A[0], {}, 2, require("../js/listing-page.js").related(A[0], A, 3));
+  ok("已租出页面显示『这些现在可以租』卡片并链到对应独立页", h.includes("这些现在可以租") && h.includes('href="d.html"') && h.includes("$650/周"));
+  ok("没有其它在租房源时不显示推荐区", !require("../js/listing-page.js").render(A[0], {}, 2, []).includes('class="rel"')); }
 process.exit(fail ? 1 : 0);

@@ -102,7 +102,14 @@
   }
   const rel = p => /^https?:/.test(p) ? p : "../" + String(p).replace(/^\//, "");
 
-  function render(x, contact, letCount) {
+  // 同区优先、马上能住优先，挑最多 n 套其它在租房源，放在独立页底部（已租出的页面最需要它留住来访者）。
+  function related(x, all, n) {
+    const live = (all || []).filter(y => y && y.status === "live" && String(y.id) !== String(x.id) && safeId(y.id));
+    const sc = y => (y.suburb && y.suburb === x.suburb ? 2 : 0) + (y.beds != null && y.beds === x.beds ? 1 : 0);
+    return live.map((y, i) => [y, sc(y), i]).sort((a, b) => b[1] - a[1] || a[2] - b[2]).slice(0, n || 3).map(a => a[0]);
+  }
+
+  function render(x, contact, letCount, others) {
     contact = contact || {};
     const tel = x.phone || contact.phone, wx = x.wechat || contact.wechat;
     const P = x.photos || [];
@@ -157,6 +164,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tr-g b{display:block;font-size:13px}.tr-g small{display:block;font-size:11.5px;color:#6b726f;line-height:1.35}.tr-n{font-size:12px;color:#6b726f;margin-top:9px;padding-top:8px;border-top:1px solid rgba(15,107,79,.12)}
 .desc{white-space:pre-line;font-size:15px;border-top:1px solid #ece9e2;padding-top:18px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0}.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}.grid a:only-child{grid-column:1/-1}.grid a:only-child img{aspect-ratio:16/10}@media(max-width:699px){.grid a:last-child:nth-child(odd){grid-column:1/-1}.grid a:last-child:nth-child(odd) img{aspect-ratio:2/1}}
+.rel{margin:22px 0 6px}.rel-h{font-size:16px;font-weight:700;margin-bottom:10px}.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rel-h{grid-column:1/-1}.rel a{text-decoration:none;color:inherit;min-width:0}.rel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:#eee}.rel b{display:block;font-size:13px;color:#0f6b4f;margin-top:6px}.rel span{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rel small{display:block;font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .more{display:block;text-align:center;padding:14px;border:1px solid #e4e1d8;border-radius:12px;text-decoration:none;font-size:15px;margin-top:8px}.more.lead{background:#0f6b4f;border-color:#0f6b4f;color:#fff;line-height:1.5;margin-top:16px}.more.lead b{display:block;font-size:16px}
 .trust{font-size:13px;color:#6b726f;margin-top:22px}
 .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid #ece9e2;padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
@@ -181,6 +189,7 @@ ${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</
 ${x.desc ? `<div class="desc">${esc(x.desc)}</div>` : ""}
 ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map(p => `<a href="${esc(full)}"><img src="${esc(rel(p))}" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
 ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</a>` : ""}
+${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "这些现在可以租" : "其他在租房源"}</div>${others.map(y => `<a href="${esc(y.id)}.html" data-act="rel" data-id="${esc(y.id)}">${(y.photos || [])[0] ? `<img src="${esc(rel(y.photos[0]))}" alt="" loading="lazy">` : ""}<b>${esc(priceText(y))}</b><span>${esc((y.title || y.suburb || "").split("·")[0].trim())}</span><small>${esc([y.beds != null ? y.beds + " 房" : "", y.baths != null ? y.baths + " 卫" : "", y.cars ? y.cars + " 车位" : ""].filter(Boolean).join(" · ") || y.suburb || "")}</small></a>`).join("")}</div>` : ""}
 <a class="more" href="${esc(full)}">查看全部照片 · 看对口学区 ›</a>
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
 <p class="trust">好租 Howzu · 持牌物业管理 · 全程中文服务</p>
@@ -239,7 +248,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     if (S["设施"] !== TBC) CARD_AMEN.filter(a => S["设施"].split("、").includes(a)).slice(0, 2).forEach(a => out.push(a));
     return out;
   }
-  const api = { availText, availNow, leadUrl, bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  const api = { availText, availNow, leadUrl, bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, related, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);

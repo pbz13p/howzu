@@ -200,6 +200,9 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .filters button[data-k].zero{color:#9a9a9a}
 .fsum{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#666;margin:-4px 0 12px}
 .fsum b{color:var(--ink);font-weight:600}
+.fsum>span,.fsum button{white-space:nowrap}#fcnt{min-width:0;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:440px){.fsum .fr:has(#fclr:not([hidden])){gap:10px}.fsum .fr:has(#fclr:not([hidden])) .mt span{display:none}}
+@media (max-width:380px){#fclr span{display:none}}
 .fsum .fr{display:flex;align-items:center;gap:12px}
 .fsum select{border:0;padding:4px 18px 4px 0;background-position:right 2px center;color:var(--ink);font-weight:500}
 .fsum select.on{background-color:transparent;color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%230f6b4f' stroke-width='1.5'/%3E%3C/svg%3E")}
@@ -246,7 +249,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <label class="fs"><select id="fRent" aria-label="周租"></select></label>
     <button data-f="fav" class="fv" hidden>♥ 收藏 <i></i></button>
   </div>
-  <div class="fsum" id="fsum"><span id="fcnt"></span><span class="fr"><button data-fclr id="fclr" hidden>清除筛选</button><button class="mt" id="mapT" aria-pressed="false">🗺 地图看房</button><label class="fs"><select id="fSort" aria-label="排序"></select></label></span></div>
+  <div class="fsum" id="fsum"><span id="fcnt"></span><span class="fr"><button data-fclr id="fclr" hidden>清除<span>筛选</span></button><button class="mt" id="mapT" aria-pressed="false">🗺 地图<span>看房</span></button><label class="fs"><select id="fSort" aria-label="排序"></select></label></span></div>
   <section class="rc" id="recent" hidden aria-label="最近看过"></section>
   <div id="lmap" hidden><div class="lm" id="lmapM"></div><p id="lmapN">位置按地址大致标注，仅供参考</p></div>
   <div id="list"><div class="empty">加载中…</div></div>
@@ -371,7 +374,7 @@ async function listMap(){const seq=++LMseq,box=$("#lmap"),n=$("#lmapN");box.hidd
     n.textContent=`正在标注 ${i+1}/${xs.length}…`;
     if(pts.length===1)LM.setView(pts[0],13);else LM.fitBounds(pts,{padding:[36,36],maxZoom:14});}
   n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;}
-document.addEventListener("click",e=>{const b=e.target.closest("#mapT");if(!b)return;MAPON=!MAPON;b.classList.toggle("on",MAPON);b.setAttribute("aria-pressed",MAPON);b.textContent=MAPON?"☰ 收起地图":"🗺 地图看房";
+document.addEventListener("click",e=>{const b=e.target.closest("#mapT");if(!b)return;MAPON=!MAPON;b.classList.toggle("on",MAPON);b.setAttribute("aria-pressed",MAPON);b.innerHTML=MAPON?"☰ 收起<span>地图</span>":"🗺 地图<span>看房</span>";
   if(MAPON){listMap();requestAnimationFrame(()=>{const nv=document.querySelector("nav");scrollTo({top:$("#fsum").getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-8,behavior:"smooth"});});}else{LMseq++;$("#lmap").hidden=true;}});
 /* ---------- 房源详情 ---------- */
 // "待确认"不只是一行灰字：列出没核实的项，一键生成现成的提问（短信 / 复制给微信），租客不用打字

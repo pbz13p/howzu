@@ -8,7 +8,7 @@ const list = (data.listings || []).filter(x => LP.safeId(x.id));
 fs.mkdirSync(path.join(root, "rent"), { recursive: true });
 let n = 0;
 for (const x of list) {
-  const f = path.join(root, "rent", x.id + ".html"), html = LP.render(x, data.contact, (data.listings || []).filter(y => y.status === "let").length);
+  const f = path.join(root, "rent", x.id + ".html"), html = LP.render(x, data.contact, (data.listings || []).filter(y => y.status === "let").length, LP.related(x, list, 3));
   if (!fs.existsSync(f) || fs.readFileSync(f, "utf8") !== html) { fs.writeFileSync(f, html); n++; }
 }
 const guides = fs.readdirSync(path.join(root, "guide")).filter(f => f.endsWith(".html"));
