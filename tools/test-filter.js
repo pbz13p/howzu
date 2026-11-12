@@ -23,4 +23,8 @@ ok(ids(F.sort(L, "new")) === "dcab" && ids(F.sort(L, "")) === "abcd" && ids(L) =
 ok(JSON.stringify(F.areas(L)) === JSON.stringify([["Melbourne CBD", 2], ["Carlton", 1], ["其他", 1]]), "区域选项按房源数排序");
 ok(F.count(L, { beds: "2" }) === 2 && F.active({ feat: [] }) === false && F.active({ rent: "500" }) === true, "计数和是否有筛选");
 ok(F.RENT[0][0] === "" && F.SORT[0][0] === "", "下拉第一项是'不限'/'推荐'（顺序不能乱）");
+{ const U = { id: "u", beds: 2, suburb: "Carlton", title: "两房公寓" }, N = { id: "n", beds: 2, furnished: false, title: "两房" }, Y = { id: "y", beds: 2, furnished: true };
+  ok(F.unknown(U, "furn") && !F.unknown(N, "furn") && !F.unknown({ desc: "不带家具" }, "furn") && !F.unknown(U, "gym"), "没写家具情况才算待确认；写了'不带'不算；泳池不算待确认");
+  ok(F.maybe(U, { feat: ["furn"] }) && !F.maybe(N, { feat: ["furn"] }) && !F.maybe(Y, { feat: ["furn"] }), "待确认的另列；明确不带的、已符合的都不列");
+  ok(!F.maybe(U, { feat: ["furn"], beds: "1" }) && !F.maybe(U, { feat: [] }) && !F.maybe(U, { feat: ["furn", "gym"] }), "其他条件不符、没勾设施、泳池没写的都不列"); }
 if (fail) { console.log(`✗ filter ${fail} 项失败`); process.exit(1); } else console.log("✓ filter 全部通过");

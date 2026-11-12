@@ -9,6 +9,21 @@
     pet: { label: "可养宠物", test: x => x.pets === true || x.pets === "可以" || (x.pets == null && has(x, /可养宠|宠物友好|允许宠物|可带宠物|pets? (ok|allowed|friendly)/i, /不可养宠|不能养宠|禁止宠物|no pets/i)) },
     gym: { label: "泳池/健身房", test: x => has(x, /泳池|健身房|pool|gym/i) }
   };
+  // 没写明（既没说有、也没说没有）→ 待确认；泳池/健身房没写就当没有
+  const UNK = {
+    furn: x => x.furnished == null && !/带家具|家具|furnished/i.test(txt(x)),
+    car: x => x.cars == null && !/车位|car ?park|parking/i.test(txt(x)),
+    pet: x => x.pets == null && !/宠物|pets?\b/i.test(txt(x))
+  };
+  const unknown = (x, k) => !!(UNK[k] && UNK[k](x));
+  // 不完全符合，但只差"待确认"的条件：比如筛"带家具"，房源没写家具情况
+  function maybe(x, s) {
+    s = s || {};
+    const feat = s.feat || [];
+    if (!feat.length || match(x, s)) return false;
+    if (!match(x, { ...s, feat: [] })) return false;
+    return feat.every(k => !FEAT[k] || FEAT[k].test(x) || unknown(x, k));
+  }
   // 用数组保证顺序（对象里数字键会被排到前面）
   const RENT = [["", "周租不限"], ["500", "$500 以下"], ["700", "$700 以下"], ["900", "$900 以下"], ["900+", "$900 以上"]];
   const SORT = Object.entries({ "": "推荐排序", "new": "最新上架", "low": "租金低→高", "high": "租金高→低" });
@@ -41,6 +56,6 @@
   function areas(list) { const m = new Map(); for (const x of list) m.set(area(x), (m.get(area(x)) || 0) + 1); return [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])); }
   const count = (list, s) => list.filter(x => match(x, s)).length;
   const active = s => !!(s && (s.beds || (s.feat && s.feat.length) || s.area || s.rent));
-  const api = { FEAT, RENT, SORT, match, sort, areas, count, active, area };
+  const api = { FEAT, RENT, SORT, match, sort, areas, count, active, area, unknown, maybe };
   if (typeof module !== "undefined" && module.exports) module.exports = api; else root.HowzuFilter = api;
 })(typeof window !== "undefined" ? window : this);
