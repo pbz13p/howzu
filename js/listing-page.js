@@ -42,6 +42,12 @@
     return { cells, rest };
   }
 
+  // 押金后面附上大约金额："4 周" + 周租 650 → "4 周（约 $2,600）"；"1 个月"按 周租×52÷12；没有周租或"面议"原样返回
+  function bondWithAmt(v, weekly) {
+    const w = +weekly || 0, m = /^(\d+) 周$/.exec(v || "");
+    const amt = !w ? 0 : m ? w * +m[1] : v === "1 个月" ? Math.round(w * 52 / 12) : 0;
+    return amt ? `${v}（约 $${amt.toLocaleString("en-AU")}）` : v;
+  }
   // 统一的"房屋信息"表：每套房同样的字段、同样的顺序。没有数据就写"待确认"，不猜。
   // 来源优先级：结构化字段 → 发房源时选的标签（highlights）→ 标题/介绍里的明确说法
   const TBC = "待确认";
@@ -61,7 +67,7 @@
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : TBC;
     return [
       ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
-      ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", tag("押金 ") || TBC],
+      ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", bondWithAmt(tag("押金 "), x.rentWeekly) || TBC],
       ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : hs.includes("不包水电网") ? "不包，租客自付" : TBC], ["楼层", tag("楼层 ") || (floor ? `${floor} 层` : /高层|high[- ]?rise/i.test(all) ? "高层" : TBC)], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
       ["设施", amen.length ? amen.join("、") : TBC],
     ];
@@ -211,7 +217,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     if (S["设施"] !== TBC) CARD_AMEN.filter(a => S["设施"].split("、").includes(a)).slice(0, 2).forEach(a => out.push(a));
     return out;
   }
-  const api = { cardFacts, keyFacts, specs, compare, TBC, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  const api = { bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);

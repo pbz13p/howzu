@@ -32,9 +32,14 @@
     const a = arr.slice(); if (from === to || from < 0 || to < 0 || from >= a.length || to >= a.length) return a;
     const [x] = a.splice(from, 1); a.splice(to, 0, x); return a;
   }
-  // 押金金额提示：周租 × 周数
+  // 押金金额提示：周租 × 周数；“1 个月”= 周租 × 52 ÷ 12（维州押金上限一般就是 1 个月租金）
   function bondText(weekly, choice) {
+    const t = bondAmt(weekly, choice);
+    return t && +weekly > 900 ? t + "（周租超过 $900，维州允许押金多于 1 个月）" : t;
+  }
+  function bondAmt(weekly, choice) {
     const w = +weekly || 0, m = /^(\d+) 周/.exec(choice || "");
+    if (w && choice === "1 个月") return `押金 ≈ $${Math.round(w * 52 / 12).toLocaleString("en-AU")}`;
     return m && w ? `押金 ≈ $${(w * +m[1]).toLocaleString("en-AU")}` : "";
   }
   // 日期框最早可选今天（本地时间）

@@ -76,4 +76,5 @@ console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部�
 { const s = Object.fromEntries(LP.specs({ title: "Carlton 一房", highlights: ["不包水电网"], desc: "" }));
   ok("房屋信息：选了都不包 → 不包，租客自付（不误读成包水电网）", s["包水电网"] === "不包，租客自付");
   ok("关键信息栏：不包水电网不当亮点", !LP.keyFacts({ highlights: ["不包水电网", "近火车站"] }).rest.includes("不包水电网")); }
+ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 周（约 $2,600）" && LP.bondWithAmt("1 个月", 650) === "1 个月（约 $2,817）" && LP.bondWithAmt("面议", 650) === "面议" && LP.bondWithAmt("4 周", 0) === "4 周" && LP.specs({ rentWeekly: 500, highlights: ["押金 4 周"] }).find(r => r[0] === "押金")[1] === "4 周（约 $2,000）");
 process.exit(fail ? 1 : 0);

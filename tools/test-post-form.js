@@ -14,6 +14,8 @@ ok("日期显示", F.niceDate("2026-12-01") === "12 月 1 日" && F.niceDate("�
 ok("押金/看房：结构化标签不重复", eq(F.withTag(F.withTag(["包网"], "押金 ", "4 周"), "看房 ", "视频看房"), ["看房 视频看房", "押金 4 周", "包网"]) && eq(F.withTag(["押金 4 周"], "押金 ", "面议"), ["押金 面议"]));
 ok("照片换顺序", eq(F.move([1, 2, 3, 4], 3, 0), [4, 1, 2, 3]) && eq(F.move([1, 2, 3, 4], 0, 2), [2, 3, 1, 4]) && eq(F.move([1, 2], 0, 5), [1, 2]));
 ok("押金金额", F.bondText(650, "4 周") === "押金 ≈ $2,600" && F.bondText(0, "4 周") === "" && F.bondText(650, "面议") === "");
+ok("押金：周租超过 $900 才提示可多收", F.bondText(1000, "4 周") === "押金 ≈ $4,000（周租超过 $900，维州允许押金多于 1 个月）" && F.bondText(900, "4 周") === "押金 ≈ $3,600");
+ok("押金 1 个月", F.bondText(650, "1 个月") === "押金 ≈ $2,817" && F.bondText(0, "1 个月") === "");
 const pv = F.previewLines({ kind: "整套出租", beds: 2, baths: 1, cars: 1, suburb: "Carlton", rent_weekly: 650, title: "Carlton 两房", available: "2026-12-01", furnished: "带家具", highlights: ["a", "b", "c", "d", "e"] });
 ok("预览：价格/房型/入住", pv.price === "$650" && pv.facts === "2 房 · 1 卫 · 1 车位 · Carlton" && pv.meta === "12 月 1 日入住 · 带家具" && pv.tags.length === 4);
 ok("预览：单间 + 马上 + 没租金", (q => q.facts === "单间" && q.meta === "马上入住" && q.price === "租金面议")(F.previewLines({ kind: "单间出租", beds: 1, baths: 1, available: "马上" })));
