@@ -27,5 +27,18 @@ const tO = LP.trust({ id: "a" }, 22), tU = LP.trust({ id: "b", user: true }, 22)
 ok("信任信息：自管房源显示成交数和 RTBA", tO.kind === "own" && tO.cases === 22 && /22 套/.test(tO.note) && tO.items.some(i => /RTBA/.test(i[1])));
 ok("信任信息：个人发布不冒充直管，给防骗提醒", tU.kind === "user" && !/直管|持牌/.test(tU.title) && tU.items.some(i => /转账/.test(i[0])));
 ok("信任信息：没有成交时不写 0 套", LP.trust({}, 0).note === "");
+const SP = o => Object.fromEntries(LP.specs(o));
+const s1 = SP(x);
+ok("房屋信息：固定 13 项、顺序固定", LP.specs(x).map(r => r[0]).join() === "类型,卧室,卫生间,车位,家具,可入住,租期,押金,宠物,包水电网,楼层,看房,设施");
+ok("房屋信息：没数据写待确认，不编", s1["押金"] === "待确认" && s1["宠物"] === "待确认" && s1["家具"] === "待确认" && s1["包水电网"] === "待确认");
+ok("房屋信息：车位 0 写'无'，房型从标题认出公寓", s1["车位"] === "无" && s1["卧室"] === "2 间" && s1["类型"] === "公寓");
+const s2 = SP({ title: "Box Hill 48 层 一房", beds: 0, furnished: false, highlights: ["类型 联排别墅", "押金 4 周", "租期 12 个月", "包水费", "包网", "可养宠物", "看房 视频看房"], desc: "有电梯和健身房，no smoking" });
+ok("房屋信息：发房源的选项（类型/押金/租期/看房）直接用", s2["类型"] === "联排别墅" && s2["押金"] === "4 周" && s2["租期"] === "12 个月" && s2["看房"] === "视频看房");
+ok("房屋信息：开间、不带家具、包水网、可养宠、楼层、设施", s2["卧室"] === "开间 Studio" && s2["家具"] === "不带家具" && s2["包水电网"] === "包水、网费" && s2["宠物"] === "可以" && s2["楼层"] === "48 层" && s2["设施"] === "电梯、健身房");
+ok("房屋信息：写了 no pets 就是不可以", SP({ desc: "No pets please" })["宠物"] === "不可以");
+ok("关键信息栏：'类型'标签不再当亮点重复显示", !LP.keyFacts({ highlights: ["类型 公寓", "近火车站"] }).rest.includes("类型 公寓"));
+const CP = LP.compare([x, { suburb: "Carlton", beds: 1, rentWeekly: null, title: "公寓" }, x, x]);
+ok("对比：最多 3 套，第一行租金（面议照写）", CP[0].k === "周租" && CP[0].v.length === 3 && CP[0].v[1] === "面议" && CP[0].v[0] === "$650");
+ok("对比：区域 + 13 项房屋信息，不同的行标出来", CP.length === 15 && CP.find(r => r.k === "卧室").diff === true && CP.find(r => r.k === "类型").diff === false);
 console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部通过");
 process.exit(fail ? 1 : 0);

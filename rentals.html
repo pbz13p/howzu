@@ -99,6 +99,8 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .card{cursor:pointer}
 .more{font-size:13px;color:#6b726f;margin:8px 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .more b{color:#0f6b4f;font-weight:600}
+.cmpbar{display:flex;align-items:center;justify-content:space-between;width:100%;grid-column:1/-1;background:var(--accent2);border:0;border-radius:14px;padding:12px 14px;margin:0 0 12px;font:inherit;font-size:13px;color:var(--ink);text-align:left;cursor:pointer}.cmpbar b{color:var(--accent);margin-right:6px;font-size:14px}.cmpbar i{font-style:normal;color:var(--accent);font-size:20px}
+.cmp-b{padding:18px 16px 30px;overflow-x:auto}.cmp-b h2{font-size:20px;margin:0 0 2px}.cmp-s{font-size:12px;color:var(--muted);margin:0 0 12px}.cmp table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}.cmp th,.cmp td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:break-word}.cmp tbody th{width:64px;color:var(--muted);font-weight:400}.cmp thead th{vertical-align:bottom;cursor:pointer}.cmp thead th:first-child{width:64px}.cmp thead img{display:block;width:100%;height:68px;object-fit:cover;border-radius:8px;margin-bottom:6px}.cmp thead span{display:block;font-size:12.5px;font-weight:600;line-height:1.35}.cmp tr.d td{background:#fbf6ea;font-weight:600}.cmp td.m{color:#a3a8a5;font-weight:400}
 .dt-mask{position:fixed;inset:0;z-index:90;background:rgba(10,16,14,.6);display:flex;align-items:center;justify-content:center;padding:24px}
 .dt{position:relative;background:#fff;border-radius:18px;width:min(980px,100%);max-height:100%;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .dt-x{position:absolute;top:12px;right:12px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.95);font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
@@ -139,6 +141,7 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 @keyframes bkf{from{opacity:0}}@keyframes bku{from{transform:translateY(40px);opacity:.4}}
 #toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,10px);background:rgba(29,35,33,.94);color:#fff;font-size:14px;padding:10px 16px;border-radius:12px;z-index:200;opacity:0;pointer-events:none;transition:.25s;max-width:86vw;text-align:center}#toast.on{opacity:1;transform:translate(-50%,0)}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
+.empty .lnk{border:0;background:none;color:var(--accent);font:inherit;padding:0;cursor:pointer;text-decoration:underline}
 .leadcta{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;background:var(--accent2);color:var(--accent);text-decoration:none;font-size:14px}
 .leadcta b{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
 .leadcta i{font-style:normal;font-size:20px}
@@ -174,6 +177,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .dt .tr-n{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(15,107,79,.12);font-size:12px;color:var(--muted)}.dt .tr.u .tr-n{border-top-color:rgba(138,90,18,.14)}
 .dt .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.dt .tr.u .tr-l{color:#8a5a12}
 .dt .tr-n button{border:0;background:none;padding:0;font:inherit;font-size:12.5px;font-weight:600;color:#0f6b4f;cursor:pointer;white-space:nowrap}
+.dt .mp{margin:14px 0 16px}.dt .mp-m{height:200px;border-radius:12px;overflow:hidden;background:#eef1ef;z-index:0;position:relative}.dt .mp-l div{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}.dt .mp-l i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px #fff,0 0 0 3px rgba(0,0,0,.08)}.dt .mp-l span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}.dt .mp-l span small{display:block;font-size:12px;color:var(--muted);font-weight:400}.dt .mp-l b{font-weight:600;font-size:14px;text-align:right;white-space:nowrap}.dt .mp-l b small{display:block;font-size:12px;color:var(--muted);font-weight:400}.dt .mp-l .mp-w{color:var(--muted);font-size:13px;border:0}.dt .mp-n{font-size:12px;color:var(--muted);margin:6px 0 0}.dt .mp-g{display:inline-block;margin-top:6px;font-size:13px;color:var(--accent);font-weight:600;text-decoration:none}
 .dt .cm{margin:14px 0 16px}.dt .cm-h{font-size:14px;font-weight:600;margin-bottom:8px}.dt .cm-h small{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px}.dt .cm-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.dt .cm-g div{background:#f6f8f7;border-radius:12px;padding:10px 10px 9px;min-width:0}.dt .cm-g small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .cm-g i{font-style:normal;opacity:.75}.dt .cm-g b{display:block;font-size:15px;font-weight:600;margin:3px 0 1px;white-space:nowrap}.dt .cm-g span{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap}
 @media (max-width:560px){.dt .cm-g{grid-template-columns:1fr 1fr}}
 .dt .cm-z{display:block;margin-top:8px;background:#f6f8f7;border-radius:12px;padding:10px 12px;color:inherit;text-decoration:none}.dt .cm-z span{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.dt .cm-z b{display:block;font-size:14px;font-weight:600;line-height:1.5}.dt .cm-z b small{font-weight:400;color:var(--muted);font-size:12px;margin-right:8px}.dt .cm-z em{display:block;font-style:normal;font-size:13px;color:var(--accent);margin-top:4px;font-weight:600}
@@ -182,6 +186,19 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 #list .sharefab{right:52px;top:10px}
 .favd{display:inline-flex;align-items:center;gap:5px}.favd svg{width:16px;height:16px}
 .filters .fv i{font-style:normal;opacity:.7}
+.fs{flex:none;position:relative;display:flex}
+.filters select,.fsum select{-webkit-appearance:none;appearance:none;font:inherit;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:20px;padding:7px 26px 7px 12px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.filters select.on,.fsum select.on{background-color:var(--accent);color:#fff;border-color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E")}
+.filters button[data-k] i{font-style:normal;opacity:.55;margin-left:3px;font-size:12px}
+.filters button[data-k].zero{color:#9a9a9a}
+.fsum{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#666;margin:-4px 0 12px}
+.fsum b{color:var(--ink);font-weight:600}
+.fsum .fr{display:flex;align-items:center;gap:12px}
+.fsum select{border:0;padding:4px 18px 4px 0;background-position:right 2px center;color:var(--ink);font-weight:500}
+.fsum select.on{background-color:transparent;color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%230f6b4f' stroke-width='1.5'/%3E%3C/svg%3E")}
+.empty a{color:var(--accent)}
+.fsum button{border:0;background:none;color:var(--accent);font:inherit;font-size:13px;padding:4px 0;cursor:pointer}
+.dt .sp{margin:14px 0 12px}.dt .sp-h{font-size:15px;font-weight:600;margin-bottom:6px}.dt .sp dl{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:1px solid var(--line)}.dt .sp dl div{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;min-width:0}.dt .sp dl div:nth-child(odd):not(.w){padding-right:12px}.dt .sp dl div:nth-child(even){padding-left:12px}.dt .sp dl div.w{grid-column:1/-1;padding-left:0}.dt .sp dt{color:var(--muted);flex:none}.dt .sp dd{margin:0;font-weight:500;text-align:right;overflow:hidden;text-overflow:ellipsis}.dt .sp dd.m{color:#a3a8a5;font-weight:400}.dt .sp-n{font-size:12px;color:var(--muted);margin:6px 0 0}
 .dt .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin:12px 0 10px}.dt .kf div{padding:9px 4px;text-align:center;min-width:0}.dt .kf div+div{border-left:1px solid var(--line)}.dt .kf small{display:block;font-size:12px;color:var(--muted);line-height:1.3}.dt .kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .kf b.m{color:#9aa09d;font-weight:500}
 </style>
 </head>
@@ -205,10 +222,18 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <button data-f="all" class="on">全部</button>
     <button data-f="now">马上入住</button>
     <button data-f="later">稍后入住</button>
-    <button data-f="1">1 房</button>
-    <button data-f="2">2 房+</button>
+    <button data-b="1">1 房</button>
+    <button data-b="2">2 房</button>
+    <button data-b="3">3 房+</button>
+    <button data-k="furn">带家具</button>
+    <button data-k="car">有车位</button>
+    <button data-k="pet">可养宠物</button>
+    <button data-k="gym">泳池/健身房</button>
+    <label class="fs"><select id="fArea" aria-label="区域"><option value="">区域不限</option></select></label>
+    <label class="fs"><select id="fRent" aria-label="周租"></select></label>
     <button data-f="fav" class="fv" hidden>♥ 收藏 <i></i></button>
   </div>
+  <div class="fsum" id="fsum"><span id="fcnt"></span><span class="fr"><button data-fclr id="fclr" hidden>清除筛选</button><label class="fs"><select id="fSort" aria-label="排序"></select></label></span></div>
   <section class="rc" id="recent" hidden aria-label="最近看过"></section>
   <div id="list"><div class="empty">加载中…</div></div>
   <section class="lead" id="leadCard">
@@ -235,17 +260,19 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261112"></script>
+<script src="js/listing-page.js?v=20261112b"></script>
 <script src="js/share.js?v=20261110"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="js/enquire.js?v=20261111"></script>
 <script src="js/commute.js?v=20261111"></script>
 <script src="js/fav.js?v=20261111b"></script>
+<script src="js/filter.js?v=20261112"></script>
+<script src="js/nearby.js?v=20261112"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
-let L=[],C={},F="all";
+let L=[],C={},F="all";const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
 const isNow=x=>x.status!=="let"&&/尽快|马上|即|now/i.test(x.available||"");
 const isLet=x=>x.status==="let";
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
@@ -264,7 +291,7 @@ function card(x){
   const dots=P.length>1?`<div class="dots">${P.slice(0,5).map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div><button class="cnav l" data-cnav="-1" aria-label="上一张">‹</button><button class="cnav r" data-cnav="1" aria-label="下一张">›</button>`:"";
   const price=isLet(x)?`<b>已租出</b>`:x.rentWeekly?`<b>$${x.rentWeekly}</b> / 周`:`<b>租金面议</b>`;
   const area=(x.address||"").split(",").slice(-1)[0].replace(/VIC\s*\d+/,"").trim()||"墨尔本";
-  const f=[x.beds!=null?`${x.beds} 房`:"",x.baths!=null?`${x.baths} 卫`:"",x.cars?`${x.cars} 车位`:""].filter(Boolean).join(" · ");
+  const f=[x.beds!=null?`${x.beds} 房`:"",x.baths!=null?`${x.baths} 卫`:"",x.cars?`${x.cars} 车位`:"",x.furnished===true?"带家具":x.furnished===false?"不带家具":x.furnished==="部分家具"?"部分家具":""].filter(Boolean).join(" · ");
   const when=isLet(x)?untilTxt(x):isNow(x)?"可马上入住":(x.available||"")+"入住";
   return `<div class="card${isLet(x)?" is-let":""}" id="L-${esc(x.id)}" data-open="${esc(x.id)}">
     <div class="ph"><div class="sl">${imgs}</div>${dots}
@@ -278,16 +305,28 @@ function card(x){
 const one=new URLSearchParams(location.search).get("id");
 document.addEventListener("scroll",e=>{const sl=e.target;if(!sl.classList||!sl.classList.contains("sl"))return;const n=sl.children.length,i=Math.round(sl.scrollLeft/(sl.clientWidth||1));const d=sl.parentNode.querySelectorAll(".dots i");if(!d.length)return;const k=n<=5?i:Math.min(4,Math.max(0,i<2?i:i>=n-2?5-(n-i):2));d.forEach((el,j)=>el.classList.toggle("on",j===k));},true);
 let RECENT=window.HowzuFav&&HowzuFav.loadR?HowzuFav.loadR(localStorage):[];
-function recentRow(){const box=document.getElementById("recent");if(!box||!window.HowzuFav||!HowzuFav.recentShow)return;const R=F==="all"?HowzuFav.recentShow(RECENT,L.filter(x=>preview||x.status==="live"),isLet):[];
+function recentRow(){const box=document.getElementById("recent");if(!box||!window.HowzuFav||!HowzuFav.recentShow)return;const R=F==="all"&&!(HF&&HF.active(S))?HowzuFav.recentShow(RECENT,L.filter(x=>preview||x.status==="live"),isLet):[];
   box.hidden=!R.length;if(!R.length){box.innerHTML="";return;}
   box.innerHTML=`<div class="rc-h"><span>最近看过</span><button data-rcclr>清除</button></div><div class="rc-r">${R.map(x=>`<div class="rc-i" data-open="${esc(x.id)}"><img src="${esc((x.photos||[])[0]||phImg(x))}" alt="" loading="lazy"><b>${esc((x.title||"").split("·")[0].trim()||x.suburb||"")}</b><span>${[x.rentWeekly?`$${x.rentWeekly}/周`:"",x.beds!=null?`${x.beds} 房`:"",isNow(x)?"马上入住":""].filter(Boolean).map(esc).join(" · ")}</span></div>`).join("")}</div>`;}
+function filterUI(base,n,act){if(!HF)return;
+  document.querySelectorAll("#filters [data-b]").forEach(b=>b.classList.toggle("on",S.beds===b.dataset.b));
+  document.querySelectorAll("#filters [data-k]").forEach(b=>{const k=b.dataset.k,on=S.feat.includes(k),c=HF.count(base,{feat:[k]});b.classList.toggle("on",on);b.classList.toggle("zero",!c&&!on);b.innerHTML=`${HF.FEAT[k].label}<i>${c}</i>`;});
+  const sa=$("#fArea"),A=HF.areas(base);if(sa.dataset.n!==String(A.length)){sa.dataset.n=A.length;sa.innerHTML='<option value="">区域不限</option>'+A.map(([a,c])=>`<option value="${esc(a)}">${esc(a)}（${c}）</option>`).join("");sa.value=S.area;}
+  const sr=$("#fRent"),so=$("#fSort");if(!sr.options.length){sr.innerHTML=HF.RENT.map(([v,t])=>`<option value="${v}">${t}</option>`).join("");so.innerHTML=HF.SORT.map(([v,t])=>`<option value="${v}">${t}</option>`).join("");}
+  sa.classList.toggle("on",!!S.area);sr.classList.toggle("on",!!S.rent);so.classList.toggle("on",!!S.sort);
+  document.querySelector('#filters [data-f="all"]').classList.toggle("on",F==="all"&&!act);
+  $("#fcnt").innerHTML=act?`找到 <b>${n}</b> 套在租房源`:`<b>${n}</b> 套在租房源`;$("#fclr").hidden=!act;}
+function clearF(){S.beds="";S.feat=[];S.area="";S.rent="";$("#fArea").value="";$("#fRent").value="";F="all";document.querySelectorAll("#filters [data-f]").forEach(b=>b.classList.toggle("on",b.dataset.f==="all"));render();}
 function render(){
   let list=L.filter(x=>preview||x.status==="live"||isLet(x)||x.id===one);
-  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2)||(F==="fav"&&isFav(x)));
-  list.sort((a,b)=>(isLet(a)?1:0)-(isLet(b)?1:0));
-  const live=list.filter(x=>!isLet(x)),done=list.filter(isLet);
+  const base=list.filter(x=>!isLet(x));
+  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="fav"&&isFav(x)));
+  const act=HF&&HF.active(S);if(HF)list=list.filter(x=>HF.match(x,S));
+  const live=HF?HF.sort(list.filter(x=>!isLet(x)),S.sort):list.filter(x=>!isLet(x)),done=act?[]:list.filter(isLet);
+  filterUI(base,live.length,act);
   const sec=(live.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
-  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？<a href="#leadCard">在下面留下需求</a>。</div>`;
+  const cmpN=F==="fav"&&window.ListingPage&&ListingPage.compare?Math.min(3,live.length):0;
+  $("#list").innerHTML=list.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+sec+done.map(card).join(""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
   favChip();recentRow();
 }
 
@@ -315,7 +354,26 @@ async function geoPt(addr){const k="howzu-geo:"+addr;try{const c=JSON.parse(loca
   if(!p)try{const r=await fetch("https://photon.komoot.io/api/?limit=1&lat=-37.81&lon=144.96&q="+encodeURIComponent(q));if(r.ok){const j=await r.json();const c=j.features&&j.features[0]&&j.features[0].geometry.coordinates;if(c)p={lat:c[1],lng:c[0]};}}catch(_){}
   if(p)try{localStorage.setItem(k,JSON.stringify(p));}catch(_){}
   return p;}
-async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:await geoPt(x.address);
+// 地图：免费 OpenStreetMap + Leaflet（打开详情才加载）；周边站点和超市来自 OpenStreetMap Overpass，缓存在本机
+let LF=null;function leaflet(){return LF=LF||new Promise((ok,no)=>{const c=document.createElement("link");c.rel="stylesheet";c.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";document.head.appendChild(c);const j=document.createElement("script");j.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";j.onload=()=>ok(window.L);j.onerror=()=>{LF=null;no();};document.head.appendChild(j);});}
+async function nearbyOf(pt){const k=`howzu-nb:${pt.lat.toFixed(4)},${pt.lng.toFixed(4)}`;try{const c=JSON.parse(localStorage.getItem(k)||"null");if(c)return c;}catch(_){}
+  for(const u of["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter"]){try{const ac=new AbortController(),t=setTimeout(()=>ac.abort(),9000);
+    const r=await fetch(u,{method:"POST",body:"data="+encodeURIComponent(HowzuNearby.query(pt)),headers:{"Content-Type":"application/x-www-form-urlencoded"},signal:ac.signal});clearTimeout(t);if(!r.ok)continue;
+    const R=HowzuNearby.nearest(pt,(await r.json()).elements);if(R.length)try{localStorage.setItem(k,JSON.stringify(R));}catch(_){}return R;}catch(_){}}
+  return [];}
+async function mapBox(x,pt){const box=document.getElementById("mp");if(!box||!window.HowzuNearby||DX!==x)return;
+  try{await leaflet();}catch(_){return;}const Lf=window.L;if(!Lf||DX!==x)return;box.hidden=false;
+  const map=Lf.map("mpM",{zoomControl:false,scrollWheelZoom:false,dragging:!matchMedia("(pointer:coarse)").matches,tap:false,attributionControl:true}).setView([pt.lat,pt.lng],15);
+  Lf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+  Lf.circle([pt.lat,pt.lng],{radius:120,color:"#0f6b4f",weight:2,fillColor:"#0f6b4f",fillOpacity:.18}).addTo(map);
+  Lf.circleMarker([pt.lat,pt.lng],{radius:6,color:"#fff",weight:2,fillColor:"#0f6b4f",fillOpacity:1}).addTo(map);
+  const lst=document.getElementById("mpL");lst.innerHTML='<div class="mp-w">正在查找附近的车站和超市…</div>';
+  let R=[];try{R=await nearbyOf(pt);}catch(_){}if(DX!==x)return;
+  const pts=[[pt.lat,pt.lng]];R.forEach(r=>{pts.push([r.lat,r.lng]);Lf.circleMarker([r.lat,r.lng],{radius:7,color:"#fff",weight:2,fillColor:r.color,fillOpacity:1}).addTo(map).bindTooltip(r.icon+" "+r.name,{direction:"top"});});
+  if(pts.length>1)map.fitBounds(pts,{padding:[28,28],maxZoom:16});
+  lst.innerHTML=R.length?R.map(r=>`<div><i style="background:${r.color}"></i><span><small>最近${esc(r.label)}</small>${esc(r.name)}</span><b>步行 ${r.min} 分钟<small>${HowzuNearby.fmtDist(r.m)}</small></b></div>`).join("")+'<p class="mp-n">直线距离估算，数据来自 OpenStreetMap</p>':'<div class="mp-w">附近站点暂时查不到，可以点地图放大看。</div>';
+  const g=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.address)}`;lst.insertAdjacentHTML("beforeend",`<a class="mp-g" href="${esc(g)}" target="_blank" rel="noopener">在 Google 地图中打开 ›</a>`);}
+async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:await geoPt(x.address);if(pt)mapBox(x,pt);
   const R=HowzuCommute.rows(pt),box=document.getElementById("cm");if(!R.length||!box||DX!==x)return;
   document.getElementById("cmG").innerHTML=R.map(r=>`<div><small>${esc(r.name)} <i>${esc(r.sub)}</i></small><b>${r.mode==="walk"?"🚶":"🚆"} ${r.min} 分钟</b><span>${r.km} · ${r.mode==="walk"?"步行":"公共交通"}</span></div>`).join("");box.hidden=false;
   try{const [zp,zs]=await (window.ZP=window.ZP||Promise.all(["zones_primary","zones_secondary"].map(n=>fetch(`data/${n}.json`).then(r=>r.json()))));
@@ -340,8 +398,9 @@ function openDetail(x,noPush){
     ${f?`<div class="facts">${f}</div>`:""}
     ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div><small>${esc(k)}</small><b${v==="咨询"?' class="m"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}</b></div>`).join("")}</div>`}
     <div class="tags">${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':x.furnished==="部分家具"?'<span class="tag">部分家具</span>':""}${KF.rest.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
+    ${isLet(x)||!window.ListingPage||!ListingPage.specs?"":`<div class="sp"><div class="sp-h">房屋信息</div><dl>${ListingPage.specs(x).map(([k,v])=>`<div${k==="设施"?' class="w"':""}><dt>${esc(k)}</dt><dd${v===ListingPage.TBC?' class="m"':""}>${esc(v)}</dd></div>`).join("")}</dl>${ListingPage.specs(x).some(r=>r[1]===ListingPage.TBC)?'<p class="sp-n">标“待确认”的还没核实，咨询时可以直接问我们。</p>':""}</div>`}
     ${trustBox(x)}
-    ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a></div>`}
+    ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a></div><div class="mp" id="mp" hidden><div class="cm-h">📍 位置和周边 <small>大致位置，门牌号看房时告知</small></div><div class="mp-m" id="mpM"></div><div class="mp-l" id="mpL"></div></div>`}
     ${x.desc?`<div class="dt-desc">${esc(x.desc)}</div>`:`<div class="dt-desc muted">房东还没有写介绍，欢迎直接联系咨询。</div>`}
     <div class="acts2"><a href="index.html?q=${encodeURIComponent(x.address)}">🏫 看对口学区</a>${isLet(x)?"":`<button data-share="${esc(x.id)}">📤 转发给朋友</button>${favBtn(x,"favd")}`}</div>
     <div class="acts">${contactBtns(x)}</div>
@@ -357,6 +416,14 @@ function openDetail(x,noPush){
 function go(d){const P=DX.photos||[];if(!P.length)return;DI=(DI+d+P.length)%P.length;show();}
 function show(){const P=DX.photos;document.getElementById("dtImg").src=P[DI];const c=document.getElementById("dtC");if(c)c.textContent=`${DI+1} / ${P.length}`;document.querySelectorAll(".dt-th img").forEach((t,i)=>{t.classList.toggle("on",i===DI);if(i===DI)t.scrollIntoView({block:"nearest",inline:"center"});});}
 function openBook(){if(!DX||document.getElementById("bk"))return;document.querySelector("#dt .dt").insertAdjacentHTML("beforeend",bookSheet(DX));}
+function openCmp(){const C3=FAV.map(id=>L.find(y=>String(y.id)===id&&!isLet(y))).filter(Boolean).slice(0,3);if(C3.length<2)return;const R=ListingPage.compare(C3);
+  const m=document.createElement("div");m.className="dt-mask";m.id="cmp";
+  m.innerHTML=`<div class="dt cmp" role="dialog" aria-label="并排对比"><button class="dt-x" data-cmpx aria-label="关闭">✕</button><div class="cmp-b"><h2>并排对比</h2><p class="cmp-s">底色标出的是几套不一样的地方</p>
+  <table><thead><tr><th></th>${C3.map(x=>`<th data-go="${esc(x.id)}"><img src="${esc((x.photos||[])[0]||phImg(x))}" alt=""><span>${esc((x.title||"").split("·")[0].trim())}</span></th>`).join("")}</tr></thead>
+  <tbody>${R.map(r=>`<tr class="${r.diff?"d":""}"><th>${esc(r.k)}</th>${r.v.map(v=>`<td class="${v===ListingPage.TBC?"m":""}">${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table>
+  <p class="cmp-s">点上面的照片看详情。“待确认”可以咨询时问。</p></div></div>`;
+  document.body.appendChild(m);document.body.style.overflow="hidden";}
+document.addEventListener("click",e=>{if(e.target.closest("[data-cmp]")){openCmp();return;}const c=document.getElementById("cmp");if(!c)return;const o=e.target.closest("#cmp [data-go]");if(e.target.closest("[data-cmpx]")||e.target===c||o){c.parentNode.removeChild(c);document.body.style.overflow="";if(o){const x=L.find(y=>String(y.id)===o.dataset.go);if(x)openDetail(x);}e.stopPropagation();}},true);
 function closeDetail(back){const m=document.getElementById("dt");if(!m)return;m.remove();if(window.T0)document.title=T0;document.body.style.overflow="";DX=null;recentRow();if(back!==false&&new URLSearchParams(location.search).get("id"))history.pushState({},"","rentals.html"+(preview?"?preview=1":""));}
 addEventListener("popstate",()=>{const id=new URLSearchParams(location.search).get("id");closeDetail(false);if(id){const x=L.find(y=>String(y.id)===id);if(x)openDetail(x,true);}});
 addEventListener("keydown",e=>{if(!DX)return;if(e.key==="Escape")closeDetail();if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);});
@@ -368,7 +435,7 @@ document.addEventListener("click",e=>{
     const th=t.closest(".dt-th img");if(th){DI=+th.dataset.i;return show();}
     const w=t.closest("[data-wx]");if(w){copy(w.dataset.wx);toast(`已复制微信号 ${w.dataset.wx}，打开微信 → 添加朋友 → 粘贴`);return;}
     if(t.closest("[data-book]"))return openBook();
-    if(t.closest("[data-cases]")){closeDetail();if(F!=="all"){F="all";document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("on",b.dataset.f==="all"));render();}requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
+    if(t.closest("[data-cases]")){closeDetail();if(F!=="all"||(HF&&HF.active(S)))clearF();requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
     if(t.closest("[data-bkx]")||t.id==="bk")return document.getElementById("bk").remove();
     const bd=t.closest("#bkD button,#bkT button");if(bd){bd.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===bd));return;}
     if(t.closest("[data-ics]")){const [d,tm]=bkPick();const tel=DX.phone||C.phone;const u=URL.createObjectURL(new Blob([HowzuEnquire.ics(DX,d,tm,{tel})],{type:"text/calendar"}));const a=document.createElement("a");a.href=u;a.download=`howzu-${DX.id}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);document.getElementById("bkN").textContent="已生成日历提醒（提前 1 小时）。别忘了点「发送预约」告诉我们。";return;}
@@ -390,7 +457,14 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-fav]");if(
   favChip();toast(on?"已收藏，在列表上方「♥ 收藏」里能找到":"已取消收藏");},true);
 document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.share);if(x&&window.HowzuShare)HowzuShare.open(x);});
 document.addEventListener("click",e=>{if(e.target.closest("[data-rcclr]")){RECENT=[];HowzuFav.saveR(localStorage,RECENT);recentRow();}});
-$("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F=b.dataset.f;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));render();});
+$("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.b!=null){S.beds=S.beds===b.dataset.b?"":b.dataset.b;render();return;}
+  if(b.dataset.k){const k=b.dataset.k;S.feat=S.feat.includes(k)?S.feat.filter(y=>y!==k):[...S.feat,k];render();return;}
+  if(b.dataset.f==="all"){clearF();return;}
+  F=F===b.dataset.f?"all":b.dataset.f;document.querySelectorAll("#filters [data-f]").forEach(x=>x.classList.toggle("on",x.dataset.f===F));render();});
+$("#fsum").addEventListener("change",e=>{if(e.target.id==="fSort"){S.sort=e.target.value;render();}});
+$("#filters").addEventListener("change",e=>{const t=e.target;if(t.id==="fArea")S.area=t.value;else if(t.id==="fRent")S.rent=t.value;else if(t.id==="fSort")S.sort=t.value;render();});
+document.addEventListener("click",e=>{if(e.target.closest("[data-fclr]")){e.preventDefault();clearF();}});
 // 留需求：存进后台（listings 表 kind=求租需求，公众看不到）
 $("#lBeds").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=!b.classList.contains("on");document.querySelectorAll("#lBeds button").forEach(x=>x.classList.remove("on"));b.classList.toggle("on",on);});
 $("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on");f.beds=b?b.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:"");
@@ -404,7 +478,7 @@ async function userListings(){
   try{
     const r=await fetch(`${H.SUPABASE_URL}/rest/v1/listings?status=eq.live&kind=neq.%E6%B1%82%E7%A7%9F%E9%9C%80%E6%B1%82&order=created_at.desc&limit=200`,{headers:{apikey:H.SUPABASE_ANON_KEY}});
     const rows=r.ok?await r.json():[];
-    return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:/^\d{4}-\d\d-\d\d$/.test(x.available||"")?`${+x.available.slice(5,7)} 月 ${+x.available.slice(8,10)} 日`:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,user:true}));
+    return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:/^\d{4}-\d\d-\d\d$/.test(x.available||"")?`${+x.available.slice(5,7)} 月 ${+x.available.slice(8,10)} 日`:x.available,furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:x.description,phone:x.contact_phone,wechat:x.contact_wechat,createdAt:x.created_at,user:true}));
   }catch(_){return []}
 }
 // 先显示自有房源，用户发布的房源（Supabase）到了再补上；Supabase 慢或连不上也不会卡在"加载中"

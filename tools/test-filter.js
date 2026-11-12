@@ -1,0 +1,25 @@
+// 运行：node tools/test-filter.js（由 test-data.js 调用）
+const F = require("../js/filter.js");
+let fail = 0; const ok = (c, m) => { if (c) console.log("  ✓ " + m); else { console.log("  ✗ " + m); fail++; } };
+console.log("筛选和排序 js/filter.js");
+const A = { id: "a", suburb: "Carlton", beds: 1, cars: 0, rentWeekly: 520, furnished: true, highlights: ["楼内泳池、健身房"] };
+const B = { id: "b", suburb: "Melbourne CBD", beds: 2, cars: 1, rentWeekly: 780, furnished: false, desc: "不带家具，可养宠物" };
+const C = { id: "c", suburb: "Melbourne CBD", beds: 3, rentWeekly: null, desc: "家具齐全，无车位，no pets", createdAt: "2026-11-10" };
+const D = { id: "d", suburb: "", beds: 2, rentWeekly: 950, desc: "含一个车位", createdAt: "2026-11-11" };
+const L = [A, B, C, D];
+const ids = l => l.map(x => x.id).join("");
+ok(ids(L.filter(x => F.match(x, {}))) === "abcd", "空条件全部显示");
+ok(ids(L.filter(x => F.match(x, { beds: "2" }))) === "bd" && ids(L.filter(x => F.match(x, { beds: "3" }))) === "c", "卧室数：2 房、3 房+");
+ok(ids(L.filter(x => F.match(x, { feat: ["furn"] }))) === "ac", "带家具：字段 true 或介绍写'家具齐全'；false 不算");
+ok(ids(L.filter(x => F.match(x, { feat: ["car"] }))) === "bd", "车位：cars>0 或介绍写'含车位'；'无车位'不算");
+ok(ids(L.filter(x => F.match(x, { feat: ["pet"] }))) === "b", "可养宠物：写'no pets'的不算");
+ok(ids(L.filter(x => F.match(x, { feat: ["gym"] }))) === "a", "泳池/健身房看亮点");
+ok(ids(L.filter(x => F.match(x, { feat: ["furn", "car"] }))) === "", "多个条件同时满足");
+ok(ids(L.filter(x => F.match(x, { area: "Melbourne CBD" }))) === "bc" && ids(L.filter(x => F.match(x, { area: "其他" }))) === "d", "区域；没写区域的归'其他'");
+ok(ids(L.filter(x => F.match(x, { rent: "700" }))) === "a" && ids(L.filter(x => F.match(x, { rent: "900+" }))) === "d", "周租区间；面议的不算进任何价位");
+ok(ids(F.sort(L, "low")) === "abdc" && ids(F.sort(L, "high")) === "dbac", "按租金排序，面议排最后");
+ok(ids(F.sort(L, "new")) === "dcab" && ids(F.sort(L, "")) === "abcd" && ids(L) === "abcd", "最新上架；默认不变；不改原数组");
+ok(JSON.stringify(F.areas(L)) === JSON.stringify([["Melbourne CBD", 2], ["Carlton", 1], ["其他", 1]]), "区域选项按房源数排序");
+ok(F.count(L, { beds: "2" }) === 2 && F.active({ feat: [] }) === false && F.active({ rent: "500" }) === true, "计数和是否有筛选");
+ok(F.RENT[0][0] === "" && F.SORT[0][0] === "", "下拉第一项是'不限'/'推荐'（顺序不能乱）");
+if (fail) { console.log(`✗ filter ${fail} 项失败`); process.exit(1); } else console.log("✓ filter 全部通过");

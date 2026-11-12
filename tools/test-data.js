@@ -48,6 +48,6 @@ for (const [label, feats] of [["小学", zp], ["中学", zs]]) {
 }
 
 try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, "test-post-form.js")], { stdio: "inherit" }); } catch (_) { fail++; }
-for (const f of ["build-listing-pages.js", "test-listing-page.js", "test-enquire.js", "test-commute.js", "test-fav.js"]) { try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, f)], { stdio: "inherit" }); } catch (_) { fail++; } }
+for (const f of ["build-listing-pages.js", "test-listing-page.js", "test-enquire.js", "test-commute.js", "test-fav.js", "test-filter.js", "test-nearby.js"]) { try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, f)], { stdio: "inherit" }); } catch (_) { fail++; } }
 try { require("child_process").execFileSync(process.execPath, [require("path").join(__dirname, "test-work.mjs")], { stdio: "inherit" }); } catch (_) { fail++; }
 process.exit(fail ? 1 : 0);
