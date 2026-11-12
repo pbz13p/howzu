@@ -27,5 +27,15 @@ const tO = LP.trust({ id: "a" }, 22), tU = LP.trust({ id: "b", user: true }, 22)
 ok("信任信息：自管房源显示成交数和 RTBA", tO.kind === "own" && tO.cases === 22 && /22 套/.test(tO.note) && tO.items.some(i => /RTBA/.test(i[1])));
 ok("信任信息：个人发布不冒充直管，给防骗提醒", tU.kind === "user" && !/直管|持牌/.test(tU.title) && tU.items.some(i => /转账/.test(i[0])));
 ok("信任信息：没有成交时不写 0 套", LP.trust({}, 0).note === "");
+const SP = (x) => Object.fromEntries(LP.specs(x));
+const s1 = SP({ status: "live", beds: 2, baths: 1, cars: 0, available: "尽快", highlights: ["类型 联排别墅", "押金 4 周", "包水费", "包网", "有电梯"], desc: "38 层，带家具，有健身房" });
+ok("房屋信息：固定 13 项、固定顺序", LP.specs({}).length === 13 && LP.specs({})[0][0] === "类型" && LP.specs({})[12][0] === "设施");
+ok("房屋信息：结构化字段和点选标签都用上", s1["类型"] === "联排别墅" && s1["卧室"] === "2 间" && s1["车位"] === "无" && s1["押金"] === "4 周" && s1["可入住"] === "尽快");
+ok("房屋信息：包水电网只写包了的", s1["包水电网"] === "包水、网");
+ok("房屋信息：楼层/家具/设施从介绍里认", s1["楼层"] === "38 层" && s1["家具"] === "带家具" && s1["设施"] === "电梯、健身房");
+const s2 = SP({ status: "live", desc: "不带家具，no pets" });
+ok("房屋信息：否定说法不当成有", s2["家具"] === "不带家具" && s2["宠物"] === "不可以");
+ok("房屋信息：没数据的是 null（显示待确认），不编", s2["押金"] === null && s2["车位"] === null && s2["租期"] === null && s2["卧室"] === null);
+ok("房屋信息：HTML 里没数据显示“待确认”", /待确认/.test(LP.specsHtml({})) && /房屋信息/.test(LP.specsHtml({})));
 console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部通过");
 process.exit(fail ? 1 : 0);

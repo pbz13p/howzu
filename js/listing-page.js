@@ -33,13 +33,41 @@
   }
   // 关键信息栏：押金 / 可入住 / 租期 / 看房。押金、租期、看房来自发房源时存进 highlights 的标签；
   // 没填的写"咨询"，不编数据。返回 { cells:[[标签,值]], rest:剩下的普通亮点 }
-  const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/]];
+  const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/]];
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
     const rest = hs.filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : "咨询";
     const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] || "预约看房"]];
     return { cells, rest };
+  }
+  // 统一「房屋信息」表：固定顺序、固定项目。先看结构化字段，再看发房源时点选的标签，
+  // 最后只认介绍里明确的肯定说法；都没有就返回 null（页面显示“待确认”），不编数据。
+  const AMEN = [["电梯", /电梯|lift|elevator/i], ["健身房", /健身房|gym/i], ["泳池", /泳池|游泳池|pool/i], ["阳台", /阳台|balcony/i],
+    ["洗衣机", /洗衣机|washing machine|washer/i], ["烘干机", /烘干机|dryer/i], ["空调", /空调|冷暖|air ?con|split system/i], ["洗碗机", /洗碗机|dishwasher/i], ["门禁", /门禁|安保|security/i]];
+  function specs(x) {
+    const hs = (x.highlights || []).map(String);
+    const all = [x.title, ...hs, x.desc].filter(Boolean).join(" ");
+    const tag = re => { const h = hs.find(v => re.test(v)); return h ? h.replace(re, "").trim() : null; };
+    const kf = keyFacts(x).cells.reduce((o, [k, v]) => (o[k] = v, o), {});
+    const type = tag(/^类型\s*/) || (/单间/.test(all) ? "单间" : /联排|townhouse/i.test(all) ? "联排别墅" : /独立屋|\bhouse\b/i.test(all) ? "独立屋" : /公寓|apartment|高层|tower/i.test(all) ? "公寓" : null);
+    const furn = x.furnished === true ? "带家具" : x.furnished === false ? "不带家具" : typeof x.furnished === "string" && x.furnished ? x.furnished
+      : /不带家具|无家具|unfurnished/i.test(all) ? "不带家具" : /带家具|家具齐全|拎包入住|fully furnished/i.test(all) ? "带家具" : null;
+    const pets = x.pets === true || /可养宠物|宠物友好|pets? (ok|allowed)/i.test(all) && !/不可养宠物|no pets?/i.test(all) ? "可以" : x.pets === false || /不可养宠物|不能养宠物|no pets?/i.test(all) ? "不可以" : null;
+    const bills = ["水", "电", "网"].filter(k => hs.some(h => h === "包" + k + (k === "网" ? "" : "费")) || new RegExp("包" + k).test(all) && !/不包/.test(all));
+    const floor = (all.match(/(\d{1,2})\s*层/) || [])[1];
+    const am = AMEN.filter(([, re]) => re.test(all)).map(a => a[0]);
+    const v = s => (s == null || s === "" || s === "咨询" ? null : s);
+    return [
+      ["类型", type], ["卧室", x.beds != null ? (x.beds ? x.beds + " 间" : "开间") : null], ["卫生间", x.baths != null ? x.baths + " 个" : null],
+      ["车位", x.cars != null ? (x.cars ? x.cars + " 个" : "无") : null], ["家具", furn],
+      ["可入住", isLet(x) ? "已租出" : v(kf["可入住"])], ["租期", v(kf["租期"])], ["押金", v(kf["押金"])], ["宠物", pets],
+      ["包水电网", bills.length ? "包" + bills.join("、") : null], ["楼层", floor ? floor + " 层" : null], ["看房", v(kf["看房"]) || "预约看房"],
+      ["设施", am.length ? am.join("、") : null],
+    ];
+  }
+  function specsHtml(x) {
+    return `<div class="sp"><h3>房屋信息</h3><div class="sp-g">${specs(x).map(([k, v]) => `<div${k === "设施" ? ' class="w"' : ""}><small>${esc(k)}</small><b${v ? "" : ' class="m"'}>${esc(v || "待确认")}</b></div>`).join("")}</div><p>标“待确认”的还没核实，咨询时可以直接问我们。</p></div>`;
   }
   const rel = p => /^https?:/.test(p) ? p : "../" + String(p).replace(/^\//, "");
 
@@ -92,6 +120,7 @@ main{max-width:880px;margin:0 auto;padding:0 20px 120px}
 h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:14px}
 .facts{display:flex;gap:18px;margin:14px 0;font-size:15px;color:#1d2321}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.chips span{background:#e8f3ee;color:#0f6b4f;font-size:13px;padding:4px 10px;border-radius:99px}
+.sp{border-top:1px solid #ece9e2;margin:4px 0 18px}.sp h3,.sp-h{font-size:15px;font-weight:600;margin:14px 0 6px}.sp-g{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}.sp-g div{padding:9px 0;border-bottom:1px solid #f1efea;display:flex;justify-content:space-between;gap:8px;font-size:14px;min-width:0}.sp-g div.w{grid-column:1/-1}.sp-g small{font-size:13px;color:#7a807d;white-space:nowrap}.sp-g b{font-weight:500;text-align:right}.sp-g b.m{color:#a3a8a5;font-weight:400}.sp p{font-size:12px;color:#8a8f8c;margin:8px 0 0}
 .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #ece9e2;border-radius:12px;margin:0 0 16px}.kf div{padding:10px 4px;text-align:center;min-width:0}.kf div+div{border-left:1px solid #ece9e2}.kf small{display:block;font-size:12px;color:#6b726f}.kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kf b.m{color:#9aa09d;font-weight:500}
 .tr{border-radius:14px;background:#f2f7f4;padding:12px 14px 11px;margin:0 0 18px}.tr-h{font-size:14px;font-weight:600;color:#0f6b4f;margin-bottom:8px}
 .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tr-g b{display:block;font-size:13px}.tr-g small{display:block;font-size:11.5px;color:#6b726f;line-height:1.35}.tr-n{font-size:12px;color:#6b726f;margin-top:9px;padding-top:8px;border-top:1px solid rgba(15,107,79,.12)}
@@ -114,7 +143,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 <h1>${esc(x.title)}</h1>
 <div class="addr">📍 ${esc(hideUnit(x.address))}</div>
 ${tags.length ? `<div class="facts">${tags.map(esc).join("<span></span>")}</div>` : ""}
-<div class="kf">${kf.cells.map(([k, v]) => `<div><small>${esc(k)}</small><b${v === "咨询" ? ' class="m"' : ""}>${esc(v)}</b></div>`).join("")}</div>
+<div class="kf">${kf.cells.map(([k, v]) => `<div><small>${esc(k)}</small><b${v === "咨询" ? ' class="m"' : ""}>${esc(v)}</b></div>`).join("")}</div>${isLet(x) ? "" : specsHtml(x)}
 ${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
 ${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}
 ${x.desc ? `<div class="desc">${esc(x.desc)}</div>` : ""}
@@ -163,7 +192,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     };
   }
 
-  const api = { keyFacts, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  const api = { specs, specsHtml, keyFacts, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);

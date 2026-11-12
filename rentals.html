@@ -182,6 +182,18 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 #list .sharefab{right:52px;top:10px}
 .favd{display:inline-flex;align-items:center;gap:5px}.favd svg{width:16px;height:16px}
 .filters .fv i{font-style:normal;opacity:.7}
+.filters button i.n{font-style:normal;font-size:11px;opacity:.55;margin-left:3px}.filters button.on i.n{opacity:.8}
+.filters button.zero{color:#b7bcb9;border-color:#eef0ef}
+.filters .sel[hidden]{display:none}
+.filters .sel{flex:none;position:relative;display:flex}.filters .sel span{font-size:13px;line-height:1.35;white-space:nowrap;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:20px;padding:7px 26px 7px 12px}.filters .sel select{position:absolute;inset:0;width:100%;opacity:0;font-size:16px;cursor:pointer}
+.filters .sel::after{content:"";position:absolute;right:11px;top:50%;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;opacity:.55}
+.filters .sel.on span{background:var(--accent);color:#fff;border-color:var(--accent)}.filters .sel.on::after{color:#fff;opacity:.9}
+.rbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:-2px 0 12px;font-size:13px;color:var(--muted)}
+.empty a{color:var(--accent)}
+.empty .lk{border:0;background:none;color:var(--accent);font:inherit;padding:0;text-decoration:underline;cursor:pointer}
+.rbar b{color:var(--ink);font-weight:600}.rbar button{border:0;background:none;color:var(--accent);font:inherit;font-size:13px;padding:0 0 0 6px;cursor:pointer}
+.rbar .sort{display:flex;align-items:center;gap:2px;white-space:nowrap}.rbar .sort select{appearance:none;-webkit-appearance:none;border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--ink);padding:4px 14px 4px 2px;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-size:4px 4px;background-position:calc(100% - 6px) 55%,calc(100% - 2px) 55%;background-repeat:no-repeat}
+.dt .sp{border-top:1px solid var(--line);margin:4px 0 14px}.dt .sp h3{font-size:15px;font-weight:600;margin:14px 0 4px}.dt .sp-g{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}.dt .sp-g div{padding:9px 0;border-bottom:1px solid #f1efea;display:flex;justify-content:space-between;gap:8px;font-size:14px;min-width:0}.dt .sp-g div.w{grid-column:1/-1}.dt .sp-g small{font-size:13px;color:#7a807d;white-space:nowrap}.dt .sp-g b{font-weight:500;text-align:right}.dt .sp-g b.m{color:#a3a8a5;font-weight:400}.dt .sp p{font-size:12px;color:var(--muted);margin:8px 0 0}
 .dt .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin:12px 0 10px}.dt .kf div{padding:9px 4px;text-align:center;min-width:0}.dt .kf div+div{border-left:1px solid var(--line)}.dt .kf small{display:block;font-size:12px;color:var(--muted);line-height:1.3}.dt .kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .kf b.m{color:#9aa09d;font-weight:500}
 </style>
 </head>
@@ -202,13 +214,18 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <div class="pk"><b>🔔 空房优先通知</b><span>登记需求，同楼或附近有房第一时间告诉你</span></div>
   </section>
   <div class="filters" id="filters">
-    <button data-f="all" class="on">全部</button>
-    <button data-f="now">马上入住</button>
-    <button data-f="later">稍后入住</button>
-    <button data-f="1">1 房</button>
-    <button data-f="2">2 房+</button>
     <button data-f="fav" class="fv" hidden>♥ 收藏 <i></i></button>
+    <label class="sel" id="selArea"><span></span><select data-s="area" aria-label="区域"></select></label>
+    <label class="sel" id="selPrice"><span></span><select data-s="price" aria-label="周租"></select></label>
+    <button data-k="when" data-v="now">马上入住</button>
+    <button data-k="when" data-v="later">稍后入住</button>
+    <button data-k="beds" data-v="1">1 房</button>
+    <button data-k="beds" data-v="2">2 房+</button>
+    <button data-k="feat" data-v="furn">带家具</button>
+    <button data-k="feat" data-v="car">有车位</button>
+    <button data-k="feat" data-v="pet">可养宠物</button>
   </div>
+  <div class="rbar" id="rbar"><span id="rcount"></span><label class="sort">排序 <select data-s="sort" aria-label="排序"></select></label></div>
   <section class="rc" id="recent" hidden aria-label="最近看过"></section>
   <div id="list"><div class="empty">加载中…</div></div>
   <section class="lead" id="leadCard">
@@ -235,17 +252,18 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261112"></script>
+<script src="js/listing-page.js?v=20261112b"></script>
 <script src="js/share.js?v=20261110"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="js/enquire.js?v=20261111"></script>
 <script src="js/commute.js?v=20261111"></script>
 <script src="js/fav.js?v=20261111b"></script>
+<script src="js/filter.js?v=20261112"></script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
-let L=[],C={},F="all";
+let L=[],C={},S=HowzuFilter.empty();
 const isNow=x=>x.status!=="let"&&/尽快|马上|即|now/i.test(x.available||"");
 const isLet=x=>x.status==="let";
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
@@ -257,14 +275,14 @@ const HEART='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
 let FAV=window.HowzuFav?HowzuFav.load(localStorage):[];
 const isFav=x=>FAV.includes(String(x.id));
 function favBtn(x,cls){const on=isFav(x);return `<button class="${cls}${on?" on":""}" data-fav="${esc(x.id)}" data-act="fav" aria-pressed="${on}" aria-label="${on?"取消收藏":"收藏"}">${HEART}${cls==="favfab"?"":`<span>${on?"已收藏":"收藏"}</span>`}</button>`;}
-function favChip(){const b=document.querySelector('#filters [data-f="fav"]');const n=FAV.filter(id=>L.some(y=>String(y.id)===id)).length;if(b){b.hidden=!n&&F!=="fav";b.querySelector("i").textContent=n||"";}}
+function favChip(){const b=document.querySelector('#filters [data-f="fav"]');const n=FAV.filter(id=>L.some(y=>String(y.id)===id)).length;if(b){b.hidden=!n&&!S.fav;b.classList.toggle("on",S.fav);b.querySelector("i").textContent=n||"";}}
 function card(x){
   const P=x.photos||[];
   const imgs=P.length?P.map((p,i)=>`<img src="${esc(p)}" alt="${esc(x.title)}" loading="${i?"lazy":"eager"}">`).join(""):`<img src="${phImg(x)}" alt="${esc(x.title)}">`;
   const dots=P.length>1?`<div class="dots">${P.slice(0,5).map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div><button class="cnav l" data-cnav="-1" aria-label="上一张">‹</button><button class="cnav r" data-cnav="1" aria-label="下一张">›</button>`:"";
   const price=isLet(x)?`<b>已租出</b>`:x.rentWeekly?`<b>$${x.rentWeekly}</b> / 周`:`<b>租金面议</b>`;
   const area=(x.address||"").split(",").slice(-1)[0].replace(/VIC\s*\d+/,"").trim()||"墨尔本";
-  const f=[x.beds!=null?`${x.beds} 房`:"",x.baths!=null?`${x.baths} 卫`:"",x.cars?`${x.cars} 车位`:""].filter(Boolean).join(" · ");
+  const f=[x.beds!=null?`${x.beds} 房`:"",x.baths!=null?`${x.baths} 卫`:"",x.cars?`${x.cars} 车位`:"",window.HowzuFilter&&HowzuFilter.hasFeat(x,"furn")?"带家具":""].filter(Boolean).join(" · ");
   const when=isLet(x)?untilTxt(x):isNow(x)?"可马上入住":(x.available||"")+"入住";
   return `<div class="card${isLet(x)?" is-let":""}" id="L-${esc(x.id)}" data-open="${esc(x.id)}">
     <div class="ph"><div class="sl">${imgs}</div>${dots}
@@ -278,16 +296,26 @@ function card(x){
 const one=new URLSearchParams(location.search).get("id");
 document.addEventListener("scroll",e=>{const sl=e.target;if(!sl.classList||!sl.classList.contains("sl"))return;const n=sl.children.length,i=Math.round(sl.scrollLeft/(sl.clientWidth||1));const d=sl.parentNode.querySelectorAll(".dots i");if(!d.length)return;const k=n<=5?i:Math.min(4,Math.max(0,i<2?i:i>=n-2?5-(n-i):2));d.forEach((el,j)=>el.classList.toggle("on",j===k));},true);
 let RECENT=window.HowzuFav&&HowzuFav.loadR?HowzuFav.loadR(localStorage):[];
-function recentRow(){const box=document.getElementById("recent");if(!box||!window.HowzuFav||!HowzuFav.recentShow)return;const R=F==="all"?HowzuFav.recentShow(RECENT,L.filter(x=>preview||x.status==="live"),isLet):[];
+function recentRow(){const box=document.getElementById("recent");if(!box||!window.HowzuFav||!HowzuFav.recentShow)return;const R=!HowzuFilter.active(S)?HowzuFav.recentShow(RECENT,L.filter(x=>preview||x.status==="live"),isLet):[];
   box.hidden=!R.length;if(!R.length){box.innerHTML="";return;}
   box.innerHTML=`<div class="rc-h"><span>最近看过</span><button data-rcclr>清除</button></div><div class="rc-r">${R.map(x=>`<div class="rc-i" data-open="${esc(x.id)}"><img src="${esc((x.photos||[])[0]||phImg(x))}" alt="" loading="lazy"><b>${esc((x.title||"").split("·")[0].trim()||x.suburb||"")}</b><span>${[x.rentWeekly?`$${x.rentWeekly}/周`:"",x.beds!=null?`${x.beds} 房`:"",isNow(x)?"马上入住":""].filter(Boolean).map(esc).join(" · ")}</span></div>`).join("")}</div>`;}
+function filterUI(pool,n){const H=HowzuFilter,live=pool.filter(x=>!isLet(x));
+  document.querySelectorAll("#filters button[data-k]").forEach(b=>{const k=b.dataset.k,v=b.dataset.v,on=k==="feat"?S.feat.includes(v):S[k]===v;
+    const c=on?n:H.countWith(pool,S,k==="feat"?{feat:[...S.feat,v]}:{[k]:v},isFav);b.classList.toggle("on",on);b.classList.toggle("zero",!on&&!c);b.hidden=k==="feat"&&!on&&!H.countWith(pool,H.empty(),{feat:[v]});
+    let i=b.querySelector("i.n");if(!i){i=document.createElement("i");i.className="n";b.appendChild(i);}i.textContent=c;});
+  const opt=(sel,arr,cur,lab)=>{sel.innerHTML=arr.map(([v,t])=>`<option value="${esc(v)}"${v===cur?" selected":""}>${esc(t)}</option>`).join("");const sp=sel.previousElementSibling;if(sp&&sp.tagName==="SPAN")sp.textContent=lab||(arr.find(a=>a[0]===cur)||arr[0])[1];};
+  const A=H.areas(pool);if(S.area&&!A.some(a=>a[0]===S.area))A.push([S.area,0]);
+  opt($('[data-s="area"]'),[["","全部区域"],...A.map(([a,c])=>[a,`${a}（${c}）`])],S.area,S.area?S.area.replace(/^Melbourne CBD$/,"CBD"):"区域");$("#selArea").classList.toggle("on",!!S.area);$("#selArea").hidden=A.length<2&&!S.area;
+  opt($('[data-s="price"]'),H.PRICES,S.price,S.price?"":"周租");$("#selPrice").classList.toggle("on",!!S.price);$("#selPrice").hidden=!S.price&&!live.some(x=>+x.rentWeekly>0);
+  opt($('[data-s="sort"]'),H.SORTS,S.sort);
+  $("#rcount").innerHTML=H.active(S)?`找到 <b>${n}</b> 套<button data-clr>清除筛选</button>`:`<b>${live.length}</b> 套在租房源`;}
 function render(){
   let list=L.filter(x=>preview||x.status==="live"||isLet(x)||x.id===one);
-  list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="1"&&x.beds===1)||(F==="2"&&x.beds>=2)||(F==="fav"&&isFav(x)));
-  list.sort((a,b)=>(isLet(a)?1:0)-(isLet(b)?1:0));
-  const live=list.filter(x=>!isLet(x)),done=list.filter(isLet);
+  const pool=list,on=HowzuFilter.active(S);
+  list=HowzuFilter.sort(list.filter(x=>HowzuFilter.match(x,S,isFav)&&(!on||!isLet(x))),S.sort);
+  const live=list.filter(x=>!isLet(x)),done=list.filter(isLet);filterUI(pool,live.length);
   const sec=(live.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
-  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>想第一时间收到新房源？<a href="#leadCard">在下面留下需求</a>。</div>`;
+  $("#list").innerHTML=list.length?live.map(card).join("")+sec+done.map(card).join(""):S.fav&&!FAV.length?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br><button class="lk" data-clr>清除筛选看全部</button>，或者<a href="#leadCard">留下需求</a>，有新房第一时间通知你。</div>`;
   favChip();recentRow();
 }
 
@@ -339,6 +367,7 @@ function openDetail(x,noPush){
     <h2>${esc(x.title)}</h2><div class="addr">📍 ${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
     ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div><small>${esc(k)}</small><b${v==="咨询"?' class="m"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}</b></div>`).join("")}</div>`}
+    ${!isLet(x)&&ListingPage.specsHtml?ListingPage.specsHtml(x):""}
     <div class="tags">${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':x.furnished==="部分家具"?'<span class="tag">部分家具</span>':""}${KF.rest.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
     ${trustBox(x)}
     ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a></div>`}
@@ -368,7 +397,7 @@ document.addEventListener("click",e=>{
     const th=t.closest(".dt-th img");if(th){DI=+th.dataset.i;return show();}
     const w=t.closest("[data-wx]");if(w){copy(w.dataset.wx);toast(`已复制微信号 ${w.dataset.wx}，打开微信 → 添加朋友 → 粘贴`);return;}
     if(t.closest("[data-book]"))return openBook();
-    if(t.closest("[data-cases]")){closeDetail();if(F!=="all"){F="all";document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("on",b.dataset.f==="all"));render();}requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
+    if(t.closest("[data-cases]")){closeDetail();if(HowzuFilter.active(S)){S=HowzuFilter.empty();render();}requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
     if(t.closest("[data-bkx]")||t.id==="bk")return document.getElementById("bk").remove();
     const bd=t.closest("#bkD button,#bkT button");if(bd){bd.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===bd));return;}
     if(t.closest("[data-ics]")){const [d,tm]=bkPick();const tel=DX.phone||C.phone;const u=URL.createObjectURL(new Blob([HowzuEnquire.ics(DX,d,tm,{tel})],{type:"text/calendar"}));const a=document.createElement("a");a.href=u;a.download=`howzu-${DX.id}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);document.getElementById("bkN").textContent="已生成日历提醒（提前 1 小时）。别忘了点「发送预约」告诉我们。";return;}
@@ -390,7 +419,10 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-fav]");if(
   favChip();toast(on?"已收藏，在列表上方「♥ 收藏」里能找到":"已取消收藏");},true);
 document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.share);if(x&&window.HowzuShare)HowzuShare.open(x);});
 document.addEventListener("click",e=>{if(e.target.closest("[data-rcclr]")){RECENT=[];HowzuFav.saveR(localStorage,RECENT);recentRow();}});
-$("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F=b.dataset.f;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));render();});
+$("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.f==="fav")S.fav=!S.fav;else{const k=b.dataset.k,v=b.dataset.v;if(k==="feat")S.feat=S.feat.includes(v)?S.feat.filter(y=>y!==v):[...S.feat,v];else S[k]=S[k]===v?"":v;}render();});
+document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.s;if(!k)return;S[k]=e.target.value;render();});
+document.addEventListener("click",e=>{if(e.target.closest("[data-clr]")){S=Object.assign(HowzuFilter.empty(),{sort:S.sort});render();}});
 // 留需求：存进后台（listings 表 kind=求租需求，公众看不到）
 $("#lBeds").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=!b.classList.contains("on");document.querySelectorAll("#lBeds button").forEach(x=>x.classList.remove("on"));b.classList.toggle("on",on);});
 $("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on");f.beds=b?b.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:"");
