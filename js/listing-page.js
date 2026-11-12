@@ -33,13 +33,46 @@
   }
   // 关键信息栏：押金 / 可入住 / 租期 / 看房。押金、租期、看房来自发房源时存进 highlights 的标签；
   // 没填的写"咨询"，不编数据。返回 { cells:[[标签,值]], rest:剩下的普通亮点 }
-  const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/]];
+  const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/]];
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
     const rest = hs.filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : "咨询";
     const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] || "预约看房"]];
     return { cells, rest };
+  }
+
+  // 统一的"房屋信息"表：每套房同样的字段、同样的顺序。没有数据就写"待确认"，不猜。
+  // 来源优先级：结构化字段 → 发房源时选的标签（highlights）→ 标题/介绍里的明确说法
+  const TBC = "待确认";
+  const AMEN = [["电梯", /电梯|lift|elevator/i], ["健身房", /健身房|gym/i], ["泳池", /泳池|pool/i], ["阳台", /阳台|balcony/i], ["洗衣机", /洗衣机|washing machine|washer/i], ["烘干机", /烘干机|dryer/i], ["空调", /空调|冷暖|air ?con|heating/i], ["洗碗机", /洗碗机|dishwasher/i], ["门禁/礼宾", /门禁|礼宾|concierge|intercom/i]];
+  function specs(x) {
+    const hs = (x.highlights || []).map(String), all = [x.title, ...hs, x.desc].filter(Boolean).join(" ");
+    const tag = p => { const h = hs.find(v => v.startsWith(p)); return h ? h.slice(p.length).trim() : ""; };
+    const num = (n, unit, zero) => n == null || n === "" ? TBC : +n === 0 ? zero : `${n} ${unit}`;
+    const no = re => re.test(all);
+    const type = tag("类型 ") || x.type || (/公寓|apartment|高层|层.*一房|层.*两房/i.test(all) ? "公寓" : /联排|townhouse/i.test(all) ? "联排别墅" : /独立屋|别墅|\bhouse\b/i.test(all) ? "独立屋" : /单间|房间出租|合租/.test(all) ? "单间" : TBC);
+    const furn = x.furnished === true ? "带家具" : x.furnished === false ? "不带家具" : typeof x.furnished === "string" && x.furnished ? x.furnished
+      : no(/不带家具|无家具|unfurnished/i) ? "不带家具" : no(/带家具|家具齐全|拎包入住|furnished/i) ? "带家具" : TBC;
+    const pets = x.pets === true ? "可以" : x.pets === false ? "不可以" : no(/不可养宠|不能养宠|禁止宠物|no pets/i) ? "不可以" : no(/可养宠|宠物友好|允许宠物|可带宠物|pets? (ok|allowed|friendly)/i) ? "可以" : TBC;
+    const bills = ["水", "电", "网"].filter(k => hs.includes("包" + k + "费") || hs.includes("包" + k) || new RegExp("包[水电网、和]*" + k).test(all));
+    const floor = (all.match(/(\d{1,3})\s*(?:层|楼(?!下))/) || [])[1];
+    const amen = AMEN.filter(([, re]) => re.test(all)).map(([k]) => k);
+    const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : TBC;
+    return [
+      ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
+      ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", tag("押金 ") || TBC],
+      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : TBC], ["楼层", floor ? `${floor} 层` : TBC], ["看房", tag("看房 ") || "预约看房"],
+      ["设施", amen.length ? amen.join("、") : TBC],
+    ];
+  }
+
+  // 并排对比（最多 3 套）：第一行租金，后面是统一的房屋信息；每行标出各套是否不同，方便一眼看差别
+  function compare(list) {
+    const L = (list || []).slice(0, 3), S = L.map(specs);
+    const rows = [["周租", L.map(x => Number(x.rentWeekly) > 0 ? `$${x.rentWeekly}` : "面议")], ["区域", L.map(x => x.suburb || TBC)]];
+    if (S[0]) S[0].forEach(([k], i) => rows.push([k, S.map(r => r[i][1])]));
+    return rows.map(([k, v]) => ({ k, v, diff: new Set(v).size > 1 }));
   }
   const rel = p => /^https?:/.test(p) ? p : "../" + String(p).replace(/^\//, "");
 
@@ -93,6 +126,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .facts{display:flex;gap:18px;margin:14px 0;font-size:15px;color:#1d2321}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.chips span{background:#e8f3ee;color:#0f6b4f;font-size:13px;padding:4px 10px;border-radius:99px}
 .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #ece9e2;border-radius:12px;margin:0 0 16px}.kf div{padding:10px 4px;text-align:center;min-width:0}.kf div+div{border-left:1px solid #ece9e2}.kf small{display:block;font-size:12px;color:#6b726f}.kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kf b.m{color:#9aa09d;font-weight:500}
+.sp{margin:0 0 18px}.sp-h{font-size:15px;font-weight:600;margin-bottom:6px}.sp dl{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:1px solid #ece9e2}.sp dl div{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #ece9e2;font-size:14px;min-width:0}.sp dl div:nth-child(odd):not(.w){padding-right:12px}.sp dl div:nth-child(even){padding-left:12px}.sp dl div.w{grid-column:1/-1;padding-left:0}.sp dt{color:#6b726f;flex:none}.sp dd{margin:0;font-weight:500;text-align:right}.sp dd.m{color:#a3a8a5;font-weight:400}
 .tr{border-radius:14px;background:#f2f7f4;padding:12px 14px 11px;margin:0 0 18px}.tr-h{font-size:14px;font-weight:600;color:#0f6b4f;margin-bottom:8px}
 .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tr-g b{display:block;font-size:13px}.tr-g small{display:block;font-size:11.5px;color:#6b726f;line-height:1.35}.tr-n{font-size:12px;color:#6b726f;margin-top:9px;padding-top:8px;border-top:1px solid rgba(15,107,79,.12)}
 .desc{white-space:pre-line;font-size:15px;border-top:1px solid #ece9e2;padding-top:18px}
@@ -116,6 +150,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 ${tags.length ? `<div class="facts">${tags.map(esc).join("<span></span>")}</div>` : ""}
 <div class="kf">${kf.cells.map(([k, v]) => `<div><small>${esc(k)}</small><b${v === "咨询" ? ' class="m"' : ""}>${esc(v)}</b></div>`).join("")}</div>
 ${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
+${isLet(x) ? "" : `<div class="sp"><div class="sp-h">房屋信息</div><dl>${specs(x).map(([k, v]) => `<div${k === "设施" ? ' class="w"' : ""}><dt>${esc(k)}</dt><dd${v === TBC ? ' class="m"' : ""}>${esc(v)}</dd></div>`).join("")}</dl></div>`}
 ${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}
 ${x.desc ? `<div class="desc">${esc(x.desc)}</div>` : ""}
 ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map(p => `<a href="${esc(full)}"><img src="${esc(rel(p))}" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
@@ -135,11 +170,15 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     ["https://howzu.com.au/rentals.html", "daily", "0.9"],
     ["https://howzu.com.au/invest.html", "monthly", "0.8"],
     ["https://howzu.com.au/post.html", "monthly", "0.6"],
+    ["https://howzu.com.au/guide/property.html", "weekly", "0.7"],
     ["https://howzu.com.au/guide/bond.html", "monthly", "0.7"],
     ["https://howzu.com.au/guide/apply.html", "monthly", "0.7"],
   ];
-  function sitemap(listings) {
-    const rows = STATIC.map(([u, f, p]) => `  <url><loc>${u}</loc><changefreq>${f}</changefreq><priority>${p}</priority></url>`);
+  // guides：guide/ 目录下的其它文章文件名（如 "cgt-discount.html"），由构建脚本读目录传进来，写新文章不用再改这里。
+  function sitemap(listings, guides) {
+    const have = new Set(STATIC.map(r => r[0]));
+    const extra = (guides || []).filter(f => /^[a-z0-9-]+\.html$/.test(f)).sort().map(f => ["https://howzu.com.au/guide/" + f, "monthly", "0.7"]).filter(r => !have.has(r[0]));
+    const rows = STATIC.concat(extra).map(([u, f, p]) => `  <url><loc>${u}</loc><changefreq>${f}</changefreq><priority>${p}</priority></url>`);
     for (const x of listings) if (x.status === "live") rows.push(`  <url><loc>${esc(pageUrl(x))}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
     return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`;
   }
@@ -163,7 +202,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     };
   }
 
-  const api = { keyFacts, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  const api = { keyFacts, specs, compare, TBC, trust, render, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);
