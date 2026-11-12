@@ -58,6 +58,10 @@ jobs:
           s = json.loads(p.read_text()) if p.exists() else {"total_usd": 0}
           cap = float("50"); dl = dt.datetime.fromisoformat("2026-11-14T12:00:00+00:00")
           ok = s["total_usd"] < cap - 0.5 and dt.datetime.now(dt.timezone.utc) < dl - dt.timedelta(minutes=30)
+          chg = pathlib.Path("/tmp/auto-improve-changed")
+          if ok and chg.exists() and chg.read_text().strip() == "0":
+              ok = False
+              print("这轮没改代码（没发现要修的问题），不再接着跑")
           print("已花", s["total_usd"], "/", cap, "接着跑" if ok else "停")
           sys.exit(0 if ok else 1)
           PY

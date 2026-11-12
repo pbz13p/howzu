@@ -279,6 +279,11 @@ def main():
             f"代码{'有' if changed_code else '没有'}改动" + (f"｜{merged}" if merged else ""))
     post_report(body, branch_differs)
     print(body)
+    # 给工作流的“接着跑”一步看：这轮没改代码就不再自动接着跑（等定时或手动触发），免得空转
+    try:
+        Path("/tmp/auto-improve-changed").write_text("1" if changed_code else "0")
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":
