@@ -1,19 +1,18 @@
 == files ==
 raw:
-total 712
-drwxr-xr-x  3 runner runner   4096 Nov 12 12:57 .
-drwxr-xr-x 17 runner runner   4096 Nov 12 12:58 ..
--rw-r--r--  1 runner runner     12 Nov 12 12:58 _manifest.txt
--rw-r--r--  1 runner runner     11 Nov 12 12:57 rent_period.txt
--rw-r--r--  1 runner runner 539003 Nov 12 12:58 school_locations.csv
--rw-r--r--  1 runner runner 165023 Nov 12 12:58 vce_2025.xlsx
-drwxr-xr-x  2 runner runner   4096 Nov 12 12:57 zones
+total 708
+drwxr-xr-x  3 runner runner   4096 Nov 12 13:02 .
+drwxr-xr-x 17 runner runner   4096 Nov 12 13:02 ..
+-rw-r--r--  1 runner runner     12 Nov 12 13:03 _manifest.txt
+-rw-r--r--  1 runner runner 539003 Nov 12 13:03 school_locations.csv
+-rw-r--r--  1 runner runner 165023 Nov 12 13:03 vce_2025.xlsx
+drwxr-xr-x  2 runner runner   4096 Nov 12 13:02 zones
 
 tmp:
 total 10432
-drwxr-xr-x  2 runner runner     4096 Nov 12 12:58 .
-drwxr-xr-x 17 runner runner     4096 Nov 12 12:58 ..
--rw-r--r--  1 runner runner 10673831 Nov 12 12:58 zones.zip
+drwxr-xr-x  2 runner runner     4096 Nov 12 13:02 .
+drwxr-xr-x 17 runner runner     4096 Nov 12 13:02 ..
+-rw-r--r--  1 runner runner 10673831 Nov 12 13:02 zones.zip
 == zip contents ==
 Archive:  tmp/zones.zip
   Length      Date    Time    Name
@@ -319,18 +318,15 @@ Attribute data
 [simplify] Repaired 1 intersection
 [o] Wrote raw/zones/Secondary_Integrated_Year12_2027.json
 total 12996
-drwxr-xr-x 2 runner runner    4096 Nov 12 12:57 .
-drwxr-xr-x 3 runner runner    4096 Nov 12 12:57 ..
--rw-r--r-- 1 runner runner 3624647 Nov 12 12:58 Primary_Integrated_2027.json
--rw-r--r-- 1 runner runner 1612302 Nov 12 12:58 Secondary_Integrated_Year10_2027.json
--rw-r--r-- 1 runner runner 1571892 Nov 12 12:58 Secondary_Integrated_Year11_2027.json
--rw-r--r-- 1 runner runner 1571560 Nov 12 12:58 Secondary_Integrated_Year12_2027.json
--rw-r--r-- 1 runner runner 1630672 Nov 12 12:58 Secondary_Integrated_Year7_2027.json
--rw-r--r-- 1 runner runner 1630672 Nov 12 12:58 Secondary_Integrated_Year8_2027.json
--rw-r--r-- 1 runner runner 1628135 Nov 12 12:58 Secondary_Integrated_Year9_2027.json
--rw-r--r-- 1 runner runner     765 Nov 12 12:58 Standalone_juniorsec_2027.json
--rw-r--r-- 1 runner runner    1171 Nov 12 12:58 Standalone_seniorsec_2027.json
--rw-r--r-- 1 runner runner    6965 Nov 12 12:58 Standalone_singlesex_2027.json
-== rent ==
-https://www.dffh.vic.gov.au/quarterly-median-rents-local-government-area-june-quarter-2026
-2026-06-30
+drwxr-xr-x 2 runner runner    4096 Nov 12 13:02 .
+drwxr-xr-x 3 runner runner    4096 Nov 12 13:02 ..
+-rw-r--r-- 1 runner runner 3624647 Nov 12 13:03 Primary_Integrated_2027.json
+-rw-r--r-- 1 runner runner 1612302 Nov 12 13:03 Secondary_Integrated_Year10_2027.json
+-rw-r--r-- 1 runner runner 1571892 Nov 12 13:03 Secondary_Integrated_Year11_2027.json
+-rw-r--r-- 1 runner runner 1571560 Nov 12 13:03 Secondary_Integrated_Year12_2027.json
+-rw-r--r-- 1 runner runner 1630672 Nov 12 13:03 Secondary_Integrated_Year7_2027.json
+-rw-r--r-- 1 runner runner 1630672 Nov 12 13:03 Secondary_Integrated_Year8_2027.json
+-rw-r--r-- 1 runner runner 1628135 Nov 12 13:03 Secondary_Integrated_Year9_2027.json
+-rw-r--r-- 1 runner runner     765 Nov 12 13:03 Standalone_juniorsec_2027.json
+-rw-r--r-- 1 runner runner    1171 Nov 12 13:03 Standalone_seniorsec_2027.json
+-rw-r--r-- 1 runner runner    6965 Nov 12 13:03 Standalone_singlesex_2027.json
