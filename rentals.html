@@ -164,13 +164,15 @@ html{scroll-behavior:smooth}
 .contact{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:none;gap:8px;justify-content:center}
 footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .perks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 18px}
-.perks .pk{background:#fff;border:1px solid #e6e2d8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.perks .pk{text-decoration:none;color:inherit;background:#fff;border:1px solid #e6e2d8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .perks b{font-size:14px}.perks span{font-size:12.5px;color:#6b726f;line-height:1.4}
+.perks .pk u{text-decoration:none;color:var(--accent);font-weight:600;white-space:nowrap}
 @media (max-width:950px){.perks{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}.perks .pk{flex:0 0 72%;scroll-snap-align:start}}
 .dt .tr{margin:2px 0 14px;border-radius:14px;background:#f2f7f4;padding:12px 14px 11px}.dt .tr.u{background:#fbf6ec}
 .dt .tr-h{display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#0f6b4f;margin-bottom:9px}.dt .tr.u .tr-h{color:#8a5a12}.dt .tr-h svg{flex:none}
 .dt .tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dt .tr-g div{min-width:0}.dt .tr-g b{display:block;font-size:13px;font-weight:600;color:#1d2321}.dt .tr-g small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:1px}
 .dt .tr-n{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(15,107,79,.12);font-size:12px;color:var(--muted)}.dt .tr.u .tr-n{border-top-color:rgba(138,90,18,.14)}
+.dt .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.dt .tr.u .tr-l{color:#8a5a12}
 .dt .tr-n button{border:0;background:none;padding:0;font:inherit;font-size:12.5px;font-weight:600;color:#0f6b4f;cursor:pointer;white-space:nowrap}
 .dt .cm{margin:14px 0 16px}.dt .cm-h{font-size:14px;font-weight:600;margin-bottom:8px}.dt .cm-h small{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px}.dt .cm-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.dt .cm-g div{background:#f6f8f7;border-radius:12px;padding:10px 10px 9px;min-width:0}.dt .cm-g small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .cm-g i{font-style:normal;opacity:.75}.dt .cm-g b{display:block;font-size:15px;font-weight:600;margin:3px 0 1px;white-space:nowrap}.dt .cm-g span{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap}
 @media (max-width:560px){.dt .cm-g{grid-template-columns:1fr 1fr}}
@@ -193,9 +195,9 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <header class="hero"><div class="in"><h1>在租房源</h1><p>墨尔本 CBD / Carlton 公寓，我们直接管理，中文沟通，看房、签约、维修一条龙。房东和转租的朋友也可以 <a href="post.html" style="font-weight:600">免费发房源</a>。</p></div></header>
 <main>
   <section class="perks" aria-label="租客福利">
-    <div class="pk"><b>💸 租客零中介费</b><span>看房、申请、签约都不用付中介费</span></div>
+    <a class="pk" href="guide/apply.html"><b>💸 租客零中介费</b><span>看房、申请、签约都不用付中介费 <u>申请新规 ›</u></span></a>
     <div class="pk"><b>🗣 全程中文</b><span>看房、签约、报修都能用中文沟通</span></div>
-    <div class="pk"><b>🔒 押金政府托管</b><span>押金存进维州 RTBA，退租按法规退还</span></div>
+    <a class="pk" href="guide/bond.html"><b>🔒 押金政府托管</b><span>押金存进维州 RTBA，退租按法规退还 <u>押金指南 ›</u></span></a>
     <div class="pk"><b>🔁 提前搬走不慌</b><span>帮你办转租（lease transfer），尽量不付违约金</span></div>
     <div class="pk"><b>🔔 空房优先通知</b><span>登记需求，同楼或附近有房第一时间告诉你</span></div>
   </section>
@@ -227,13 +229,13 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
       <p class="fine">联系方式只有好租工作人员能看到，不会公开。</p>
     </form>
   </section>
-  <p class="note">房源信息以签约时为准。租约使用维州 CAV 标准租赁合同，押金存入 RTBA（维州租房押金管理局）。</p>
+  <p class="note">房源信息以签约时为准。租约使用维州 CAV 标准租赁合同，押金存入 RTBA（维州租房押金管理局）。<a href="guide/bond.html">押金怎么交、怎么退？看中文指南 ›</a></p>
 </main>
 <div class="contact" id="contactBar"></div>
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261111b"></script>
+<script src="js/listing-page.js?v=20261112"></script>
 <script src="js/share.js?v=20261110"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="js/enquire.js?v=20261111"></script>
@@ -322,7 +324,7 @@ async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x
     a.innerHTML=`<span>🏫 对口公立学校</span>${P.length?`<b><small>小学</small>${nm(P)}</b>`:""}${S.length?`<b><small>中学</small>${nm(S)}</b>`:""}<em>看排名和周边学校 ›</em>`;a.hidden=false;}catch(_){window.ZP=null;}}
 function trustBox(x){if(!window.ListingPage||!ListingPage.trust||isLet(x))return "";const T=ListingPage.trust(x,L.filter(isLet).length);
   const ic=T.kind==="own"?'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>':'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>';
-  return `<div class="tr${T.kind==="user"?" u":""}"><div class="tr-h">${ic}${esc(T.title)}</div><div class="tr-g">${T.items.map(([b,s])=>`<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note?`<div class="tr-n"><span>${esc(T.note)}</span>${T.cases?`<button data-cases>看成交案例 ›</button>`:""}</div>`:""}</div>`;}
+  return `<div class="tr${T.kind==="user"?" u":""}"><div class="tr-h">${ic}${esc(T.title)}</div><div class="tr-g">${T.items.map(([b,s])=>`<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note?`<div class="tr-n"><span>${esc(T.note)}</span>${T.cases?`<button data-cases>看成交案例 ›</button>`:""}</div>`:""}${T.guide?`<a class="tr-l" href="${esc(T.guide.replace(/^\//,""))}">押金怎么交、怎么退？看中文指南 ›</a>`:""}</div>`;}
 function openDetail(x,noPush){
   DX=x;DI=0;if(!isLet(x)&&window.HowzuFav&&HowzuFav.seen){RECENT=HowzuFav.seen(RECENT,x.id);HowzuFav.saveR(localStorage,RECENT);}const P=x.photos||[];
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");
@@ -413,7 +415,7 @@ async function orgListings(){
     const rows=r.ok?await r.json():[]; return rows.filter(x=>x.pub&&x.pub.title).map(x=>({...x.pub,id:x.id,address:hideUnit(x.pub.address)}));}catch(_){return []}
 }
 let J=[],U=[],I=[],opened=false;
-const merge=()=>{const ids=new Set(I.map(x=>String(x.id)));L=[...J.filter(x=>!ids.has(String(x.id))),...I,...U];render();if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else{openDetail(x,true);if(location.hash==="#book"){openBook();history.replaceState(history.state,"",location.pathname+location.search);}}}}};
+const merge=()=>{const ids=new Set(I.map(x=>String(x.id)));L=[...J.filter(x=>!ids.has(String(x.id))),...I,...U];render();if(location.hash==="#leadCard"&&!one&&L.length&&!window.__lcGo){window.__lcGo=1;const lc=document.getElementById("leadCard"),nv=document.querySelector("nav");if(lc)scrollTo({top:lc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12});}if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else{openDetail(x,true);if(location.hash==="#book"){openBook();history.replaceState(history.state,"",location.pathname+location.search);}}}}};
 const uP=Promise.race([userListings(),new Promise(r=>setTimeout(()=>r(null),8000))]);
 fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address),_page:/^[\w-]+$/.test(x.id)}));C=j.contact||{};merge();});
 uP.then(u=>{if(u){U=u;merge();}});

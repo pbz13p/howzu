@@ -14,6 +14,8 @@ ok("已租出：noindex、无电话栏", let_.includes("noindex") && !let_.inclu
 ok("没照片用默认分享图", LP.ogImage({}) === "https://howzu.com.au/icons/og-share.jpg");
 ok("描述不超过 110 字", LP.ogDesc({ ...x, desc: "长".repeat(300) }).length <= 110);
 const sm = LP.sitemap([x, { ...x, id: "b", status: "let" }]);
+ok("信任卡片链到押金指南", LP.trust({id:"a"},3).guide==="/guide/bond.html" && LP.trust({id:"b",user:1},0).guide==="/guide/bond.html");
+ok("sitemap 收录租房指南", sm.includes("guide/bond.html") && sm.includes("guide/apply.html"));
 ok("sitemap 只收在租房源", sm.includes("rent/2110-spencer.html") && !sm.includes("rent/b.html") && sm.includes("<loc>https://howzu.com.au/</loc>"));
 ok("id 安全检查", LP.safeId("a-1_b") && !LP.safeId("../x") && !LP.safeId(""));
 const kf = LP.keyFacts({ status: "live", available: "12 月 1 日", highlights: ["押金 4 周", "租期 12 个月", "近电车", "看房 视频看房"] });
