@@ -294,6 +294,7 @@ const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
 const isNow=x=>x.status!=="let"&&ListingPage.availNow(x.available);
 const isLet=x=>x.status==="let";
+const AREA_G={"Melbourne CBD":"area-melbourne-cbd","Melbourne":"area-melbourne-cbd","Carlton":"area-carlton","Southbank":"area-southbank","Docklands":"area-docklands"};
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
 function phImg(x){const P=[["#3f6f60","#7fa595"],["#4a5f73","#8c9fb1"],["#7a6a55","#b3a38c"],["#56665a","#97a596"],["#5e6670","#a2a9b1"],["#6d6253","#a99c8a"]];let h=0;for(const c of (x.suburb||x.id))h=(h*31+c.charCodeAt(0))>>>0;const [a,b]=P[h%P.length];
   const t=(x.title||"").split("·")[0].trim().replace(/[<&]/g,"");const r=[x.beds!=null?x.beds+" 房":"",x.baths!=null?x.baths+" 卫":""].filter(Boolean).join(" · ");
@@ -456,7 +457,7 @@ function openDetail(x,noPush){
     ${x.desc?`<div class="dt-desc${x.desc.length>140||x.desc.split("\n").length>6?" clip":""}" id="dtDesc">${esc(x.desc)}</div>${x.desc.length>140||x.desc.split("\n").length>6?`<button class="dt-more" data-more>展开全文</button>`:""}`:`<div class="dt-desc muted">房东还没有写介绍，欢迎直接联系咨询。</div>`}
     ${isLet(x)||!window.ListingPage||!ListingPage.specs?"":`<div class="sp"><div class="sp-h">房屋信息</div><dl>${ListingPage.specs(x).map(([k,v])=>`<div${k==="设施"?' class="w"':""}><dt>${esc(k)}</dt><dd${v===ListingPage.TBC?' class="m"':""}>${esc(v)}</dd></div>`).join("")}</dl>${tbcAsk(x)}</div>`}
     ${trustBox(x)}
-    ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a><a class="cm-zg" id="cmZG" hidden href="guide/school-zone.html">租约能用来给孩子报名吗？<u>按学区租房指南 ›</u></a></div><div class="mp" id="mp" hidden><div class="cm-h">📍 位置和周边 <small>大致位置，门牌号看房时告知</small></div><div class="mp-m" id="mpM"></div><div class="mp-l" id="mpL"></div></div>`}
+    ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a><a class="cm-zg" id="cmZG" hidden href="guide/school-zone.html">租约能用来给孩子报名吗？<u>按学区租房指南 ›</u></a></div><div class="mp" id="mp" hidden><div class="cm-h">📍 位置和周边 <small>大致位置，门牌号看房时告知</small></div><div class="mp-m" id="mpM"></div><div class="mp-l" id="mpL"></div></div>${AREA_G[x.suburb]?`<a class="cm-zg" href="guide/${AREA_G[x.suburb]}.html">住在 ${esc(x.suburb)}：免费电车区、到各大学距离、对口学区 <u>区域租房指南 ›</u></a>`:""}`}
     <div class="acts2"><a href="index.html?q=${encodeURIComponent(x.address)}">🏫 看对口学区</a>${isLet(x)?"":`<button data-share="${esc(x.id)}">📤 转发给朋友</button>${favBtn(x,"favd")}`}</div>
     ${isLet(x)&&window.ListingPage&&ListingPage.leadUrl?`<button class="letlead" data-letlead="${esc(x.id)}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</button>`:""}
     <div class="acts">${contactBtns(x)}</div>
