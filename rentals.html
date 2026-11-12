@@ -213,7 +213,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .dt .sp-n{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12.5px;line-height:1.5;color:var(--muted);margin:10px 0 0;padding:10px 12px;background:#f6f7f6;border-radius:12px}.dt .sp-a{flex:none;font:inherit;font-size:13px;font-weight:600;color:var(--accent);background:#fff;border:1px solid var(--line);border-radius:18px;padding:6px 12px;text-decoration:none;cursor:pointer}
 .dt .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin:12px 0 10px}.dt .kf div{padding:9px 4px;text-align:center;min-width:0}.dt .kf div+div{border-left:1px solid var(--line)}.dt .kf small{display:block;font-size:12px;color:var(--muted);line-height:1.3}.dt .kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .kf b.m{color:#9aa09d;font-weight:500}.dt .kf b.g{color:var(--accent)}.dt .kf [role=button]{cursor:pointer}
 .fsum .mt{display:inline-flex;align-items:center;gap:4px;font-weight:500;color:var(--ink)}.fsum .mt.on{color:var(--accent)}
-#lmap{margin:0 0 22px}#lmap .lm{height:min(56vh,440px);border-radius:16px;overflow:hidden;background:#eef1ef;position:relative;z-index:0}#lmap p{font-size:12px;color:var(--muted);margin:8px 2px 0}
+#lmap{margin:0 0 22px}#lmap .lz{display:flex;align-items:center;gap:8px;margin:0 0 8px;background:#f3f6f4;border-radius:12px;padding:6px 8px 6px 12px}#lmap .lz span{font-size:13px;font-weight:600;white-space:nowrap;color:#1d2321}#lmap .lz input{flex:1;min-width:0;border:1px solid #d8dfdb;border-radius:10px;padding:8px 10px;font-size:14px;background:#fff}#lmap .lz button{border:0;background:none;font-size:15px;color:#6b726f;cursor:pointer}#lzN{font-size:13px!important;color:#1d2321!important;line-height:1.6}#lzN small{color:#8a908d}#lzN a{color:#0f6b4f;font-weight:600}#lmap .lm{height:min(56vh,440px);border-radius:16px;overflow:hidden;background:#eef1ef;position:relative;z-index:0}#lmap p{font-size:12px;color:var(--muted);margin:8px 2px 0}
 .pin{background:#fff;color:#1d2321;font:600 13px/1 -apple-system,"PingFang SC",sans-serif;padding:7px 10px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.22);white-space:nowrap;transform:translate(-50%,-50%);display:inline-block}.pin.now{background:var(--accent);color:#fff}
 .mpop{display:flex;gap:10px;align-items:center;cursor:pointer;width:230px}.mpop img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none}.mpop b{display:block;font-size:13.5px;line-height:1.35;color:#1d2321}.mpop span{display:block;font-size:12.5px;color:#6b726f;margin-top:3px}.mpop u{display:block;font-size:12.5px;color:var(--accent);text-decoration:none;font-weight:600;margin-top:4px}#lmap .leaflet-popup-content{margin:10px 12px}.mpop-s{height:1px;background:#e8ebe9;margin:9px 0}#lmap .leaflet-tile-pane,.dt .mp-m .leaflet-tile-pane{filter:saturate(.3) brightness(1.05) contrast(.95)}
 </style>
@@ -251,7 +251,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
   </div>
   <div class="fsum" id="fsum"><span id="fcnt"></span><span class="fr"><button data-fclr id="fclr" hidden>清除<span>筛选</span></button><button class="mt" id="mapT" aria-pressed="false">🗺 地图<span>看房</span></button><label class="fs"><select id="fSort" aria-label="排序"></select></label></span></div>
   <section class="rc" id="recent" hidden aria-label="最近看过"></section>
-  <div id="lmap" hidden><div class="lm" id="lmapM"></div><p id="lmapN">位置按地址大致标注，仅供参考</p></div>
+  <div id="lmap" hidden><div class="lz"><span>🏫 按学区看</span><input id="lzI" list="lzL" placeholder="输入公立中学名，如 University High" autocomplete="off"><button type="button" id="lzX" hidden aria-label="清除学区">✕</button><datalist id="lzL"></datalist></div><div class="lm" id="lmapM"></div><p id="lmapN">位置按地址大致标注，仅供参考</p><p id="lzN" hidden></p></div>
   <div id="list"><div class="empty">加载中…</div></div>
   <section class="lead" id="leadCard">
     <h2>没找到合适的？</h2>
@@ -288,7 +288,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="js/nearby.js?v=20261112"></script>
 <script>
 const $=s=>document.querySelector(s);
-let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;
+let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;let LMGRP={},LZ=null;
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
@@ -374,9 +374,25 @@ async function listMap(){const seq=++LMseq,box=$("#lmap"),n=$("#lmapN");box.hidd
       .bindPopup(g.xs.map(y=>`<div class="mpop" data-open="${esc(y.id)}"><img src="${esc((y.photos||[])[0]||phImg(y))}" alt=""><div><b>${esc(y.title||y.suburb||"")}</b><span>${[y.rentWeekly?`$${y.rentWeekly}/周`:"",y.beds!=null?`${y.beds} 房`:"",isNow(y)?"马上入住":""].filter(Boolean).join(" · ")}</span><u>查看详情 ›</u></div></div>`).join('<div class="mpop-s"></div>'),{closeButton:false,offset:[0,-10]});
     n.textContent=`正在标注 ${i+1}/${xs.length}…`;
     if(pts.length===1)LM.setView(pts[0],13);else LM.fitBounds(pts,{padding:[36,36],maxZoom:14});}
-  n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;}
+  n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;LMGRP=G;lzFill();if(LZ)lzShow(LZ.name);}
 document.addEventListener("click",e=>{const b=e.target.closest("#mapT");if(!b)return;MAPON=!MAPON;b.classList.toggle("on",MAPON);b.setAttribute("aria-pressed",MAPON);b.innerHTML=MAPON?"☰ 收起<span>地图</span>":"🗺 地图<span>看房</span>";
   if(MAPON){listMap();requestAnimationFrame(()=>{const nv=document.querySelector("nav");scrollTo({top:$("#fsum").getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-8,behavior:"smooth"});});}else{LMseq++;$("#lmap").hidden=true;}});
+// 按学区看：选一所公立中学，地图上画出它的学区，算出学区里有几套在租房源
+async function lzZones(){return (window.ZP=window.ZP||Promise.all(["zones_primary","zones_secondary"].map(n=>fetch(`data/${n}.json`).then(r=>r.json()))));}
+async function lzFill(){const dl=$("#lzL");if(!dl||dl.dataset.ok)return;try{const [,zs]=await lzZones();const names=[...new Set(zs.features.map(f=>f.properties.name))].sort();dl.innerHTML=names.map(n=>`<option value="${esc(n)}">`).join("");dl.dataset.ok=1;}catch(_){window.ZP=null;}}
+async function lzShow(name){if(!LM||!window.L)return;const Lf=window.L,N=$("#lzN");if(LZ&&LZ.layer)LM.removeLayer(LZ.layer);LZ=null;$("#lzX").hidden=!name;
+  if(!name){N.hidden=true;return;}
+  let zs;try{[,zs]=await lzZones();}catch(_){return;}
+  const fs=zs.features.filter(f=>f.properties.name.toLowerCase()===name.toLowerCase());if(!fs.length){N.hidden=false;N.textContent="没找到这所学校的学区，请从下拉列表里选。";return;}
+  const f7=fs.filter(f=>f.properties.yl==="7");const use=f7.length?f7:fs.slice(0,1);
+  const layer=Lf.geoJSON({type:"FeatureCollection",features:use},{style:{color:"#2563eb",weight:2,dashArray:"6 4",fillColor:"#2563eb",fillOpacity:.08},interactive:false}).addTo(LM);LZ={name:fs[0].properties.name,layer};
+  LM.fitBounds(layer.getBounds(),{padding:[20,20]});
+  const inside=[];Object.values(LMGRP).forEach(g=>{if(use.some(f=>HowzuCommute.inFeature(f,g.pt.lng,g.pt.lat)))inside.push(...g.xs);});
+  let zg={};try{zg=await (window.ZG=window.ZG||fetch("data/zone_guides.json").then(r=>r.json()));}catch(_){}
+  const sl=zg[String(fs[0].properties.no)];
+  N.hidden=false;N.innerHTML=`<b>${esc(LZ.name)}</b> 学区（2027）里有 <b>${inside.length}</b> 套在租房源${inside.length?"："+inside.map(x=>`<a href="?id=${encodeURIComponent(x.id)}" data-open="${esc(x.id)}">${esc(x.title||x.suburb)}</a>`).join("、"):"。可以<a href=\"#leadCard\">留下需求</a>，写上这所学校，有学区内的房源第一时间通知你。"}${sl?` · <a href="guide/${sl}.html">这个学区的租房指南 ›</a>`:""}<br><small>学区边界仅供参考，签约前请在 Find my School 按具体地址核对。</small>`;}
+document.addEventListener("change",e=>{if(e.target&&e.target.id==="lzI")lzShow(e.target.value.trim());});
+document.addEventListener("click",e=>{if(e.target&&e.target.id==="lzX"){$("#lzI").value="";lzShow("");}});
 /* ---------- 房源详情 ---------- */
 // "待确认"不只是一行灰字：列出没核实的项，一键生成现成的提问（短信 / 复制给微信），租客不用打字
 function tbcAsk(x){const K=ListingPage.specs(x).filter(r=>r[1]===ListingPage.TBC).map(r=>r[0]);if(!K.length)return "";
