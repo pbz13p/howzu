@@ -63,7 +63,7 @@ for A in AREAS:
     uni="".join(f"<tr><td>{n}</td><td>约 {km(A['lat'],A['lng'],a,b):.1f} 公里</td></tr>" for n,a,b in UNIS)
     zg=json.load(open(f"{R}/data/zone_guides.json"))
     szl="、".join((f'<a href="/guide/{zg[str(z["no"])]}.html">{zl(z)}</a>' if str(z["no"]) in zg else zl(z)) for z in sz) or "（中心点不在任何公立中学学区内，按具体地址查）"
-    pzl="、".join(zl(z) for z in pz) or "（按具体地址查）"
+    pzl="、".join((f'<a href="/guide/{zg[str(z["no"])]}.html">{zl(z)}</a>' if str(z["no"]) in zg else zl(z)) for z in pz) or "（按具体地址查）"
     lst="".join(f'<li><a href="/rentals.html?id={x["id"]}">{html.escape(x["title"])}</a></li>' for x in live)
     sm=[f"{A['ftz']}",
         (lambda nu: f"离这里最近的大学是 <b>{nu[0]}</b>（直线约 {nu[1]:.1f} 公里）；到墨尔本大学约 {km(A['lat'],A['lng'],UNIS[0][1],UNIS[0][2]):.1f} 公里。")(min(((n,km(A['lat'],A['lng'],a,b)) for n,a,b in UNIS),key=lambda t:t[1])),
