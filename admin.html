@@ -68,6 +68,7 @@ async function start() {
 }
 async function load() {
   if (tab === "lead") return loadLeads();
+  if (tab === "stats") return loadStats();
   const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询)").order("created_at", { ascending: false });
   const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询)"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
@@ -89,9 +90,35 @@ async function load() {
       <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-notice="${esc(x.id)}">📨 通知房东</button><button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
-const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"]];
+const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"], ["stats", "访问统计"]];
 const tabsHtml = () => `<div class="tabs">${TABS.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>`;
 // 租客留的需求：不给"通过上线"（会公开联系方式），只能复制联系方式 / 标记已联系 / 删除
+// 访问统计：最近 30 天每天多少人看、多少次咨询，哪些页面和房源最热（数据来自 js/track.js 写入的 pageviews 表）
+async function loadStats() {
+  const since = new Date(Date.now() - 30 * 864e5).toISOString();
+  const { data, error } = await sb.from("pageviews").select("at,path,ref,mobile,ev").gte("at", since).order("at", { ascending: false }).limit(20000);
+  const head = tabsHtml();
+  if (error) { $("#app").innerHTML = head + `<div class="empty">还没开通访问统计：请在 Supabase 的 SQL Editor 运行一次 <b>supabase/pageviews.sql</b>（建表，访客只能写、只有你能看）。<br><small>${esc(error.message)}</small></div>`; return; }
+  const day = t => new Date(t).toLocaleDateString("en-CA", { timeZone: "Australia/Melbourne" });
+  const V = data.filter(r => r.ev === "view"), E = data.filter(r => r.ev !== "view");
+  const by = (arr, f) => { const m = new Map(); arr.forEach(r => { const k = f(r); if (k) m.set(k, (m.get(k) || 0) + 1); }); return [...m].sort((a, b) => b[1] - a[1]); };
+  const days = []; for (let i = 0; i < 30; i++) days.push(day(Date.now() - i * 864e5));
+  let vd = new Map(by(V, r => day(r.at))), ed = new Map(by(E, r => day(r.at)));
+  // 每日总数用数据库里汇总好的视图（不受单次最多返回 1000 行的限制）
+  const dv = await sb.from("pageviews_daily").select("day,views,enquiries").gte("day", days[29]);
+  if (!dv.error && dv.data && dv.data.length && dv.data[0].day) { vd = new Map(dv.data.map(r => [r.day, r.views])); ed = new Map(dv.data.map(r => [r.day, r.enquiries])); }
+  const mx = Math.max(1, ...days.map(d => vd.get(d) || 0));
+  const bars = days.slice().reverse().map(d => `<div title="${d}：${vd.get(d) || 0} 次浏览，${ed.get(d) || 0} 次咨询" style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:90px"><div style="height:${Math.round((vd.get(d) || 0) / mx * 86)}px;background:#0f6b4f;border-radius:3px 3px 0 0;min-height:${vd.get(d) ? 2 : 0}px"></div></div>`).join("");
+  const tbl = (t, rows) => `<div class="card"><div class="t">${t}</div>${rows.length ? rows.slice(0, 12).map(([k, n]) => `<div class="m" style="display:flex;justify-content:space-between;gap:12px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k)}</span><b>${n}</b></div>`).join("") : '<div class="m">还没有数据</div>'}</div>`;
+  const today = day(Date.now()), wk = days.slice(0, 7);
+  const sum = (m, ds) => ds.reduce((a, d) => a + (m.get(d) || 0), 0);
+  $("#app").innerHTML = head + `<div class="card"><div class="t">最近 30 天</div>
+    <div class="m">今天 <b>${vd.get(today) || 0}</b> 次浏览 · <b>${ed.get(today) || 0}</b> 次咨询　|　近 7 天 <b>${sum(vd, wk)}</b> 次浏览 · <b>${sum(ed, wk)}</b> 次咨询　|　30 天 <b>${sum(vd, days)}</b> / <b>${sum(ed, days)}</b>　|　手机占 ${V.length ? Math.round(V.filter(r => r.mobile).length / V.length * 100) : 0}%</div>
+    <div style="display:flex;gap:2px;align-items:flex-end;margin-top:10px">${bars}</div><div class="m" style="display:flex;justify-content:space-between"><span>${days[29]}</span><span>今天</span></div></div>` +
+    (data.length >= 1000 ? `<div class="m" style="margin:0 4px 8px">下面的排行按最近 ${data.length} 条记录统计。</div>` : "") + tbl("最热门页面（浏览）", by(V, r => r.path.replace(/\?.*$/, "") + (/[?&]id=/.test(r.path) ? " · " + (r.path.match(/[?&]id=([^&]+)/) || [])[1] : ""))) +
+    tbl("咨询（按钮 · 房源）", by(E, r => r.ev)) +
+    tbl("从哪里来", by(V, r => r.ref || "直接打开 / 微信等"));
+}
 async function loadLeads() {
   const { data, error } = await sb.from("listings").select("*").in("kind", ["求租需求", "房东托管咨询"]).order("created_at", { ascending: false });
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
