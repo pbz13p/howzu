@@ -251,6 +251,7 @@ function renderStats() {
   </div>
   <div class="grid2">
     ${SUPER ? `<div class="card" id="webst"><h3>🌐 网站访问 <span class="c">近 7 天 · <a href="admin.html" target="_blank">详细 ↗</a></span></h3><div class="muted small">加载中…</div></div>` : ""}
+    <div class="card" id="pubgap"><h3>📝 对外房源还缺 <span class="c">在租展示中</span></h3><div class="muted small">检查中…</div></div>
     <div class="card"><h3>💸 欠租 <span class="c">交到日已过</span></h3>${list(S.arrears.map(x => ({ p: x.p, r: `过交到日 ${x.days} 天 · 应收 ${money(x.amt)}${x.periods > 1 ? `（${x.periods} 期）` : ""}` })), "没有欠租 👍")}</div>
     <div class="card"><h3>📅 租约即将到期 <span class="c">180 天内</span></h3>${list(S.exp180.map(x => ({ p: x.p, r: `${fmtDate(x.p.lease_end)} · ${x.days} 天后` })), "半年内没有到期")}</div>
     <div class="card"><h3>⏰ 常迟交 <span class="c">近几个月一半以上迟交</span></h3>${list(S.late.map(p => ({ p, r: Math.round(p.late_rate * 100) + "% 迟交" })), "没有")}</div>
@@ -260,6 +261,26 @@ function renderStats() {
   </div>
   <p class="small muted">租金交到日、租约日期来自 PropertyMe / 账单 tracker 的同步，以最近一次同步为准（最近更新：${fmtDate(S.lastUpdate)}）。钱的正式账本以 PropertyMe 为准。</p>`;
   loadWeb().catch(() => {});
+  loadPubGaps().catch(() => {});
+}
+// 对外在租的房源缺了哪些租客最在意的信息（周租、可入住日期、照片数、亮点）
+function pubGaps(u) {
+  const g = [];
+  if (!u.rentWeekly) g.push("周租");
+  if (!u.available) g.push("入住日期");
+  if ((u.photos || []).length < 5) g.push(`照片（${(u.photos || []).length} 张）`);
+  if (!(u.highlights || []).length) g.push("亮点");
+  return g;
+}
+async function loadPubGaps() {
+  const el = $("#pubgap"); if (!el) return;
+  const rows = [], seen = new Set();
+  P.filter(p => p.published && p.pub && p.pub.status !== "let").forEach(p => { seen.add(String(p.pub_id || p.id)); const g = pubGaps(p.pub); if (g.length) rows.push(`<div class="row"><a data-open="${esc(p.id)}">${esc(p.addr)}</a><span class="r">缺 ${g.join("、")}</span></div>`); });
+  try {
+    const j = await (await fetch("data/listings.json?t=" + Date.now())).json();
+    (j.listings || j).filter(u => u.status === "live" && !seen.has(String(u.id))).forEach(u => { const g = pubGaps(u); if (g.length) rows.push(`<div class="row"><a href="rentals.html?id=${encodeURIComponent(u.id)}" target="_blank">${esc(u.title || u.id)} ↗</a><span class="r">缺 ${g.join("、")}</span></div>`); });
+  } catch (e) {}
+  el.querySelector("div").outerHTML = rows.length ? rows.join("") + `<div class="small muted" style="margin-top:6px">没写周租的房源在网站上显示“租金面议”，咨询会少很多。工作台里的房源点开改；带 ↗ 的是网站原有房源（data/listings.json）。</div>` : `<div class="muted small">都齐了 👍</div>`;
 }
 
 const FILTERS = [["all", "全部"], ["arrears", "欠租"], ["expiring", "90 天内到期"], ["todo", "有待办"], ["pub", "已发布"], ["unpub", "未发布"], ["nophoto", "缺照片"]];
