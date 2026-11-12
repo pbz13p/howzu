@@ -357,7 +357,7 @@ function render(){
 /* ---------- 地图看房（列表）：免费 OpenStreetMap + Leaflet；地址→坐标按需解析并缓存在本机 ---------- */
 
 async function listMap(){const seq=++LMseq,box=$("#lmap"),n=$("#lmapN");box.hidden=false;
-  let Lf;try{Lf=await leaflet();}catch(_){n.textContent="地图加载失败，请检查网络后再试";return;}
+  let Lf;try{Lf=await loadLeaflet();}catch(_){n.textContent="地图加载失败，请检查网络后再试";return;}
   if(seq!==LMseq)return;
   if(!LM){LM=Lf.map("lmapM",{scrollWheelZoom:false}).setView([-37.8136,144.9631],11);
     Lf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(LM);LMG=Lf.layerGroup().addTo(LM);}
@@ -427,14 +427,14 @@ async function geoPt(addr){const k="howzu-geo:"+addr;try{const c=JSON.parse(loca
   if(p)try{localStorage.setItem(k,JSON.stringify(p));}catch(_){}
   return p;}
 // 地图：免费 OpenStreetMap + Leaflet（打开详情才加载）；周边站点和超市来自 OpenStreetMap Overpass，缓存在本机
-let LF=null;function leaflet(){return LF=LF||new Promise((ok,no)=>{const c=document.createElement("link");c.rel="stylesheet";c.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";document.head.appendChild(c);const j=document.createElement("script");j.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";j.onload=()=>ok(window.L);j.onerror=()=>{LF=null;no();};document.head.appendChild(j);});}
+let LF=null;function loadLeaflet(){return LF=LF||new Promise((ok,no)=>{const c=document.createElement("link");c.rel="stylesheet";c.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";document.head.appendChild(c);const j=document.createElement("script");j.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";j.onload=()=>ok(window.L);j.onerror=()=>{LF=null;no();};document.head.appendChild(j);});}
 async function nearbyOf(pt){const k=`howzu-nb:${pt.lat.toFixed(4)},${pt.lng.toFixed(4)}`;try{const c=JSON.parse(localStorage.getItem(k)||"null");if(c)return c;}catch(_){}
   for(const u of["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter"]){try{const ac=new AbortController(),t=setTimeout(()=>ac.abort(),9000);
     const r=await fetch(u,{method:"POST",body:"data="+encodeURIComponent(HowzuNearby.query(pt)),headers:{"Content-Type":"application/x-www-form-urlencoded"},signal:ac.signal});clearTimeout(t);if(!r.ok)continue;
     const R=HowzuNearby.nearest(pt,(await r.json()).elements);if(R.length)try{localStorage.setItem(k,JSON.stringify(R));}catch(_){}return R;}catch(_){}}
   return [];}
 async function mapBox(x,pt){const box=document.getElementById("mp");if(!box||!window.HowzuNearby||DX!==x)return;
-  try{await leaflet();}catch(_){return;}const Lf=window.L;if(!Lf||DX!==x)return;box.hidden=false;
+  try{await loadLeaflet();}catch(_){return;}const Lf=window.L;if(!Lf||DX!==x)return;box.hidden=false;
   const map=Lf.map("mpM",{zoomControl:false,scrollWheelZoom:false,dragging:!matchMedia("(pointer:coarse)").matches,tap:false,attributionControl:true}).setView([pt.lat,pt.lng],15);
   Lf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);MPMAP={x,map};
   Lf.circle([pt.lat,pt.lng],{radius:120,color:"#0f6b4f",weight:2,fillColor:"#0f6b4f",fillOpacity:.18}).addTo(map);
