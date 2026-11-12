@@ -95,8 +95,8 @@ ul.dot li{margin:0 0 6px}
 </ol>
 <p><a href="/rentals.html?zone=Ashwood%20High%20School">在地图上看 Ashwood High School 学区里的好租在租房源 ›</a></p>
 <div class="note">热门学区的房子往往一出来就被租走。可以在好租<a href="/rentals.html?la=Ashwood%20High%20School%20%E5%AD%A6%E5%8C%BA#leadCard">留下需求</a>（已帮你填好 Ashwood High School 学区），有合适的房源第一时间通知你。</div>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<script src="/vendor/leaflet/leaflet.js" defer></script>
 <script>
 window.addEventListener("load",function(){try{var G=[[[145.12357, -37.84384], [145.10783, -37.83631], [145.0711, -37.85681], [145.06551, -37.86511], [145.07876, -37.8908], [145.11063, -37.8955], [145.12357, -37.84384]]];var m=L.map("zmap",{scrollWheelZoom:false});L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"&copy; OpenStreetMap"}).addTo(m);var p=L.polygon(G.map(function(r){return r.map(function(c){return [c[1],c[0]]})}),{color:"#0f6b4f",weight:2,fillOpacity:.15}).addTo(m);L.circleMarker([-37.86453,145.10333],{radius:7,color:"#c2410c",fillColor:"#c2410c",fillOpacity:1}).addTo(m).bindPopup("Ashwood High School");m.fitBounds(p.getBounds(),{padding:[10,10]});}catch(e){console.log("zmap",e&&e.message);document.getElementById("zmap").textContent="地图加载失败，请到 Find my School 查看学区。"}});
 </script>

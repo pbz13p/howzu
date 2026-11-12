@@ -65,8 +65,8 @@ for name in PICK:
 </ol>
 <p><a href="/rentals.html?zone={urllib.parse.quote(name)}">在地图上看 {html.escape(name)} 学区里的好租在租房源 ›</a></p>
 <div class="note">热门学区的房子往往一出来就被租走。可以在好租<a href="/rentals.html?la={urllib.parse.quote(name+" 学区")}#leadCard">留下需求</a>（已帮你填好 {html.escape(name)} 学区），有合适的房源第一时间通知你。</div>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<script src="/vendor/leaflet/leaflet.js" defer></script>
 <script>
 window.addEventListener("load",function(){{try{{var G={json.dumps(geo)};var m=L.map("zmap",{{scrollWheelZoom:false}});L.tileLayer("https://tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png",{{maxZoom:18,attribution:"&copy; OpenStreetMap"}}).addTo(m);var p=L.polygon(G.map(function(r){{return r.map(function(c){{return [c[1],c[0]]}})}}),{{color:"#0f6b4f",weight:2,fillOpacity:.15}}).addTo(m);L.circleMarker([{x['lat']},{x['lng']}],{{radius:7,color:"#c2410c",fillColor:"#c2410c",fillOpacity:1}}).addTo(m).bindPopup({json.dumps(name)});m.fitBounds(p.getBounds(),{{padding:[10,10]}});}}catch(e){{console.log("zmap",e&&e.message);document.getElementById("zmap").textContent="地图加载失败，请到 Find my School 查看学区。"}}}});
 </script>'''

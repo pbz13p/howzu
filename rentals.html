@@ -279,7 +279,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <div class="contact" id="contactBar"></div>
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="/vendor/qrcode/qrcode.js"></script>
 <script src="js/listing-page.js?v=20261113d"></script>
 <script src="js/share.js?v=20261112"></script>
 <script src="js/lead.js?v=20261112"></script>
@@ -430,7 +430,7 @@ async function geoPt(addr){const k="howzu-geo:"+addr;try{const c=JSON.parse(loca
   if(p)try{localStorage.setItem(k,JSON.stringify(p));}catch(_){}
   return p;}
 // 地图：免费 OpenStreetMap + Leaflet（打开详情才加载）；周边站点和超市来自 OpenStreetMap Overpass，缓存在本机
-let LF=null;function loadLeaflet(){return LF=LF||new Promise((ok,no)=>{const c=document.createElement("link");c.rel="stylesheet";c.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";document.head.appendChild(c);const j=document.createElement("script");j.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";j.onload=()=>ok(window.L);j.onerror=()=>{LF=null;no();};document.head.appendChild(j);});}
+let LF=null;function loadLeaflet(){return LF=LF||new Promise((ok,no)=>{const c=document.createElement("link");c.rel="stylesheet";c.href="/vendor/leaflet/leaflet.css";document.head.appendChild(c);const j=document.createElement("script");j.src="/vendor/leaflet/leaflet.js";j.onload=()=>ok(window.L);j.onerror=()=>{LF=null;no();};document.head.appendChild(j);});}
 async function nearbyOf(pt){const k=`howzu-nb:${pt.lat.toFixed(4)},${pt.lng.toFixed(4)}`;try{const c=JSON.parse(localStorage.getItem(k)||"null");if(c)return c;}catch(_){}
   for(const u of["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter"]){try{const ac=new AbortController(),t=setTimeout(()=>ac.abort(),9000);
     const r=await fetch(u,{method:"POST",body:"data="+encodeURIComponent(HowzuNearby.query(pt)),headers:{"Content-Type":"application/x-www-form-urlencoded"},signal:ac.signal});clearTimeout(t);if(!r.ok)continue;

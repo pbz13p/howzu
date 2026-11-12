@@ -72,8 +72,8 @@ for name in PICK:
 <li><b>报名的家长写进租约，租期覆盖开学第一天</b>，详见 <a href="/guide/school-zone.html">按学区租房</a>。</li>
 <li><b>没找到合适的</b>：<a href="/rentals.html?la={urllib.parse.quote(name+' 学区')}#leadCard">留下需求</a>（已帮你填好学校），有学区内的房源第一时间通知你。</li>
 </ol>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<script src="/vendor/leaflet/leaflet.js" defer></script>
 <script>
 window.addEventListener("load",function(){{try{{var G={json.dumps(geo)},S={json.dumps([[[[round(c[0],5),round(c[1],5)] for c in p[0]] for p in polys(g)] for g in sec7 if any(g["properties"]["no"]==n for n,_ in ov)])};var m=L.map("zmap",{{scrollWheelZoom:false}});L.tileLayer("https://tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png",{{maxZoom:18,attribution:"&copy; OpenStreetMap"}}).addTo(m);S.forEach(function(P){{L.polygon(P.map(function(r){{return r.map(function(c){{return [c[1],c[0]]}})}}),{{color:"#2563eb",weight:2,dashArray:"6 4",fillOpacity:.04}}).addTo(m)}});var p=L.polygon(G.map(function(r){{return r.map(function(c){{return [c[1],c[0]]}})}}),{{color:"#c2410c",weight:2,fillOpacity:.15}}).addTo(m);{f'L.circleMarker([{s["lat"]},{s["lng"]}],{{radius:7,color:"#c2410c",fillColor:"#c2410c",fillOpacity:1}}).addTo(m).bindPopup({json.dumps(name)});' if s and s.get("lat") else ''}m.fitBounds(p.getBounds(),{{padding:[10,10]}});}}catch(e){{document.getElementById("zmap").textContent="地图加载失败，请到 Find my School 查看学区。"}}}});
 </script>'''

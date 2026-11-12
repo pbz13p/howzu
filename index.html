@@ -19,7 +19,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="css/site.css?v=20261112">
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
@@ -221,7 +221,7 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
 <script>fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).then(j=>{const R=HomeRent.html(j.listings);if(!R.n)return;document.getElementById("hrR").innerHTML=R.cards;document.getElementById("hrN").textContent=R.n+" 套";document.getElementById("homeRent").classList.remove("hidden");}).catch(()=>{});</script>
 <script src="js/config.js?v=20261107"></script>
 <script src="js/lead.js?v=20261111"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/vendor/leaflet/leaflet.js"></script>
 <script>
 
 const $ = s => document.querySelector(s);

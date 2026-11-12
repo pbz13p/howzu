@@ -93,8 +93,8 @@ ul.dot li{margin:0 0 6px}
 <li><b>报名的家长写进租约，租期覆盖开学第一天</b>，详见 <a href="/guide/school-zone.html">按学区租房</a>。</li>
 <li><b>没找到合适的</b>：<a href="/rentals.html?la=Highvale%20Primary%20School%20%E5%AD%A6%E5%8C%BA#leadCard">留下需求</a>（已帮你填好学校），有学区内的房源第一时间通知你。</li>
 </ol>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<script src="/vendor/leaflet/leaflet.js" defer></script>
 <script>
 window.addEventListener("load",function(){try{var G=[[[145.18254, -37.87415], [145.18058, -37.86444], [145.16651, -37.86042], [145.16656, -37.86861], [145.17843, -37.87489], [145.18254, -37.87415]]],S=[[[[145.20074, -37.88628], [145.20688, -37.87642], [145.20436, -37.86564], [145.18262, -37.85095], [145.15732, -37.86327], [145.18799, -37.88515], [145.18644, -37.88533], [145.19387, -37.88676], [145.20074, -37.88628]]]];var m=L.map("zmap",{scrollWheelZoom:false});L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"&copy; OpenStreetMap"}).addTo(m);S.forEach(function(P){L.polygon(P.map(function(r){return r.map(function(c){return [c[1],c[0]]})}),{color:"#2563eb",weight:2,dashArray:"6 4",fillOpacity:.04}).addTo(m)});var p=L.polygon(G.map(function(r){return r.map(function(c){return [c[1],c[0]]})}),{color:"#c2410c",weight:2,fillOpacity:.15}).addTo(m);L.circleMarker([-37.86702,145.17407],{radius:7,color:"#c2410c",fillColor:"#c2410c",fillOpacity:1}).addTo(m).bindPopup("Highvale Primary School");m.fitBounds(p.getBounds(),{padding:[10,10]});}catch(e){document.getElementById("zmap").textContent="地图加载失败，请到 Find my School 查看学区。"}});
 </script>
