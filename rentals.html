@@ -170,7 +170,7 @@ html{scroll-behavior:smooth}
 .lead .done b{display:block;font-size:18px;margin:6px 0}
 .lead .hp{position:absolute;left:-9999px}
 .lead .fine{font-size:11px;color:var(--muted);margin:10px 0 0;text-align:center}
-.note{font-size:12px;color:var(--muted)}
+.note{font-size:12px;color:var(--muted);line-height:1.7}.note a{color:var(--accent);text-decoration:none;font-weight:500;white-space:nowrap}.note a:hover{text-decoration:underline}
 .contact{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:none;gap:8px;justify-content:center}
 footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .perks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 18px}
@@ -255,7 +255,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <p class="sub">留下需求，有新房源第一时间通知你。不用注册，30 秒填完。</p>
     <form id="leadF" novalidate>
       <div class="two">
-        <div><label for="lArea">想住哪里</label><input id="lArea" name="area" list="lAreas" placeholder="如 Carlton / 墨大附近" autocomplete="off"><datalist id="lAreas"><option value="CBD"><option value="Carlton"><option value="Southbank"><option value="Docklands"><option value="North Melbourne"><option value="Parkville（墨大附近）"><option value="Clayton（莫纳什附近）"><option value="Box Hill"><option value="Glen Waverley"><option value="Doncaster"></datalist></div>
+        <div><label for="lArea">想住哪里</label><input id="lArea" name="area" list="lAreas" placeholder="如 Carlton、墨大" autocomplete="off"><datalist id="lAreas"><option value="CBD"><option value="Carlton"><option value="Southbank"><option value="Docklands"><option value="North Melbourne"><option value="Parkville（墨大附近）"><option value="Clayton（莫纳什附近）"><option value="Box Hill"><option value="Glen Waverley"><option value="Doncaster"></datalist></div>
         <div><label for="lBudget">每周预算（澳元）</label><input id="lBudget" name="budget" inputmode="numeric" placeholder="如 600"></div>
       </div>
       <label>房型</label>
@@ -277,7 +277,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script src="js/listing-page.js?v=20261112j"></script>
 <script src="js/share.js?v=20261112"></script>
-<script src="js/lead.js?v=20261111"></script>
+<script src="js/lead.js?v=20261112"></script>
 <script src="js/enquire.js?v=20261112d"></script>
 <script src="js/commute.js?v=20261111"></script>
 <script src="js/fav.js?v=20261111b"></script>
@@ -292,7 +292,7 @@ let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort
 const isNow=x=>x.status!=="let"&&ListingPage.availNow(x.available);
 const isLet=x=>x.status==="let";
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
-function phImg(x){const P=[["#0f6b4f","#1f9a72"],["#1c4e80","#3a7fbf"],["#7a4b1f","#c08540"],["#4b2f6b","#8a5bb8"],["#2f5d50","#5aa08b"],["#6b2f3a","#b45a69"]];let h=0;for(const c of (x.suburb||x.id))h=(h*31+c.charCodeAt(0))>>>0;const [a,b]=P[h%P.length];
+function phImg(x){const P=[["#3f6f60","#7fa595"],["#4a5f73","#8c9fb1"],["#7a6a55","#b3a38c"],["#56665a","#97a596"],["#5e6670","#a2a9b1"],["#6d6253","#a99c8a"]];let h=0;for(const c of (x.suburb||x.id))h=(h*31+c.charCodeAt(0))>>>0;const [a,b]=P[h%P.length];
   const t=(x.title||"").split("·")[0].trim().replace(/[<&]/g,"");const r=[x.beds!=null?x.beds+" 房":"",x.baths!=null?x.baths+" 卫":""].filter(Boolean).join(" · ");
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 380"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="380" fill="url(#g)"/><g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="3"><rect x="150" y="70" width="100" height="190" rx="4"/><rect x="250" y="120" width="70" height="140" rx="4"/><rect x="90" y="140" width="60" height="120" rx="4"/></g><g fill="rgba(255,255,255,.2)">${[0,1,2,3,4,5].map(i=>`<rect x="165" y="${88+i*28}" width="22" height="14"/><rect x="213" y="${88+i*28}" width="22" height="14"/>`).join("")}</g><text x="200" y="310" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700" fill="#fff">${t}</text><text x="200" y="345" text-anchor="middle" font-family="sans-serif" font-size="19" fill="rgba(255,255,255,.85)">${r}</text></svg>`;
   return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);}
@@ -343,7 +343,7 @@ function render(){
   const mbK=S.feat.filter(k=>mb.some(x=>HF.unknown(x,k))).map(k=>HF.FEAT[k].label).join("、");
   const mbSec=mb.length?`<div class="sec mb${live.length?"":" top"}"><b>${live.length?"还有 ":""}${mb.length} 套还没写明「${esc(mbK)}」</b><span>不一定没有，点开房源用「一键问清」问我们</span></div>`+mb.map(card).join(""):"";
   LIVE=live;
-  filterUI(base,live.length,act,mb.length);if(MAPON)listMap();
+  filterUI(base,live.length,act,mb.length);leadSync();if(MAPON)listMap();
   const sec=(live.length||mb.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
   const cmpN=F==="fav"&&window.ListingPage&&ListingPage.compare?Math.min(3,live.length):0;
   $("#list").innerHTML=live.length||done.length||mb.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+mbSec+sec+(LETALL||done.length<=6?done:done.slice(0,4)).map(card).join("")+(!LETALL&&done.length>6?`<button class="letmore" data-letmore>查看全部 ${done.length} 套成交案例 <i>›</i></button>`:""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
@@ -528,6 +528,9 @@ document.addEventListener("click",e=>{if(e.target.closest("[data-letmore]")){LET
 ["#lBeds","#lWhen"].forEach(g=>$(g).addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=!b.classList.contains("on");document.querySelectorAll(g+" button").forEach(x=>x.classList.remove("on"));b.classList.toggle("on",on);}));
 // 从已租出房源页"留下需求"过来：区域、房型按那套房预先填好（?la=CBD&lb=2 房&lf=房源id）
 const LQ=new URLSearchParams(location.search);let LEADF=LQ.get("lf")||"";
+// 列表筛了几房 / 哪个区，没找到时"留需求"表单直接带上同样的条件（用户自己改过表单就不动）
+var LEADT=false;function leadSync(){if(LEADT||!window.HowzuLead||!HowzuLead.fromFilter)return;const P=HowzuLead.fromFilter(S),bv=P.beds;if(bv)document.querySelectorAll("#lBeds button").forEach(x=>x.classList.toggle("on",x.dataset.v===bv));const la=$("#lArea");if(la&&(!la.value||la.dataset.auto!=null)){la.value=P.area;if(P.area)la.dataset.auto="";else delete la.dataset.auto;}const lb=$("#lBudget");if(lb&&(!lb.value||lb.dataset.auto!=null)){lb.value=P.budget;if(P.budget)lb.dataset.auto="";else delete lb.dataset.auto;}}
+["#lBeds","#lWhen"].forEach(g=>$(g).addEventListener("click",()=>{LEADT=true;}));["#lArea","#lBudget"].forEach(g=>$(g).addEventListener("input",()=>{LEADT=true;}));
 function fillLead(Q,force){const a=Q.get("la"),bd=Q.get("lb");if(a&&(force||!$("#lArea").value))$("#lArea").value=a.slice(0,40);if(bd&&document.querySelector(`#lBeds [data-v="${CSS.escape(bd)}"]`))document.querySelectorAll("#lBeds button").forEach(x=>x.classList.toggle("on",x.dataset.v===bd));}
 fillLead(LQ);
 // 租房页里点开已租出房源 → 一键跳到"留下需求"，区域、房型已按那套房填好

@@ -43,6 +43,7 @@ const lr = Ld.leadRow({ area: "Carlton", budget: "$600", beds: "2 房", when: "2
 ok("留需求：存成待审核的求租需求（公众看不到）", lr.status === "pending" && lr.kind === "求租需求" && Ld.isLead(lr) && lr.photos.length === 0);
 ok("留需求：字段符合 listings 表限制", lr.title.length >= 4 && lr.title.length <= 80 && lr.address.length >= 5 && lr.rent_weekly === 600 && lr.beds === 2 && lr.contact_wechat === "wx_abc123" && lr.contact_phone === null);
 ok("留需求：手机号存进电话栏、单间=0 房", (r => r.contact_phone === "0412 345 678" && r.contact_wechat === null && r.beds === 0)(Ld.leadRow({ contact: "0412 345 678", beds: "单间" })));
+ok("留需求：按列表筛选预填（3 房+、区域、预算）", (f => f.beds === "3 房+" && f.area === "Carlton" && f.budget === "700")(Ld.fromFilter({ beds: "3", area: "Carlton", rent: "700" })) && Ld.fromFilter({}).beds === "");
 ok("留需求：没留联系方式 → 提示", !!Ld.leadRow({ area: "CBD", contact: " " }).error);
 ok("留需求：预算乱填不报错、区域可空", (r => r.rent_weekly === null && r.address.length >= 5 && /区域不限/.test(r.title))(Ld.leadRow({ budget: "5", contact: "a@b.co" })));
 // 开放看房时间

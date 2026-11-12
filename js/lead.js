@@ -58,6 +58,11 @@
       return r.ok ? { ok: true } : { ok: false, error: "提交没成功，请稍后再试或直接加微信联系我们" };
     } catch (_) { return { ok: false, error: "网络不太好，请稍后再试" }; }
   }
-  const api = { KIND, leadRow, isLead, submit };
+  // 列表页当前的筛选 → 留需求表单的预填值（没找到房时少填一遍）
+  function fromFilter(s) {
+    s = s || {};
+    return { beds: { "1": "1 房", "2": "2 房", "3": "3 房+" }[s.beds] || "", area: clip(s.area, 40), budget: clip(s.rent, 8) };
+  }
+  const api = { KIND, leadRow, isLead, submit, fromFilter };
   if (typeof module !== "undefined" && module.exports) module.exports = api; else root.HowzuLead = api;
 })(typeof window !== "undefined" ? window : globalThis);
