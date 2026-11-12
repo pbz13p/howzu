@@ -392,8 +392,9 @@ async function lzShow(name){if(!LM||!window.L)return;const Lf=window.L,N=$("#lzN
   const inside=[];Object.values(LMGRP).forEach(g=>{if(use.some(f=>HowzuCommute.inFeature(f,g.pt.lng,g.pt.lat)))inside.push(...g.xs);});
   let zg={};try{zg=await (window.ZG=window.ZG||fetch("data/zone_guides.json").then(r=>r.json()));}catch(_){}
   const sl=zg[String(fs[0].properties.no)];
-  N.hidden=false;N.innerHTML=`<b>${esc(LZ.name)}</b> 学区（2027）里有 <b>${inside.length}</b> 套在租房源${inside.length?"："+inside.map(x=>`<a href="?id=${encodeURIComponent(x.id)}" data-open="${esc(x.id)}">${esc(x.title||x.suburb)}</a>`).join("、"):"。可以<a href=\"#leadCard\">留下需求</a>，写上这所学校，有学区内的房源第一时间通知你。"}${sl?` · <a href="guide/${sl}.html">这个学区的租房指南 ›</a>`:""}<br><small>学区边界仅供参考，签约前请在 Find my School 按具体地址核对。</small>`;}
+  N.hidden=false;N.innerHTML=`<b>${esc(LZ.name)}</b> 学区（2027）里有 <b>${inside.length}</b> 套在租房源${inside.length?"："+inside.map(x=>`<a href="?id=${encodeURIComponent(x.id)}" data-open="${esc(x.id)}">${esc(x.title||x.suburb)}</a>`).join("、"):"。可以<a href=\"#leadCard\" data-lzlead>留下需求</a>（已帮你填好学校），有学区内的房源第一时间通知你。"}${sl?` · <a href="guide/${sl}.html">这个学区的租房指南 ›</a>`:""}<br><small>学区边界仅供参考，签约前请在 Find my School 按具体地址核对。</small>`;}
 document.addEventListener("change",e=>{if(e.target&&e.target.id==="lzI")lzShow(e.target.value.trim());});
+document.addEventListener("click",e=>{if(!e.target.closest||!e.target.closest("[data-lzlead]")||!LZ)return;const a=document.querySelector('#leadF [name="area"]');if(a)a.value=LZ.name+" 学区";});
 document.addEventListener("click",e=>{if(e.target&&e.target.id==="lzX"){$("#lzI").value="";lzShow("");}});
 /* ---------- 房源详情 ---------- */
 // "待确认"不只是一行灰字：列出没核实的项，一键生成现成的提问（短信 / 复制给微信），租客不用打字
