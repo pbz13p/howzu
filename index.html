@@ -35,6 +35,13 @@ main.wide{max-width:1760px;padding:22px 20px;display:grid;grid-template-columns:
 .card{box-shadow:0 1px 2px rgba(0,0,0,.03)}
 @media (min-width:1000px){#map{height:420px}}
 @media (max-width:999px){main.wide{grid-template-columns:1fr;max-width:760px;padding:14px}.colB{position:static;max-height:none;overflow:visible}}
+.hr .hr-h{display:flex;justify-content:space-between;align-items:baseline}.hr h2{margin:0;font-size:18px}.hr-h a{font-size:14px;color:var(--accent);font-weight:600;text-decoration:none}
+.hr-t{margin:4px 0 12px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.hr-r{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 16px;scrollbar-width:none;margin:0 -16px;padding:0 16px 2px;-webkit-overflow-scrolling:touch}.hr-r::-webkit-scrollbar{display:none}
+.hr-c{flex:none;width:158px;scroll-snap-align:start;text-decoration:none;color:var(--ink)}
+.hr-i{position:relative;display:block;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#eceae4}.hr-i img{width:100%;height:100%;object-fit:cover;display:block}
+.hr-i em{position:absolute;left:6px;top:6px;font-style:normal;font-size:11px;font-weight:600;background:rgba(255,255,255,.94);color:var(--ink);padding:2px 7px;border-radius:20px}
+.hr-c b{display:block;font-size:14px;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hr-s{display:block;font-size:12px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hr-p{display:block;font-size:13px;font-weight:600;color:var(--accent);margin-top:2px}.hr-p small{font-weight:400;color:var(--muted)}.hr-p.q{color:var(--muted);font-weight:400}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .search{display:flex;gap:8px}
 .search input{flex:1;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;min-width:0}
@@ -111,6 +118,7 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
     <div id="map"></div>
   </section>
 
+
   <section class="card hidden" id="zoneCard">
     <h2>对口公立学校（学区）</h2>
     <div id="zones"></div>
@@ -122,6 +130,12 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
     <div id="nearTabs"></div>
     <p class="note">澳洲没有单独的“高中”：中学是 7–12 年级，11–12 年级就是高中阶段（考 VCE）。排名按 2025 年 VCE 中位分，全州共 <span id="rt"></span> 所学校参与排名。</p>
     <div class="list" id="near"></div>
+  </section>
+
+  <section class="card hr hidden" id="homeRent" aria-label="正在招租">
+    <div class="hr-h"><h2>正在招租</h2><a href="rentals.html">看全部 <span id="hrN"></span> ›</a></div>
+    <p class="hr-t">好租直管 · 零中介费 · 押金 RTBA 政府托管 · 全程中文</p>
+    <div class="hr-r" id="hrR"></div>
   </section>
 
 
@@ -201,6 +215,8 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
   <p id="built"></p>
 </footer>
 
+<script src="js/home-rent.js?v=20261112"></script>
+<script>fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).then(j=>{const R=HomeRent.html(j.listings);if(!R.n)return;document.getElementById("hrR").innerHTML=R.cards;document.getElementById("hrN").textContent=R.n+" 套";document.getElementById("homeRent").classList.remove("hidden");}).catch(()=>{});</script>
 <script src="js/config.js?v=20261107"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
