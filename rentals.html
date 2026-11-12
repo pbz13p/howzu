@@ -201,6 +201,10 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .fsum button{border:0;background:none;color:var(--accent);font:inherit;font-size:13px;padding:4px 0;cursor:pointer}
 .dt .sp{margin:14px 0 12px}.dt .sp-h{font-size:15px;font-weight:600;margin-bottom:6px}.dt .sp dl{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:1px solid var(--line)}.dt .sp dl div{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;min-width:0}.dt .sp dl div:nth-child(odd):not(.w){padding-right:12px}.dt .sp dl div:nth-child(even){padding-left:12px}.dt .sp dl div.w{grid-column:1/-1;padding-left:0}.dt .sp dt{color:var(--muted);flex:none}.dt .sp dd{margin:0;font-weight:500;text-align:right;overflow:hidden;text-overflow:ellipsis}.dt .sp dd.m{color:#a3a8a5;font-weight:400}.dt .sp-n{font-size:12px;color:var(--muted);margin:6px 0 0}
 .dt .kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin:12px 0 10px}.dt .kf div{padding:9px 4px;text-align:center;min-width:0}.dt .kf div+div{border-left:1px solid var(--line)}.dt .kf small{display:block;font-size:12px;color:var(--muted);line-height:1.3}.dt .kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dt .kf b.m{color:#9aa09d;font-weight:500}
+.fsum .mt{display:inline-flex;align-items:center;gap:4px;font-weight:500;color:var(--ink)}.fsum .mt.on{color:var(--accent)}
+#lmap{margin:0 0 22px}#lmap .lm{height:min(56vh,440px);border-radius:16px;overflow:hidden;background:#eef1ef;position:relative;z-index:0}#lmap p{font-size:12px;color:var(--muted);margin:8px 2px 0}
+.pin{background:#fff;color:#1d2321;font:600 13px/1 -apple-system,"PingFang SC",sans-serif;padding:7px 10px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.22);white-space:nowrap;transform:translate(-50%,-50%);display:inline-block}.pin.now{background:var(--accent);color:#fff}
+.mpop{display:flex;gap:10px;align-items:center;cursor:pointer;width:230px}.mpop img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none}.mpop b{display:block;font-size:13.5px;line-height:1.35;color:#1d2321}.mpop span{display:block;font-size:12.5px;color:#6b726f;margin-top:3px}.mpop u{display:block;font-size:12.5px;color:var(--accent);text-decoration:none;font-weight:600;margin-top:4px}#lmap .leaflet-popup-content{margin:10px 12px}.mpop-s{height:1px;background:#e8ebe9;margin:9px 0}#lmap .leaflet-tile-pane,.dt .mp-m .leaflet-tile-pane{filter:saturate(.3) brightness(1.05) contrast(.95)}
 </style>
 </head>
 <body>
@@ -234,8 +238,9 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
     <label class="fs"><select id="fRent" aria-label="周租"></select></label>
     <button data-f="fav" class="fv" hidden>♥ 收藏 <i></i></button>
   </div>
-  <div class="fsum" id="fsum"><span id="fcnt"></span><span class="fr"><button data-fclr id="fclr" hidden>清除筛选</button><label class="fs"><select id="fSort" aria-label="排序"></select></label></span></div>
+  <div class="fsum" id="fsum"><span id="fcnt"></span><span class="fr"><button data-fclr id="fclr" hidden>清除筛选</button><button class="mt" id="mapT" aria-pressed="false">🗺 地图看房</button><label class="fs"><select id="fSort" aria-label="排序"></select></label></span></div>
   <section class="rc" id="recent" hidden aria-label="最近看过"></section>
+  <div id="lmap" hidden><div class="lm" id="lmapM"></div><p id="lmapN">位置按地址大致标注，仅供参考</p></div>
   <div id="list"><div class="empty">加载中…</div></div>
   <section class="lead" id="leadCard">
     <h2>没找到合适的？</h2>
@@ -271,6 +276,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="js/nearby.js?v=20261112"></script>
 <script>
 const $=s=>document.querySelector(s);
+let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all";const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
@@ -324,13 +330,36 @@ function render(){
   list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="fav"&&isFav(x)));
   const act=HF&&HF.active(S);if(HF)list=list.filter(x=>HF.match(x,S));
   const live=HF?HF.sort(list.filter(x=>!isLet(x)),S.sort):list.filter(x=>!isLet(x)),done=act?[]:list.filter(isLet);
-  filterUI(base,live.length,act);
+  filterUI(base,live.length,act);LIVE=live;if(MAPON)listMap();
   const sec=(live.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
   const cmpN=F==="fav"&&window.ListingPage&&ListingPage.compare?Math.min(3,live.length):0;
   $("#list").innerHTML=list.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+sec+done.map(card).join(""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
   favChip();recentRow();
 }
 
+/* ---------- 地图看房（列表）：免费 OpenStreetMap + Leaflet；地址→坐标按需解析并缓存在本机 ---------- */
+
+async function listMap(){const seq=++LMseq,box=$("#lmap"),n=$("#lmapN");box.hidden=false;
+  let Lf;try{Lf=await leaflet();}catch(_){n.textContent="地图加载失败，请检查网络后再试";return;}
+  if(seq!==LMseq)return;
+  if(!LM){LM=Lf.map("lmapM",{scrollWheelZoom:false}).setView([-37.8136,144.9631],11);
+    Lf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(LM);LMG=Lf.layerGroup().addTo(LM);}
+  LMG.clearLayers();LM.invalidateSize();
+  const xs=LIVE.filter(x=>x.address||(x.lat&&x.lng)),pts=[],G={};let miss=0;
+  if(!xs.length){n.textContent="当前筛选下没有可以标在地图上的房源";return;}
+  for(let i=0;i<xs.length;i++){const x=xs[i];let pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:null;
+    if(!pt){let hit=null;try{hit=localStorage.getItem("howzu-geo:"+x.address);}catch(_){}if(!hit&&i)await new Promise(r=>setTimeout(r,1100));if(seq!==LMseq)return;pt=await geoPt(x.address);}
+    if(seq!==LMseq)return;
+    if(!pt){miss++;continue;}pts.push([pt.lat,pt.lng]);
+    const gk=pt.lat.toFixed(4)+","+pt.lng.toFixed(4),g=G[gk]=G[gk]||{pt,xs:[]};g.xs.push(x);if(g.m)LMG.removeLayer(g.m);
+    const one=g.xs.length===1,price=one?(x.rentWeekly?`$${x.rentWeekly}/周`:x.beds!=null?`${x.beds} 房`:"询价"):`${g.xs.length} 套`;
+    g.m=Lf.marker([pt.lat,pt.lng],{icon:Lf.divIcon({className:"",html:`<span class="pin${g.xs.some(isNow)?" now":""}">${esc(price)}</span>`,iconSize:[0,0]}),title:one?(x.title||""):`同一栋 ${g.xs.length} 套`}).addTo(LMG)
+      .bindPopup(g.xs.map(y=>`<div class="mpop" data-open="${esc(y.id)}"><img src="${esc((y.photos||[])[0]||phImg(y))}" alt=""><div><b>${esc(y.title||y.suburb||"")}</b><span>${[y.rentWeekly?`$${y.rentWeekly}/周`:"",y.beds!=null?`${y.beds} 房`:"",isNow(y)?"马上入住":""].filter(Boolean).join(" · ")}</span><u>查看详情 ›</u></div></div>`).join('<div class="mpop-s"></div>'),{closeButton:false,offset:[0,-10]});
+    n.textContent=`正在标注 ${i+1}/${xs.length}…`;
+    if(pts.length===1)LM.setView(pts[0],13);else LM.fitBounds(pts,{padding:[36,36],maxZoom:14});}
+  n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;}
+document.addEventListener("click",e=>{const b=e.target.closest("#mapT");if(!b)return;MAPON=!MAPON;b.classList.toggle("on",MAPON);b.setAttribute("aria-pressed",MAPON);b.textContent=MAPON?"☰ 收起地图":"🗺 地图看房";
+  if(MAPON){listMap();requestAnimationFrame(()=>{const nv=document.querySelector("nav");scrollTo({top:$("#fsum").getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-8,behavior:"smooth"});});}else{LMseq++;$("#lmap").hidden=true;}});
 /* ---------- 房源详情 ---------- */
 let DX=null,DI=0;
 function contactBtns(x){const tel=x.phone||C.phone,wx=x.wechat||C.wechat,id=esc(x.id);const telTxt=tel?String(tel).replace(/^(\d{4})(\d{3})(\d{3})$/,"$1 $2 $3"):"";const msg=HowzuEnquire.askMsg(x);

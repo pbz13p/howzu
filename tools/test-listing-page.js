@@ -51,4 +51,11 @@ console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部�
     const h = fs.readFileSync(path.join(gd, f), "utf8");
     ok(`文章 ${f}：栏目页有入口、有来源、有免责声明、有 og 卡片`, idx.includes(`/guide/${f}"`) && h.includes("官方来源") && /不构成/.test(h) && h.includes(`og:url" content="https://howzu.com.au/guide/${f}"`));
   } }
+// 列表“地图看房”：有开关和地图容器；状态变量要在 render 之前声明（否则首屏渲染报错）
+{ const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
+  ok("列表有地图看房开关和地图容器", r.includes('id="mapT"') && r.includes('id="lmap"') && r.includes("function listMap("));
+  ok("地图状态变量在 render 之前声明", r.indexOf("let LIVE=") > -1 && r.indexOf("let LIVE=") < r.indexOf("function render("));
+  const po = require("fs").readFileSync(require("path").join(__dirname, "..", "post.html"), "utf8");
+  ok("发房源页：hidden 的元素真的隐藏（看房时间框不会默认露出来）", po.includes("[hidden]{display:none!important}"));
+  ok("地图用免费 OpenStreetMap、不接付费 API", !/maps\.googleapis|api\.mapbox/.test(r)); }
 process.exit(fail ? 1 : 0);

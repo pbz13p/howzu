@@ -21,6 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/site.css?v=20261107">
 <style>
+[hidden]{display:none!important}
 :root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5;--bad:#a12b2b}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:90px}
@@ -186,8 +187,8 @@ textarea{resize:vertical;min-height:110px}
   </section>
 
   <section class="card">
-    <h2><span class="n">4</span>标题和介绍 <span class="opt">不会写就让 AI 帮你写</span></h2>
-    <input type="text" id="title" maxlength="60" placeholder="如 CBD 两房一卫 · 近南十字星站 · 马上入住">
+    <h2><span class="n">4</span>标题和介绍 <span class="opt">可不填，或让 AI 帮你写</span></h2>
+    <input type="text" id="title" maxlength="60" placeholder="不填就自动用“区 + 几房几卫”当标题">
     <textarea id="desc" maxlength="2000" placeholder="交通、周边、房子的好处、对租客的要求…" style="margin-top:8px"></textarea>
     <button class="ghost" id="ai">✨ AI 帮我写（先预览，你同意才用）</button>
     <div class="aibox" id="aibox" hidden>
