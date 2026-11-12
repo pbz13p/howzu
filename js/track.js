@@ -9,7 +9,7 @@
       if (ref === location.hostname) ref = "";
       fetch(U + "/rest/v1/pageviews", { method: "POST", keepalive: true,
         headers: { apikey: K, Authorization: "Bearer " + K, "Content-Type": "application/json", Prefer: "return=minimal" },
-        body: JSON.stringify({ path: (location.pathname + location.search).slice(0, 200), ref: ref.slice(0, 100), mobile: /Mobi|Android|iPhone/i.test(navigator.userAgent), ev: String(ev || "view").slice(0, 40) })
+        body: JSON.stringify({ path: (window.HOWZU_PATH || (location.pathname + location.search)).slice(0, 200), ref: ref.slice(0, 100), mobile: /Mobi|Android|iPhone/i.test(navigator.userAgent), ev: String(ev || "view").slice(0, 40) })
       }).catch(function () {});
     } catch (e) {}
   }

@@ -100,7 +100,7 @@ async function loadStats() {
   const head = tabsHtml();
   if (error) { $("#app").innerHTML = head + `<div class="empty">还没开通访问统计：请在 Supabase 的 SQL Editor 运行一次 <b>supabase/pageviews.sql</b>（建表，访客只能写、只有你能看）。<br><small>${esc(error.message)}</small></div>`; return; }
   const day = t => new Date(t).toLocaleDateString("en-CA", { timeZone: "Australia/Melbourne" });
-  const V = data.filter(r => r.ev === "view"), E = data.filter(r => r.ev !== "view");
+  const V = data.filter(r => r.ev === "view" && !/^404 /.test(r.path)), NF = data.filter(r => r.ev === "view" && /^404 /.test(r.path)), E = data.filter(r => r.ev !== "view");
   const by = (arr, f) => { const m = new Map(); arr.forEach(r => { const k = f(r); if (k) m.set(k, (m.get(k) || 0) + 1); }); return [...m].sort((a, b) => b[1] - a[1]); };
   const days = []; for (let i = 0; i < 30; i++) days.push(day(Date.now() - i * 864e5));
   let vd = new Map(by(V, r => day(r.at))), ed = new Map(by(E, r => day(r.at)));
@@ -117,7 +117,8 @@ async function loadStats() {
     <div style="display:flex;gap:2px;align-items:flex-end;margin-top:10px">${bars}</div><div class="m" style="display:flex;justify-content:space-between"><span>${days[29]}</span><span>今天</span></div></div>` +
     (data.length >= 1000 ? `<div class="m" style="margin:0 4px 8px">下面的排行按最近 ${data.length} 条记录统计。</div>` : "") + tbl("最热门页面（浏览）", by(V, r => r.path.replace(/\?.*$/, "") + (/[?&]id=/.test(r.path) ? " · " + (r.path.match(/[?&]id=([^&]+)/) || [])[1] : ""))) +
     tbl("咨询（按钮 · 房源）", by(E, r => r.ev)) +
-    tbl("从哪里来", by(V, r => r.ref || "直接打开 / 微信等"));
+    tbl("从哪里来", by(V, r => r.ref || "直接打开 / 微信等")) +
+    (NF.length ? tbl("打不开的链接（404，可能是旧房源或打错的地址）", by(NF, r => r.path.slice(4) + (r.ref ? " ← " + r.ref : ""))) : "");
 }
 async function loadLeads() {
   const { data, error } = await sb.from("listings").select("*").in("kind", ["求租需求", "房东托管咨询"]).order("created_at", { ascending: false });
