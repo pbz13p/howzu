@@ -118,7 +118,7 @@ async function start() {
   $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
   const [{ data: sa }, { data: mm }, { data: oo }] = await Promise.all([sb.from("super_admins").select("email"), sb.from("members").select("*"), sb.from("orgs").select("*").order("created_at")]);
   SUPER = (sa || []).some(x => x.email === me.toLowerCase()); MY = (mm || []).filter(m => m.email === me.toLowerCase()); ORGS = oo || [];
-  if (!SUPER && !MY.length) { await sb.auth.signOut(); $("#who").innerHTML = ""; $("#app").innerHTML = `<div class="card login"><h3>这个账号没有授权</h3><p class="muted">${esc(me)} 不在员工名单里，已自动退出。需要开通请联系管理员。</p></div>`; return; }
+  if (!SUPER && !MY.length) return showPending();
   await loadProps();
 }
 const pwField = (id, ph, ac) => `<div style="position:relative"><input id="${id}" type="password" autocomplete="${ac}" placeholder="${ph}" style="padding-right:56px"><button type="button" class="pweye" data-for="${id}" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--muted,#6b726f);font-size:13px;padding:6px;cursor:pointer">显示</button></div>`;
@@ -142,13 +142,44 @@ function showLogin(mode = "login") {
   ${pwField("pw", "密码", "current-password")}
   <button class="btn pri" id="go" style="width:100%">登录</button>
   <p class="small muted" id="msg"></p>
-  <p class="small" style="display:flex;justify-content:space-between;gap:8px;margin-top:10px"><a href="#" id="forgot">忘记密码？</a><span class="muted">没有账号？请找管理员开通</span></p></div>`;
+  <p class="small" style="display:flex;justify-content:space-between;gap:8px;margin-top:10px"><a href="#" id="forgot">忘记密码？</a><a href="#" id="signup">没有账号？申请开通</a></p></div>`;
   const go = async () => { const email = $("#em").value.trim(), password = $("#pw").value; if (!email || !password) return $("#msg").textContent = "请填邮箱和密码";
     $("#msg").textContent = "登录中…"; const { error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) { $("#msg").textContent = /Invalid login/i.test(error.message) ? "邮箱或密码不对。忘了密码点「忘记密码？」；还没有账号请找管理员开通。" : /confirm/i.test(error.message) ? "账号还没激活：请点管理员邀请邮件里的链接设置密码。" : "失败：" + error.message; return; }
+    if (error) { $("#msg").textContent = /Invalid login/i.test(error.message) ? "邮箱或密码不对。忘了密码点「忘记密码？」；还没有账号点「申请开通」。" : /confirm/i.test(error.message) ? "账号还没激活：请先点确认邮件（或邀请邮件）里的链接。" : "失败：" + error.message; return; }
     try { localStorage.setItem("howzu-em", email); } catch (_) {} location.reload(); };
   $("#go").onclick = go; $("#pw").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
   $("#forgot").onclick = e => { e.preventDefault(); showLogin("forgot"); };
+  $("#signup").onclick = e => { e.preventDefault(); showSignup(); };
+}
+// 已登录但还没被批准：提交 / 显示申请，什么内部资料都看不到（数据库规则也不给）
+async function showPending() {
+  $("#nav").innerHTML = "";
+  let pre = {}; try { pre = JSON.parse(localStorage.getItem("howzu-req") || "{}"); } catch (_) {}
+  const { data: mine } = await sb.from("access_requests").select("*").eq("email", me.toLowerCase()).maybeSingle();
+  if (!mine && (pre.name || pre.note)) { await sb.from("access_requests").upsert({ email: me.toLowerCase(), name: pre.name || null, note: pre.note || null }); try { localStorage.removeItem("howzu-req"); } catch (_) {} return showPending(); }
+  $("#app").innerHTML = mine ? `<div class="card login"><h3>⏳ 已提交申请，等管理员批准</h3><p class="muted">${esc(me)}${mine.name ? "（" + esc(mine.name) + "）" : ""} 的申请已经收到。管理员批准后，重新打开这个页面就能看到你负责的房源。</p><p class="small muted">在批准之前，这个账号看不到任何内部资料。</p></div>`
+    : `<div class="card login"><h3>申请开通工作台</h3><p class="small muted">${esc(me)} 还不在员工名单里。填一下称呼和说明，管理员批准后才能进入。</p>
+      <input id="rq_nm" placeholder="称呼，如 王先生 / 合作方 A" maxlength="40"><textarea id="rq_nt" placeholder="说明（可选）：你是谁、要看哪些房源" maxlength="300" style="min-height:70px"></textarea>
+      <button class="btn pri" id="rq_go" style="width:100%">提交申请</button><p class="small muted" id="rq_m"></p></div>`;
+  const b = $("#rq_go"); if (b) b.onclick = async () => { const { error } = await sb.from("access_requests").upsert({ email: me.toLowerCase(), name: $("#rq_nm").value.trim() || null, note: $("#rq_nt").value.trim() || null }); if (error) $("#rq_m").textContent = "提交失败：" + error.message; else showPending(); };
+}
+function showSignup() {
+  $("#nav").innerHTML = "";
+  $("#app").innerHTML = `<div class="card login"><h3>申请工作台账号</h3><p class="small muted">注册后要经过管理员批准，才能看到内部资料。</p>
+  <input id="em" type="email" autocomplete="username" placeholder="邮箱">
+  ${pwField("pw", "设置密码（至少 8 位）", "new-password")}
+  <input id="rq_nm" placeholder="称呼，如 王先生 / 合作方 A" maxlength="40">
+  <textarea id="rq_nt" placeholder="说明（可选）：你是谁、要看哪些房源" maxlength="300" style="min-height:70px"></textarea>
+  <button class="btn pri" id="go" style="width:100%">注册并提交申请</button><p class="small muted" id="msg"></p>
+  <p class="small"><a href="#" id="back">← 已有账号，去登录</a></p></div>`;
+  $("#back").onclick = e => { e.preventDefault(); showLogin(); };
+  $("#go").onclick = async () => { const email = $("#em").value.trim().toLowerCase(), password = $("#pw").value;
+    if (!/^\S+@\S+\.\S+$/.test(email)) return $("#msg").textContent = "邮箱格式不对"; if (password.length < 8) return $("#msg").textContent = "密码至少 8 位";
+    try { localStorage.setItem("howzu-req", JSON.stringify({ name: $("#rq_nm").value.trim(), note: $("#rq_nt").value.trim() })); localStorage.setItem("howzu-em", email); } catch (_) {}
+    $("#msg").textContent = "提交中…"; const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: location.href.split("#")[0].split("?")[0] } });
+    if (error) return $("#msg").textContent = "注册失败：" + error.message;
+    if (data.session) return location.reload();
+    $("#app").innerHTML = `<div class="card login"><h3>📧 请去邮箱确认</h3><p class="muted">我们给 ${esc(email)} 发了一封确认邮件。点邮件里的链接回到这里登录，申请就会自动交给管理员。</p><p class="small muted">管理员批准之前，看不到任何内部资料。</p></div>`; };
 }
 function setPassword(title = "设置密码", after) {
   const d = document.createElement("div");
@@ -355,11 +386,21 @@ async function upload(files) {
 }
 
 function renderStaff() {
-  $("#app").innerHTML = `<div class="grid2"><div class="card"><h3>账号 <span class="c">谁能进哪个区块</span></h3><p class="small muted">你是总管理员，能看所有区块。其他人只能看到自己所在区块的房源：admin/staff 能改，viewer 只能看。</p><div id="ml">加载中…</div>
+  $("#app").innerHTML = `<div class="card" id="rqbox"><h3>🙋 待审批的账号申请 <span class="c">自己注册的人，批准前什么都看不到</span></h3><div id="rql">加载中…</div></div><div class="grid2"><div class="card"><h3>账号 <span class="c">谁能进哪个区块</span></h3><p class="small muted">你是总管理员，能看所有区块。其他人只能看到自己所在区块的房源：admin/staff 能改，viewer 只能看。</p><div id="ml">加载中…</div>
   <div class="tools" style="margin-top:10px"><input id="me_em" type="email" placeholder="邮箱"><input id="me_nm" placeholder="称呼" style="max-width:110px"><select id="me_org" class="chip">${ORGS.map(o => `<option value="${o.id}">${esc(o.name)}</option>`).join("")}</select><select id="me_role" class="chip"><option value="staff">staff 可改</option><option value="viewer">viewer 只看</option><option value="admin">admin</option></select><button class="btn pri" id="me_add">添加</button></div></div>
   <div class="card"><h3>区块 <span class="c">公司 / 合作方 / 其他中介，各自独立</span></h3>${ORGS.map(o => `<div class="row"><span>${esc(o.name)} <span class="muted small">${esc(o.id)}</span></span><span class="r">${ALL.filter(p => p.org_id === o.id).length} 套</span></div>`).join("")}
   <div class="tools" style="margin-top:10px"><input id="og_id" placeholder="英文编号，如 partner-a"><input id="og_nm" placeholder="显示名称"><button class="btn pri" id="og_add">新建区块</button></div></div></div>`;
   const load = async () => { const { data, error } = await sb.from("members").select("*").order("added_at"); $("#ml").innerHTML = error ? esc(error.message) : (data.length ? data.map(m => `<div class="row"><span>${esc(m.name || "")} <span class="muted">${esc(m.email)}</span></span><span class="r">${esc((ORGS.find(o => o.id === m.org_id) || {}).name || m.org_id)} · ${m.role} · <a data-rmmem="${esc(m.email)}|${esc(m.org_id)}">移除</a></span></div>`).join("") : '<div class="muted small">还没有其他成员，只有你。</div>'); };
+  const loadReq = async () => { const { data, error } = await sb.from("access_requests").select("*").order("created_at");
+    if (error) { $("#rql").innerHTML = `<span class="small muted">还没开通申请功能：在 Supabase 运行一次 supabase/access_requests.sql。</span>`; return; }
+    $("#rql").innerHTML = data.length ? data.map(r => `<div class="row" style="flex-wrap:wrap;gap:6px"><span><b>${esc(r.name || "（没填称呼）")}</b> <span class="muted">${esc(r.email)}</span>${r.note ? `<br><span class="small muted">${esc(r.note)}</span>` : ""}<br><span class="small muted">${new Date(r.created_at).toLocaleString("zh-CN")}</span></span>
+      <span class="r" style="display:flex;gap:6px;align-items:center"><select class="chip" data-rqorg="${esc(r.email)}">${ORGS.map(o => `<option value="${o.id}">${esc(o.name)}</option>`).join("")}</select><select class="chip" data-rqrole="${esc(r.email)}"><option value="viewer">viewer 只看</option><option value="staff">staff 可改</option></select><button class="btn pri" data-rqok="${esc(r.email)}">批准</button><button class="btn bad" data-rqno="${esc(r.email)}">拒绝</button></span></div>`).join("") : '<span class="small muted">暂时没有申请。别人在工作台登录页点「申请开通」注册后，会出现在这里。</span>';
+    $("#rql").querySelectorAll("[data-rqok]").forEach(b => b.onclick = async () => { const em = b.dataset.rqok, r = data.find(x => x.email === em);
+      const org_id = $(`[data-rqorg="${CSS.escape(em)}"]`).value, role = $(`[data-rqrole="${CSS.escape(em)}"]`).value;
+      const { error } = await sb.from("members").insert({ email: em, org_id, role, name: (r && r.name) || null }); if (error) return toast(error.message);
+      await sb.from("access_requests").delete().eq("email", em); toast("已批准"); load(); loadReq(); });
+    $("#rql").querySelectorAll("[data-rqno]").forEach(b => b.onclick = async () => { if (!confirm("拒绝 " + b.dataset.rqno + " 的申请？")) return; await sb.from("access_requests").delete().eq("email", b.dataset.rqno); toast("已拒绝"); loadReq(); }); };
+  loadReq();
   $("#me_add").onclick = async () => { const email = $("#me_em").value.trim().toLowerCase(); if (!/^\S+@\S+\.\S+$/.test(email)) return toast("邮箱格式不对"); const { error } = await sb.from("members").insert({ email, org_id: $("#me_org").value, role: $("#me_role").value, name: $("#me_nm").value.trim() || null }); if (error) toast(error.message); else { toast("已添加"); load(); } };
   $("#og_add").onclick = async () => { const id = $("#og_id").value.trim().toLowerCase(), name = $("#og_nm").value.trim(); if (!/^[a-z0-9-]+$/.test(id) || !name) return toast("编号只能用小写英文、数字和横线，名称必填"); const { error } = await sb.from("orgs").insert({ id, name }); if (error) toast(error.message); else { ORGS.push({ id, name }); toast("已新建"); renderStaff(); } };
   load();
