@@ -50,7 +50,7 @@ print(r[-1]['url'] if r else '')
 print(r[-1].get('period_end') or '' if r else '')" )
   echo "== rent ==" >> raw/_manifest.txt; echo "$RENT_URL" >> raw/_manifest.txt
   U=$(echo "$RENT_URL" | head -1)
-  [ -n "$U" ] && curl -sSfL -A "$UA" -o raw/rent_lga.xlsx "$U" && echo "rent ok: $U"
+  [ -n "$U" ] && curl -sSfL --http1.1 --retry 2 -A "Mozilla/5.0" -o raw/rent_lga.xlsx "$U" && echo "rent ok: $U" && file raw/rent_lga.xlsx >> raw/_manifest.txt
   echo "$RENT_URL" | tail -1 > raw/rent_period.txt
 fi
 exit 0
