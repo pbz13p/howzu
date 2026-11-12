@@ -58,4 +58,8 @@ console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部�
   const po = require("fs").readFileSync(require("path").join(__dirname, "..", "post.html"), "utf8");
   ok("发房源页：hidden 的元素真的隐藏（看房时间框不会默认露出来）", po.includes("[hidden]{display:none!important}"));
   ok("地图用免费 OpenStreetMap、不接付费 API", !/maps\.googleapis|api\.mapbox/.test(r)); }
+// 学区指南：详情页对口学校下面有入口（跟着对口学校一起出现），查学区页也有入口
+{ const fs = require("fs"), path = require("path"), r = fs.readFileSync(path.join(__dirname, "..", "rentals.html"), "utf8"), ix = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  ok("详情页对口学校下有“按学区租房指南”入口，并在显示对口学校时一起显示", r.includes('id="cmZG" hidden href="guide/school-zone.html"') && r.includes('getElementById("cmZG")'));
+  ok("查学区页链到按学区租房指南", ix.includes('href="guide/school-zone.html"')); }
 process.exit(fail ? 1 : 0);
