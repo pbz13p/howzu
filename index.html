@@ -240,15 +240,18 @@ let nearLevel = "all", nearSort = "dist", place = null;
 let D = {}, map, layers = [], nearData = [], nearFilter = "all", rankShown = 30;
 
 async function load(){
-  const [zp, zs, sc, meta] = await Promise.all(
-    ["zones_primary","zones_secondary","schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
-  zp.features.forEach(prepBBox); zs.features.forEach(prepBBox);
-  D = {zp, zs, sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
+  // 学区边界文件较大：先加载学校和排名（小文件）马上显示，学区边界并行下载，查地址时再等它
+  const zones = Promise.all(["zones_primary","zones_secondary"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
+  const [sc, meta] = await Promise.all(["schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
+  D = {sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
   try{ const fees = await fetch("data/fees.json").then(r=>r.ok?r.json():{});
     for(const [no,f] of Object.entries(fees)) if(f.found && f.max_annual_aud && D.byNo[no]) D.byNo[no].fee=f; }catch(_){}
   $("#rt").textContent = meta.vce_ranked_total;
   $("#built").textContent = `学区年份 ${meta.zones_year}｜VCE 年份 ${meta.vce_year}｜数据更新 ${meta.built}`;
   renderRank();
+  const [zp, zs] = await zones;
+  zp.features.forEach(prepBBox); zs.features.forEach(prepBBox);
+  D.zp = zp; D.zs = zs;
 }
 
 function prepBBox(f){
@@ -284,7 +287,7 @@ async function geocode(q){
 
 async function search(){
   const q=$("#q").value.trim(); if(!q) return;
-  if(!D.sc){ $("#status").textContent="数据加载中，请稍候…"; await ready; }
+  if(!D.zp){ $("#status").textContent="学区数据加载中，请稍候…"; await ready; }
   $("#status").textContent="正在查找地址…"; $("#suggest").innerHTML="";
   // 公寓地址 "2110/138 Spencer St" 或 "Unit 5, 12 X St"：学区只看楼的位置，去掉单元号地图服务才找得准
   const qg=q.replace(/^\s*(unit|apt|apartment|shop|suite)\s*\w+\s*[,/]?\s*/i,"").replace(/^\s*\w+\s*\/\s*(?=\d)/,"");
