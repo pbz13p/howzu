@@ -83,8 +83,8 @@ ul.dot li{margin:0 0 6px}
 <div id="zmap" style="height:360px;border-radius:16px;overflow:hidden;background:#eef2f0;margin:8px 0"></div>
 <p class="meta" style="margin:6px 0 0">绿色区域为 Glen Waverley Secondary College 的 2027 学区，红点是学校位置。地图仅供参考，以 Find my School 为准。</p>
 <h2>学区里有哪些区？</h2>
-<p>按学区内的学校地址统计，学区覆盖（全部或部分）：<b>Glen Waverley</b>。同一个区可能只有一部分在学区里，一定按具体地址查。</p>
-<h2>学区内的公立小学</h2><ul class='dot'><li>Glen Waverley Primary School<span style='color:#8a908d'> · Glen Waverley</span></li><li>Glendal Primary School<span style='color:#8a908d'> · Glen Waverley</span></li><li>Mount View Primary School<span style='color:#8a908d'> · Glen Waverley</span></li></ul><p>小学有自己的学区，和中学学区不一样，要分别查。</p>
+<p>按学区内的学校地址统计，学区覆盖（全部或部分）：<b>Glen Waverley、Mount Waverley</b>。同一个区可能只有一部分在学区里，一定按具体地址查。</p>
+<h2>学区内的公立小学</h2><ul class='dot'><li>Glen Waverley Primary School<span style='color:#8a908d'> · Glen Waverley</span></li><li>Glendal Primary School<span style='color:#8a908d'> · Glen Waverley</span></li><li>Mount View Primary School<span style='color:#8a908d'> · Glen Waverley</span></li><li>Pinewood Primary School<span style='color:#8a908d'> · Mount Waverley</span></li></ul><p>小学有自己的学区，和中学学区不一样，要分别查。</p>
 <h2>在这个学区租房，要注意</h2>
 <ol class="steps">
 <li><b>先核对地址</b>：用 <a href="/">好租查学区</a> 输入地址看附近学校，再到 Find my School 核对确实在学区内。</li>
@@ -96,7 +96,7 @@ ul.dot li{margin:0 0 6px}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script>
-window.addEventListener("load",function(){try{var G=[[[145.15318, -37.86375], [145.14131, -37.88993], [145.18644, -37.88533], [145.15732, -37.86327], [145.15318, -37.86375]]];var m=L.map("zmap",{scrollWheelZoom:false});L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"&copy; OpenStreetMap"}).addTo(m);var p=L.polygon(G.map(function(r){return r.map(function(c){return [c[1],c[0]]})}),{color:"#0f6b4f",weight:2,fillOpacity:.15}).addTo(m);L.circleMarker([-37.8781,145.16211],{radius:7,color:"#c2410c",fillColor:"#c2410c",fillOpacity:1}).addTo(m).bindPopup("Glen Waverley Secondary College");m.fitBounds(p.getBounds(),{padding:[10,10]});}catch(e){console.log("zmap",e&&e.message);document.getElementById("zmap").textContent="地图加载失败，请到 Find my School 查看学区。"}});
+window.addEventListener("load",function(){try{var G=[[[145.15318, -37.86375], [145.13991, -37.88863], [145.14131, -37.88993], [145.14194, -37.89052], [145.18644, -37.88533], [145.18799, -37.88515], [145.15732, -37.86327], [145.15594, -37.86229], [145.15401, -37.8622], [145.15318, -37.86375]]];var m=L.map("zmap",{scrollWheelZoom:false});L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"&copy; OpenStreetMap"}).addTo(m);var p=L.polygon(G.map(function(r){return r.map(function(c){return [c[1],c[0]]})}),{color:"#0f6b4f",weight:2,fillOpacity:.15}).addTo(m);L.circleMarker([-37.8781,145.16211],{radius:7,color:"#c2410c",fillColor:"#c2410c",fillOpacity:1}).addTo(m).bindPopup("Glen Waverley Secondary College");m.fitBounds(p.getBounds(),{padding:[10,10]});}catch(e){console.log("zmap",e&&e.message);document.getElementById("zmap").textContent="地图加载失败，请到 Find my School 查看学区。"}});
 </script>
 <section class="cta">
 <h3>想在好学区附近租房？</h3>

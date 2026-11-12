@@ -4,7 +4,8 @@ Inputs (raw/): school zones GeoJSON (DataVic, CC BY 4.0), school locations CSV
 (DataVic, CC BY 4.0), VCAA Senior Secondary Completion and Achievement 2025.
 Outputs (data/): zones_primary.json, zones_secondary.json, schools.json, meta.json
 """
-import json, re, datetime, pathlib, difflib
+import json, re, datetime, pathlib, difflib, sys
+sys.setrecursionlimit(20000)
 import pandas as pd
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -16,6 +17,51 @@ def rnd(coords):
     if isinstance(coords[0], (int, float)):
         return [round(coords[0], 5), round(coords[1], 5)]
     return [rnd(c) for c in coords]
+
+
+# 墨尔本都市圈保留原精度（fetch_raw.sh 已按 20 米误差简化）；都市圈以外的学区很大，
+# 再按约 100 米误差简化，减小文件，避免查学区页面加载过慢。
+METRO = (144.20, 145.70, -38.55, -37.35)  # lng_min, lng_max, lat_min, lat_max（含吉朗）
+RURAL_TOL = 0.001  # 约 100 米（经纬度）
+
+
+def _dp(pts, tol):
+    if len(pts) < 3:
+        return pts
+    (x1, y1), (x2, y2) = pts[0], pts[-1]
+    dx, dy = x2 - x1, y2 - y1
+    L = (dx * dx + dy * dy) ** 0.5
+    best, idx = -1.0, 0
+    for i in range(1, len(pts) - 1):
+        px, py = pts[i]
+        d = abs(dy * px - dx * py + x2 * y1 - y2 * x1) / L if L else ((px - x1) ** 2 + (py - y1) ** 2) ** 0.5
+        if d > best:
+            best, idx = d, i
+    if best <= tol:
+        return [pts[0], pts[-1]]
+    return _dp(pts[: idx + 1], tol)[:-1] + _dp(pts[idx:], tol)
+
+
+def simplify_ring(ring, tol):
+    if len(ring) < 8:
+        return ring
+    out = _dp(ring[:-1], tol) + [ring[-1]]
+    return out if len(out) >= 4 else ring
+
+
+def is_metro(geom):
+    rings = [geom["coordinates"][0]] if geom["type"] == "Polygon" else [p[0] for p in geom["coordinates"]]
+    xs = [c[0] for r in rings for c in r]; ys = [c[1] for r in rings for c in r]
+    cx, cy = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+    return METRO[0] <= cx <= METRO[1] and METRO[2] <= cy <= METRO[3]
+
+
+def shrink(geom):
+    if is_metro(geom):
+        return geom
+    if geom["type"] == "Polygon":
+        return {"type": "Polygon", "coordinates": [simplify_ring(r, RURAL_TOL) for r in geom["coordinates"]]}
+    return {"type": "MultiPolygon", "coordinates": [[simplify_ring(r, RURAL_TOL) for r in p] for p in geom["coordinates"]]}
 
 
 def school_no(entity_code):
@@ -41,7 +87,7 @@ def load_zones(files, label):
                     "yl": str(pr.get("Year_Level") or ""),
                     "kind": label,
                 },
-                "geometry": {"type": f["geometry"]["type"], "coordinates": rnd(f["geometry"]["coordinates"])},
+                "geometry": shrink({"type": f["geometry"]["type"], "coordinates": rnd(f["geometry"]["coordinates"])}),
             })
     return {"type": "FeatureCollection", "features": feats}
 
