@@ -7,6 +7,7 @@ style=tpl[tpl.index("<style>"):tpl.index("</style>")+8]
 def build(a):
     slug,title,desc,kick,section=a["slug"],a["title"],a["desc"],a["kick"],a["section"]
     url=f"https://howzu.com.au/guide/{slug}.html"
+    bc=json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"好租 Howzu","item":"https://howzu.com.au/"},{"@type":"ListItem","position":2,"name":"房产干货和租房指南","item":"https://howzu.com.au/guide/property.html"},{"@type":"ListItem","position":3,"name":title,"item":url}]},ensure_ascii=False)
     ld=json.dumps({"@context":"https://schema.org","@type":"Article","headline":title,"inLanguage":"zh-CN","datePublished":"2026-11-12","dateModified":"2026-11-12","author":{"@type":"Organization","name":"好租 Howzu"},"publisher":{"@type":"Organization","name":"好租 Howzu"},"mainEntityOfPage":url},ensure_ascii=False)
     e=html.escape
     back = '<a class="all" href="/guide/property.html">房产干货 ›</a>' if section=="property" else '<a class="all" href="/guide/property.html">全部指南 ›</a>'
@@ -32,6 +33,7 @@ def build(a):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#0f6b4f">
 <script type="application/ld+json">{ld}</script>
+<script type="application/ld+json">{bc}</script>
 {style}
 </head>
 <body>
