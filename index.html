@@ -379,7 +379,7 @@ function itemHTML(s, extra){
   const yrs = yearsOf(s) ? ` · ${yearsOf(s)}` : "";
   return `<div class="item"><div class="l"><div class="n">${s.name}</div>
     <div class="chips"><span class="chip ${s.sector}">${SECTOR_LONG[s.sector]||s.sector}</span><span class="chip">${TYPE[s.type]||s.type}</span></div>
-    <div class="s">${[yearsOf(s),extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)||feeLink(s)}</div>
+    <div class="s">${[yearsOf(s),extra].filter(Boolean).join(" · ")}</div>${feeHTML(s)||feeLink(s)}${D.zg&&D.zg[s.no]?`<a class="zg" style="margin-top:6px;font-size:13px" href="guide/${D.zg[s.no]}.html">学区租房指南 ›</a>`:""}</div>
     <div class="r">${r}</div></div>`;
 }
 
