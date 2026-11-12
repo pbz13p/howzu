@@ -42,6 +42,7 @@ ok("关键信息栏：'类型'标签不再当亮点重复显示", !LP.keyFacts({
 const CP = LP.compare([x, { suburb: "Carlton", beds: 1, rentWeekly: null, title: "公寓" }, x, x]);
 ok("对比：最多 3 套，第一行租金（面议照写）", CP[0].k === "周租" && CP[0].v.length === 3 && CP[0].v[1] === "面议" && CP[0].v[0] === "$650");
 ok("对比：区域 + 13 项房屋信息，不同的行标出来", CP.length === 15 && CP.find(r => r.k === "卧室").diff === true && CP.find(r => r.k === "类型").diff === false);
+ok("开放看房：时间标签不当亮点显示，看房栏写'定时开放'", (() => { const k = LP.keyFacts({ status: "live", highlights: ["看房 定好时间", "开放看房 2026-11-15 11:00", "近电车"] }); return k.cells[3][1] === "定时开放" && k.rest.length === 1 && k.rest[0] === "近电车"; })());
 console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部通过");
 // 每篇文章：进了栏目页（文章或租房指南）、带官方来源和免责声明、有分享卡片
 { const fs = require("fs"), path = require("path"), gd = path.join(__dirname, "..", "guide");

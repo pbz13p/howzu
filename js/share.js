@@ -1,5 +1,7 @@
 // 好租 Howzu：房源一键分享（海报图 + 微信文案 + 小红书文案 + 系统分享）
 (function () {
+  // 转发文案里的看房标签写成人话：「开放看房 2026-11-15 11:00」→「开放看房 11/15 11:00」，「看房 定好时间」不显示
+  const hl = x => (x.highlights || []).map(String).filter(h => h !== "看房 定好时间").map(h => h.replace(/^开放看房 \d{4}-(\d\d)-(\d\d) (\d\d:\d\d)$/, (m, a, b, c) => `开放看房 ${+a}/${+b} ${c}`));
   const SITE = "https://howzu.com.au";
   const css = `
   .sh-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:flex-end;justify-content:center}
@@ -44,13 +46,13 @@
 
   function wechatText(x) {
     return [`🏠 ${x.title}`, `📍 ${x.address}`, x.rentWeekly ? `💰 $${x.rentWeekly}/周` : "", roomTxt(x) ? `🛏 ${roomTxt(x)}` : "", x.available ? `🔑 ${x.available}入住` : "",
-      (x.highlights || []).length ? `✨ ${x.highlights.join(" · ")}` : "", `👉 更多照片、对口学区：${url(x)}`].filter(Boolean).join("\n");
+      hl(x).length ? `✨ ${hl(x).join(" · ")}` : "", `👉 更多照片、对口学区：${url(x)}`].filter(Boolean).join("\n");
   }
   // 小红书：不放链接（外链会被限流），用话题标签
   function xhsText(x) {
     const a = area(x).replace(/\s+/g, "");
     return [`${x.title}✨`, "", `📍 ${a}`, x.rentWeekly ? `💰 每周 $${x.rentWeekly}` : "", roomTxt(x) ? `🛏 ${roomTxt(x)}` : "", x.available ? `🔑 ${x.available}入住` : "",
-      ...(x.highlights || []).map(h => `✅ ${h}`), "", "想看房的宝子私信我～", "",
+      ...hl(x).map(h => `✅ ${h}`), "", "想看房的宝子私信我～", "",
       `#墨尔本租房 #墨尔本找房 #${a}租房 #墨尔本留学 #澳洲租房`].filter((v, i, arr) => v !== "" || arr[i - 1] !== "").join("\n");
   }
 
@@ -84,7 +86,7 @@
     g.fillStyle = "#6b726f"; g.font = `400 30px ${F}`; g.fillText(`📍 ${area(x)}　🛏 ${roomTxt(x)}`, 60, y + 4); y += 52;
     // chips
     let cx = 60; g.font = `500 28px ${F}`;
-    for (const t of [x.available ? `${x.available}入住` : "", ...(x.highlights || [])].filter(Boolean).slice(0, 4)) {
+    for (const t of [x.available ? `${x.available}入住` : "", ...hl(x)].filter(Boolean).slice(0, 4)) {
       const w = g.measureText(t).width + 36; if (cx + w > W - 300) break;
       g.fillStyle = "#e8f3ee"; rr(g, cx, y, w, 50, 25); g.fill(); g.fillStyle = "#0f6b4f"; g.fillText(t, cx + 18, y + 35); cx += w + 12;
     }

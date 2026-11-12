@@ -19,6 +19,14 @@
     const h = (highlights || []).filter(x => !String(x).startsWith(prefix));
     return value ? [prefix + value, ...h] : h;
   }
+  // 房东定好的开放看房时间：datetime-local 的值（"2026-11-15T11:00"）→ 标签「开放看房 2026-11-15 11:00」。
+  // 去掉旧的同类标签、坏值和重复，按时间排序，最多 3 个。
+  const SLOT_PREFIX = "开放看房 ";
+  function withSlots(highlights, values) {
+    const h = (highlights || []).filter(x => !String(x).startsWith(SLOT_PREFIX));
+    const v = [...new Set((values || []).map(s => String(s || "").trim().replace("T", " ").slice(0, 16)).filter(s => /^\d{4}-\d\d-\d\d \d\d:\d\d$/.test(s)))].sort().slice(0, 3);
+    return [...v.map(s => SLOT_PREFIX + s), ...h];
+  }
   // 照片换顺序：把第 from 张挪到第 to 个位置（返回新数组）
   function move(arr, from, to) {
     const a = arr.slice(); if (from === to || from < 0 || to < 0 || from >= a.length || to >= a.length) return a;
@@ -42,9 +50,9 @@
       title: x.title || "",
       facts: [room, x.suburb].filter(Boolean).join(" · "),
       meta: [av, x.furnished].filter(Boolean).join(" · "),
-      tags: (x.highlights || []).slice(0, 4)
+      tags: (x.highlights || []).filter(h => !String(h).startsWith(SLOT_PREFIX)).slice(0, 4)
     };
   }
-  const api = { chipState, withLease, withTag, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
+  const api = { chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);

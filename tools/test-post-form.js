@@ -43,4 +43,8 @@ ok("留需求：手机号存进电话栏、单间=0 房", (r => r.contact_phone 
 ok("留需求：没留联系方式 → 提示", !!Ld.leadRow({ area: "CBD", contact: " " }).error);
 ok("留需求：预算乱填不报错、区域可空", (r => r.rent_weekly === null && r.address.length >= 5 && /区域不限/.test(r.title))(Ld.leadRow({ budget: "5", contact: "a@b.co" })));
 if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
+// 开放看房时间
+const ws = F.withSlots(["近火车站", "开放看房 2026-01-01 10:00"], ["2026-11-16T10:00", "", "bad", "2026-11-15T11:00", "2026-11-16T10:00"]);
+ok("开放看房：排序、去重、去坏值、替换旧的", JSON.stringify(ws) === JSON.stringify(["开放看房 2026-11-15 11:00", "开放看房 2026-11-16 10:00", "近火车站"]));
+ok("开放看房：最多 3 个", F.withSlots([], ["2026-11-15T09:00", "2026-11-15T10:00", "2026-11-15T11:00", "2026-11-15T12:00"]).length === 3);
 console.log("发房源表单测试全部通过");

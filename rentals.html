@@ -132,7 +132,8 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 .bk{position:fixed;inset:0;z-index:95;justify-content:center;background:rgba(10,16,14,.45);display:flex;align-items:flex-end;animation:bkf .2s ease}
 .bk-s{width:100%;max-width:520px;background:#fff;border-radius:20px 20px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.12);animation:bku .25s cubic-bezier(.2,.8,.2,1)}
 .bk-h{display:flex;justify-content:space-between;align-items:center}.bk-h b{font-size:18px}.bk-x{border:0;background:#f1efe9;width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;color:#555}
-.bk-p{margin:4px 0 12px;font-size:13px;color:var(--muted)}.bk-l{font-size:12px;color:var(--muted);margin:10px 0 6px;letter-spacing:.5px}
+.ins{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;font-size:13px}.ins span{color:var(--muted);margin-right:2px}.ins button{font:inherit;font-size:13px;border:1px solid var(--accent);color:var(--accent);background:#fff;border-radius:16px;padding:5px 10px;cursor:pointer}
+.bk-p{margin:4px 0 6px;font-size:13px;color:var(--muted)}.bk-m{margin:0 0 10px;font-size:13px;color:var(--ink)}.bk-m.weekend,.bk-m.video,.bk-m.fixed{display:inline-block;background:#eef6f1;color:var(--accent);border-radius:8px;padding:5px 9px}.bk-l{font-size:12px;color:var(--muted);margin:10px 0 6px;letter-spacing:.5px}
 .bk-r{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}.bk-r::-webkit-scrollbar{display:none}
 .bk-r button{flex:0 0 auto;min-width:64px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;cursor:pointer;color:var(--ink);font:inherit}.bk-r button b{display:block;font-size:14px;font-weight:600}.bk-r button small{display:block;font-size:11px;color:var(--muted);margin-top:1px}
 .bk-r button.on{border-color:var(--accent);background:var(--accent);color:#fff}.bk-r button.on small{color:rgba(255,255,255,.8)}
@@ -260,10 +261,10 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261112b"></script>
-<script src="js/share.js?v=20261110"></script>
+<script src="js/listing-page.js?v=20261112d"></script>
+<script src="js/share.js?v=20261112"></script>
 <script src="js/lead.js?v=20261111"></script>
-<script src="js/enquire.js?v=20261111"></script>
+<script src="js/enquire.js?v=20261112c"></script>
 <script src="js/commute.js?v=20261111"></script>
 <script src="js/fav.js?v=20261111b"></script>
 <script src="js/filter.js?v=20261112"></script>
@@ -336,15 +337,19 @@ function contactBtns(x){const tel=x.phone||C.phone,wx=x.wechat||C.wechat,id=esc(
   return (wx?`<button class="btn ghost" data-wx="${esc(wx)}" data-act="wechat" data-id="${id}">💬 <span class="mob">微信</span><span class="desk">微信 ${esc(wx)}</span></button>`:tel?`<a class="btn ghost mob" href="${esc(HowzuEnquire.smsHref(tel,msg))}" data-act="sms" data-id="${id}">💬 短信</a>`:"")
    +(tel?`<a class="btn ghost" href="tel:${esc(tel)}" data-act="call" data-id="${id}">📞 <span class="mob">电话</span><span class="desk">${esc(telTxt)}</span></a>`:"")
    +(isLet(x)||!(tel||wx)?"":`<button class="btn pri" data-book data-act="book" data-id="${id}">📅 预约看房</button>`);}
-function bookSheet(x){const D=HowzuEnquire.days(),T=HowzuEnquire.TIMES;
+// 详情页直接显示房东定好的开放看房时间（对标 realestate 的 Inspection times），点一个直接打开预约并选中它
+function insRow(x){if(!window.HowzuEnquire||!HowzuEnquire.viewPlan)return "";const P=HowzuEnquire.viewPlan(x);if(P.mode!=="fixed")return "";
+  return `<div class="ins"><span>开放看房</span>${P.slots.slice(0,4).map(o=>`<button data-ins="${o.ymd}${o.t}">${esc(o.label)} ${esc(o.sub)}</button>`).join("")}</div>`;}
+function bookSheet(x){const P=HowzuEnquire.viewPlan(x),FX=P.mode==="fixed",D=FX?[]:P.days,T=FX?[]:P.times,TI=Math.max(0,T.indexOf("14:00"));
   return `<div class="bk" id="bk" role="dialog" aria-label="预约看房"><div class="bk-s">
    <div class="bk-h"><b>预约看房</b><button class="bk-x" data-bkx aria-label="关闭">✕</button></div>
-   <p class="bk-p">${esc(x.title)} · 选一个你方便的时间，我们回复确认</p>
-   <div class="bk-l">日期</div><div class="bk-r" id="bkD">${D.map((d,i)=>`<button data-d="${d.ymd}" class="${i?"":"on"}"><b>${d.label}</b><small>${d.sub}${i?"":" "+d.wk}</small></button>`).join("")}</div>
-   <div class="bk-l">时间</div><div class="bk-r" id="bkT">${T.map((t,i)=>`<button data-t="${t}" class="${i===2?"on":""}"><b>${HowzuEnquire.timeLabel(t).replace(" 点","点")}</b><small>${t}</small></button>`).join("")}</div>
+   <p class="bk-p">${esc(x.title)}</p><p class="bk-m${P.mode?" "+P.mode:""}">${P.mode==="video"?"🎥 ":P.mode==="weekend"?"🗓 ":P.mode==="fixed"?"📌 ":""}${esc(P.note)}</p>
+   ${FX?`<div class="bk-l">开放看房时间</div><div class="bk-r" id="bkS">${P.slots.map((o,i)=>`<button data-d="${o.ymd}" data-t="${o.t}" class="${i?"":"on"}"><b>${o.label}</b><small>${o.sub}</small></button>`).join("")}</div>`
+   :`<div class="bk-l">日期</div><div class="bk-r" id="bkD">${D.map((d,i)=>`<button data-d="${d.ymd}" class="${i?"":"on"}"><b>${d.label}</b><small>${d.sub}${i||!d.wk?"":" "+d.wk}</small></button>`).join("")}</div>
+   <div class="bk-l">时间</div><div class="bk-r" id="bkT">${T.map((t,i)=>`<button data-t="${t}" class="${i===TI?"on":""}"><b>${HowzuEnquire.timeLabel(t).replace(" 点","点")}</b><small>${t}</small></button>`).join("")}</div>`}
    <div class="bk-a"><button class="btn ghost" data-ics data-act="ics" data-id="${esc(x.id)}">加到日历</button><button class="btn pri" data-bksend data-act="book-send" data-id="${esc(x.id)}">发送预约</button></div>
    <p class="bk-n" id="bkN" aria-live="polite"></p></div></div>`;}
-function bkPick(){const d=document.querySelector("#bkD .on"),t=document.querySelector("#bkT .on");return [d.dataset.d,t.dataset.t];}
+function bkPick(){const s=document.querySelector("#bkS .on");if(s)return [s.dataset.d,s.dataset.t];const d=document.querySelector("#bkD .on"),t=document.querySelector("#bkT .on");return [d.dataset.d,t.dataset.t];}
 function toast(m){let t=document.getElementById("toast");if(!t){t=document.createElement("div");t.id="toast";t.setAttribute("role","status");document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("on"),3200);}
 const copy=s=>{try{navigator.clipboard.writeText(s);}catch(_){}};
 // 通勤估算：地址 → 坐标（OpenStreetMap 免费解析，缓存在本机），再算到 CBD/墨大/RMIT/莫纳什 的直线估算
@@ -396,7 +401,7 @@ function openDetail(x,noPush){
     <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>
     <h2>${esc(x.title)}</h2><div class="addr">📍 ${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
-    ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div><small>${esc(k)}</small><b${v==="咨询"?' class="m"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}</b></div>`).join("")}</div>`}
+    ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div><small>${esc(k)}</small><b${v==="咨询"?' class="m"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}</b></div>`).join("")}</div>${insRow(x)}`}
     <div class="tags">${x.furnished===true?'<span class="tag">带家具</span>':x.furnished===false?'<span class="tag">不带家具</span>':x.furnished==="部分家具"?'<span class="tag">部分家具</span>':""}${KF.rest.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>
     ${isLet(x)||!window.ListingPage||!ListingPage.specs?"":`<div class="sp"><div class="sp-h">房屋信息</div><dl>${ListingPage.specs(x).map(([k,v])=>`<div${k==="设施"?' class="w"':""}><dt>${esc(k)}</dt><dd${v===ListingPage.TBC?' class="m"':""}>${esc(v)}</dd></div>`).join("")}</dl>${ListingPage.specs(x).some(r=>r[1]===ListingPage.TBC)?'<p class="sp-n">标“待确认”的还没核实，咨询时可以直接问我们。</p>':""}</div>`}
     ${trustBox(x)}
@@ -435,11 +440,12 @@ document.addEventListener("click",e=>{
     const th=t.closest(".dt-th img");if(th){DI=+th.dataset.i;return show();}
     const w=t.closest("[data-wx]");if(w){copy(w.dataset.wx);toast(`已复制微信号 ${w.dataset.wx}，打开微信 → 添加朋友 → 粘贴`);return;}
     if(t.closest("[data-book]"))return openBook();
+    const ib=t.closest("[data-ins]");if(ib){openBook();document.querySelectorAll("#bkS button").forEach(b=>b.classList.toggle("on",b.dataset.d+b.dataset.t===ib.dataset.ins));return;}
     if(t.closest("[data-cases]")){closeDetail();if(F!=="all"||(HF&&HF.active(S)))clearF();requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
     if(t.closest("[data-bkx]")||t.id==="bk")return document.getElementById("bk").remove();
-    const bd=t.closest("#bkD button,#bkT button");if(bd){bd.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===bd));return;}
+    const bd=t.closest("#bkD button,#bkT button,#bkS button");if(bd){bd.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===bd));return;}
     if(t.closest("[data-ics]")){const [d,tm]=bkPick();const tel=DX.phone||C.phone;const u=URL.createObjectURL(new Blob([HowzuEnquire.ics(DX,d,tm,{tel})],{type:"text/calendar"}));const a=document.createElement("a");a.href=u;a.download=`howzu-${DX.id}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);document.getElementById("bkN").textContent="已生成日历提醒（提前 1 小时）。别忘了点「发送预约」告诉我们。";return;}
-    if(t.closest("[data-bksend]")){const [d,tm]=bkPick();const msg=HowzuEnquire.bookMsg(DX,d,tm),tel=DX.phone||C.phone,wx=DX.wechat||C.wechat;const n=document.getElementById("bkN");
+    if(t.closest("[data-bksend]")){const [d,tm]=bkPick();const msg=HowzuEnquire.bookMsg(DX,d,tm,HowzuEnquire.viewPlan(DX).mode==="video"),tel=DX.phone||C.phone,wx=DX.wechat||C.wechat;const n=document.getElementById("bkN");
       if(tel&&!matchMedia("(hover:hover) and (pointer:fine)").matches){location.href=HowzuEnquire.smsHref(tel,msg);n.textContent="已打开短信，按发送即可。我们会尽快回复确认。";}
       else{copy(msg);n.textContent=wx?`已复制预约内容。打开微信添加 ${wx} 并粘贴发送。`:`已复制预约内容，请发短信到 ${tel}，或直接致电。`;}
       return;}

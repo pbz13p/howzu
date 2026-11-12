@@ -36,9 +36,9 @@
   const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/]];
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
-    const rest = hs.filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
+    const rest = hs.filter(h => !/^开放看房 /.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : "咨询";
-    const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] || "预约看房"]];
+    const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] === "定好时间" ? "定时开放" : got["看房"] || "预约看房"]];
     return { cells, rest };
   }
 
@@ -62,7 +62,7 @@
     return [
       ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
       ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", tag("押金 ") || TBC],
-      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : TBC], ["楼层", floor ? `${floor} 层` : TBC], ["看房", tag("看房 ") || "预约看房"],
+      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : TBC], ["楼层", floor ? `${floor} 层` : TBC], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
       ["设施", amen.length ? amen.join("、") : TBC],
     ];
   }

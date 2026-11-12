@@ -18,5 +18,19 @@ ok(ics.includes("UID:2110-spencer-20261114T160000@howzu.com.au") && ics.includes
 ok(ics.split("\r\n").filter(l => l === "BEGIN:VEVENT").length === 1 && ics.endsWith("END:VCALENDAR\r\n"), "ics 结构");
 ok(E.ics(x, "20261114", "18:45").includes("T191500"), "跨小时结束时间");
 ok(E.smsHref("0431438595", "a b").startsWith("sms:0431438595?&body=a%20b"), "短信链接");
+// 看房安排
+const N = new Date(2026, 10, 12, 9, 0); // 周四
+const pw = E.viewPlan({ highlights: ["近火车站", "看房 周末看房"] }, N);
+ok(pw.mode === "weekend" && pw.days.length === 4 && pw.days.every(d => d.label === "周六" || d.label === "周日") && pw.days[0].ymd === "20261114", "周末看房只给周末日期");
+ok(!pw.times.includes("18:00"), "周末不给晚上");
+const pv = E.viewPlan({ highlights: ["看房 视频看房"] }, N);
+ok(pv.mode === "video" && pv.days.length === 7 && E.bookMsg(x, "20261114", "14:00", true).includes("视频看房"), "视频看房");
+ok(E.viewPlan({}, N).mode === "" && E.viewPlan({}, N).days.length === 7, "没写看房方式：默认 7 天");
+const pf = E.viewPlan({ highlights: ["看房 周末看房"], inspections: [{ date: "2026-11-15", time: "11:00" }, { date: "2026-11-10", time: "10:00" }, { date: "2026-11-13", time: "17:30" }, { date: "bad", time: "1" }] }, N);
+ok(pf.mode === "fixed" && pf.slots.length === 2 && pf.slots[0].ymd === "20261113" && pf.slots[0].label === "11/13 周五" && pf.slots[1].t === "11:00", "固定开放时间：过期和坏数据去掉、按时间排序");
+const pt = E.viewPlan({ highlights: ["看房 定好时间", "开放看房 2026-11-15 11:00", "开放看房 2026-11-14 10:00"] }, N);
+ok(pt.mode === "fixed" && pt.slots.length === 2 && pt.slots[0].ymd === "20261114" && pt.slots[0].t === "10:00", "发房源时填的开放看房时间");
+ok(E.timeLabel("18:30") === "晚上 6:30" && E.whenText("20261118", "09:15") === "11 月 18 日 上午 9:15", "带分钟的时间文字");
+ok(E.viewPlan({ highlights: ["看房 定好时间", "开放看房 2026-11-01 11:00"] }, N).note.includes("已过"), "开放时间都过期：退回自选时间并说明");
 console.log(`enquire: ${n - fail}/${n} 通过`);
 if (fail) process.exit(1);

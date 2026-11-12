@@ -47,6 +47,7 @@ textarea{resize:vertical;min-height:110px}
 .rent .unit button{border:0;padding:11px 12px;background:#fff;font-size:15px;cursor:pointer;color:var(--ink)}
 .rent .unit button.on{background:var(--accent);color:#fff}
 .hint{font-size:12px;color:var(--muted);margin-top:6px}
+.slots{margin-top:10px;display:grid;gap:8px}.slots input{width:100%;box-sizing:border-box;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);min-height:44px}
 .drop{border:2px dashed #b9cfc5;border-radius:14px;padding:22px 12px;text-align:center;background:var(--accent2);color:var(--accent);cursor:pointer;font-size:15px}
 .drop b{font-size:17px;display:block;margin-bottom:2px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
@@ -203,7 +204,11 @@ textarea{resize:vertical;min-height:110px}
     <label class="l">手机</label><input type="tel" id="phone" maxlength="20" placeholder="如 04xx xxx xxx">
     <label class="l">怎么看房 <span class="opt">可不选</span></label>
     <div class="chips" data-k="viewing" data-single data-opt>
-      <button>随时可约</button><button>周末看房</button><button>视频看房</button>
+      <button>随时可约</button><button>周末看房</button><button>视频看房</button><button data-slots>定好时间</button>
+    </div>
+    <div id="slots" class="slots" hidden>
+      <div class="hint" style="margin:0 0 6px">填 1–3 个开放看房时间，租客直接选，不用来回问</div>
+      <input type="datetime-local" step="900"><input type="datetime-local" step="900"><input type="datetime-local" step="900">
     </div>
     <input type="text" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="hint">提交即表示房源信息真实，你有权出租这套房。虚假房源会被删除。</div>
@@ -218,7 +223,7 @@ textarea{resize:vertical;min-height:110px}
 </div></div>
 <div class="bar"><span class="prog" id="prog">还差：照片、租金、地址、联系方式</span><button class="submit" id="go">发布</button></div>
 
-<script src="js/post-form.js?v=20261111"></script>
+<script src="js/post-form.js?v=20261112b"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -319,10 +324,12 @@ document.querySelectorAll(".chips").forEach(g => g.addEventListener("click", e =
   else b.classList.toggle("on");
   if (g.dataset.k === "when") $("#date").hidden = !b.hasAttribute("data-date");
   if (g.dataset.k === "bond") rentHint();
+  if (g.dataset.k === "viewing") { $("#slots").hidden = !g.querySelector("button.on[data-slots]"); if (!$("#slots").hidden) setTimeout(() => $("#slots input").focus({ preventScroll: true }), 50); }
   save(); progress();
 }));
 // 租期、押金、看房方式都作为结构化标签放进已有的 highlights 字段（不改数据库）
-const tags = () => PostForm.withTag(PostForm.withLease(PostForm.withTag(PostForm.withTag(chips("highlights"), "看房 ", chips("viewing")[0]), "押金 ", chips("bond")[0]), chips("lease")[0]), "类型 ", chips("ptype")[0]);
+const slotVals = () => [...document.querySelectorAll("#slots input")].map(i => i.value);
+const tags = () => PostForm.withSlots([], document.querySelector('.chips[data-k="viewing"] button.on[data-slots]') ? slotVals() : []).concat(PostForm.withTag(PostForm.withLease(PostForm.withTag(PostForm.withTag(chips("highlights"), "看房 ", chips("viewing")[0]), "押金 ", chips("bond")[0]), chips("lease")[0]), "类型 ", chips("ptype")[0]));
 const chips = k => [...document.querySelectorAll(`.chips[data-k="${k}"] button.on`)].map(b => b.textContent);
 document.querySelectorAll("[data-s]").forEach(b => b.onclick = () => {
   const k = b.dataset.s; S[k] = Math.max(LIM[k][0], Math.min(LIM[k][1], S[k] + +b.dataset.d)); $("#v-" + k).textContent = S[k]; save();
@@ -403,14 +410,20 @@ function progress() { const m = missing(); $("#prog").textContent = m.length ? "
 const KEY = "howzu-post-draft";
 const CHIPK = ["kind", "ptype", "when", "furnished", "lease", "bond", "viewing", "highlights"];
 $("#date").min = PostForm.todayISO();
-function save() { try { localStorage.setItem(KEY, JSON.stringify({ beds: S.beds, baths: S.baths, cars: S.cars, unit: S.unit, rent: $("#rent").value, addr: $("#addr").value, title: $("#title").value, desc: $("#desc").value, cname: $("#cname").value, wechat: $("#wechat").value, phone: $("#phone").value, date: $("#date").value, chips: Object.fromEntries(CHIPK.map(k => [k, chips(k)])), lat: S.lat, lng: S.lng, suburb: S.suburb })); } catch (_) {} }
+document.querySelectorAll("#slots input").forEach(i => { i.min = PostForm.todayISO() + "T08:00"; i.addEventListener("change", save); });
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ beds: S.beds, baths: S.baths, cars: S.cars, unit: S.unit, rent: $("#rent").value, addr: $("#addr").value, title: $("#title").value, desc: $("#desc").value, cname: $("#cname").value, wechat: $("#wechat").value, phone: $("#phone").value, date: $("#date").value, slots: slotVals(), chips: Object.fromEntries(CHIPK.map(k => [k, chips(k)])), lat: S.lat, lng: S.lng, suburb: S.suburb })); } catch (_) {} }
 try { const d = JSON.parse(localStorage.getItem(KEY) || "null"); if (d) { Object.assign(S, { beds: d.beds, baths: d.baths, cars: d.cars, lat: d.lat, lng: d.lng, suburb: d.suburb }); ["beds", "baths", "cars"].forEach(k => $("#v-" + k).textContent = S[k]); for (const k of ["rent", "addr", "title", "desc", "cname", "wechat", "phone"]) $("#" + k).value = d[k] || ""; 
   if (d.unit === "m" || d.unit === "w") { S.unit = d.unit; $("#unit").querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.u === d.unit)); }
   $("#date").value = d.date || "";
   for (const k of CHIPK) { const g = document.querySelector(`.chips[data-k="${k}"]`); if (!g) continue; const bs = [...g.querySelectorAll("button")];
     const st = PostForm.chipState(bs.map(b => b.textContent), d.chips && d.chips[k], g.hasAttribute("data-single"), bs.map(b => b.classList.contains("on"))); bs.forEach((b, i) => b.classList.toggle("on", st[i])); }
   $("#date").hidden = !document.querySelector('.chips[data-k="when"] button.on[data-date]');
+  (d.slots || []).forEach((v, i) => { const el = document.querySelectorAll("#slots input")[i]; if (el) el.value = v || ""; });
+  $("#slots").hidden = !document.querySelector('.chips[data-k="viewing"] button.on[data-slots]');
   rentHint(); } } catch (_) {}
+// 联系方式单独记住（提交成功后草稿会清空，但再发一套时不用重新打称呼/微信/手机）
+const CKEY = "howzu-post-contact";
+try { const c = JSON.parse(localStorage.getItem(CKEY) || "null"); if (c) for (const k of ["cname", "wechat", "phone"]) if (!$("#" + k).value && c[k]) $("#" + k).value = c[k]; } catch (_) {}
 progress();
 
 // ---------- submit ----------
@@ -474,8 +487,8 @@ $("#go").onclick = async () => {
     };
     const { error } = await sb.from("listings").insert(row);
     if (error) throw error;
-    try { localStorage.removeItem(KEY); } catch (_) {}
-    $("#main").innerHTML = `<div class="card done">🎉<b>提交成功！</b>我们审核后会尽快上线（一般 24 小时内）。<br><br><a href="rentals.html">去看看在租房源 ›</a><br><br><a href="post.html">再发一套 ›</a></div>`;
+    try { localStorage.removeItem(KEY); localStorage.setItem(CKEY, JSON.stringify({ cname: row.contact_name || "", wechat: row.contact_wechat || "", phone: row.contact_phone || "" })); } catch (_) {}
+    $("#main").innerHTML = `<div class="card done">🎉<b>提交成功！</b>我们审核后会尽快上线（一般 24 小时内）。<br><br><a href="rentals.html">去看看在租房源 ›</a><br><br><a href="post.html">再发一套 ›</a><br><small style="color:#888">再发时称呼、微信、手机会自动填好</small></div>`;
     document.querySelector(".bar").remove();
   } catch (e) {
     $("#err").textContent = "提交失败：" + (e.message || e) + "。请检查网络后再点一次。";
