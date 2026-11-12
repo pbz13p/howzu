@@ -82,7 +82,7 @@ textarea{resize:vertical;min-height:110px}
 .pv .bt .back{flex:0 0 34%;background:#f1f3f2;color:var(--ink)}.pv .bt .yes{background:var(--accent);color:#fff}
 @keyframes pvf{from{opacity:0}}@keyframes pvu{from{transform:translateY(40px);opacity:.4}}
 .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;justify-content:center}
-.bar .prog{font-size:13px;color:var(--muted)}
+.bar .prog{font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
 .submit{font-size:17px;padding:13px 26px;border:0;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;font-weight:600}
 .submit:disabled{opacity:.5}
 .err{color:var(--bad);font-size:13px;margin-top:6px}
@@ -485,13 +485,19 @@ $("#go").onclick = async () => {
   const m = missing(); $("#err").textContent = "";
   if (m.length) {
     $("#err").textContent = "还差：" + m.join("、");
-    // 错误提示在页面最底下，手机上看不到：直接带用户去第一个没填的地方
+    jumpMissing(m); return;
+  }
+  if ($("#website").value) return; // bot
+  return go2();
+};
+// 错误提示在页面最底下，手机上看不到：直接带用户去第一个没填的地方（点“发布”或点底部“还差…”都会跳）
+function jumpMissing(m) {
     const el = $({ 照片: "#drop", 租金: "#rent", 地址: "#addr", 联系方式: "#wechat" }[m[0]]);
     const pr = $("#prog"); pr.classList.add("bad"); setTimeout(() => pr.classList.remove("bad"), 2500);
     if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("need"); void el.offsetWidth; el.classList.add("need"); setTimeout(() => el.classList.remove("need"), 2500); if (el.tagName === "INPUT") setTimeout(() => el.focus({ preventScroll: true }), 400); }
-    return;
-  }
-  if ($("#website").value) return; // bot
+}
+$("#prog").onclick = () => { const m = missing(); if (m.length) jumpMissing(m); };
+async function go2() {
   if (S.photos.some(p => !p.blob)) { $("#err").textContent = "照片还在压缩，稍等几秒再点。"; return; }
   if (!PV_OK) return showPreview();
   PV_OK = false;
