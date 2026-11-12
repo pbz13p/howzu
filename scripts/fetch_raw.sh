@@ -29,13 +29,13 @@ find tmp/zones -iname "*.shp" | while read -r shp; do
   base=$(basename "$shp" .shp)
   echo "== $base ==" >> raw/_manifest.txt
   mapshaper "$shp" -info >> raw/_manifest.txt 2>&1
-  mapshaper "$shp" -proj wgs84 -simplify 8% keep-shapes -o "raw/zones/${base}.json" format=geojson precision=0.00001 >> raw/_manifest.txt 2>&1
+  mapshaper "$shp" -proj wgs84 -simplify interval=20 keep-shapes -o "raw/zones/${base}.json" format=geojson precision=0.00001 >> raw/_manifest.txt 2>&1
 done
 # Also handle GeoJSON / other formats shipped directly
 find tmp/zones -iname "*.geojson" -o -iname "*.json" | while read -r f; do
   base=$(basename "$f"); echo "== $base (geojson) ==" >> raw/_manifest.txt
   mapshaper "$f" -info >> raw/_manifest.txt 2>&1
-  mapshaper "$f" -proj wgs84 -simplify 8% keep-shapes -o "raw/zones/${base%.*}.json" format=geojson precision=0.00001 >> raw/_manifest.txt 2>&1
+  mapshaper "$f" -proj wgs84 -simplify interval=20 keep-shapes -o "raw/zones/${base%.*}.json" format=geojson precision=0.00001 >> raw/_manifest.txt 2>&1
 done
 ls -la raw/zones >> raw/_manifest.txt
 exit 0
