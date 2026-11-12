@@ -1,4 +1,5 @@
 # 生成 guide/zone-*.html 学区租房页：python3 tools/zone_pages.py（学区或 VCE 数据更新后重跑，再跑 node tools/build-listing-pages.js 更新 sitemap）
+# 注意：增删学校后，guide/property.html 里“热门公立中学学区”的小卡片和 guide/school-zone.html 的链接列表要同步更新
 import json,re,sys,html
 import os
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
