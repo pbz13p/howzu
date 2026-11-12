@@ -48,7 +48,8 @@ for name in PICK:
         "租房也算数：只要真的住在学区内的地址，租约就能用来报名；租期要覆盖开学第一天。",
         "学区边界会调整，签约前一定用 Find my School 按<b>具体地址</b>核对。"]
     subl="、".join(subs) if subs else "（见地图）"
-    pl="".join(f"<li>{html.escape(p['name'])}<span style='color:#8a908d'> · {html.escape(suburb(p['addr']))}</span></li>" for p in prim[:15])
+    _ZG=json.load(open(os.path.join(R,"data","zone_guides.json"))) if os.path.exists(os.path.join(R,"data","zone_guides.json")) else {}
+    pl="".join(f"<li>{(chr(60)+'a href=\"/guide/'+_ZG[str(p['no'])]+'.html\"'+chr(62)+html.escape(p['name'])+'</a>') if str(p['no']) in _ZG else html.escape(p['name'])}<span style='color:#8a908d'> · {html.escape(suburb(p['addr']))}</span></li>" for p in prim[:15])
     body=f'''<h2>学区地图（2027）</h2>
 <div id="zmap" style="height:360px;border-radius:16px;overflow:hidden;background:#eef2f0;margin:8px 0"></div>
 <p class="meta" style="margin:6px 0 0">绿色区域为 {html.escape(name)} 的 2027 学区，红点是学校位置。地图仅供参考，以 Find my School 为准。</p>
