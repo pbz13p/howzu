@@ -16,6 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#0f6b4f">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Box Hill 租房指南：免费电车区、到大学距离、对口学区和在租房源", "inLanguage": "zh-CN", "datePublished": "2026-11-12", "dateModified": "2026-11-12", "author": {"@type": "Organization", "name": "好租 Howzu"}, "publisher": {"@type": "Organization", "name": "好租 Howzu"}, "mainEntityOfPage": "https://howzu.com.au/guide/area-box-hill.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "好租 Howzu", "item": "https://howzu.com.au/"}, {"@type": "ListItem", "position": 2, "name": "房产干货和租房指南", "item": "https://howzu.com.au/guide/property.html"}, {"@type": "ListItem", "position": 3, "name": "Box Hill 租房指南：免费电车区、到大学距离、对口学区和在租房源", "item": "https://howzu.com.au/guide/area-box-hill.html"}]}</script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#1d2321;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
@@ -66,7 +67,6 @@ ul.dot li{margin:0 0 6px}
 .ex td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .ex tr.t td{border-top:1px solid #dfe3e1;font-weight:700;padding-top:8px}
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "好租 Howzu", "item": "https://howzu.com.au/"}, {"@type": "ListItem", "position": 2, "name": "房产干货和租房指南", "item": "https://howzu.com.au/guide/property.html"}, {"@type": "ListItem", "position": 3, "name": "Box Hill 租房指南：免费电车区、到大学距离、对口学区和在租房源", "item": "https://howzu.com.au/guide/area-box-hill.html"}]}</script>
 </head>
 <body>
 <header class="top"><a class="logo" href="/">好租 Howzu</a><a class="all" href="/guide/property.html">全部指南 ›</a></header>
@@ -89,7 +89,7 @@ ul.dot li{margin:0 0 6px}
 <h2>好租在 Box Hill 的房源</h2>
 <ul class="dot" id="areaL"><li>加载中…</li></ul>
 <script>fetch("/data/listings.json").then(r=>r.json()).then(j=>{const L=(j.listings||[]).filter(x=>x.suburb==="Box Hill"&&x.status==="live");const e=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);document.getElementById("areaL").innerHTML=L.length?L.map(x=>`<li><a href="/rentals.html?id=${encodeURIComponent(x.id)}">${e(x.title)}</a></li>`).join(""):"<li>暂时没有在租房源，可以留下需求。</li>";}).catch(()=>{document.getElementById("areaL").innerHTML='<li><a href="/rentals.html">看全部在租房源</a></li>'});</script>
-<p><a href="/rentals.html">看全部在租房源 ›</a> · <a href="/rentals.html#leadCard">留下需求，有新房通知你 ›</a></p>
+<p><a href="/rentals.html">看全部在租房源 ›</a> · <a href="/rentals.html?la=Box%20Hill#leadCard">留下需求，有新房通知你 ›</a></p>
 <h2>在这里租房前，先看这几篇</h2>
 <ul class="dot"><li><a href="/guide/first-rental.html">留学生第一次在墨尔本租房</a></li><li><a href="/guide/apply.html">租房申请新规：哪些钱不该付</a></li><li><a href="/guide/bond.html">押金怎么交、怎么退</a></li><li><a href="/guide/utilities.html">水电煤网谁付</a></li><li><a href="/guide/sublet.html">找二房东租房间安全吗</a></li></ul>
 <section class="cta">

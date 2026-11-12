@@ -1,5 +1,5 @@
 # 生成 guide/area-*.html 区域租房页：python3 tools/area_pages.py
-import json,os,sys,html,math
+import json,os,sys,html,math,urllib.parse
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 import guide_gen as gen
 def _inside(lng,lat,ring):
@@ -70,7 +70,7 @@ for A in AREAS:
 <h2>好租在 {html.escape(A['name'])} 的房源</h2>
 <ul class="dot" id="areaL"><li>加载中…</li></ul>
 <script>fetch("/data/listings.json").then(r=>r.json()).then(j=>{{const L=(j.listings||[]).filter(x=>x.suburb==={json.dumps(A['sub'])}&&x.status==="live");const e=s=>String(s).replace(/[&<>"]/g,c=>({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}})[c]);document.getElementById("areaL").innerHTML=L.length?L.map(x=>`<li><a href="/rentals.html?id=${{encodeURIComponent(x.id)}}">${{e(x.title)}}</a></li>`).join(""):"<li>暂时没有在租房源，可以留下需求。</li>";}}).catch(()=>{{document.getElementById("areaL").innerHTML='<li><a href="/rentals.html">看全部在租房源</a></li>'}});</script>
-<p><a href="/rentals.html">看全部在租房源 ›</a> · <a href="/rentals.html#leadCard">留下需求，有新房通知你 ›</a></p>
+<p><a href="/rentals.html">看全部在租房源 ›</a> · <a href="/rentals.html?la={urllib.parse.quote(A['en'])}#leadCard">留下需求，有新房通知你 ›</a></p>
 <h2>在这里租房前，先看这几篇</h2>
 <ul class="dot"><li><a href="/guide/first-rental.html">留学生第一次在墨尔本租房</a></li><li><a href="/guide/apply.html">租房申请新规：哪些钱不该付</a></li><li><a href="/guide/bond.html">押金怎么交、怎么退</a></li><li><a href="/guide/utilities.html">水电煤网谁付</a></li><li><a href="/guide/sublet.html">找二房东租房间安全吗</a></li></ul>'''
     title=f"{A['name']} 租房指南：免费电车区、到大学距离、对口学区和在租房源"
