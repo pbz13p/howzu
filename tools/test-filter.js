@@ -27,4 +27,7 @@ ok(F.RENT[0][0] === "" && F.SORT[0][0] === "", "下拉第一项是'不限'/'推�
   ok(F.unknown(U, "furn") && !F.unknown(N, "furn") && !F.unknown({ desc: "不带家具" }, "furn") && !F.unknown(U, "gym"), "没写家具情况才算待确认；写了'不带'不算；泳池不算待确认");
   ok(F.maybe(U, { feat: ["furn"] }) && !F.maybe(N, { feat: ["furn"] }) && !F.maybe(Y, { feat: ["furn"] }), "待确认的另列；明确不带的、已符合的都不列");
   ok(!F.maybe(U, { feat: ["furn"], beds: "1" }) && !F.maybe(U, { feat: [] }) && !F.maybe(U, { feat: ["furn", "gym"] }), "其他条件不符、没勾设施、泳池没写的都不列"); }
+{ const L = [{ id: "a" }, { id: "b" }, { id: "c" }], m = { a: 40, b: null, c: 15 };
+  ok(F.sort(L, "near", x => m[x.id]).map(x => x.id).join() === "c,a,b", "离我的学校最近：按通勤分钟排，算不出的排后面");
+  ok(F.sort(L, "near").map(x => x.id).join() === "a,b,c", "没设学校时选“最近”保持原顺序"); }
 if (fail) { console.log(`✗ filter ${fail} 项失败`); process.exit(1); } else console.log("✓ filter 全部通过");

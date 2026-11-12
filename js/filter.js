@@ -26,7 +26,7 @@
   }
   // 用数组保证顺序（对象里数字键会被排到前面）
   const RENT = [["", "周租不限"], ["500", "$500 以下"], ["700", "$700 以下"], ["900", "$900 以下"], ["900+", "$900 以上"]];
-  const SORT = Object.entries({ "": "推荐排序", "new": "最新上架", "low": "租金低→高", "high": "租金高→低" });
+  const SORT = Object.entries({ "": "推荐排序", "new": "最新上架", "low": "租金低→高", "high": "租金高→低", "near": "离我的学校/公司最近" });
   const area = x => String(x.suburb || "").trim() || "其他";
   const rent = x => { const n = Number(x.rentWeekly); return n > 0 ? n : null; };
   // s = { beds: ""|"1"|"2"|"3", feat: ["furn",...], area: "", rent: "" }
@@ -41,13 +41,15 @@
     return true;
   }
   // 排序不改原数组；租金不详（面议）的总排在后面；同分保持原顺序
-  function sort(list, mode) {
+  // near：按传入的 nearFn(x) 算出的分钟数排，算不出的排后面
+  function sort(list, mode, nearFn) {
     const a = list.map((x, i) => [x, i]);
     const t = x => { const d = Date.parse(x.createdAt || x.created_at || x.listedAt || ""); return isNaN(d) ? null : d; };
     const cmp = {
       low: (p, q) => (rent(p) ?? Infinity) - (rent(q) ?? Infinity),
       high: (p, q) => (rent(q) ?? -Infinity) - (rent(p) ?? -Infinity),
-      new: (p, q) => (t(q) ?? -Infinity) - (t(p) ?? -Infinity)
+      new: (p, q) => (t(q) ?? -Infinity) - (t(p) ?? -Infinity),
+      near: nearFn ? (p, q) => (nearFn(p) ?? Infinity) - (nearFn(q) ?? Infinity) : null
     }[mode];
     if (cmp) a.sort((p, q) => (cmp(p[0], q[0]) || 0) || p[1] - q[1]);
     return a.map(p => p[0]);

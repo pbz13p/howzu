@@ -285,7 +285,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <script src="js/enquire.js?v=20261112d"></script>
 <script src="js/commute.js?v=20261113"></script>
 <script src="js/fav.js?v=20261111b"></script>
-<script src="js/filter.js?v=20261112b"></script>
+<script src="js/filter.js?v=20261113"></script>
 <script src="js/nearby.js?v=20261112"></script>
 <script>
 const $=s=>document.querySelector(s);
@@ -343,8 +343,8 @@ function render(){
   const base=list.filter(x=>!isLet(x));
   list=list.filter(x=>F==="all"||(F==="now"&&isNow(x))||(F==="later"&&!isNow(x)&&!isLet(x))||(F==="let"&&isLet(x))||(F==="fav"&&isFav(x)));
   const act=HF&&HF.active(S),pre=list;if(HF)list=list.filter(x=>HF.match(x,S));
-  const live=HF?HF.sort(list.filter(x=>!isLet(x)),S.sort):list.filter(x=>!isLet(x)),done=act?[]:list.filter(isLet);
-  const mb=act&&HF.maybe?HF.sort(pre.filter(x=>!isLet(x)&&HF.maybe(x,S)),S.sort):[];
+  const live=HF?HF.sort(list.filter(x=>!isLet(x)),S.sort,cmMin):list.filter(x=>!isLet(x)),done=act?[]:list.filter(isLet);
+  const mb=act&&HF.maybe?HF.sort(pre.filter(x=>!isLet(x)&&HF.maybe(x,S)),S.sort,cmMin):[];
   const mbK=S.feat.filter(k=>mb.some(x=>HF.unknown(x,k))).map(k=>HF.FEAT[k].label).join("、");
   const mbSec=mb.length?`<div class="sec mb${live.length?"":" top"}"><b>${live.length?"还有 ":""}${mb.length} 套还没写明「${esc(mbK)}」</b><span>不一定没有，点开房源用「一键问清」问我们</span></div>`+mb.map(card).join(""):"";
   LIVE=live;
@@ -455,11 +455,12 @@ async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x
   try{await zoneLayer(x,pt);}catch(_){}}
 // 列表卡片：租客加过自己的学校 / 公司后，每套房显示“到 X 约几分钟”（只用已查到的位置，没查到的后台慢慢查）
 function geoCached(a){try{return JSON.parse(localStorage.getItem("howzu-geo:"+a)||"null");}catch(_){return null;}}
+function cmMin(x){const M=myPl();if(!M.length||!window.HowzuCommute)return null;const pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:geoCached(x.address);if(!pt)return null;const r=HowzuCommute.rows(pt,M.slice(0,1)).find(r=>r.extra);return r?r.min+(r.mode==="walk"?0:0.5):null;}
 function cmChip(x){const M=myPl();if(!M.length||!window.HowzuCommute)return "";const pt=(x.lat&&x.lng)?{lat:+x.lat,lng:+x.lng}:geoCached(x.address);if(!pt)return "";
   const r=HowzuCommute.rows(pt,M.slice(0,1)).find(r=>r.extra);return r?`🎯 到${esc(r.name)}${r.sub!=="我加的"?" "+esc(r.sub):""} ${r.mode==="walk"?"步行":"公交"}约 ${r.min} 分钟`:"";}
-let CMQ=false;async function cmFill(){if(CMQ||!myPl().length)return;CMQ=true;try{for(const x of LIVE){if(!x.address||(x.lat&&x.lng)||geoCached(x.address))continue;await new Promise(r=>setTimeout(r,1100));await geoPt(x.address);
+let CMQ=false,CMNEW=false;async function cmFill(){if(CMQ||!myPl().length)return;CMQ=true;try{for(const x of LIVE){if(!x.address||(x.lat&&x.lng)||geoCached(x.address))continue;await new Promise(r=>setTimeout(r,1100));await geoPt(x.address);CMNEW=true;
   const el=document.querySelector(`[data-cmchip="${CSS.escape(x.id)}"]`);if(el)el.innerHTML=cmChip(x);}}finally{CMQ=false;}
-  document.querySelectorAll("[data-cmchip]").forEach(el=>{const x=LIVE.find(y=>String(y.id)===el.dataset.cmchip);if(x)el.innerHTML=cmChip(x);});}
+  document.querySelectorAll("[data-cmchip]").forEach(el=>{const x=LIVE.find(y=>String(y.id)===el.dataset.cmchip);if(x)el.innerHTML=cmChip(x);});if(CMNEW&&$("#fSort")&&$("#fSort").value==="near"){CMNEW=false;render();}}
 function lcmRender(){const el=document.getElementById("lcm");if(!el||!window.HowzuCommute)return;const M=myPl();
   el.innerHTML=M.length?`<span>🎯 通勤按「${esc(M[0].name)}${M[0].sub!=="我加的"?" "+esc(M[0].sub):""}」显示</span><button type="button" data-lcmclr>换一个</button>`
     :`<select id="lcmS" aria-label="看到我的学校要多久"><option value="">🎯 看每套房到我的学校 / 公司要多久</option>${HowzuCommute.EXTRA.concat(HowzuCommute.PLACES).map(p=>`<option value="${esc(p.k)}">${esc(p.name)} · ${esc(p.sub)}</option>`).join("")}</select>`;}
