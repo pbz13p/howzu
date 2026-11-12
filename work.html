@@ -88,6 +88,7 @@ textarea{min-height:180px;line-height:1.55}
 .login{max-width:420px;margin:60px auto}
 .login input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin:8px 0}
 @media (max-width:700px){.kpi .v{font-size:22px}.hd h1 small{display:none}.hd{gap:6px}nav{order:3;flex-basis:100%;margin:0 -6px}.who .em{display:none}.who{margin-left:auto}}
+.ext{position:relative;display:inline-block;margin-left:6px}.ext summary{list-style:none;cursor:pointer;color:#fff;font-weight:600;padding:6px 10px;border-radius:14px}.ext summary::-webkit-details-marker{display:none}.ext[open] summary{background:rgba(255,255,255,.18)}.ext>div{position:absolute;right:0;top:110%;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;min-width:200px;z-index:60}.ext a{display:block;padding:8px 10px;border-radius:8px;color:#1d2321;text-decoration:none;font-size:14px;white-space:nowrap}.ext a:hover{background:#eef5f1}
 </style>
 </head>
 <body>
@@ -170,7 +171,8 @@ function applyOrg() { P = org === "all" ? ALL : ALL.filter(p => p.org_id === org
 function renderNav() {
   const seen = [...new Set(ALL.map(p => p.org_id))];
   const sel = (SUPER || seen.length > 1) && ORGS.length > 1 ? `<select id="orgsel" style="margin-left:6px;border-radius:14px;padding:4px 8px;border:0">${[["all", "全部区块"], ...ORGS.map(o => [o.id, o.name])].map(([k, l]) => `<option value="${k}" ${k === org ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>` : "";
-  $("#nav").innerHTML = tabs().map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("") + sel;
+  $("#nav").innerHTML = tabs().map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("") + sel +
+    `<details class="ext"><summary>🌐 外部网站</summary><div>${[["rentals.html", "在租房源"], ["rentals.html?zone=University%20High%20School", "地图 · 按学区看房"], ["index.html", "查学区"], ["guide/property.html", "房产干货 · 学区 · 区域页"], ["guide/landlord.html", "房东托管页"], ["post.html", "免费发房源"], ["admin.html", "访问统计 · 审核"]].map(([h, t]) => `<a href="${h}" target="_blank" rel="noopener">${t} ↗</a>`).join("")}</div></details>`;
   const os = $("#orgsel"); if (os) os.onchange = () => { org = os.value; applyOrg(); render(); };
 }
 function render() {
@@ -278,10 +280,11 @@ function openProp(id) {
     <canvas id="gen_cv" width="1080" height="1440" style="display:none;width:100%;max-width:360px;margin-top:8px;border-radius:10px"></canvas>
    </div></div>`;
   drawPhotos();
-  $("#bbar").innerHTML = !canWrite(cur.org_id) ? `<span class="muted small">你在这个区块是只读账号</span><button class="btn" data-act="wechat">📋 复制微信文案</button>` : `<button class="btn pri" data-act="save">💾 保存</button>
+  $("#bbar").innerHTML = !canWrite(cur.org_id) ? `<span class="muted small">你在这个区块是只读账号</span><button class="btn" data-act="preview">👁 预览对外效果</button><button class="btn" data-act="wechat">📋 复制微信文案</button>` : `<button class="btn pri" data-act="save">💾 保存</button>
     ${cur.published && u.status !== "let" ? "" : `<button class="btn" data-act="live">🟢 发布为在租</button>`}
     ${cur.published && u.status === "let" ? "" : `<button class="btn" data-act="let">🔵 发布为已租出</button>`}
     ${cur.published ? `<button class="btn bad" data-act="unpub">下架</button><a class="btn" target="_blank" href="rentals.html?id=${encodeURIComponent(cur.pub_id || cur.id)}">看对外页面 ↗</a>` : ""}
+    <button class="btn" data-act="preview">👁 预览对外效果</button>
     <button class="btn" data-act="wechat">📋 复制微信文案</button>`;
   ["#ov", "#dr", "#bbar"].forEach(s => $(s).classList.add("on"));
 }
@@ -350,6 +353,7 @@ document.addEventListener("click", async e => {
     if (a === "save") { if (await save()) { render(); openProp(cur.id); } }
     if (a === "live" || a === "let") { collect(); cur.pub.status = a; if (await save({ published: true })) { render(); openProp(cur.id); toast(a === "live" ? "已发布到对外页面（在租）" : "已发布为已租出展示"); } }
     if (a === "unpub" && confirm("从对外页面下架？内部数据不会删。")) { if (await save({ published: false })) { render(); openProp(cur.id); } }
+    if (a === "preview") { collect(); const id = String(cur.pub_id || cur.id); try { localStorage.setItem("howzu-draft", JSON.stringify({ ...cur.pub, id, status: cur.pub.status === "let" ? "let" : "live" })); } catch (_) {} window.open("rentals.html?draft=1&id=" + encodeURIComponent(id), "_blank"); }
     if (a === "wechat") { collect(); try { await navigator.clipboard.writeText(wechatText(cur.pub, location.origin + "/rentals.html?id=" + encodeURIComponent(cur.pub_id || cur.id))); toast("已复制，去微信粘贴"); } catch (_) { toast("复制失败，请手动复制"); } }
     t.disabled = false;
   }
