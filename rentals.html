@@ -452,7 +452,8 @@ async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x
   const box=document.getElementById("cm");if(!box||DX!==x||!HowzuCommute.rows(pt).length)return;cmRender(x,pt);box.hidden=false;
   try{const [zp,zs]=await (window.ZP=window.ZP||Promise.all(["zones_primary","zones_secondary"].map(n=>fetch(`data/${n}.json`).then(r=>r.json()))));
     const P=HowzuCommute.zonesAt(zp,pt),S=HowzuCommute.zonesAt(zs,pt),a=document.getElementById("cmZ");if(!a||DX!==x||!(P.length||S.length))return;
-    const nm=v=>v.map(z=>esc(z.name)).join("、");
+    let byNo={};try{const sc=await (window.SCH=window.SCH||fetch("data/schools.json").then(r=>r.json()));byNo=Object.fromEntries(sc.map(s=>[s.no,s]));}catch(_){}
+    const nm=v=>v.map(z=>esc(z.name)+(byNo[z.no]&&byNo[z.no].vce_med?`<small style="font-weight:500;margin-left:4px">VCE ${byNo[z.no].vce_med}</small>`:"")).join("、");
     a.innerHTML=`<span>🏫 对口公立学校</span>${P.length?`<b><small>小学</small>${nm(P)}</b>`:""}${S.length?`<b><small>中学</small>${nm(S)}</b>`:""}<em>看排名和周边学校 ›</em>`;a.hidden=false;const zg=document.getElementById("cmZG");if(zg)zg.hidden=false;}catch(_){window.ZP=null;}
   try{await zoneLayer(x,pt);}catch(_){}}
 // 列表卡片：租客加过自己的学校 / 公司后，每套房显示“到 X 约几分钟”（只用已查到的位置，没查到的后台慢慢查）
