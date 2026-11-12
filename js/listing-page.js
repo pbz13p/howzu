@@ -36,7 +36,7 @@
   const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/]];
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
-    const rest = hs.filter(h => !/^开放看房 /.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
+    const rest = hs.filter(h => !/^开放看房 |^不可养宠/.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
     const avail = isLet(x) ? "已租出" : x.available ? String(x.available).replace(/入住$/, "") : "咨询";
     const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] === "定好时间" ? "定时开放" : got["看房"] || "预约看房"]];
     return { cells, rest };
@@ -190,7 +190,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
       kind: "user", title: "个人发布 · 好租已审核",
       items: [["看房前不转账", "不要先付定金或押金"], ["押金交 RTBA", "不交现金给个人"], ["签标准合同", "维州 CAV 标准租约"]],
       note: "这是房东或租客自己发布的房源，好租只做了信息审核。",
-      guide: "/guide/bond.html",
+      guide: "/guide/first-rental.html#scam", guideText: "怎么识别租房骗局？看防骗 6 招 ›",
     };
     const n = +letCount || 0;
     return {

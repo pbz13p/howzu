@@ -50,9 +50,12 @@
       title: x.title || "",
       facts: [room, x.suburb].filter(Boolean).join(" · "),
       meta: [av, x.furnished].filter(Boolean).join(" · "),
-      tags: (x.highlights || []).filter(h => !String(h).startsWith(SLOT_PREFIX)).slice(0, 4)
+      tags: splitTags(x.highlights).real.filter(h => !h.startsWith(SLOT_PREFIX)).slice(0, 4)
     };
   }
-  const api = { chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
+  // 结构化标签（类型/押金/租期/看房/宠物）和真正的“亮点”分开：自动写标题只用真亮点，结构化的放进“房子”信息里
+  const INFO_RE = /^(类型|押金|租期|看房|开放看房) |^不?可养宠物$/;
+  function splitTags(h) { const a = (h || []).map(String); return { real: a.filter(x => !INFO_RE.test(x)), info: a.filter(x => INFO_RE.test(x)) }; }
+  const api = { splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);

@@ -171,7 +171,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .perks .pk{text-decoration:none;color:inherit;background:#fff;border:1px solid #e6e2d8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .perks b{font-size:14px}.perks span{font-size:12.5px;color:#6b726f;line-height:1.4}
 .perks .pk u{text-decoration:none;color:var(--accent);font-weight:600;white-space:nowrap}
-@media (max-width:950px){.perks{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}.perks .pk{flex:0 0 72%;scroll-snap-align:start}}
+@media (max-width:950px){.perks{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px;scroll-padding:0 16px;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}.perks .pk{flex:0 0 72%;scroll-snap-align:start}}
 .dt .tr{margin:2px 0 14px;border-radius:14px;background:#f2f7f4;padding:12px 14px 11px}.dt .tr.u{background:#fbf6ec}
 .dt .tr-h{display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#0f6b4f;margin-bottom:9px}.dt .tr.u .tr-h{color:#8a5a12}.dt .tr-h svg{flex:none}
 .dt .tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dt .tr-g div{min-width:0}.dt .tr-g b{display:block;font-size:13px;font-weight:600;color:#1d2321}.dt .tr-g small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:1px}
@@ -269,7 +269,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261112d"></script>
+<script src="js/listing-page.js?v=20261112f"></script>
 <script src="js/share.js?v=20261112"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="js/enquire.js?v=20261112d"></script>
@@ -424,7 +424,7 @@ async function commute(x){if(!window.HowzuCommute||!x.address)return;const pt=(x
     a.innerHTML=`<span>🏫 对口公立学校</span>${P.length?`<b><small>小学</small>${nm(P)}</b>`:""}${S.length?`<b><small>中学</small>${nm(S)}</b>`:""}<em>看排名和周边学校 ›</em>`;a.hidden=false;const zg=document.getElementById("cmZG");if(zg)zg.hidden=false;}catch(_){window.ZP=null;}}
 function trustBox(x){if(!window.ListingPage||!ListingPage.trust||isLet(x))return "";const T=ListingPage.trust(x,L.filter(isLet).length);
   const ic=T.kind==="own"?'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>':'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>';
-  return `<div class="tr${T.kind==="user"?" u":""}"><div class="tr-h">${ic}${esc(T.title)}</div><div class="tr-g">${T.items.map(([b,s])=>`<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note?`<div class="tr-n"><span>${esc(T.note)}</span>${T.cases?`<button data-cases>看成交案例 ›</button>`:""}</div>`:""}${T.guide?`<a class="tr-l" href="${esc(T.guide.replace(/^\//,""))}">押金怎么交、怎么退？看中文指南 ›</a>`:""}</div>`;}
+  return `<div class="tr${T.kind==="user"?" u":""}"><div class="tr-h">${ic}${esc(T.title)}</div><div class="tr-g">${T.items.map(([b,s])=>`<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note?`<div class="tr-n"><span>${esc(T.note)}</span>${T.cases?`<button data-cases>看成交案例 ›</button>`:""}</div>`:""}${T.guide?`<a class="tr-l" href="${esc(T.guide.replace(/^\//,""))}">${esc(T.guideText||"押金怎么交、怎么退？看中文指南 ›")}</a>`:""}</div>`;}
 function openDetail(x,noPush){
   DX=x;DI=0;if(!isLet(x)&&window.HowzuFav&&HowzuFav.seen){RECENT=HowzuFav.seen(RECENT,x.id);HowzuFav.saveR(localStorage,RECENT);}const P=x.photos||[];
   const f=[x.beds!=null?`🛏 ${x.beds} 房`:"",x.baths!=null?`🛁 ${x.baths} 卫`:"",x.cars!=null?`🚗 ${x.cars?x.cars+" 车位":"无车位"}`:""].filter(Boolean).join("　");

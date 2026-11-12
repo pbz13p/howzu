@@ -17,6 +17,7 @@ ok("押金金额", F.bondText(650, "4 周") === "押金 ≈ $2,600" && F.bondTex
 const pv = F.previewLines({ kind: "整套出租", beds: 2, baths: 1, cars: 1, suburb: "Carlton", rent_weekly: 650, title: "Carlton 两房", available: "2026-12-01", furnished: "带家具", highlights: ["a", "b", "c", "d", "e"] });
 ok("预览：价格/房型/入住", pv.price === "$650" && pv.facts === "2 房 · 1 卫 · 1 车位 · Carlton" && pv.meta === "12 月 1 日入住 · 带家具" && pv.tags.length === 4);
 ok("预览：单间 + 马上 + 没租金", (q => q.facts === "单间" && q.meta === "马上入住" && q.price === "租金面议")(F.previewLines({ kind: "单间出租", beds: 1, baths: 1, available: "马上" })));
+ok("预览：押金/租期/类型等标签不当亮点小标签显示（和上线后一致）", F.previewLines({ beds: 1, baths: 1, highlights: ["类型 公寓", "押金 4 周", "近电车"] }).tags.join() === "近电车");
 ok("预览：没选日期不显示", F.previewLines({ beds: 1, baths: 1, available: "选日期" }).meta === "");
 // ---- 后台审核自动检查 ----
 const A = require("../js/admin-check.js");
@@ -47,4 +48,6 @@ if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit
 const ws = F.withSlots(["近火车站", "开放看房 2026-01-01 10:00"], ["2026-11-16T10:00", "", "bad", "2026-11-15T11:00", "2026-11-16T10:00"]);
 ok("开放看房：排序、去重、去坏值、替换旧的", JSON.stringify(ws) === JSON.stringify(["开放看房 2026-11-15 11:00", "开放看房 2026-11-16 10:00", "近火车站"]));
 ok("开放看房：最多 3 个", F.withSlots([], ["2026-11-15T09:00", "2026-11-15T10:00", "2026-11-15T11:00", "2026-11-15T12:00"]).length === 3);
+{ const st = F.splitTags(["类型 公寓", "押金 4 周", "租期 12 个月", "看房 视频看房", "开放看房 2026-11-15 11:00", "不可养宠物", "近火车站", "包网"]);
+  ok("自动写标题：结构化标签不当亮点，真亮点保持顺序", st.real.join() === "近火车站,包网" && st.info.length === 6); }
 console.log("发房源表单测试全部通过");

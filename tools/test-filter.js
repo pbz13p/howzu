@@ -12,6 +12,7 @@ ok(ids(L.filter(x => F.match(x, {}))) === "abcd", "空条件全部显示");
 ok(ids(L.filter(x => F.match(x, { beds: "2" }))) === "bd" && ids(L.filter(x => F.match(x, { beds: "3" }))) === "c", "卧室数：2 房、3 房+");
 ok(ids(L.filter(x => F.match(x, { feat: ["furn"] }))) === "ac", "带家具：字段 true 或介绍写'家具齐全'；false 不算");
 ok(ids(L.filter(x => F.match(x, { feat: ["car"] }))) === "bd", "车位：cars>0 或介绍写'含车位'；'无车位'不算");
+ok(!F.match({ highlights: ["不可养宠物"] }, { feat: ["pet"] }), "可养宠物：发房源选了“不可养宠物”的不算");
 ok(ids(L.filter(x => F.match(x, { feat: ["pet"] }))) === "b", "可养宠物：写'no pets'的不算");
 ok(ids(L.filter(x => F.match(x, { feat: ["gym"] }))) === "a", "泳池/健身房看亮点");
 ok(ids(L.filter(x => F.match(x, { feat: ["furn", "car"] }))) === "", "多个条件同时满足");

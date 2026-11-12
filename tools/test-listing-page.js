@@ -14,7 +14,8 @@ ok("已租出：noindex、无电话栏", let_.includes("noindex") && !let_.inclu
 ok("没照片用默认分享图", LP.ogImage({}) === "https://howzu.com.au/icons/og-share.jpg");
 ok("描述不超过 110 字", LP.ogDesc({ ...x, desc: "长".repeat(300) }).length <= 110);
 const sm = LP.sitemap([x, { ...x, id: "b", status: "let" }]);
-ok("信任卡片链到押金指南", LP.trust({id:"a"},3).guide==="/guide/bond.html" && LP.trust({id:"b",user:1},0).guide==="/guide/bond.html");
+ok("信任卡片链到押金指南", LP.trust({id:"a"},3).guide==="/guide/bond.html" && LP.trust({id:"b",user:1},0).guide==="/guide/first-rental.html#scam");
+ok("个人房源防骗链接指向真实存在的“防骗 6 招”小节", require("fs").readFileSync(require("path").join(__dirname,"..","guide","first-rental.html"),"utf8").includes('id="scam"') && /防骗/.test(LP.trust({user:1},0).guideText));
 ok("sitemap 收录租房指南", sm.includes("guide/bond.html") && sm.includes("guide/apply.html"));
 const sm2 = LP.sitemap([x], ["cgt-discount.html", "bond.html", "../evil.html"]);
 ok("sitemap 自动收录 guide 目录文章且不重复、不收怪文件名", sm2.includes("guide/cgt-discount.html") && sm2.split("guide/bond.html").length === 2 && !sm2.includes("evil"));
@@ -37,6 +38,8 @@ ok("房屋信息：车位 0 写'无'，房型从标题认出公寓", s1["车位"
 const s2 = SP({ title: "Box Hill 48 层 一房", beds: 0, furnished: false, highlights: ["类型 联排别墅", "押金 4 周", "租期 12 个月", "包水费", "包网", "可养宠物", "看房 视频看房"], desc: "有电梯和健身房，no smoking" });
 ok("房屋信息：发房源的选项（类型/押金/租期/看房）直接用", s2["类型"] === "联排别墅" && s2["押金"] === "4 周" && s2["租期"] === "12 个月" && s2["看房"] === "视频看房");
 ok("房屋信息：开间、不带家具、包水网、可养宠、楼层、设施", s2["卧室"] === "开间 Studio" && s2["家具"] === "不带家具" && s2["包水电网"] === "包水、网费" && s2["宠物"] === "可以" && s2["楼层"] === "48 层" && s2["设施"] === "电梯、健身房");
+ok("房屋信息：发房源选了“不可养宠物”就写不可以", SP({ highlights: ["不可养宠物"] })["宠物"] === "不可以");
+ok("亮点：“不可养宠物”不当亮点显示（房屋信息表里有）", LP.keyFacts({ highlights: ["不可养宠物", "近电车"] }).rest.join() === "近电车");
 ok("房屋信息：写了 no pets 就是不可以", SP({ desc: "No pets please" })["宠物"] === "不可以");
 ok("关键信息栏：'类型'标签不再当亮点重复显示", !LP.keyFacts({ highlights: ["类型 公寓", "近火车站"] }).rest.includes("类型 公寓"));
 const CP = LP.compare([x, { suburb: "Carlton", beds: 1, rentWeekly: null, title: "公寓" }, x, x]);
