@@ -18,3 +18,23 @@ create policy "own or super read requests" on public.access_requests for select 
 drop policy if exists "super delete requests" on public.access_requests;
 create policy "super delete requests" on public.access_requests for delete to authenticated using (public.is_super());
 grant select, insert, update, delete on public.access_requests to authenticated;
+
+-- 有人提交申请时，发邮件通知老板（经 ntfy.sh 转发邮件，不用另开账号）。邮件里的链接直接打开工作台审批页。
+-- 运行前把下面的 你的邮箱@example.com 换成老板邮箱。
+create extension if not exists pg_net;
+create or replace function public.notify_access_request() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  perform net.http_post(
+    url := 'https://ntfy.sh/',
+    body := jsonb_build_object(
+      'topic', 'howzu-approve-ca31ae596221c70ccb',
+      'title', '好租工作台：有人申请开通账号',
+      'message', coalesce(new.name, '（没填称呼）') || ' ' || new.email || coalesce(E'\n说明：' || new.note, '') || E'\n点链接登录工作台审批（批准前对方看不到任何内部资料）。',
+      'click', 'https://howzu.com.au/work.html?tab=staff',
+      'email', '你的邮箱@example.com'),
+    headers := '{"Content-Type": "application/json"}'::jsonb);
+  return new;
+end $$;
+drop trigger if exists access_request_notify on public.access_requests;
+create trigger access_request_notify after insert on public.access_requests for each row execute function public.notify_access_request();

@@ -104,7 +104,7 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "
 const sb = createClient(H.SUPABASE_URL, H.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
 window.HOWZU_SB = sb; // 给 tracker 同步脚本用（js/work-sync.js）
 const PUBLIC_IMG = p => /^https?:|^data:/.test(p) ? p : "/" + String(p).replace(/^\//, "");
-let ALL = [], P = [], tab = "stats", filt = "all", q = "", cur = null, me = "", SUPER = false, MY = [], ORGS = [], org = "all";
+let ALL = [], P = [], tab = (["stats", "props", "review", "staff"].includes(new URLSearchParams(location.search).get("tab")) ? new URLSearchParams(location.search).get("tab") : "stats"), filt = "all", q = "", cur = null, me = "", SUPER = false, MY = [], ORGS = [], org = "all";
 const canWrite = o => SUPER || MY.some(m => m.org_id === o && m.role !== "viewer");
 const toast = t => { const e = $("#toast"); e.textContent = t; e.style.display = "block"; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = "none", 2200); };
 const tabs = () => [["stats", "📊 统计"], ["props", "🏠 房源"], ...(SUPER ? [["review", "📝 用户发布审核"], ["staff", "👥 账号与区块"]] : [])];
