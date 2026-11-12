@@ -80,4 +80,8 @@ console.log(fail ? `listing-page：${fail} 项失败` : "listing-page：全部�
   ok("房屋信息：选了都不包 → 不包，租客自付（不误读成包水电网）", s["包水电网"] === "不包，租客自付");
   ok("关键信息栏：不包水电网不当亮点", !LP.keyFacts({ highlights: ["不包水电网", "近火车站"] }).rest.includes("不包水电网")); }
 ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 周（约 $2,600）" && LP.bondWithAmt("1 个月", 650) === "1 个月（约 $2,817）" && LP.bondWithAmt("面议", 650) === "面议" && LP.bondWithAmt("4 周", 0) === "4 周" && LP.specs({ rentWeekly: 500, highlights: ["押金 4 周"] }).find(r => r[0] === "押金")[1] === "4 周（约 $2,000）");
+{ const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
+  ok("租房页：已租出详情弹窗有『留下需求』按钮，点了预填并记录来源", /isLet\(x\)&&window\.ListingPage&&ListingPage\.leadUrl\?`<button class="letlead" data-letlead/.test(r) && r.includes("fillLead(new URLSearchParams(ListingPage.leadUrl(x)") && r.includes('LEADF?"?lf="+encodeURIComponent(LEADF)') && (r.match(/let LF\b/g) || []).length === 1 && /isLet\(x\)\?\(window\.ListingPage&&ListingPage\.leadUrl\?`<button class="btn pri" data-letlead/.test(r)); }
+{ const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
+  ok("租房页：成交案例超过 6 套先露 4 套，可展开；『看成交案例』直接展开全部", r.includes("(LETALL||done.length<=6?done:done.slice(0,4))") && r.includes("data-letmore") && r.includes('closeDetail();LETALL=true;')); }
 process.exit(fail ? 1 : 0);

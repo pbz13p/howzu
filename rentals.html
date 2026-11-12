@@ -57,6 +57,8 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .price b{font-weight:600}
 .filters{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -16px 12px;padding:0 16px}
 .filters::-webkit-scrollbar{display:none}
+#list .letmore{grid-column:1/-1;display:block;width:100%;font:inherit;font-size:14px;font-weight:600;color:var(--accent);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;margin-top:2px}#list .letmore i{font-style:normal;opacity:.6}
+.letlead{display:block;width:100%;text-align:left;font:inherit;font-size:14px;line-height:1.5;color:#2f5f4f;background:#eef6f2;border:1px solid #d3e7dd;border-radius:14px;padding:13px 15px;margin:14px 0 4px;cursor:pointer}.letlead b{display:block;font-size:15px;color:#1f4a3c;margin-bottom:2px}
 @media (max-width:560px){.filters{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}}
 #list .sec{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;margin:14px 0 -6px;padding-top:22px;border-top:1px solid var(--line)}
 #list .sec b{font-size:17px;font-weight:600;color:var(--ink)}
@@ -283,7 +285,7 @@ const $=s=>document.querySelector(s);
 let LIVE=[],MAPON=false,LM=null,LMG=null,LMseq=0;
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const preview=new URLSearchParams(location.search).has("preview");
-let L=[],C={},F="all";const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
+let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
 const isNow=x=>x.status!=="let"&&/尽快|马上|即|now/i.test(x.available||"");
 const isLet=x=>x.status==="let";
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
@@ -337,7 +339,7 @@ function render(){
   filterUI(base,live.length,act);LIVE=live;if(MAPON)listMap();
   const sec=(live.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
   const cmpN=F==="fav"&&window.ListingPage&&ListingPage.compare?Math.min(3,live.length):0;
-  $("#list").innerHTML=list.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+sec+done.map(card).join(""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
+  $("#list").innerHTML=list.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+sec+(LETALL||done.length<=6?done:done.slice(0,4)).map(card).join("")+(!LETALL&&done.length>6?`<button class="letmore" data-letmore>查看全部 ${done.length} 套成交案例 <i>›</i></button>`:""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
   favChip();recentRow();
 }
 
@@ -374,7 +376,7 @@ let DX=null,DI=0;
 function contactBtns(x){const tel=x.phone||C.phone,wx=x.wechat||C.wechat,id=esc(x.id);const telTxt=tel?String(tel).replace(/^(\d{4})(\d{3})(\d{3})$/,"$1 $2 $3"):"";const msg=HowzuEnquire.askMsg(x);
   return (wx?`<button class="btn ghost" data-wx="${esc(wx)}" data-act="wechat" data-id="${id}">💬 <span class="mob">微信</span><span class="desk">微信 ${esc(wx)}</span></button>`:tel?`<a class="btn ghost mob" href="${esc(HowzuEnquire.smsHref(tel,msg))}" data-act="sms" data-id="${id}">💬 短信</a>`:"")
    +(tel?`<a class="btn ghost" href="tel:${esc(tel)}" data-act="call" data-id="${id}">📞 <span class="mob">电话</span><span class="desk">${esc(telTxt)}</span></a>`:"")
-   +(isLet(x)||!(tel||wx)?"":`<button class="btn pri" data-book data-act="book" data-id="${id}">📅 预约看房</button>`);}
+   +(isLet(x)?(window.ListingPage&&ListingPage.leadUrl?`<button class="btn pri" data-letlead="${id}" data-act="lead" data-id="${id}">🔔 有空房通知我</button>`:""):!(tel||wx)?"":`<button class="btn pri" data-book data-act="book" data-id="${id}">📅 预约看房</button>`);}
 // 详情页直接显示房东定好的开放看房时间（对标 realestate 的 Inspection times），点一个直接打开预约并选中它
 function insRow(x){if(!window.HowzuEnquire||!HowzuEnquire.viewPlan)return "";const P=HowzuEnquire.viewPlan(x);if(P.mode!=="fixed")return "";
   return `<div class="ins"><span>开放看房</span>${P.slots.slice(0,4).map(o=>`<button data-ins="${o.ymd}${o.t}">${esc(o.label)} ${esc(o.sub)}</button>`).join("")}</div>`;}
@@ -446,6 +448,7 @@ function openDetail(x,noPush){
     ${isLet(x)?"":`<div class="cm" id="cm" hidden><div class="cm-h">🎓 通勤和学区 <small>按直线距离估算，实际以地图为准</small></div><div class="cm-g" id="cmG"></div><a class="cm-z" id="cmZ" hidden href="index.html?q=${encodeURIComponent(x.address)}"></a><a class="cm-zg" id="cmZG" hidden href="guide/school-zone.html">租约能用来给孩子报名吗？<u>按学区租房指南 ›</u></a></div><div class="mp" id="mp" hidden><div class="cm-h">📍 位置和周边 <small>大致位置，门牌号看房时告知</small></div><div class="mp-m" id="mpM"></div><div class="mp-l" id="mpL"></div></div>`}
     ${x.desc?`<div class="dt-desc">${esc(x.desc)}</div>`:`<div class="dt-desc muted">房东还没有写介绍，欢迎直接联系咨询。</div>`}
     <div class="acts2"><a href="index.html?q=${encodeURIComponent(x.address)}">🏫 看对口学区</a>${isLet(x)?"":`<button data-share="${esc(x.id)}">📤 转发给朋友</button>${favBtn(x,"favd")}`}</div>
+    ${isLet(x)&&window.ListingPage&&ListingPage.leadUrl?`<button class="letlead" data-letlead="${esc(x.id)}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</button>`:""}
     <div class="acts">${contactBtns(x)}</div>
    </div></div>`;
   document.body.appendChild(m);document.body.style.overflow="hidden";
@@ -481,7 +484,7 @@ document.addEventListener("click",e=>{
     const w=t.closest("[data-wx]");if(w){copy(w.dataset.wx);toast(`已复制微信号 ${w.dataset.wx}，打开微信 → 添加朋友 → 粘贴`);return;}
     if(t.closest("[data-book]"))return openBook();
     const ib=t.closest("[data-ins]");if(ib){openBook();document.querySelectorAll("#bkS button").forEach(b=>b.classList.toggle("on",b.dataset.d+b.dataset.t===ib.dataset.ins));return;}
-    if(t.closest("[data-cases]")){closeDetail();if(F!=="all"||(HF&&HF.active(S)))clearF();requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
+    if(t.closest("[data-cases]")){closeDetail();LETALL=true;if(F!=="all"||(HF&&HF.active(S)))clearF();else render();requestAnimationFrame(()=>{const sc=document.querySelector("#list .sec"),nv=document.querySelector("nav");if(sc)scrollTo({top:sc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12,behavior:"smooth"});});return;}
     if(t.closest("[data-bkx]")||t.id==="bk")return document.getElementById("bk").remove();
     const bd=t.closest("#bkD button,#bkT button,#bkS button");if(bd){bd.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===bd));return;}
     if(t.closest("[data-ics]")){const [d,tm]=bkPick();const tel=DX.phone||C.phone;const u=URL.createObjectURL(new Blob([HowzuEnquire.ics(DX,d,tm,{tel})],{type:"text/calendar"}));const a=document.createElement("a");a.href=u;a.download=`howzu-${DX.id}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);document.getElementById("bkN").textContent="已生成日历提醒（提前 1 小时）。别忘了点「发送预约」告诉我们。";return;}
@@ -511,11 +514,19 @@ $("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if
 $("#fsum").addEventListener("change",e=>{if(e.target.id==="fSort"){S.sort=e.target.value;render();}});
 $("#filters").addEventListener("change",e=>{const t=e.target;if(t.id==="fArea")S.area=t.value;else if(t.id==="fRent")S.rent=t.value;else if(t.id==="fSort")S.sort=t.value;render();});
 document.addEventListener("click",e=>{if(e.target.closest("[data-fclr]")){e.preventDefault();clearF();}});
+// 成交案例默认只露 4 套，免得 20 多套已租出把"留下需求"和页脚压到很下面
+document.addEventListener("click",e=>{if(e.target.closest("[data-letmore]")){LETALL=true;render();}});
 // 留需求：存进后台（listings 表 kind=求租需求，公众看不到）
 ["#lBeds","#lWhen"].forEach(g=>$(g).addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const on=!b.classList.contains("on");document.querySelectorAll(g+" button").forEach(x=>x.classList.remove("on"));b.classList.toggle("on",on);}));
 // 从已租出房源页"留下需求"过来：区域、房型按那套房预先填好（?la=CBD&lb=2 房&lf=房源id）
-const LQ=new URLSearchParams(location.search);(()=>{const a=LQ.get("la"),bd=LQ.get("lb");if(a&&!$("#lArea").value)$("#lArea").value=a.slice(0,40);if(bd&&document.querySelector(`#lBeds [data-v="${CSS.escape(bd)}"]`))document.querySelectorAll("#lBeds button").forEach(x=>x.classList.toggle("on",x.dataset.v===bd));})();
-$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on"),w=document.querySelector("#lWhen .on");f.beds=b?b.dataset.v:"";f.when=w?w.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:LQ.get("lf")?"?lf="+LQ.get("lf"):"");
+const LQ=new URLSearchParams(location.search);let LEADF=LQ.get("lf")||"";
+function fillLead(Q,force){const a=Q.get("la"),bd=Q.get("lb");if(a&&(force||!$("#lArea").value))$("#lArea").value=a.slice(0,40);if(bd&&document.querySelector(`#lBeds [data-v="${CSS.escape(bd)}"]`))document.querySelectorAll("#lBeds button").forEach(x=>x.classList.toggle("on",x.dataset.v===bd));}
+fillLead(LQ);
+// 租房页里点开已租出房源 → 一键跳到"留下需求"，区域、房型已按那套房填好
+document.addEventListener("click",e=>{const b=e.target.closest("[data-letlead]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.letlead);if(!x)return;
+  fillLead(new URLSearchParams(ListingPage.leadUrl(x).split("?")[1].split("#")[0]),true);LEADF=String(x.id);closeDetail();
+  const c=document.getElementById("leadCard");if(c){c.scrollIntoView({behavior:"smooth",block:"start"});const i=$("#lContact");if(i)setTimeout(()=>i.focus({preventScroll:true}),450);}});
+$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on"),w=document.querySelector("#lWhen .on");f.beds=b?b.dataset.v:"";f.when=w?w.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:LEADF?"?lf="+encodeURIComponent(LEADF):"");
   const btn=e.target.querySelector(".go"),err=$("#lErr");btn.disabled=true;btn.textContent="提交中…";err.hidden=true;
   const r=await HowzuLead.submit(f);
   if(r.ok){$("#leadCard").innerHTML=`<div class="done"><div style="font-size:34px">✓</div><b>收到，有合适的房源会第一时间联系你</b><p class="sub">一般 1 个工作日内回复。也可以先看看上面的在租房源。</p></div>`;return;}
