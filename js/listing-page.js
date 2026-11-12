@@ -172,6 +172,7 @@ ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同�
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
 <p class="trust">好租 Howzu · 持牌物业管理 · 全程中文服务</p>
 </main>
+${isLet(x) ? `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${esc(x.id)}">看在租房源</a><a class="p" href="${esc(leadUrl(x))}" data-act="lead" data-id="${esc(x.id)}">🔔 同楼或附近有空房通知我</a></div></nav>` : ""}
 ${isLet(x) || !tel ? "" : `<nav class="bar"><div><a class="g" href="sms:${esc(tel)}?&amp;body=${msg}" data-act="sms" data-id="${esc(x.id)}">💬 短信</a><a class="g" href="tel:${esc(tel)}" data-act="call" data-id="${esc(x.id)}">📞 电话</a><a class="p" href="${esc(full)}#book" data-act="book" data-id="${esc(x.id)}">📅 预约看房</a></div></nav>`}
 ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信咨询：${esc(wx)}</a></div></nav>` : ""}
 </body>
