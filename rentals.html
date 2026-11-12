@@ -278,7 +278,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261113a"></script>
+<script src="js/listing-page.js?v=20261113b"></script>
 <script src="js/share.js?v=20261112"></script>
 <script src="js/lead.js?v=20261112"></script>
 <script src="js/enquire.js?v=20261112d"></script>
@@ -294,7 +294,7 @@ const preview=new URLSearchParams(location.search).has("preview");
 let L=[],C={},F="all",LETALL=false;const S={beds:"",feat:[],area:"",rent:"",sort:""};const HF=window.HowzuFilter;
 const isNow=x=>x.status!=="let"&&ListingPage.availNow(x.available);
 const isLet=x=>x.status==="let";
-const AREA_G={"Melbourne CBD":"area-melbourne-cbd","Melbourne":"area-melbourne-cbd","Carlton":"area-carlton","Southbank":"area-southbank","Docklands":"area-docklands"};
+const AREA_G={"Melbourne CBD": "area-melbourne-cbd", "Melbourne": "area-melbourne-cbd", "Carlton": "area-carlton", "Southbank": "area-southbank", "Docklands": "area-docklands", "Box Hill": "area-box-hill", "Clayton": "area-clayton", "Glen Waverley": "area-glen-waverley", "Burwood": "area-burwood", "North Melbourne": "area-north-melbourne", "Parkville": "area-parkville", "South Yarra": "area-south-yarra", "Hawthorn": "area-hawthorn", "Footscray": "area-footscray", "Brunswick": "area-brunswick", "Caulfield East": "area-caulfield", "Doncaster": "area-doncaster"};
 const untilTxt=x=>x.leaseEnd?`现租约到 ${+x.leaseEnd.slice(0,4)} 年 ${+x.leaseEnd.slice(5,7)} 月`:"已租出";
 function phImg(x){const P=[["#3f6f60","#7fa595"],["#4a5f73","#8c9fb1"],["#7a6a55","#b3a38c"],["#56665a","#97a596"],["#5e6670","#a2a9b1"],["#6d6253","#a99c8a"]];let h=0;for(const c of (x.suburb||x.id))h=(h*31+c.charCodeAt(0))>>>0;const [a,b]=P[h%P.length];
   const t=(x.title||"").split("·")[0].trim().replace(/[<&]/g,"");const r=[x.beds!=null?x.beds+" 房":"",x.baths!=null?x.baths+" 卫":""].filter(Boolean).join(" · ");

@@ -220,7 +220,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`;
   }
   // 区域租房指南（guide/area-*.html，由 tools/area_pages.py 生成）
-  const AREA_G = { "Melbourne CBD": "area-melbourne-cbd", "Melbourne": "area-melbourne-cbd", "Carlton": "area-carlton", "Southbank": "area-southbank", "Docklands": "area-docklands" };
+  const AREA_G = {"Melbourne CBD": "area-melbourne-cbd", "Melbourne": "area-melbourne-cbd", "Carlton": "area-carlton", "Southbank": "area-southbank", "Docklands": "area-docklands", "Box Hill": "area-box-hill", "Clayton": "area-clayton", "Glen Waverley": "area-glen-waverley", "Burwood": "area-burwood", "North Melbourne": "area-north-melbourne", "Parkville": "area-parkville", "South Yarra": "area-south-yarra", "Hawthorn": "area-hawthorn", "Footscray": "area-footscray", "Brunswick": "area-brunswick", "Caulfield East": "area-caulfield", "Doncaster": "area-doncaster"};
   const safeId = id => /^[\w-]+$/.test(String(id || ""));
 
   // 信任信息：自管房源讲清楚我们的保障；个人发布的房源给防骗提醒（不替私人房东做承诺）

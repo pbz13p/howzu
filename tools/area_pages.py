@@ -25,6 +25,18 @@ AREAS=[
  dict(slug="area-southbank",name="Southbank",en="Southbank",sub="Southbank",lat=-37.8226,lng=144.9646,ftz="不在免费电车区内（免费区南边界是 Flinders St），过河进城坐电车要刷 myki；步行过桥到 Flinders Street 车站一般十几分钟。"),
  dict(slug="area-docklands",name="Docklands",en="Docklands",sub="Docklands",lat=-37.8160,lng=144.9460,ftz="大部分在免费电车区内：在 Docklands 和 CBD 之间坐电车不用刷 myki。"),
  dict(slug="area-carlton",name="Carlton",en="Carlton",sub="Carlton",lat=-37.8001,lng=144.9671,ftz="不在免费电车区内（免费区北边界在 Victoria St 一带），往南进城坐电车要刷 myki；步行到 CBD 北部一般十几分钟。"),
+ dict(slug="area-box-hill",name="Box Hill",en="Box Hill",sub="Box Hill",lat=-37.8189,lng=145.125,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-clayton",name="Clayton",en="Clayton",sub="Clayton",lat=-37.9245,lng=145.1196,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-glen-waverley",name="Glen Waverley",en="Glen Waverley",sub="Glen Waverley",lat=-37.8781,lng=145.1648,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-burwood",name="Burwood",en="Burwood",sub="Burwood",lat=-37.85,lng=145.115,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-north-melbourne",name="North Melbourne",en="North Melbourne",sub="North Melbourne",lat=-37.799,lng=144.946,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-parkville",name="Parkville",en="Parkville",sub="Parkville",lat=-37.787,lng=144.951,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-south-yarra",name="South Yarra",en="South Yarra",sub="South Yarra",lat=-37.838,lng=144.992,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-hawthorn",name="Hawthorn",en="Hawthorn",sub="Hawthorn",lat=-37.822,lng=145.035,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-footscray",name="Footscray",en="Footscray",sub="Footscray",lat=-37.8,lng=144.9,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-brunswick",name="Brunswick",en="Brunswick",sub="Brunswick",lat=-37.767,lng=144.962,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-caulfield",name="Caulfield East",en="Caulfield East",sub="Caulfield East",lat=-37.876,lng=145.042,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
+ dict(slug="area-doncaster",name="Doncaster",en="Doncaster",sub="Doncaster",lat=-37.788,lng=145.124,ftz="不在免费电车区内：坐火车、电车、公交都要刷 myki。"),
 ]
 def km(a,b,c,d):
     r=6371;p=math.pi/180;x=(d-b)*p*math.cos((a+c)/2*p);y=(c-a)*p;return r*math.hypot(x,y)
@@ -45,7 +57,7 @@ for A in AREAS:
     pzl="、".join(zl(z) for z in pz) or "（按具体地址查）"
     lst="".join(f'<li><a href="/rentals.html?id={x["id"]}">{html.escape(x["title"])}</a></li>' for x in live)
     sm=[f"{A['ftz']}",
-        f"到墨尔本大学约 <b>{km(A['lat'],A['lng'],UNIS[0][1],UNIS[0][2]):.1f} 公里</b>、到 RMIT 约 <b>{km(A['lat'],A['lng'],UNIS[1][1],UNIS[1][2]):.1f} 公里</b>（直线距离）。",
+        (lambda nu: f"离这里最近的大学是 <b>{nu[0]}</b>（直线约 {nu[1]:.1f} 公里）；到墨尔本大学约 {km(A['lat'],A['lng'],UNIS[0][1],UNIS[0][2]):.1f} 公里。")(min(((n,km(A['lat'],A['lng'],a,b)) for n,a,b in UNIS),key=lambda t:t[1])),
         f"区中心点对口的公立中学学区：{szl}。不同街道可能不同，签约前按具体地址查。",
         "租房押金一律交政府 RTBA 托管；申请租房不用付任何申请费。",
         f"好租在 {html.escape(A['name'])} 的在租房源见下方（实时更新）；没有合适的可以留下需求，有新房第一时间通知你。"]
