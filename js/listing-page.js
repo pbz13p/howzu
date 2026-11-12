@@ -33,7 +33,7 @@
   }
   // 关键信息栏：押金 / 可入住 / 租期 / 看房。押金、租期、看房来自发房源时存进 highlights 的标签；
   // 没填的写"咨询"，不编数据。返回 { cells:[[标签,值]], rest:剩下的普通亮点 }
-  const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/]];
+  const KEY = [["押金", /^押金\s*/], ["租期", /^租期\s*/], ["看房", /^看房\s*/], ["类型", /^类型\s*/], ["楼层", /^楼层\s*/]];
   function keyFacts(x) {
     const hs = (x.highlights || []).map(String), got = {};
     const rest = hs.filter(h => !/^开放看房 |^不可养宠/.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
@@ -62,7 +62,7 @@
     return [
       ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
       ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", tag("押金 ") || TBC],
-      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : TBC], ["楼层", floor ? `${floor} 层` : TBC], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
+      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : TBC], ["楼层", tag("楼层 ") || (floor ? `${floor} 层` : TBC)], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
       ["设施", amen.length ? amen.join("、") : TBC],
     ];
   }

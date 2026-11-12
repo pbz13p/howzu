@@ -43,11 +43,20 @@ ok("留需求：字段符合 listings 表限制", lr.title.length >= 4 && lr.tit
 ok("留需求：手机号存进电话栏、单间=0 房", (r => r.contact_phone === "0412 345 678" && r.contact_wechat === null && r.beds === 0)(Ld.leadRow({ contact: "0412 345 678", beds: "单间" })));
 ok("留需求：没留联系方式 → 提示", !!Ld.leadRow({ area: "CBD", contact: " " }).error);
 ok("留需求：预算乱填不报错、区域可空", (r => r.rent_weekly === null && r.address.length >= 5 && /区域不限/.test(r.title))(Ld.leadRow({ budget: "5", contact: "a@b.co" })));
-if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
 // 开放看房时间
 const ws = F.withSlots(["近火车站", "开放看房 2026-01-01 10:00"], ["2026-11-16T10:00", "", "bad", "2026-11-15T11:00", "2026-11-16T10:00"]);
 ok("开放看房：排序、去重、去坏值、替换旧的", JSON.stringify(ws) === JSON.stringify(["开放看房 2026-11-15 11:00", "开放看房 2026-11-16 10:00", "近火车站"]));
 ok("开放看房：最多 3 个", F.withSlots([], ["2026-11-15T09:00", "2026-11-15T10:00", "2026-11-15T11:00", "2026-11-15T12:00"]).length === 3);
 { const st = F.splitTags(["类型 公寓", "押金 4 周", "租期 12 个月", "看房 视频看房", "开放看房 2026-11-15 11:00", "不可养宠物", "近火车站", "包网"]);
   ok("自动写标题：结构化标签不当亮点，真亮点保持顺序", st.real.join() === "近火车站,包网" && st.info.length === 6); }
+{ const h = F.withTag(F.withTag(["近火车站"], "楼层 ", "10–19 层"), "楼层 ", "20 层以上");
+  ok("楼层：点选存成一个结构化标签，改选会替换", h.join() === "楼层 20 层以上,近火车站" && F.splitTags(h).real.join() === "近火车站"); }
+ok("设施：旧草稿里的“有电梯/泳池/健身房”自动转成新设施选项", F.oldAmen({ highlights: ["有电梯", "泳池/健身房", "近大学"] }).join() === "电梯,泳池,健身房" && F.oldAmen({ amen: ["空调"] }).join() === "空调" && F.oldAmen(null).length === 0);
+{ const AC = require("../js/admin-check.js"), LPx = require("../js/listing-page.js");
+  const row = { id: "a1", title: "Carlton 两房", contact_name: "王先生", beds: 2, baths: 1, cars: 0, furnished: "带家具", available: "马上入住", status: "pending", highlights: ["租期 12 个月", "押金 4 周", "不可养宠物", "楼层 4–9 层", "包网", "电梯"], description: "" };
+  const m = AC.missingSpecs(row, LPx);
+  ok("后台：房屋信息待确认项用详情页同一套规则算", m.join() === "类型" && AC.missingSpecs({ ...row, highlights: [] }, LPx).includes("租期"));
+  const t = AC.askOwner(row, ["家具", "租期"]);
+  ok("后台：一键复制问房东的话，带称呼、房源名和缺的项", /^王先生，您好/.test(t) && t.includes("「Carlton 两房」") && t.includes("家具、租期") && AC.askOwner(row, []) === ""); }
+if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
 console.log("发房源表单测试全部通过");

@@ -39,6 +39,19 @@
       `https://howzu.com.au/rentals.html?id=${encodeURIComponent(x.id)}`, "",
       "把这个链接转发到微信群/朋友圈，租客能直接看到照片和租金。有租客会直接联系您；租出去后请回复我们一声，我们帮您标记“已租出”。", "—— 好租 Howzu"].join("\n");
   }
-  const api = { listingIssues, normAddr, shareText, ownerNotice };
+  // 房屋信息里还“待确认”的项（用详情页同一套 ListingPage.specs），审核时一眼看到缺什么
+  function missingSpecs(x, LP) {
+    if (!LP || !LP.specs) return [];
+    const pub = { title: x.title, highlights: x.highlights, desc: x.description, beds: x.beds, baths: x.baths, cars: x.cars, furnished: x.furnished || undefined, available: x.available, status: x.status };
+    return LP.specs(pub).filter(r => r[1] === LP.TBC).map(r => r[0]);
+  }
+  // 一键复制：请房东补齐待确认的信息
+  function askOwner(x, miss) {
+    if (!miss || !miss.length) return "";
+    const name = String(x.contact_name || "").trim(), t = String(x.title || "").trim() || x.address || "您的房源";
+    return [`${name ? name + "，" : ""}您好！您在好租 Howzu 发布的「${t}」还差这几项信息：${miss.join("、")}。`,
+      "麻烦回复一下（比如：带家具、租期 12 个月、不能养宠物），我们帮您补上。信息越全，租客越愿意咨询。", "—— 好租 Howzu"].join("\n");
+  }
+  const api = { listingIssues, normAddr, shareText, ownerNotice, missingSpecs, askOwner };
   if (typeof module === "object" && module.exports) module.exports = api; else root.AdminCheck = api;
 })(this);

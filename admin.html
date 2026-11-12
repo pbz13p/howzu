@@ -21,6 +21,7 @@ main{max-width:720px;margin:0 auto;padding:12px}
 .strip img{height:110px;border-radius:8px}
 .t{font-weight:600;font-size:16px;margin-top:8px}
 .m{font-size:13px;color:var(--muted)}
+.tbc{font-size:13px;color:#8a5a00;background:#fff7e6;border-radius:10px;padding:8px 10px;margin:6px 0;line-height:1.6}.tbc.ok{color:#1d6b4f;background:#eef7f2}.tbc button{margin-left:6px;font:inherit;font-size:12px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid #ecd29a;background:#fff;color:#8a5a00;cursor:pointer}
 .desc{font-size:14px;white-space:pre-wrap;margin:6px 0}
 .edit{margin-top:12px;padding:12px;border-radius:12px;background:#f6f8f7;border:1px solid var(--line, #e4e8e6)}
 .edit label{display:block;font-size:13px;color:#667;margin:10px 0 4px}.edit label:first-child{margin-top:0}.edit small{color:#99a}
@@ -46,7 +47,8 @@ input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border
 <body>
 <header><h1>审核房源</h1></header>
 <main id="app"><div class="empty">加载中…</div></main>
-<script src="js/admin-check.js?v=20261111"></script>
+<script src="js/listing-page.js?v=20261112g"></script>
+<script src="js/admin-check.js?v=20261112"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -81,6 +83,7 @@ async function load() {
       <div class="m">📍 ${esc(x.address)}</div>
       <div class="m">👤 ${esc(x.contact_name || "")} · 微信 ${esc(x.contact_wechat || "—")} · 手机 ${esc(x.contact_phone || "—")}</div>
       <div class="m">${(x.highlights || []).map(esc).join(" · ")}</div>
+      ${x.kind === "求租需求" ? "" : (ms => ms.length ? `<div class="tbc">📋 房屋信息还有 ${ms.length} 项待确认：${ms.map(esc).join("、")} <button class="gr" data-ask="${esc(x.id)}">复制问房东的话</button></div>` : `<div class="tbc ok">📋 房屋信息齐全</div>`)(AdminCheck.missingSpecs(x, window.ListingPage))}
       <div class="desc">${esc(x.description || "")}</div>
       <div class="m">提交于 ${new Date(x.created_at).toLocaleString("zh-CN")}</div>
       <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-notice="${esc(x.id)}">📨 通知房东</button><button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
@@ -111,6 +114,11 @@ document.addEventListener("click", async e => {
   if (b.dataset.notice) {
     const t = AdminCheck.ownerNotice(D[b.dataset.notice] || { id: b.dataset.notice }), old = b.textContent;
     try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制，去微信粘贴给房东"; } catch (_) { prompt("复制下面这段发给房东：", t); }
+    setTimeout(() => b.textContent = old, 2200);
+  }
+  if (b.dataset.ask) {
+    const x = D[b.dataset.ask] || {}, t = AdminCheck.askOwner(x, AdminCheck.missingSpecs(x, window.ListingPage)), old = b.textContent;
+    try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制，去微信发给房东"; } catch (_) { prompt("复制下面这段发给房东：", t); }
     setTimeout(() => b.textContent = old, 2200);
   }
   if (b.dataset.copy) {

@@ -53,9 +53,12 @@
       tags: splitTags(x.highlights).real.filter(h => !h.startsWith(SLOT_PREFIX)).slice(0, 4)
     };
   }
-  // 结构化标签（类型/押金/租期/看房/宠物）和真正的“亮点”分开：自动写标题只用真亮点，结构化的放进“房子”信息里
-  const INFO_RE = /^(类型|押金|租期|看房|开放看房) |^不?可养宠物$/;
+  // 结构化标签（类型/押金/租期/看房/宠物/楼层）和真正的“亮点”分开：自动写标题只用真亮点，结构化的放进“房子”信息里
+  const INFO_RE = /^(类型|押金|租期|看房|开放看房|楼层) |^不?可养宠物$/;
   function splitTags(h) { const a = (h || []).map(String); return { real: a.filter(x => !INFO_RE.test(x)), info: a.filter(x => INFO_RE.test(x)) }; }
-  const api = { splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
+  // 旧草稿：设施以前混在“亮点”里（有电梯 / 有阳台 / 泳池/健身房），换成新的“设施”选项
+  const OLD_AMEN = { "有电梯": ["电梯"], "有阳台": ["阳台"], "泳池/健身房": ["泳池", "健身房"] };
+  function oldAmen(c) { return Array.isArray(c && c.amen) ? c.amen : (c && c.highlights || []).flatMap(h => OLD_AMEN[h] || []); }
+  const api = { oldAmen, splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);
