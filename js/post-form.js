@@ -62,6 +62,12 @@
   function billTags(a) { return (a || []).map(b => b === "都不包" ? "不包水电网" : b); }
   function oldBills(c) { return Array.isArray(c && c.bills) ? c.bills : (c && c.highlights || []).filter(h => /^包(水费|电费|网)$/.test(h)); }
   function oldAmen(c) { return Array.isArray(c && c.amen) ? c.amen : (c && c.highlights || []).flatMap(h => OLD_AMEN[h] || []); }
-  const api = { billTags, oldBills, oldAmen, splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
+  // 澳洲高层公寓房号惯例：3 位房号首位、4 位房号前两位是楼层（2110 → 21 层，305 → 3 层）。只用来帮房东预选，可改。
+  function unitFloor(addr) {
+    const m = String(addr || "").match(/^\s*(?:unit\s*|apt\.?\s*)?(\d{3,4})[a-z]?\s*\//i); if (!m) return null;
+    const n = m[1], f = +(n.length === 3 ? n[0] : n.slice(0, 2)); if (!f) return null;
+    return { unit: n, floor: f, bucket: f <= 3 ? "1–3 层" : f <= 9 ? "4–9 层" : f <= 19 ? "10–19 层" : "20 层以上" };
+  }
+  const api = { unitFloor, billTags, oldBills, oldAmen, splitTags, chipState, withLease, withTag, withSlots, SLOT_PREFIX, move, bondText, todayISO, niceDate, previewLines, LEASE_PREFIX };
   if (typeof module === "object" && module.exports) module.exports = api; else root.PostForm = api;
 })(this);

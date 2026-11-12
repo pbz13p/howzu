@@ -51,6 +51,7 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .badge.draft{background:#fde8e8;color:#a12b2b;top:44px}
 #list .body{padding:10px 2px 0}
 #list .t{font-size:15px;font-weight:600;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#list .cf{display:flex;gap:6px;margin-top:7px;overflow:hidden}#list .cf span{flex:none;font-size:12px;line-height:1;padding:5px 8px;border-radius:6px;background:#f1f3f2;color:#4a524f}
 #list .sub{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #list .price{font-size:15px;color:var(--ink);font-weight:400;margin-top:4px}
 #list .price b{font-weight:600}
@@ -269,7 +270,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/listing-page.js?v=20261112h"></script>
+<script src="js/listing-page.js?v=20261112i"></script>
 <script src="js/share.js?v=20261112"></script>
 <script src="js/lead.js?v=20261111"></script>
 <script src="js/enquire.js?v=20261112d"></script>
@@ -309,7 +310,7 @@ function card(x){
       ${isLet(x)?"":`<button class="sharefab" data-share="${esc(x.id)}" title="分享" aria-label="分享">分享</button>${favBtn(x,"favfab")}`}</div>
     <div class="body"><div class="t">${esc(x.title)}</div>
       <div class="sub">${esc(area)}${f?" · "+f:""}</div>
-      <div class="sub">${esc(when)}</div>
+      <div class="sub">${esc(when)}</div>${(()=>{const k=!isLet(x)&&window.ListingPage&&ListingPage.cardFacts?ListingPage.cardFacts(x):[];return k.length?`<div class="cf">${k.map(v=>`<span>${esc(v)}</span>`).join("")}</div>`:"";})()}
       <div class="price">${price}</div></div></div>`;
 }
 const one=new URLSearchParams(location.search).get("id");

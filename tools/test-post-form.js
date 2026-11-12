@@ -76,4 +76,8 @@ ok("租金包含：“不包水电网”不当亮点", F.splitTags(["不包水�
   ok("配房：区域不限、单间不限房型", ids({ suburb: "墨尔本（区域不限）", beds: 0 }) === "a,c,d");
   const t = AC.leadNotice({ title: "求租 · CBD · 2 房" }, AC.leadMatches({ suburb: "CBD", beds: 2 }, L));
   ok("配房：通知话术带需求和房源链接", t.includes("（CBD · 2 房）") && t.includes("https://howzu.com.au/rentals.html?id=a") && !t.includes("undefined")); }
+{ const UF = require("../js/post-form.js").unitFloor;
+  ok("房号推楼层：2110/138 Spencer St → 21 层 → 20 层以上", UF("2110/138 Spencer St").bucket === "20 层以上" && UF("2110/138 Spencer St").unit === "2110");
+  ok("房号推楼层：305/ → 1–3 层，4803B/ → 20 层以上，1205/ → 10–19 层，601/ → 4–9 层", UF("305/1 A St").bucket === "1–3 层" && UF("4803B/639 Little Lonsdale").bucket === "20 层以上" && UF("1205/2 B St").bucket === "10–19 层" && UF(" 601 / 2 B St").bucket === "4–9 层");
+  ok("房号推楼层：联排小房号、无房号、0 字头都不猜", UF("3/12 Smith St") === null && UF("138 Spencer St") === null && UF("012/3 C St") === null && UF("") === null); }
 if (fail) { console.log(`发房源表单测试失败 ${fail} 项`); process.exit(1); }
