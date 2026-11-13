@@ -15,7 +15,7 @@
    "beds": 2,
    "baths": 1,
    "cars": 0,
-   "rentWeekly": null,
+   "rentWeekly": 810,
    "available": "尽快",
    "furnished": null,
    "photos": [
@@ -43,7 +43,7 @@
    "beds": 1,
    "baths": 1,
    "cars": 0,
-   "rentWeekly": null,
+   "rentWeekly": 680,
    "available": "尽快",
    "furnished": null,
    "photos": [
@@ -75,7 +75,7 @@
    "beds": 2,
    "baths": 1,
    "cars": null,
-   "rentWeekly": null,
+   "rentWeekly": 720,
    "available": "尽快",
    "furnished": null,
    "photos": [
@@ -105,7 +105,7 @@
    "beds": 1,
    "baths": 1,
    "cars": null,
-   "rentWeekly": null,
+   "rentWeekly": 650,
    "available": "2027 年 1 月",
    "furnished": null,
    "photos": [
@@ -140,7 +140,7 @@
    "beds": 1,
    "baths": 1,
    "cars": null,
-   "rentWeekly": null,
+   "rentWeekly": 580,
    "available": "2027 年 1 月",
    "furnished": null,
    "photos": [

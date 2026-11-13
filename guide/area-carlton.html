@@ -87,7 +87,7 @@ ul.dot li{margin:0 0 6px}
 <ul class="dot"><li>中学：<a href="/guide/zone-university-high-school.html">University High School（2025 VCE 中位分 31）</a></li><li>小学：<a href="/guide/zone-carlton-gardens-primary-school.html">Carlton Gardens Primary School</a></li></ul>
 <p>学区按具体地址划分，同一个区不同街道可能对口不同学校。用 <a href="/">好租查学区</a> 输入地址查，签约前再到 Find my School 核对。按学区租房的注意事项见 <a href="/guide/school-zone.html">按学区租房</a>。</p>
 <h2>好租在 Carlton 的房源</h2>
-<ul class="dot" id="areaL"><li><a href="/rent/3817-victoria.html">Carlton · 38 层一房一卫高层公寓</a></li></ul>
+<ul class="dot" id="areaL"><li><a href="/rent/3817-victoria.html">Carlton · 38 层一房一卫高层公寓 · $580/周</a></li></ul>
 <script>fetch("/data/listings.json").then(r=>r.json()).then(j=>{const L=(j.listings||[]).filter(x=>x.suburb==="Carlton"&&x.status==="live");const e=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);document.getElementById("areaL").innerHTML=L.length?L.map(x=>`<li><a href="/rent/${encodeURIComponent(x.id)}.html">${e(x.title)}${x.rentWeekly?" · $"+e(x.rentWeekly)+"/周":""}</a></li>`).join(""):'<li>这个区暂时没有在租房源。<a href="/rentals.html#leadCard">留下需求</a>，有房第一时间通知你。</li>';}).catch(()=>{document.getElementById("areaL").innerHTML='<li><a href="/rentals.html">看全部在租房源</a></li>'});</script>
 <p><a href="/rentals.html">看全部在租房源 ›</a> · <a href="/rentals.html?la=Carlton#leadCard">留下需求，有新房通知你 ›</a></p>
 <h2>在这里租房前，先看这几篇</h2>
