@@ -229,7 +229,7 @@ ${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "�
 ${isLet(x) ? `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${esc(x.id)}">看在租房源</a><a class="p" href="${esc(leadUrl(x))}" data-act="lead" data-id="${esc(x.id)}">🔔 同楼或附近有空房通知我</a></div></nav>` : ""}
 ${isLet(x) || !tel ? "" : `<nav class="bar"><div><a class="g" href="sms:${esc(tel)}?&amp;body=${msg}" data-act="sms" data-id="${esc(x.id)}">💬 短信</a><a class="g" href="tel:${esc(tel)}" data-act="call" data-id="${esc(x.id)}">📞 电话</a><a class="p" href="${esc(full)}#book" data-act="book" data-id="${esc(x.id)}">📅 预约看房</a></div></nav>`}
 ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信咨询：${esc(wx)}</a></div></nav>` : ""}
-<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261113b" defer></script>
+<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>
 </body>
 </html>
 `;

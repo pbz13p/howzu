@@ -115,7 +115,7 @@ ul.dot li{margin:0 0 6px}
 </ul>
 <style>.of{display:grid;gap:12px;background:#f3f8f5;border-radius:16px;padding:16px;margin:8px 0}.of label{display:grid;gap:6px;font-size:14px;font-weight:600;color:#1d2321}.of input,.of select,.of textarea{font:inherit;font-weight:400;font-size:16px;border:1px solid #d8dfdb;border-radius:10px;padding:10px 12px;background:#fff;width:100%}.of2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.of button{border:0;border-radius:12px;background:#0f6b4f;color:#fff;font-size:16px;font-weight:700;padding:13px}.om{margin:0;font-size:14px}.om.ok{color:#0f6b4f;font-weight:600}.om.err{color:#b42318}</style>
 <script src="/js/config.js?v=20261107"></script><script src="/js/owner-lead.js?v=20261113"></script>
-<script>document.getElementById("ownF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));f.ref="guide/landlord.html";const m=document.getElementById("ownM"),b=e.target.querySelector("button");b.disabled=true;m.className="om";m.textContent="提交中…";
+<script>document.getElementById("ownF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));f.ref="guide/landlord.html"+(window.HowzuTrack&&HowzuTrack.src?" · 渠道 "+HowzuTrack.src():"");const m=document.getElementById("ownM"),b=e.target.querySelector("button");b.disabled=true;m.className="om";m.textContent="提交中…";
 const r=await HowzuOwner.submit(f);b.disabled=false;if(r.ok){m.className="om ok";m.textContent="收到了！我们会尽快联系你。";e.target.reset();if(window.HowzuTrack)HowzuTrack.ev("owner-lead");}else{m.className="om err";m.textContent=r.error;}});</script>
 <section class="cta">
 <h3>想先看看我们管理的房子？</h3>
@@ -130,6 +130,6 @@ const r=await HowzuOwner.submit(f);b.disabled=false;if(r.ok){m.className="om ok"
 <p>本页介绍的是好租 / 胜腾 Cendant 的物业管理服务；法规要求部分来自 Consumer Affairs Victoria，具体以官网为准。管理费按房子情况报价，签约前会给你书面管理协议。不构成法律或财务建议。</p>
 </section>
 </main>
-<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261113b" defer></script>
+<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>
 </body>
 </html>

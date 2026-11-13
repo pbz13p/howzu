@@ -17,7 +17,9 @@ ok("打开页面写一条 view，带路径、来源域名（不带搜索词）�
 ok("不带 IP、cookie 等字段", Object.keys(a.calls[0][1]).sort().join() === "ev,mobile,path,ref");
 const btn = { getAttribute: k => ({ "data-act": "wechat", "data-id": "2110-spencer" })[k] };
 a.listeners.click({ target: { closest: () => btn } });
-ok("点咨询按钮记一条 wechat:房源id", a.calls.length === 2 && a.calls[1][1].ev === "wechat:2110-spencer");
+ok("点咨询按钮记一条 wechat:房源id@来源渠道", a.calls.length === 2 && a.calls[1][1].ev === "wechat:2110-spencer@google");
+{ const T = a.ctx.window.HowzuTrack;
+  ok("渠道识别：Google、小红书短链、Facebook、微信内打开、utm、直接", T.classify("", "www.google.com.au") === "google" && T.classify("", "xhslink.com") === "xiaohongshu" && T.classify("", "m.facebook.com") === "facebook" && T.classify("", "", "Mozilla MicroMessenger/8") === "wechat" && T.classify("XHS", "www.google.com") === "xiaohongshu" && T.classify("", "") === "direct"); }
 ok("本机预览不发", run("localhost", false).calls.length === 0);
 ok("自动化测试浏览器不发", run("howzu.com.au", true).calls.length === 0);
 process.exit(fail ? 1 : 0);

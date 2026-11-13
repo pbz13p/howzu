@@ -621,10 +621,10 @@ fillLead(LQ);
 document.addEventListener("click",e=>{const b=e.target.closest("[data-letlead]");if(!b)return;const x=L.find(y=>String(y.id)===b.dataset.letlead);if(!x)return;
   fillLead(new URLSearchParams(ListingPage.leadUrl(x).split("?")[1].split("#")[0]),true);LEADF=String(x.id);closeDetail();
   const c=document.getElementById("leadCard");if(c){c.scrollIntoView({behavior:"smooth",block:"start"});const i=$("#lContact");if(i)setTimeout(()=>i.focus({preventScroll:true}),450);}});
-$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on"),w=document.querySelector("#lWhen .on");f.beds=b?b.dataset.v:"";f.when=w?w.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:LEADF?"?lf="+encodeURIComponent(LEADF):"");
+$("#leadF").addEventListener("submit",async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const b=document.querySelector("#lBeds .on"),w=document.querySelector("#lWhen .on");f.beds=b?b.dataset.v:"";f.when=w?w.dataset.v:"";f.ref="rentals.html"+(one?"?id="+one:LEADF?"?lf="+encodeURIComponent(LEADF):"");try{if(window.HowzuTrack&&HowzuTrack.src)f.ref+=" · 渠道 "+HowzuTrack.src();}catch(_){}
   const btn=e.target.querySelector(".go"),err=$("#lErr");btn.disabled=true;btn.textContent="提交中…";err.hidden=true;
   const r=await HowzuLead.submit(f);
-  if(r.ok){$("#leadCard").innerHTML=`<div class="done"><div style="font-size:34px">✓</div><b>收到，有合适的房源会第一时间联系你</b><p class="sub">一般 1 个工作日内回复。也可以先看看上面的在租房源。</p></div>`;return;}
+  if(r.ok){try{HowzuTrack.ev("lead-send:"+(one||LEADF||""));}catch(_){}$("#leadCard").innerHTML=`<div class="done"><div style="font-size:34px">✓</div><b>收到，有合适的房源会第一时间联系你</b><p class="sub">一般 1 个工作日内回复。也可以先看看上面的在租房源。</p></div>`;return;}
   btn.disabled=false;btn.textContent="有新房通知我";err.textContent=r.error;err.hidden=false;if(/微信号/.test(r.error))$("#lContact").focus();});
 const hideUnit=a=>String(a||"").replace(/^\s*[\w-]+\s*\/\s*/,"");
 async function userListings(){
@@ -651,6 +651,6 @@ fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({}))
 uP.then(u=>{if(u){U=u;merge();}});
 Promise.race([orgListings(),new Promise(r=>setTimeout(()=>r(null),8000))]).then(u=>{if(u&&u.length){I=u;merge();}});
 </script>
-<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261113b" defer></script>
+<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>
 </body>
 </html>
