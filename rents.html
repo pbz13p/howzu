@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>墨尔本租金、房价查询：各区周租中位数、成交中位价和租金回报 | 好租 Howzu</title>
+<meta name="description" content="免费查墨尔本各区租金和房价：1–4 房公寓/独立屋周租中位数、一年和五年涨幅、新租约数，公寓和独立屋成交中位价，粗算租金回报率。数据来自维州政府 DFFH 租金报告和 Valuer-General 房价报告。">
+<link rel="canonical" href="https://howzu.com.au/rents.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="好租 Howzu">
+<meta property="og:title" content="墨尔本租金、房价查询（各区周租中位数和成交中位价）">
+<meta property="og:description" content="输入区名，马上看各房型周租中位数、涨幅和成交中位价。维州政府公开数据。">
+<meta property="og:url" content="https://howzu.com.au/rents.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#0f6b4f">
+<link rel="stylesheet" href="css/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"墨尔本租金、房价查询","inLanguage":"zh-CN","url":"https://howzu.com.au/rents.html","publisher":{"@type":"Organization","name":"好租 Howzu"}}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#faf9f5;color:#1d2321;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{max-width:1100px;margin:0 auto;padding:20px clamp(16px,4vw,40px) 80px}
+.search{display:flex;gap:10px;margin:0 0 8px}
+.search input{flex:1;min-width:0;font-size:17px;padding:13px 14px;border:1.5px solid #d6d2c6;border-radius:12px;background:#fff}
+.search input:focus{outline:none;border-color:#0f6b4f}
+.hint{font-size:13px;color:#6b726f;margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+.chips button{border:1px solid #d6d2c6;background:#fff;border-radius:999px;padding:5px 12px;font-size:14px;cursor:pointer;color:#3b4340}
+.chips button:hover{border-color:#0f6b4f;color:#0f6b4f}
+.sug{background:#fff;border:1px solid #e4e1d8;border-radius:12px;margin:-4px 0 16px;overflow:hidden}
+.sug button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 14px;font-size:15px;cursor:pointer;border-top:1px solid #f1efe8}
+.sug button:first-child{border-top:0}.sug button:hover{background:#f3f8f5}
+.sug small{color:#8a908d;margin-left:6px}
+.card{background:#fff;border:1px solid #e4e1d8;border-radius:16px;padding:18px 18px 10px;margin:0 0 18px}
+.card h2{margin:0 0 2px;font-size:22px}
+.card .sub{color:#6b726f;font-size:14px;margin:0 0 14px}
+.card h3{font-size:16px;margin:16px 0 8px;color:#0f6b4f}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid #f1efe8;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:13px;color:#6b726f;font-weight:600}
+.up{color:#b4442e}.dn{color:#1f7a52}
+.big{font-weight:700}
+.spark{vertical-align:middle}
+.yield{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:4px 0 8px}
+.yield div{background:#f3f8f5;border-radius:12px;padding:12px 14px}
+.yield b{font-size:24px;color:#0f6b4f;display:block}
+.yield span{font-size:13px;color:#4b5350}
+.note{font-size:13px;color:#6b726f}
+.all th{cursor:pointer}
+.all td a{color:#0f6b4f;text-decoration:none;cursor:pointer}
+.src{font-size:13px;color:#6b726f;border-top:1px solid #e4e1d8;margin-top:28px;padding-top:14px}
+.src a{color:#0f6b4f}
+@media (max-width:600px){th,td{padding:7px 6px;font-size:14px}.card{padding:14px 12px 8px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="in">
+  <a class="logo" href="index.html"><i>好</i>好租 Howzu<small>墨尔本 · 学区 · 租房 · 投资</small></a>
+  <div class="links"><a href="index.html">🏫 查学区</a><a href="rentals.html">🏠 在租房源</a><a href="rents.html" class="on">💰 租金房价</a><a href="invest.html">📈 投资测算</a><a href="guide/property.html">📚 房产干货</a></div>
+  <a class="post" href="post.html">＋ 免费发房源</a>
+</div></nav>
+<header class="hero"><div class="in"><h1>墨尔本租金、房价查询</h1><p>输入区名，看各房型周租中位数、一年/五年涨幅、成交中位价和粗算租金回报。全部来自维州政府公开数据，免费。</p></div></header>
+<main>
+  <div class="search"><input id="q" type="search" placeholder="输入区名，如 Southbank、Box Hill、Carlton、3000" autocomplete="off" aria-label="区名"></div>
+  <p class="hint" id="meta">正在加载数据…</p>
+  <div class="sug" id="sug" hidden></div>
+  <div class="chips" id="chips"></div>
+  <div id="res"></div>
+  <div class="card">
+    <h2>全部区域一览</h2>
+    <p class="sub">点表头排序，点区名看详情。周租为中位数（澳元/周）。</p>
+    <div class="tw"><table class="all" id="all"></table></div>
+  </div>
+  <noscript><p>请打开 JavaScript 查看数据。</p></noscript>
+  <div class="src" id="src"></div>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const fmt=n=>n==null?"—":n.toLocaleString("en-AU");
+const money=n=>n==null?"—":"$"+(n>=1e6?(n/1e6).toFixed(2)+" 百万":(n/1e4).toFixed(1)+" 万");
+const pct=v=>v==null?"—":`<span class="${v>0?"up":v<0?"dn":""}">${v>0?"+":""}${v}%</span>`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const title=s=>s.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
+const POP=["CBD-St Kilda Rd","Southbank","Docklands","Carlton-Parkville","Box Hill","Clayton","Glen Waverley-Mulgrave","Richmond-Burnley","South Yarra","Footscray"];
+let D, IDX=[];
+function spark(h){
+  if(!h||h.length<2) return "";
+  const W=90,H=24,v=h.map(x=>x[1]),mn=Math.min(...v),mx=Math.max(...v),r=mx-mn||1;
+  const p=v.map((y,i)=>`${(i*W/(v.length-1)).toFixed(1)},${(H-2-(y-mn)/r*(H-4)).toFixed(1)}`).join(" ");
+  return `<svg class="spark" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-label="${h[0][0]}–${h[h.length-1][0]} 走势"><polyline fill="none" stroke="#0f6b4f" stroke-width="1.6" points="${p}"/></svg>`;
+}
+function salesFor(g){return D.suburbs.filter(s=>g.suburbs.includes(s.name));}
+function yieldCard(rent,price,label){
+  if(!rent||!price) return "";
+  const y=(rent*52/price*100).toFixed(1);
+  return `<div><b>${y}%</b><span>${label}：周租 $${fmt(rent)} × 52 ÷ 成交中位价 ${money(price)}</span></div>`;
+}
+function showGroup(gi, saleName){
+  const g=D.groups[gi];
+  const rows=Object.entries(g.rents).map(([dw,r])=>`<tr><td>${D.dwellings[dw]}</td><td class="big">$${fmt(r.now)}</td><td>${pct(r.yoy)}</td><td>${pct(r.y5)}</td><td>${fmt(r.lettings)}</td><td>${spark(r.hist)}</td></tr>`).join("");
+  const sales=salesFor(g);
+  let sh="", yc="";
+  if(sales.length){
+    sh=`<h3>成交中位价（${D.sale_quarter.replace("-"," 年 ")} 月季度）</h3><div class="tw"><table><tr><th>区</th><th>公寓/单元</th><th>一年</th><th>成交数</th><th>独立屋</th><th>一年</th><th>成交数</th></tr>`+
+      sales.map(s=>{const u=s.sales.unit||{},h=s.sales.house||{};return `<tr><td>${title(s.name)}</td><td class="big">${money(u.now)}</td><td>${pct(u.yoy)}</td><td>${fmt(u.n)}</td><td class="big">${money(h.now)}</td><td>${pct(h.yoy)}</td><td>${fmt(h.n)}</td></tr>`}).join("")+`</table></div>`;
+    const s0=sales.find(s=>s.name===saleName)||sales[0];
+    const r2=g.rents["2 bedroom flat"],r1=g.rents["1 bedroom flat"],r3=g.rents["3 bedroom house"];
+    yc=yieldCard(r2&&r2.now,s0.sales.unit&&s0.sales.unit.now,`${title(s0.name)} 公寓（按 2 房租金）`)+
+       yieldCard(r1&&r1.now,s0.sales.unit&&s0.sales.unit.now,`${title(s0.name)} 公寓（按 1 房租金）`)+
+       yieldCard(r3&&r3.now,s0.sales.house&&s0.sales.house.now,`${title(s0.name)} 独立屋（按 3 房租金）`);
+    if(yc) yc=`<h3>粗算毛租金回报率</h3><div class="yield">${yc}</div><p class="note">只是区内中位数相除的粗算，未扣管理费、物业费、市政费、空置期和利息；成交中位价里各种房型混在一起，单套房要按实际价格和租金算。想细算可用 <a href="invest.html">投资测算</a>。</p>`;
+  } else sh=`<p class="note">这个租金统计区在房价报告里没有对应的单独区名。</p>`;
+  $("#res").innerHTML=`<div class="card" id="detail"><h2>${esc(g.name)}</h2><p class="sub">${esc(g.region)} · 租金统计截至 ${D.rent_quarter.replace("-"," 年 ")} 月季度（过去 12 个月新签租约的中位数）</p>
+  <h3>周租中位数</h3><div class="tw"><table><tr><th>房型</th><th>周租</th><th>一年</th><th>五年</th><th>新租约数</th><th>近 10 年</th></tr>${rows||'<tr><td colspan="6">暂无数据</td></tr>'}</table></div>
+  ${sh}${yc}</div>`;
+  $("#detail").scrollIntoView({behavior:"smooth",block:"start"});
+  history.replaceState(null,"","#"+encodeURIComponent(g.name));
+}
+function showSuburbOnly(s){
+  const u=s.sales.unit||{},h=s.sales.house||{};
+  $("#res").innerHTML=`<div class="card" id="detail"><h2>${title(s.name)}</h2><p class="sub">政府租金报告没有单独统计这个区的租金，下面是成交中位价（${D.sale_quarter.replace("-"," 年 ")} 月季度）。可以看看附近区的租金。</p>
+  <div class="tw"><table><tr><th></th><th>中位价</th><th>一年</th><th>成交数</th></tr><tr><td>公寓/单元</td><td class="big">${money(u.now)}</td><td>${pct(u.yoy)}</td><td>${fmt(u.n)}</td></tr><tr><td>独立屋</td><td class="big">${money(h.now)}</td><td>${pct(h.yoy)}</td><td>${fmt(h.n)}</td></tr></table></div></div>`;
+  $("#detail").scrollIntoView({behavior:"smooth",block:"start"});
+  history.replaceState(null,"","#"+encodeURIComponent(s.name));
+}
+function pick(it){$("#sug").hidden=true; if(it.g!=null) showGroup(it.g,it.sale); else showSuburbOnly(it.s);}
+const PC={"3000":"CBD-St Kilda Rd","3004":"CBD-St Kilda Rd","3006":"Southbank","3008":"Docklands","3053":"Carlton-Parkville","3052":"Carlton-Parkville","3128":"Box Hill","3168":"Clayton","3150":"Glen Waverley-Mulgrave","3121":"Richmond-Burnley","3141":"South Yarra","3011":"Footscray","3182":"St Kilda","3051":"North Melbourne-West Melbourne","3002":"East Melbourne","3207":"Port Melbourne","3205":"South Melbourne","3065":"Fitzroy","3031":"Flemington-Kensington","3030":"Werribee-Hoppers Crossing","3122":"Hawthorn","3101":"Kew","3125":"Burwood-Ashburton"};
+function search(){
+  const q=$("#q").value.trim().toLowerCase(); const box=$("#sug");
+  if(!q){box.hidden=true;return;}
+  let hits=IDX.filter(it=>it.key.includes(q));
+  if(PC[q]){const gi=D.groups.findIndex(g=>g.name===PC[q]); if(gi>=0) hits.unshift({label:PC[q],extra:"邮编 "+q,g:gi});}
+  hits=hits.slice(0,8);
+  box.innerHTML=hits.length?hits.map((h,i)=>`<button data-i="${i}">${esc(h.label)}<small>${esc(h.extra||"")}</small></button>`).join(""):`<button disabled>没找到，试试英文区名</button>`;
+  box.hidden=false;
+  box.querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>pick(hits[+b.dataset.i]));
+}
+let sortKey="r2",sortDir=-1;
+function renderAll(){
+  const rows=D.groups.map((g,i)=>{const r=g.rents,sl=salesFor(g),u=sl.map(s=>s.sales.unit&&s.sales.unit.now).filter(Boolean),r2=r["2 bedroom flat"];
+    const up=u.length?u[0]:null;
+    return {i,name:g.name,region:g.region,r1:r["1 bedroom flat"]?.now,r2:r2?.now,r2y:r2?.yoy,h3:r["3 bedroom house"]?.now,up,yl:(r2&&up)?+(r2.now*52/up*100).toFixed(1):null};});
+  rows.sort((a,b)=>{const x=a[sortKey],y=b[sortKey]; if(x==null) return 1; if(y==null) return -1; return (typeof x==="string"?x.localeCompare(y):x-y)*sortDir;});
+  const H=[["name","区域"],["region","大区"],["r1","1 房公寓"],["r2","2 房公寓"],["r2y","2 房一年"],["h3","3 房独立屋"],["up","公寓中位价"],["yl","2 房毛回报"]];
+  $("#all").innerHTML="<tr>"+H.map(([k,t])=>`<th data-k="${k}">${t}${k===sortKey?(sortDir<0?" ↓":" ↑"):""}</th>`).join("")+"</tr>"+
+    rows.map(r=>`<tr><td><a data-g="${r.i}">${esc(r.name)}</a></td><td>${esc(r.region)}</td><td>${r.r1?"$"+r.r1:"—"}</td><td>${r.r2?"$"+r.r2:"—"}</td><td>${pct(r.r2y)}</td><td>${r.h3?"$"+r.h3:"—"}</td><td>${money(r.up)}</td><td>${r.yl==null?"—":r.yl+"%"}</td></tr>`).join("");
+  $("#all").querySelectorAll("th").forEach(th=>th.onclick=()=>{const k=th.dataset.k; sortDir=k===sortKey?-sortDir:(k==="name"||k==="region"?1:-1); sortKey=k; renderAll();});
+  $("#all").querySelectorAll("a[data-g]").forEach(a=>a.onclick=()=>showGroup(+a.dataset.g));
+}
+fetch("data/rent_check.json").then(r=>r.json()).then(d=>{
+  D=d;
+  D.groups.forEach((g,i)=>IDX.push({key:g.name.toLowerCase(),label:g.name,extra:"租金 + 房价",g:i}));
+  D.suburbs.forEach(s=>{ if(!D.groups.some(g=>g.name.toUpperCase()===s.name)) IDX.push({key:s.name.toLowerCase(),label:title(s.name),extra:s.group!=null?"属于 "+D.groups[s.group].name:"只有房价",g:s.group,sale:s.name,s}); });
+  $("#meta").textContent=`租金：${D.groups.length} 个统计区，截至 ${D.rent_quarter}；房价：${D.suburbs.length} 个区，截至 ${D.sale_quarter}。`;
+  $("#chips").innerHTML=POP.map(n=>{const i=D.groups.findIndex(g=>g.name===n);return i<0?"":`<button data-g="${i}">${esc(n)}</button>`}).join("");
+  $("#chips").querySelectorAll("button").forEach(b=>b.onclick=()=>showGroup(+b.dataset.g));
+  $("#src").innerHTML="数据来源（CC BY 4.0，好租整理，非官方发布）："+D.sources.map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join("；")+"。租金为过去 12 个月新签租约的周租中位数，不是某套房的估价；仅供参考，不构成投资建议。";
+  renderAll();
+  const h=decodeURIComponent(location.hash.slice(1));
+  if(h){const gi=D.groups.findIndex(g=>g.name===h); if(gi>=0) showGroup(gi); else {const s=D.suburbs.find(s=>s.name===h); if(s) (s.group!=null?showGroup(s.group,s.name):showSuburbOnly(s));}}
+}).catch(()=>{$("#meta").textContent="数据加载失败，请刷新。";});
+$("#q").addEventListener("input",search);
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){const b=$("#sug button[data-i]"); if(b) b.click();}});
+</script>
+</body>
+</html>
