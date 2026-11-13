@@ -239,6 +239,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     ["https://howzu.com.au/", "monthly", "1.0"],
     ["https://howzu.com.au/rentals.html", "daily", "0.9"],
     ["https://howzu.com.au/invest.html", "monthly", "0.8"],
+    ["https://howzu.com.au/rents.html", "weekly", "0.8"],
     ["https://howzu.com.au/post.html", "monthly", "0.6"],
     ["https://howzu.com.au/guide/property.html", "weekly", "0.7"],
     ["https://howzu.com.au/guide/bond.html", "monthly", "0.7"],
