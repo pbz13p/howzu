@@ -216,6 +216,8 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 #lmap{margin:0 0 22px}#lmap .lz{display:flex;align-items:center;gap:8px;margin:0 0 8px;background:#f3f6f4;border-radius:12px;padding:6px 8px 6px 12px}#lmap .lz span{font-size:13px;font-weight:600;white-space:nowrap;color:#1d2321}#lmap .lz input{flex:1;min-width:0;border:1px solid #d8dfdb;border-radius:10px;padding:8px 10px;font-size:14px;background:#fff}#lmap .lz button{border:0;background:none;font-size:15px;color:#6b726f;cursor:pointer}#lzN{font-size:13px!important;color:#1d2321!important;line-height:1.6}#lzN small{color:#8a908d}#lzN a{color:#0f6b4f;font-weight:600}#lmap .lm{height:min(56vh,440px);border-radius:16px;overflow:hidden;background:#eef1ef;position:relative;z-index:0}#lmap p{font-size:12px;color:var(--muted);margin:8px 2px 0}
 .pin{background:#fff;color:#1d2321;font:600 13px/1 -apple-system,"PingFang SC",sans-serif;padding:7px 10px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.22);white-space:nowrap;transform:translate(-50%,-50%);display:inline-block}.pin.now{background:var(--accent);color:#fff}
 .mpop{display:flex;gap:10px;align-items:center;cursor:pointer;width:230px}.mpop img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none}.mpop b{display:block;font-size:13.5px;line-height:1.35;color:#1d2321}.mpop span{display:block;font-size:12.5px;color:#6b726f;margin-top:3px}.mpop u{display:block;font-size:12.5px;color:var(--accent);text-decoration:none;font-weight:600;margin-top:4px}#lmap .leaflet-popup-content{margin:10px 12px}.mpop-s{height:1px;background:#e8ebe9;margin:9px 0}#lmap .leaflet-tile-pane,.dt .mp-m .leaflet-tile-pane{filter:saturate(.3) brightness(1.05) contrast(.95)}
+#list.ld{min-height:110vh}
+.ssr{max-width:1100px;margin:24px auto 0;padding:0 18px;font-size:13px;line-height:1.9;color:#5d6461}.ssr b{display:block;font-size:14px;color:#1d2321}.ssr a{color:#0f6b4f;margin-right:14px;white-space:nowrap}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://howzu.com.au/#org", "name": "好租 Howzu", "url": "https://howzu.com.au/", "logo": "https://howzu.com.au/apple-touch-icon.png", "areaServed": "Melbourne, Victoria, Australia", "knowsLanguage": ["zh-CN", "en"]}, {"@type": "WebSite", "@id": "https://howzu.com.au/#site", "url": "https://howzu.com.au/", "name": "好租 Howzu", "inLanguage": "zh-CN", "publisher": {"@id": "https://howzu.com.au/#org"}}]}</script>
 </head>
@@ -254,7 +256,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
   <section class="rc" id="recent" hidden aria-label="最近看过"></section>
   <div class="lcm" id="lcm"></div>
   <div id="lmap" hidden><div class="lz"><span>🏫 按学区看</span><input id="lzI" list="lzL" placeholder="输入公立中学名，如 University High" autocomplete="off"><button type="button" id="lzX" hidden aria-label="清除学区">✕</button><datalist id="lzL"></datalist></div><div class="lm" id="lmapM"></div><p id="lmapN">位置按地址大致标注，仅供参考</p><p id="lzN" hidden></p></div>
-  <div id="list"><div class="empty">加载中…</div></div>
+  <div id="list" class="ld"><div class="empty">加载中…</div></div>
   <section class="lead" id="leadCard">
     <h2>没找到合适的？</h2>
     <p class="sub">留下需求，有新房源第一时间通知你。不用注册，30 秒填完。</p>
@@ -276,6 +278,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
   </section>
   <p class="note">房源信息以签约时为准。租约使用维州 CAV 标准租赁合同，押金存入 RTBA（维州租房押金管理局）。<a href="guide/bond.html">押金怎么交、怎么退？看中文指南 ›</a> · <a href="guide/first-rental.html">第一次在墨尔本租房？ ›</a> · <a href="guide/school-zone.html">按学区租房怎么报名？ ›</a></p>
 </main>
+<nav class="ssr" aria-label="全部在租房源"><b>全部在租房源</b><a href="rent/2110-spencer.html">Spencer St · 两房一卫公寓</a><a href="rent/3005-latrobe.html">La Trobe St · 一房一卫公寓</a><a href="rent/4803b-wsp.html">West Side Place · 两房一卫高层公寓</a><a href="rent/6309d-lonsdale.html">West Side Place · 63 层一房一卫+书房</a><a href="rent/3817-victoria.html">Carlton · 38 层一房一卫高层公寓</a><a href="rent/2801b-wsp.html">West Side Place · 两房一卫高层公寓</a></nav>
 <div class="contact" id="contactBar"></div>
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
@@ -307,9 +310,13 @@ let FAV=window.HowzuFav?HowzuFav.load(localStorage):[];
 const isFav=x=>FAV.includes(String(x.id));
 function favBtn(x,cls){const on=isFav(x);return `<button class="${cls}${on?" on":""}" data-fav="${esc(x.id)}" data-act="fav" aria-pressed="${on}" aria-label="${on?"取消收藏":"收藏"}">${HEART}${cls==="favfab"?"":`<span>${on?"已收藏":"收藏"}</span>`}</button>`;}
 function favChip(){const b=document.querySelector('#filters [data-f="fav"]');const n=FAV.filter(id=>L.some(y=>String(y.id)===id)).length;if(b){b.hidden=!n&&F!=="fav";b.querySelector("i").textContent=n||"";}}
+// 本站照片用小图（photos/s 宽 480、photos/m 宽 960，tools/make_thumbs.py 生成），缺了就退回原图
+const SZ=(p,d)=>/^\/?photos\/[^/]+\.(jpe?g|png|webp)$/i.test(String(p))?String(p).replace(/^(\/?photos\/)([^/]+)\.\w+$/i,`$1${d}/$2.jpg`):p;
+const SRCSET=p=>SZ(p,"s")===p?"":` srcset="${esc(SZ(p,"s"))} 480w, ${esc(SZ(p,"m"))} 960w" sizes="(min-width:760px) 380px, 100vw" data-o="${esc(p)}" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0){this.removeAttribute('srcset');this.src=this.dataset.o}"`;
+let CARDN=0;
 function card(x){
-  const P=x.photos||[];
-  const imgs=P.length?P.map((p,i)=>`<img src="${esc(p)}" alt="${esc(x.title)}" loading="${i?"lazy":"eager"}">`).join(""):`<img src="${phImg(x)}" alt="${esc(x.title)}">`;
+  const P=x.photos||[], first=CARDN++<2;
+  const imgs=P.length?P.map((p,i)=>`<img src="${esc(SZ(p,"m"))}"${SRCSET(p)} alt="${esc(x.title)}" loading="${i||!first?"lazy":"eager"}">`).join(""):`<img src="${phImg(x)}" alt="${esc(x.title)}">`;
   const dots=P.length>1?`<div class="dots">${P.slice(0,5).map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div><button class="cnav l" data-cnav="-1" aria-label="上一张">‹</button><button class="cnav r" data-cnav="1" aria-label="下一张">›</button>`:"";
   const price=isLet(x)?`<b>已租出</b>`:x.rentWeekly?`<b>$${x.rentWeekly}</b> / 周`:`<b class="ng">租金面议</b>`;
   const area=(x.address||"").split(",").slice(-1)[0].replace(/VIC\s*\d+/,"").trim()||"墨尔本";
@@ -329,7 +336,7 @@ document.addEventListener("scroll",e=>{const sl=e.target;if(!sl.classList||!sl.c
 let RECENT=window.HowzuFav&&HowzuFav.loadR?HowzuFav.loadR(localStorage):[];
 function recentRow(){const box=document.getElementById("recent");if(!box||!window.HowzuFav||!HowzuFav.recentShow)return;const R=F==="all"&&!(HF&&HF.active(S))?HowzuFav.recentShow(RECENT,L.filter(x=>preview||x.status==="live"),isLet):[];
   box.hidden=!R.length;if(!R.length){box.innerHTML="";return;}
-  box.innerHTML=`<div class="rc-h"><span>最近看过</span><button data-rcclr>清除</button></div><div class="rc-r">${R.map(x=>`<div class="rc-i" data-open="${esc(x.id)}"><img src="${esc((x.photos||[])[0]||phImg(x))}" alt="" loading="lazy"><b>${esc((x.title||"").split("·")[0].trim()||x.suburb||"")}</b><span>${[x.rentWeekly?`$${x.rentWeekly}/周`:"",x.beds!=null?`${x.beds} 房`:"",isNow(x)?"马上入住":""].filter(Boolean).map(esc).join(" · ")}</span></div>`).join("")}</div>`;}
+  box.innerHTML=`<div class="rc-h"><span>最近看过</span><button data-rcclr>清除</button></div><div class="rc-r">${R.map(x=>`<div class="rc-i" data-open="${esc(x.id)}"><img src="${esc(SZ((x.photos||[])[0],"s")||phImg(x))}" alt="" loading="lazy"><b>${esc((x.title||"").split("·")[0].trim()||x.suburb||"")}</b><span>${[x.rentWeekly?`$${x.rentWeekly}/周`:"",x.beds!=null?`${x.beds} 房`:"",isNow(x)?"马上入住":""].filter(Boolean).map(esc).join(" · ")}</span></div>`).join("")}</div>`;}
 function filterUI(base,n,act,m){if(!HF)return;
   document.querySelectorAll("#filters [data-b]").forEach(b=>b.classList.toggle("on",S.beds===b.dataset.b));
   document.querySelectorAll("#filters [data-k]").forEach(b=>{const k=b.dataset.k,on=S.feat.includes(k),c=HF.count(base,{feat:[k]});b.classList.toggle("on",on);b.classList.toggle("zero",!c&&!on&&!(HF.maybe&&base.some(x=>HF.maybe(x,{feat:[k]}))));b.innerHTML=`${HF.FEAT[k].label}<i>${c}</i>`;});
@@ -352,7 +359,7 @@ function render(){
   filterUI(base,live.length,act,mb.length);leadSync();lcmRender();setTimeout(cmFill,0);if(MAPON)listMap();else if(LZQ&&live.length){const t=document.getElementById("mapT");if(t)setTimeout(()=>t.click(),0);}
   const sec=(live.length||mb.length?`<a class="leadcta" href="#leadCard"><span><b>没找到合适的？</b>留下需求，有新房第一时间通知你</span><i>→</i></a>`:"")+(done.length?`<div class="sec"><b>最近成交</b><span>已租出 ${done.length} 套 · 我们管理的同类房源</span></div>`:"");
   const cmpN=F==="fav"&&window.ListingPage&&ListingPage.compare?Math.min(3,live.length):0;
-  $("#list").innerHTML=live.length||done.length||mb.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+mbSec+sec+(LETALL||done.length<=6?done:done.slice(0,4)).map(card).join("")+(!LETALL&&done.length>6?`<button class="letmore" data-letmore>查看全部 ${done.length} 套成交案例 <i>›</i></button>`:""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
+  CARDN=0;if(window.LREADY||live.length||done.length)$("#list").classList.remove("ld");$("#list").innerHTML=live.length||done.length||mb.length?(cmpN>=2?`<button class="cmpbar" data-cmp><span><b>⇆ 并排对比</b>${live.length>3?"最近收藏的 3 套":`这 ${cmpN} 套`}：租金、房型、押金、设施</span><i>›</i></button>`:"")+live.map(card).join("")+mbSec+sec+(LETALL||done.length<=6?done:done.slice(0,4)).map(card).join("")+(!LETALL&&done.length>6?`<button class="letmore" data-letmore>查看全部 ${done.length} 套成交案例 <i>›</i></button>`:""):F==="fav"?`<div class="empty">还没有收藏。点房源照片右上角的 ♥ 就能收藏，下次打开直接在这里看。</div>`:`<div class="empty">暂时没有符合条件的房源。<br>${act?'<button class="lnk" data-fclr>清除筛选看全部</button>，或者':"想第一时间收到新房源？"}<a href="#leadCard">留下需求，有新房通知你</a>。</div>`;
   favChip();recentRow();
 }
 
@@ -373,7 +380,7 @@ async function listMap(){const seq=++LMseq,box=$("#lmap"),n=$("#lmapN");box.hidd
     const gk=pt.lat.toFixed(4)+","+pt.lng.toFixed(4),g=G[gk]=G[gk]||{pt,xs:[]};g.xs.push(x);if(g.m)LMG.removeLayer(g.m);
     const one=g.xs.length===1,price=one?(x.rentWeekly?`$${x.rentWeekly}/周`:x.beds!=null?`${x.beds} 房`:"询价"):`${g.xs.length} 套`;
     g.m=Lf.marker([pt.lat,pt.lng],{icon:Lf.divIcon({className:"",html:`<span class="pin${g.xs.some(isNow)?" now":""}">${esc(price)}</span>`,iconSize:[0,0]}),title:one?(x.title||""):`同一栋 ${g.xs.length} 套`}).addTo(LMG)
-      .bindPopup(g.xs.map(y=>`<div class="mpop" data-open="${esc(y.id)}"><img src="${esc((y.photos||[])[0]||phImg(y))}" alt=""><div><b>${esc(y.title||y.suburb||"")}</b><span>${[y.rentWeekly?`$${y.rentWeekly}/周`:"",y.beds!=null?`${y.beds} 房`:"",isNow(y)?"马上入住":""].filter(Boolean).join(" · ")}</span><u>查看详情 ›</u></div></div>`).join('<div class="mpop-s"></div>'),{closeButton:false,offset:[0,-10]});
+      .bindPopup(g.xs.map(y=>`<div class="mpop" data-open="${esc(y.id)}"><img src="${esc(SZ((y.photos||[])[0],"s")||phImg(y))}" alt=""><div><b>${esc(y.title||y.suburb||"")}</b><span>${[y.rentWeekly?`$${y.rentWeekly}/周`:"",y.beds!=null?`${y.beds} 房`:"",isNow(y)?"马上入住":""].filter(Boolean).join(" · ")}</span><u>查看详情 ›</u></div></div>`).join('<div class="mpop-s"></div>'),{closeButton:false,offset:[0,-10]});
     n.textContent=`正在标注 ${i+1}/${xs.length}…`;
     if(pts.length===1)LM.setView(pts[0],13);else LM.fitBounds(pts,{padding:[36,36],maxZoom:14});}
   n.textContent=`${pts.length} 套在租房源 · 绿色 = 马上入住 · 点标签看房源 · 位置按地址大致标注${miss?`（${miss} 套暂时定位不到）`:""}`;LMGRP=G;lzFill();if(LZQ){$("#lzI").value=LZQ;lzShow(LZQ);LZQ=null;}else if(LZ)lzShow(LZ.name);}
@@ -640,7 +647,7 @@ let J=[],U=[],I=[],opened=false;
 let DR=[];if(new URLSearchParams(location.search).has("draft")){try{const d=JSON.parse(localStorage.getItem("howzu-draft")||"null");if(d&&d.id){DR=[{...d,address:hideUnit(d.address||"")}];const b=document.createElement("div");b.className="draftbar";b.innerHTML="👁 内部预览：这是外部看到的样子，<b>还没发布的改动只有你自己看得到</b>。<a href=\"work.html\">回工作台</a>";document.body.prepend(b);}}catch(_){}}
 const merge=()=>{const ids=new Set([...I,...DR].map(x=>String(x.id))),dids=new Set(DR.map(x=>String(x.id)));L=[...DR,...J.filter(x=>!ids.has(String(x.id))),...I.filter(x=>!dids.has(String(x.id))),...U];render();if(location.hash==="#leadCard"&&!one&&L.length&&!window.__lcGo){window.__lcGo=1;const lc=document.getElementById("leadCard"),nv=document.querySelector("nav");if(lc)scrollTo({top:lc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12});}if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else{openDetail(x,true);if(location.hash==="#book"){openBook();history.replaceState(history.state,"",location.pathname+location.search);}}}}};
 const uP=Promise.race([userListings(),new Promise(r=>setTimeout(()=>r(null),8000))]);
-fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address),_page:/^[\w-]+$/.test(x.id)}));C=j.contact||{};merge();});
+fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address),_page:/^[\w-]+$/.test(x.id)}));C=j.contact||{};window.LREADY=1;merge();});
 uP.then(u=>{if(u){U=u;merge();}});
 Promise.race([orgListings(),new Promise(r=>setTimeout(()=>r(null),8000))]).then(u=>{if(u&&u.length){I=u;merge();}});
 </script>

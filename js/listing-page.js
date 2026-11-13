@@ -32,12 +32,22 @@
   function ogTitle(x) {
     return [x.title || x.suburb || "墨尔本房源", isLet(x) ? "已租出" : x.rentWeekly ? `$${x.rentWeekly}/周` : ""].filter(Boolean).join(" · ") + " | 好租 Howzu";
   }
+  // 网页标题（给搜索结果）：中文标题 · 租金 | 英文房型 | 好租。分享卡片还用 ogTitle（纯中文，微信里更短）
+  function pageTitle(x) {
+    return [x.title || x.suburb || "墨尔本房源", isLet(x) ? "已租出" : x.rentWeekly ? `$${x.rentWeekly}/周` : ""].filter(Boolean).join(" · ") + ` | ${enLine(x)} | 好租 Howzu`;
+  }
   // 分享卡片描述：关键信息 + 介绍第一句，限 110 字
   function ogDesc(x) {
     const head = [x.suburb, facts(x), isLet(x) ? "已租出" : x.available ? `${availText(x.available)}入住` : "", x.furnished === true ? "带家具" : ""].filter(Boolean).join(" · ");
     const first = String(x.desc || "").split(/\n/).map(s => s.trim()).filter(Boolean)[0] || "";
     const s = head + (first ? "。" + first : "") + " 好租 Howzu 中文服务，持牌管理。";
     return s.length > 110 ? s.slice(0, 109) + "…" : s;
+  }
+  // 搜索结果描述：中文在前，后面补一句英文
+  function pageDesc(x) {
+    const en = `${enLine(x)}${x.rentWeekly && !isLet(x) ? `, $${x.rentWeekly}/week` : ""}. Chinese-speaking licensed property manager.`;
+    let zh = ogDesc(x); if (zh.length > 90) zh = zh.slice(0, 89) + "…";
+    return zh + " " + en;
   }
   function ogImage(x) {
     const p = (x.photos || [])[0];
@@ -101,6 +111,15 @@
     return rows.map(([k, v]) => ({ k, v, diff: new Set(v).size > 1 }));
   }
   const rel = p => /^https?:/.test(p) ? p : "../" + String(p).replace(/^\//, "");
+  // 本站照片有小图：photos/s/（宽 480）、photos/m/（宽 960），由 tools/make_thumbs.py 生成；外链照片原样用
+  const sized = (p, d) => /^\/?photos\/[^/]+\.(jpe?g|png|webp)$/i.test(String(p)) ? String(p).replace(/^(\/?photos\/)([^/]+)\.\w+$/i, `$1${d}/$2.jpg`) : p;
+  // 英文房型说明，给英文搜索用：2 Bed Apartment for Rent in Melbourne CBD
+  function enLine(x) {
+    const all = [x.title, ...(x.highlights || []), x.desc].join(" ");
+    const type = /别墅|独立屋|house/i.test(all) ? "House" : /联排|townhouse/i.test(all) ? "Townhouse" : /车位|car ?park/i.test(x.title || "") && !x.beds ? "Car Park" : "Apartment";
+    const beds = x.beds ? `${x.beds} Bed ` : x.beds === 0 ? "Studio " : "";
+    return `${beds}${type} for Rent${x.suburb ? " in " + x.suburb : ""}`;
+  }
 
   // 同区优先、马上能住优先，挑最多 n 套其它在租房源，放在独立页底部（已租出的页面最需要它留住来访者）。
   function related(x, all, n) {
@@ -113,7 +132,7 @@
     contact = contact || {};
     const tel = x.phone || contact.phone, wx = x.wechat || contact.wechat;
     const P = x.photos || [];
-    const t = ogTitle(x), d = ogDesc(x), img = ogImage(x), url = pageUrl(x);
+    const t = ogTitle(x), d = ogDesc(x), img = ogImage(x), url = pageUrl(x), pt = pageTitle(x), pd = pageDesc(x);
     const full = `../rentals.html?id=${encodeURIComponent(x.id)}`;
     const msg = encodeURIComponent(`你好，我在好租 Howzu 看到房源：${x.title}（${url}）`);
     const ld = {
@@ -122,6 +141,17 @@
     };
     if (x.beds != null) ld.numberOfRooms = x.beds;
     if (x.baths != null) ld.numberOfBathroomsTotal = x.baths;
+    if (x.furnished === true || x.furnished === false) ld.amenityFeature = [{ "@type": "LocationFeatureSpecification", name: "Furnished", value: x.furnished }];
+    // 租金报价：没写周租就不写价格（不编数据），只标可租状态
+    const offer = { "@type": "Offer", url, priceCurrency: "AUD", businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
+      availability: isLet(x) ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+      offeredBy: { "@type": "Organization", name: "好租 Howzu", url: SITE } };
+    if (x.rentWeekly && !isLet(x)) { offer.price = String(x.rentWeekly); offer.priceSpecification = { "@type": "UnitPriceSpecification", price: Number(x.rentWeekly), priceCurrency: "AUD", unitCode: "WEE", unitText: "week" }; }
+    ld.offers = offer;
+    const crumbs = [["好租 Howzu", SITE + "/"], ["在租房源", SITE + "/rentals.html"]];
+    if (AREA_G[x.suburb]) crumbs.push([`${x.suburb} 租房`, `${SITE}/guide/${AREA_G[x.suburb]}.html`]);
+    crumbs.push([x.title || "房源", url]);
+    const bc = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs.map(([n, u], i) => ({ "@type": "ListItem", position: i + 1, name: n, item: u })) };
     const tags = [
       x.beds != null ? `🛏 ${x.beds} 房` : "", x.baths != null ? `🛁 ${x.baths} 卫` : "", x.cars != null ? `🚗 ${x.cars ? x.cars + " 车位" : "无车位"}` : "",
     ].filter(Boolean);
@@ -132,8 +162,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(t)}</title>
-<meta name="description" content="${esc(d)}">
+<title>${esc(pt)}</title>
+<meta name="description" content="${esc(pd)}">
 <link rel="canonical" href="${esc(url)}">
 ${isLet(x) ? '<meta name="robots" content="noindex">\n' : ""}<meta property="og:type" content="website">
 <meta property="og:site_name" content="好租 Howzu">
@@ -146,6 +176,7 @@ ${isLet(x) ? '<meta name="robots" content="noindex">\n' : ""}<meta property="og:
 <meta itemprop="name" content="${esc(t)}"><meta itemprop="image" content="${esc(img)}"><meta itemprop="description" content="${esc(d)}">
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#0f6b4f">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
+<script type="application/ld+json">${JSON.stringify(bc).replace(/</g, "\\u003c")}</script>${P.length && !/^https?:/.test(P[0]) ? `\n<link rel="preload" as="image" href="${esc(rel(sized(P[0], "m")))}" imagesrcset="${esc(rel(sized(P[0], "s")))} 480w, ${esc(rel(sized(P[0], "m")))} 960w" imagesizes="(min-width:880px) 840px, 100vw" fetchpriority="high">` : ""}
 <style>
 *{box-sizing:border-box}body{margin:0;background:#fff;color:#1d2321;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit}.top{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;max-width:880px;margin:0 auto}
@@ -158,15 +189,15 @@ main{max-width:880px;margin:0 auto;padding:0 20px 120px}
 h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:14px}
 .facts{display:flex;gap:18px;margin:14px 0;font-size:15px;color:#1d2321}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.chips span{background:#e8f3ee;color:#0f6b4f;font-size:13px;padding:4px 10px;border-radius:99px}
-.kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #ece9e2;border-radius:12px;margin:0 0 16px}.kf div{padding:10px 4px;text-align:center;min-width:0}.kf div+div{border-left:1px solid #ece9e2}.kf small{display:block;font-size:12px;color:#6b726f}.kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kf b.m{color:#9aa09d;font-weight:500}
-.sp{margin:0 0 18px}.sp-h{font-size:15px;font-weight:600;margin-bottom:6px}.sp dl{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:1px solid #ece9e2}.sp dl div{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #ece9e2;font-size:14px;min-width:0}.sp dl div:nth-child(odd):not(.w){padding-right:12px}.sp dl div:nth-child(even){padding-left:12px}.sp dl div.w{grid-column:1/-1;padding-left:0}.sp dt{color:#6b726f;flex:none}.sp dd{margin:0;font-weight:500;text-align:right}.sp dd.m{color:#a3a8a5;font-weight:400}
+.kf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #ece9e2;border-radius:12px;margin:0 0 16px}.kf div{padding:10px 4px;text-align:center;min-width:0}.kf div+div{border-left:1px solid #ece9e2}.kf small{display:block;font-size:12px;color:#6b726f}.kf b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kf b.m{color:#6b726f;font-weight:500}
+.sp{margin:0 0 18px}.sp-h{font-size:15px;font-weight:600;margin-bottom:6px}.sp dl{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:1px solid #ece9e2}.sp dl div{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #ece9e2;font-size:14px;min-width:0}.sp dl div:nth-child(odd):not(.w){padding-right:12px}.sp dl div:nth-child(even){padding-left:12px}.sp dl div.w{grid-column:1/-1;padding-left:0}.sp dt{color:#6b726f;flex:none}.sp dd{margin:0;font-weight:500;text-align:right}.sp dd.m{color:#6b726f;font-weight:400}
 .tr{border-radius:14px;background:#f2f7f4;padding:12px 14px 11px;margin:0 0 18px}.tr-h{font-size:14px;font-weight:600;color:#0f6b4f;margin-bottom:8px}
 .tr-l{display:block;margin-top:9px;font-size:12.5px;font-weight:600;color:#0f6b4f;text-decoration:none}.tr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tr-g b{display:block;font-size:13px}.tr-g small{display:block;font-size:11.5px;color:#6b726f;line-height:1.35}.tr-n{font-size:12px;color:#6b726f;margin-top:9px;padding-top:8px;border-top:1px solid rgba(15,107,79,.12)}
 .desc{white-space:pre-line;font-size:15px;border-top:1px solid #ece9e2;padding-top:18px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0}.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}.grid a:only-child{grid-column:1/-1}.grid a:only-child img{aspect-ratio:16/10}@media(max-width:699px){.grid a:last-child:nth-child(odd){grid-column:1/-1}.grid a:last-child:nth-child(odd) img{aspect-ratio:2/1}}
-.rel{margin:22px 0 6px}.rel-h{font-size:16px;font-weight:700;margin-bottom:10px}.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rel-h{grid-column:1/-1}.rel a{text-decoration:none;color:inherit;min-width:0}.rel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:#eee}.rel b{display:block;font-size:13px;color:#0f6b4f;margin-top:6px}.rel span{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rel small{display:block;font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rel{margin:22px 0 6px}.rel-h{font-size:16px;font-weight:700;margin-bottom:10px}.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rel-h{grid-column:1/-1}.rel a{text-decoration:none;color:inherit;min-width:0}.rel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:#eee}.rel b{display:block;font-size:13px;color:#0f6b4f;margin-top:6px}.rel span{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rel small{display:block;font-size:12px;color:#6b726f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .more{display:block;text-align:center;padding:14px;border:1px solid #e4e1d8;border-radius:12px;text-decoration:none;font-size:15px;margin-top:8px}.more.lead{background:#0f6b4f;border-color:#0f6b4f;color:#fff;line-height:1.5;margin-top:16px}.more.lead b{display:block;font-size:16px}
-.trust{font-size:13px;color:#6b726f;margin-top:22px}
+.trust{font-size:13px;color:#6b726f;margin-top:22px}.bc{font-size:12.5px;color:#6b726f;margin:0 0 10px}.bc a{color:#6b726f;text-decoration:none}
 .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid #ece9e2;padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
 .bar div{max-width:880px;margin:0 auto;display:flex;gap:10px}
 .bar a{flex:1;text-align:center;padding:13px 0;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;background:#0f6b4f;color:#fff}
@@ -177,7 +208,8 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 <body>
 <header class="top"><a class="logo" href="../rentals.html">好租 Howzu</a><a class="all" href="../rentals.html">全部房源 ›</a></header>
 <main>
-<div class="hero">${P.length ? `<a href="${esc(full)}"><img src="${esc(rel(P[0]))}" alt="${esc(x.title)}"></a>` : ""}${isLet(x) ? '<span class="let">已租出</span>' : ""}${P.length > 1 ? `<a class="n" href="${esc(full)}">共 ${P.length} 张照片</a>` : ""}</div>
+<nav class="bc" aria-label="面包屑">${crumbs.slice(0, -1).map(([n, u]) => `<a href="${esc(u.replace(SITE, ""))}">${esc(n)}</a>`).join(" › ")}</nav>
+<div class="hero">${P.length ? `<a href="${esc(full)}" aria-label="查看全部照片"><img src="${esc(rel(sized(P[0], "m")))}" srcset="${esc(rel(sized(P[0], "s")))} 480w, ${esc(rel(sized(P[0], "m")))} 960w" sizes="(min-width:880px) 840px, 100vw" width="960" height="720" fetchpriority="high" alt="${esc(x.title)}"></a>` : ""}${isLet(x) ? '<span class="let">已租出</span>' : ""}${P.length > 1 ? `<a class="n" href="${esc(full)}">共 ${P.length} 张照片</a>` : ""}</div>
 <div class="price">${isLet(x) ? "已租出" : x.rentWeekly ? `$${esc(x.rentWeekly)}<small> / 周</small>` : "<small>租金请咨询</small>"}</div>
 <h1>${esc(x.title)}</h1>
 <div class="addr">📍 ${esc(hideUnit(x.address))}</div>
@@ -187,9 +219,9 @@ ${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).
 ${isLet(x) ? "" : `<div class="sp"><div class="sp-h">房屋信息</div><dl>${specs(x).map(([k, v]) => `<div${k === "设施" ? ' class="w"' : ""}><dt>${esc(k)}</dt><dd${v === TBC ? ' class="m"' : ""}>${esc(v)}</dd></div>`).join("")}</dl></div>`}
 ${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}${AREA_G[x.suburb] ? `<a class="tr-l" href="/guide/${AREA_G[x.suburb]}.html">住在 ${esc(x.suburb)}：免费电车区、到大学距离、对口学区 ›</a>` : ""}
 ${x.desc ? `<div class="desc">${esc(x.desc)}</div>` : ""}
-${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map(p => `<a href="${esc(full)}"><img src="${esc(rel(p))}" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
+${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map((p, i) => `<a href="${esc(full)}" aria-label="查看第 ${i + 2} 张照片"><img src="${esc(rel(sized(p, "s")))}" width="480" height="360" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
 ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</a>` : ""}
-${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "这些现在可以租" : "其他在租房源"}</div>${others.map(y => `<a href="${esc(y.id)}.html" data-act="rel" data-id="${esc(y.id)}">${(y.photos || [])[0] ? `<img src="${esc(rel(y.photos[0]))}" alt="" loading="lazy">` : ""}<b>${esc(priceText(y))}</b><span>${esc((y.title || y.suburb || "").split("·")[0].trim())}</span><small>${esc([y.beds != null ? y.beds + " 房" : "", y.baths != null ? y.baths + " 卫" : "", y.cars ? y.cars + " 车位" : ""].filter(Boolean).join(" · ") || y.suburb || "")}</small></a>`).join("")}</div>` : ""}
+${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "这些现在可以租" : "其他在租房源"}</div>${others.map(y => `<a href="${esc(y.id)}.html" data-act="rel" data-id="${esc(y.id)}">${(y.photos || [])[0] ? `<img src="${esc(rel(sized(y.photos[0], "s")))}" width="480" height="360" alt="" loading="lazy">` : ""}<b>${esc(priceText(y))}</b><span>${esc((y.title || y.suburb || "").split("·")[0].trim())}</span><small>${esc([y.beds != null ? y.beds + " 房" : "", y.baths != null ? y.baths + " 卫" : "", y.cars ? y.cars + " 车位" : ""].filter(Boolean).join(" · ") || y.suburb || "")}</small></a>`).join("")}</div>` : ""}
 <a class="more" href="${esc(full)}">查看全部照片 · 看对口学区 ›</a>
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
 <p class="trust">好租 Howzu · 持牌物业管理 · 全程中文服务</p>
@@ -213,11 +245,13 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     ["https://howzu.com.au/guide/apply.html", "monthly", "0.7"],
   ];
   // guides：guide/ 目录下的其它文章文件名（如 "cgt-discount.html"），由构建脚本读目录传进来，写新文章不用再改这里。
-  function sitemap(listings, guides) {
+  function sitemap(listings, guides, more) {
     const have = new Set(STATIC.map(r => r[0]));
     const extra = (guides || []).filter(f => /^[a-z0-9-]+\.html$/.test(f)).sort().map(f => ["https://howzu.com.au/guide/" + f, "monthly", "0.7"]).filter(r => !have.has(r[0]));
     const rows = STATIC.concat(extra).map(([u, f, p]) => `  <url><loc>${u}</loc><changefreq>${f}</changefreq><priority>${p}</priority></url>`);
     for (const x of listings) if (x.status === "live") rows.push(`  <url><loc>${esc(pageUrl(x))}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
+    // 其它独立页（如 sale/ 在售房），由构建脚本读目录传进来
+    for (const u of more || []) rows.push(`  <url><loc>${esc(u)}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
     return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`;
   }
   // 区域租房指南（guide/area-*.html，由 tools/area_pages.py 生成）
@@ -251,7 +285,7 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
     if (S["设施"] !== TBC) CARD_AMEN.filter(a => S["设施"].split("、").includes(a)).slice(0, 2).forEach(a => out.push(a));
     return out;
   }
-  const api = { availText, availNow, leadUrl, bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, related, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
+  const api = { pageTitle, pageDesc, enLine, sized, availText, availNow, leadUrl, bondWithAmt, cardFacts, keyFacts, specs, compare, TBC, trust, render, related, sitemap, ogTitle, ogDesc, ogImage, pageUrl, hideUnit, safeId };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.ListingPage = api;
 })(this);

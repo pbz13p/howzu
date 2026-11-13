@@ -116,4 +116,14 @@ ok("房屋信息：押金附大约金额", LP.bondWithAmt("4 周", 650) === "4 �
   ok("加了自己的学校/公司后，列表卡片显示到那里的通勤", /function cmChip\(/.test(r) && r.includes('data-cmchip="${esc(x.id)}"') && r.includes("setTimeout(cmFill,0)")); }
 { const r = require("fs").readFileSync(require("path").join(__dirname, "..", "rentals.html"), "utf8");
   ok("列表顶部可直接选“我的学校/公司”看每套房通勤", r.includes('id="lcm"') && /function lcmRender\(/.test(r) && r.includes("lcmRender();setTimeout(cmFill,0)")); }
+{ const lds = [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const ap = lds.find(o => o["@type"] === "Apartment"), bc = lds.find(o => o["@type"] === "BreadcrumbList");
+  ok("房源页结构化数据有 Offer：周租、澳元、按周计价", ap && ap.offers && ap.offers.price === "650" && ap.offers.priceCurrency === "AUD" && ap.offers.priceSpecification.unitCode === "WEE");
+  ok("房源页有面包屑：首页 › 在租房源 › 区域页 › 房源", bc && bc.itemListElement.length === 4 && bc.itemListElement[2].item.endsWith("area-melbourne-cbd.html"));
+  const noRent = LP.render({ ...x, rentWeekly: null }, {}), apN = JSON.parse(noRent.match(/"@type":"Apartment"[\s\S]*?<\/script>/) ? noRent.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1] : "{}");
+  ok("没写周租时 Offer 不写价格（不编数据）", apN.offers && apN.offers.price === undefined);
+  ok("网页标题中英双语：中文标题 · 租金 | 英文房型", /<title>Spencer St · 两房一卫公寓 · \$650\/周 \| 2 Bed Apartment for Rent in Melbourne CBD \| 好租 Howzu<\/title>/.test(h));
+  ok("描述带英文一句", /name="description" content="[^"]*2 Bed Apartment for Rent in Melbourne CBD, \$650\/week\./.test(h));
+  ok("首图用中图并标高优先级；小图给列表", h.includes('src="../photos/m/a.jpg"') && h.includes('fetchpriority="high"') && LP.sized("photos/b.png", "s") === "photos/s/b.jpg" && LP.sized("https://x/y.jpg", "s") === "https://x/y.jpg");
+  ok("sitemap 收在售页", LP.sitemap([x], [], ["https://howzu.com.au/sale/a.html"]).includes("/sale/a.html")); }
 process.exit(fail ? 1 : 0);

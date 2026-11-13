@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="css/site.css?v=20261112">
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#6b726f;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2321;--muted:#5d6461;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warn:#9a5b00;--warnbg:#fff6e5}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
 main{max-width:760px;margin:0 auto;padding:14px}
@@ -134,10 +134,10 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
     <div class="list" id="near"></div>
   </section>
 
-  <section class="card hr hidden" id="homeRent" aria-label="正在招租">
-    <div class="hr-h"><h2>正在招租</h2><a href="rentals.html">看全部 <span id="hrN"></span> ›</a></div>
+  <section class="card hr" id="homeRent" aria-label="正在招租">
+    <div class="hr-h"><h2>正在招租</h2><a href="rentals.html">看全部 <span id="hrN">6 套</span> ›</a></div>
     <p class="hr-t">好租直管 · 零中介费 · 押金 RTBA 政府托管 · 全程中文</p>
-    <div class="hr-r" id="hrR"></div>
+    <div class="hr-r" id="hrR"><a class="hr-c" href="rent/2110-spencer.html"><span class="hr-i"><img src="photos/s/2110-spencer-1.jpg" data-o="photos/2110-spencer-1.jpg" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0)this.src=this.dataset.o" width="480" height="360" alt="Spencer St"><em>马上入住</em></span><b>Spencer St</b><span class="hr-s">2 房 · 1 卫 · Melbourne</span><span class="hr-p q">租金面议</span></a><a class="hr-c" href="rent/3005-latrobe.html"><span class="hr-i"><img src="photos/s/3005-latrobe-1.jpg" data-o="photos/3005-latrobe-1.jpg" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0)this.src=this.dataset.o" width="480" height="360" alt="La Trobe St"><em>马上入住</em></span><b>La Trobe St</b><span class="hr-s">1 房 · 1 卫 · Melbourne</span><span class="hr-p q">租金面议</span></a><a class="hr-c" href="rent/4803b-wsp.html"><span class="hr-i"><img src="photos/s/4803b-wsp-1.jpg" data-o="photos/4803b-wsp-1.jpg" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0)this.src=this.dataset.o" width="480" height="360" alt="West Side Place" loading="lazy"><em>马上入住</em></span><b>West Side Place</b><span class="hr-s">2 房 · 1 卫 · Melbourne</span><span class="hr-p q">租金面议</span></a><a class="hr-c" href="rent/6309d-lonsdale.html"><span class="hr-i"><img src="photos/s/6309d-lonsdale-1.jpg" data-o="photos/6309d-lonsdale-1.jpg" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0)this.src=this.dataset.o" width="480" height="360" alt="West Side Place" loading="lazy"><em>2027 年 1 月入住</em></span><b>West Side Place</b><span class="hr-s">1 房 · 1 卫 · Melbourne</span><span class="hr-p q">租金面议</span></a><a class="hr-c" href="rent/3817-victoria.html"><span class="hr-i"><img src="photos/s/3817-victoria-1.jpg" data-o="photos/3817-victoria-1.jpg" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0)this.src=this.dataset.o" width="480" height="360" alt="Carlton" loading="lazy"><em>2027 年 1 月入住</em></span><b>Carlton</b><span class="hr-s">1 房 · 1 卫 · Carlton</span><span class="hr-p q">租金面议</span></a><a class="hr-c" href="rent/2801b-wsp.html"><span class="hr-i"><img src="photos/s/2801b-wsp-2.jpg" data-o="photos/2801b-wsp-2.jpg" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0)this.src=this.dataset.o" width="480" height="360" alt="West Side Place" loading="lazy"><em>2027 年 1 月入住</em></span><b>West Side Place</b><span class="hr-s">2 房 · 1 卫 · Melbourne</span><span class="hr-p q">租金面议</span></a></div><!--/hrR-->
   </section>
 
 
@@ -154,7 +154,7 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
     <p class="note" style="margin-top:-4px">按签证类型算孩子上维州公立学校每年要交多少学费。</p>
     <form class="f" id="fee" onsubmit="return false">
       <label>孩子（或父母）的签证</label>
-      <select id="visa">
+      <select id="visa" aria-label="签证类型">
         <optgroup label="免学费">
           <option value="free|公民">澳洲公民 / 新西兰公民</option>
           <option value="free|PR">永久居民 PR（189、190、186、191、887 等）</option>
@@ -175,7 +175,7 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
         </optgroup>
       </select>
       <label>年级</label>
-      <select id="lvl">
+      <select id="lvl" aria-label="学校阶段">
         <option value="0">小学 Prep–6 年级</option>
         <option value="1">初中 7–10 年级</option>
         <option value="2">高中 11–12 年级（VCE）</option>
@@ -193,12 +193,12 @@ footer{max-width:1760px;margin:0 auto;padding:4px 20px 30px}
       <input name="school" id="leadSchool" placeholder="如 Balwyn High School">
       <div class="grid">
         <div><label>房型</label>
-          <select name="beds"><option>1 房</option><option>2 房</option><option selected>3 房</option><option>4 房以上</option></select></div>
+          <select name="beds" aria-label="几房"><option>1 房</option><option>2 房</option><option selected>3 房</option><option>4 房以上</option></select></div>
         <div><label>每周预算（澳元）</label><input name="budget" inputmode="numeric" placeholder="如 800"></div>
       </div>
       <div class="grid">
-        <div><label>入住时间</label><select name="when"><option>越快越好</option><option>1 个月内</option><option selected>2027 年 1 月</option><option>2027 年年中</option><option>还没定</option></select></div>
-        <div><label>孩子入学年级</label><select name="grade"><option value="">先不填</option><option>Prep 预备班</option><option>1 年级</option><option>2 年级</option><option>3 年级</option><option>4 年级</option><option>5 年级</option><option>6 年级</option><option>7 年级</option><option>8 年级</option><option>9 年级</option><option>10 年级</option><option>11 年级</option><option>12 年级</option></select></div>
+        <div><label>入住时间</label><select name="when" aria-label="什么时候入住"><option>越快越好</option><option>1 个月内</option><option selected>2027 年 1 月</option><option>2027 年年中</option><option>还没定</option></select></div>
+        <div><label>孩子入学年级</label><select name="grade" aria-label="孩子年级"><option value="">先不填</option><option>Prep 预备班</option><option>1 年级</option><option>2 年级</option><option>3 年级</option><option>4 年级</option><option>5 年级</option><option>6 年级</option><option>7 年级</option><option>8 年级</option><option>9 年级</option><option>10 年级</option><option>11 年级</option><option>12 年级</option></select></div>
       </div>
       <label>联系方式（微信号或手机）</label>
       <input name="contact" required placeholder="必填">
@@ -242,8 +242,7 @@ let nearLevel = "all", nearSort = "dist", place = null;
 let D = {}, map, layers = [], nearData = [], nearFilter = "all", rankShown = 30;
 
 async function load(){
-  // 学区边界文件较大：先加载学校和排名（小文件）马上显示，学区边界并行下载，查地址时再等它
-  const zones = Promise.all(["zones_primary","zones_secondary"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
+  // 学区边界文件很大（约 3MB）：打开首页不下载，用户点搜索框或查地址时才下载（见 zonesLoad）
   const [sc, meta] = await Promise.all(["schools","meta"].map(n => fetch(`data/${n}.json`).then(r=>r.json())));
   D = {sc, meta, byNo: Object.fromEntries(sc.map(s=>[s.no,s]))};
   try{ D.zg = await fetch("data/zone_guides.json").then(r=>r.ok?r.json():{}); }catch(_){ D.zg={}; }
@@ -252,9 +251,12 @@ async function load(){
   $("#rt").textContent = meta.vce_ranked_total;
   $("#built").textContent = `学区年份 ${meta.zones_year}｜VCE 年份 ${meta.vce_year}｜数据更新 ${meta.built}`;
   renderRank();
-  const [zp, zs] = await zones;
-  zp.features.forEach(prepBBox); zs.features.forEach(prepBBox);
-  D.zp = zp; D.zs = zs;
+}
+let zonesP = null;
+function zonesLoad(){
+  return zonesP || (zonesP = Promise.all(["zones_primary","zones_secondary"].map(n => fetch(`data/${n}.json`).then(r=>r.json())))
+    .then(([zp, zs]) => { zp.features.forEach(prepBBox); zs.features.forEach(prepBBox); D.zp = zp; D.zs = zs; })
+    .catch(e => { zonesP = null; throw e; }));
 }
 
 function prepBBox(f){
@@ -470,7 +472,11 @@ function calcFee(){
 }
 $("#visa").onchange=calcFee; $("#lvl").onchange=calcFee; calcFee();
 
-const ready = load();
+const base = load();
+// await ready 时才去下载学区边界（懒加载）；用户一碰搜索框就提前开始下载
+const ready = { then: (ok, bad) => Promise.all([base, zonesLoad()]).then(ok, bad) };
+["focusin","pointerdown","keydown"].forEach(t => document.addEventListener(t, ev => { if (ev.target.closest && ev.target.closest("#q, #suggest, #loc")) zonesLoad().catch(()=>{}); }, { passive: true }));
+if (/[?&](q|addr|lat)=/.test(location.search)) zonesLoad().catch(()=>{});
 {const q0=new URLSearchParams(location.search).get("q"); if(q0){$("#q").value=q0; search();}}
 </script>
 <script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261113b" defer></script>
