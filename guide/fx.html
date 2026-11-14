@@ -61,13 +61,13 @@ ul.dot li{margin:0 0 6px}
 .cal input,.cal select{font:inherit;font-size:18px;font-weight:600;border:1px solid #d8dfdb;border-radius:10px;padding:10px 12px;background:#fff;width:100%;color:#1d2321}
 .row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}
 .row label{margin:0}.row select{font-size:16px;padding:10px 8px}
-.sw{border:1px solid #d8dfdb;background:#fff;border-radius:10px;height:48px;width:44px;font-size:18px;cursor:pointer;color:#0f6b4f}
+.sw{-webkit-appearance:none;appearance:none;border:1px solid #d8dfdb;background:#fff;border-radius:10px;height:48px;width:44px;font-size:18px;cursor:pointer;color:#0f6b4f}
 .big{background:#0f6b4f;color:#fff;border-radius:18px;padding:18px 20px;margin:0 0 8px}
 .big .l{font-size:13px;opacity:.85}
 .big .v{font-size:34px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.25}
 .big .s{font-size:13px;opacity:.85}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
-.chips button{border:1px solid #d8dfdb;background:#fff;border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+.chips button{color:#1d2321;font:inherit;font-size:13px;border:1px solid #d8dfdb;background:#fff;border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
 .chips button.on{background:#0f6b4f;color:#fff;border-color:#0f6b4f}
 #chart{width:100%;height:auto;display:block}
 .hl{display:flex;flex-wrap:wrap;gap:2px 12px;justify-content:space-between;font-size:13px;color:#6b726f;font-variant-numeric:tabular-nums}
@@ -167,7 +167,7 @@ table.cmp th{font-size:13px;color:#6b726f;font-weight:600}
 <section class="src">
 <h2>数据和官方来源（2026 年 11 月查阅）</h2>
 <ul>
-<li>汇率数据：欧洲央行（ECB）参考汇率，经 Frankfurter 公开接口获取：<a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html</a></li>
+<li>汇率数据：欧洲央行（ECB）参考汇率，经 Frankfurter 公开接口获取（备用：ExchangeRate-API、fawazahmed0 currency-api）：<a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html</a></li>
 <li>AUSTRAC · Remittance sector register（汇款服务必须注册，可查询名单）：<a href="https://www.austrac.gov.au/remittance-sector-register-and-remittance-registration-actions">www.austrac.gov.au/remittance-sector-register-and-remittance-registration-actions</a></li>
 <li>Scamwatch（澳洲政府防骗网站，可举报骗局）：<a href="https://www.scamwatch.gov.au/">www.scamwatch.gov.au</a></li>
 <li>国家外汇管理局（个人外汇业务规定）：<a href="https://www.safe.gov.cn/">www.safe.gov.cn</a></li>
@@ -187,7 +187,7 @@ function opts(sel,v){sel.innerHTML=LIST.filter(c=>R?(c==="AUD"||R[c]):true).map(
 function rate(a,b){if(!R)return NaN;const ra=a==="AUD"?1:R[a],rb=b==="AUD"?1:R[b];return rb/ra;}
 async function j(u){const r=await fetch(u);if(!r.ok)throw new Error(r.status);return r.json();}
 async function load(){
-  try{const d=await j("https://api.frankfurter.app/latest?from=AUD");R=d.rates;date=d.date;src="欧洲央行参考价";}
+  try{const d=await j("https://api.frankfurter.dev/v1/latest?base=AUD");R=d.rates;date=d.date;src="欧洲央行参考价";}
   catch(_){try{const d=await j("https://open.er-api.com/v6/latest/AUD");R=d.rates;date=(d.time_last_update_utc||"").slice(5,16);src="ExchangeRate-API";}catch(e){R=null;}}
   if(!R){$("bv").textContent="暂时取不到汇率";$("bs").textContent="请稍后刷新";return;}
   const c=R.CNY;
@@ -214,7 +214,11 @@ let days=90;
 async function chart(){
   const svg=$("chart"),end=new Date(),st=new Date(end-days*864e5),iso=d=>d.toISOString().slice(0,10);
   let pts=[];
-  try{const d=await j(`https://api.frankfurter.app/${iso(st)}..${iso(end)}?from=AUD&to=CNY`);pts=Object.keys(d.rates).sort().map(k=>[k,d.rates[k].CNY]);}catch(_){}
+  try{const d=await j(`https://api.frankfurter.dev/v1/${iso(st)}..?base=AUD&symbols=CNY`);pts=Object.keys(d.rates).sort().map(k=>[k,d.rates[k].CNY]);}catch(_){}
+  if(pts.length<2){ // 备用：jsDelivr 上的每日汇率快照，抽样约 20 个日期
+    const n=20,ds=[...new Set(Array.from({length:n},(_,i)=>iso(new Date(+st+(end-st)*i/(n-1)-(i===n-1?864e5:0)))))];
+    const r=await Promise.all(ds.map(d=>j(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${d}/v1/currencies/aud.min.json`).then(x=>[d,x.aud&&x.aud.cny]).catch(()=>null)));
+    pts=r.filter(x=>x&&x[1]>0);}
   if(pts.length<2){svg.innerHTML='<text x="320" y="110" text-anchor="middle" fill="#8a908d" font-size="14">暂时取不到走势数据</text>';return;}
   const v=pts.map(p=>p[1]),mn=Math.min(...v),mx=Math.max(...v),pad=(mx-mn)*0.12||0.01,lo=mn-pad,hi=mx+pad,W=640,H=220,L=8,T=10,B=34;
   const X=i=>L+i*(W-2*L)/(pts.length-1),Y=y=>T+(hi-y)/(hi-lo)*(H-T-B);
