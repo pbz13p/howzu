@@ -39,10 +39,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TOTAL_CAP_USD: "10"
+          TOTAL_CAP_USD: "24"
           RUNS_PER_DAY: "8"
           MAX_RUN_USD: "5"
-          DEADLINE: "2026-11-14T12:00:00+00:00"
+          DEADLINE: "2026-12-13T12:00:00+00:00"
           AUTO_MERGE: "1"
           TEST_CMD: "node tools/test-engine.js && node tools/test-data.js"
           MODEL: "claude-opus-5-5"
