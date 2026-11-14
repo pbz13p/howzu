@@ -1,0 +1,52 @@
+# 好租 Howzu
+
+> 好租（howzu.com.au）是面向墨尔本华人的中文租房网站：查在租房源、学区、各区租金和房价、投资回报，并有中文租房和房产指南。只覆盖大墨尔本地区。
+
+房源来自合作物业管理公司直接管理的房子，以及房东免费发布、经审核的房子。网站以中文为主，主要服务留学生、新移民和华人家庭。
+
+## 怎么找房和联系
+- [在租房源](https://howzu.com.au/rentals.html)：按区域、学区、价格筛选，可在地图上看
+- 每个房源页底部有固定咨询栏：电话、短信、预约看房，一步就能联系
+- [查学区](https://howzu.com.au/)：输入地址查对口公立学校，再看学区里的在租房源
+- [租金和房价查询](https://howzu.com.au/rents.html)：各区周租中位数、成交中位价和租金回报
+- [投资回报测算](https://howzu.com.au/invest.html)
+- [房东免费发布房源](https://howzu.com.au/post.html)
+
+## 区域租房指南（25 个区）
+每页包括：是否在免费电车区、到各大学的通勤、对口学区和该区在租房源。
+- [Balwyn](https://howzu.com.au/guide/area-balwyn.html)
+- [Blackburn](https://howzu.com.au/guide/area-blackburn.html)
+- [Box Hill](https://howzu.com.au/guide/area-box-hill.html)
+- [Brunswick](https://howzu.com.au/guide/area-brunswick.html)
+- [Bundoora](https://howzu.com.au/guide/area-bundoora.html)
+- [Burwood](https://howzu.com.au/guide/area-burwood.html)
+- [Camberwell](https://howzu.com.au/guide/area-camberwell.html)
+- [Carlton](https://howzu.com.au/guide/area-carlton.html)
+- [Caulfield East](https://howzu.com.au/guide/area-caulfield.html)
+- [Clayton](https://howzu.com.au/guide/area-clayton.html)
+- [Docklands](https://howzu.com.au/guide/area-docklands.html)
+- [Doncaster](https://howzu.com.au/guide/area-doncaster.html)
+- [Footscray](https://howzu.com.au/guide/area-footscray.html)
+- [Glen Waverley](https://howzu.com.au/guide/area-glen-waverley.html)
+- [Hawthorn](https://howzu.com.au/guide/area-hawthorn.html)
+- [Kew](https://howzu.com.au/guide/area-kew.html)
+- [墨尔本 CBD](https://howzu.com.au/guide/area-melbourne-cbd.html)
+- [Mount Waverley](https://howzu.com.au/guide/area-mount-waverley.html)
+- [North Melbourne](https://howzu.com.au/guide/area-north-melbourne.html)
+- [Parkville](https://howzu.com.au/guide/area-parkville.html)
+- [Point Cook](https://howzu.com.au/guide/area-point-cook.html)
+- [Richmond](https://howzu.com.au/guide/area-richmond.html)
+- [South Yarra](https://howzu.com.au/guide/area-south-yarra.html)
+- [Southbank](https://howzu.com.au/guide/area-southbank.html)
+- [St Kilda](https://howzu.com.au/guide/area-st-kilda.html)
+
+## 租房和房产指南
+- [指南目录：房产干货（买房、卖房、出租的税和规定）](https://howzu.com.au/guide/property.html)
+- [留学生第一次在墨尔本租房：押金、看房、签约、涨租](https://howzu.com.au/guide/first-rental.html)
+- [租房申请 2026 新规：申请免费、标准申请表、禁止竞价](https://howzu.com.au/guide/apply.html)
+- [租房押金（Bond）怎么交、怎么退：RTBA 中文指南](https://howzu.com.au/guide/bond.html)
+- [按学区租房：租约能不能用来报名公立学校](https://howzu.com.au/guide/school-zone.html)
+- [澳币换人民币哪家最划算：参考汇率和换汇比价](https://howzu.com.au/guide/fx.html)
+
+## Optional
+- [网站地图 sitemap.xml](https://howzu.com.au/sitemap.xml)
