@@ -55,6 +55,13 @@
 3. 显示 `Success` 就好了。这一步只新建一张私密表、三个确认功能和一个每天的检查任务，不改现有的表和房源。
 4. 用法：手机或电脑打开 howzu.com.au/admin.html → “📥 贴帖入库”。先复制①的话术私信房东，对方同意后粘贴文字、拖照片，点保存，再把生成的确认话术发给房东。
 
+### F9. 更新“AI 一键生成中英文介绍”（5 分钟，可以等你在电脑前时我陪你做）
+发房源页的“✨ 一键生成中英文介绍”现在先用免费模板生成中英文；要让 AI 看照片写得更自然，需要把新版 AI 功能更新上去：
+1. 打开 https://supabase.com/dashboard/project/ltnugqlrixophjxoloym/functions ，点 **describe**（如果没有，点 **Deploy a new function**，名字填 describe）。
+2. 点 **Code**，把仓库里 `supabase/functions/describe/index.ts` 的内容整段替换进去，点 **Deploy**。
+3. 左边 **Edge Functions → Secrets** 里确认有 `ANTHROPIC_API_KEY`（没有的话你自己填 API key，我不碰密钥）。
+4. 每次生成约用 3 张小图加文字，按 Haiku 价格估算每次约 1 美分以内。
+
 ### F6. 公司微信号
 详情页底部的咨询栏现在只有短信、电话和预约看房。华人租客最习惯加微信，有了企业微信号或二维码，发我就能加上（预计询盘会明显增加）。
 
@@ -178,6 +185,7 @@
 - [x] 一页方案已写：[MONETIZATION.md](MONETIZATION.md)，等 Frank 定方向
 
 ## 工作日志
+- 2026-11-15：发房源页“✨ 一键生成中英文介绍”：传照片后一键生成中文和英文标题、介绍（AI 可看前 3 张照片；AI 没部署或出错时自动用免费模板，中英文都有）；英文介绍和中文存在同一个 description 字段，用“—— English ——”分隔，租房页英文界面显示英文。新版 AI 功能待部署（F9）。
 - 2026-11-15：英文界面第一版：js/i18n.js（切换和翻译）+ js/i18n-en.js（词典，键是中文整段，数字写 {n}）；房源描述用 listings.json 的 descEn。新增界面文字要在词典里补英文。
 - 2026-11-15：一键入库（房东授权版）做完：admin.html 新增“📥 贴帖入库”（js/admin-import.js），粘贴即识别（js/post-parse.js，规则识别，不花 API）；新增房东确认页 confirm.html（必须填固定周租、勾选业主授权）；supabase/import.sql（私密表 listing_owners、确认和续期函数、每天检查：30 天提醒、45 天下架）。post.html 加“⚡ 一键帮我填好”：房东粘贴自己写的介绍，自动填好几房几卫、租金、家具、入住、租期、押金、设施。仿真测试 3 条帖子全流程通过，截图在 docs/import-screens/。
 - 2026-11-15：2801B 没写固定租金，改为草稿（维州不允许“面议”广告）；新增测试：在租房源必须有固定周租。“一键入库”按房东授权版写进排序第 2。
