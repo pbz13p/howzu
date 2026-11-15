@@ -70,6 +70,8 @@ textarea{resize:vertical;min-height:110px}
 #sug div{padding:10px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
 #sug div:active{background:var(--accent2)}
 .why .wg{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}.why b{display:block;font-size:14px}.why span{font-size:12.5px;color:var(--muted);line-height:1.5}
+.whyline{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:#f4faf7;border:1px solid #cfe6d8;font-size:13.5px;color:#0f6b4f;line-height:1.6}
+.more>summary{cursor:pointer;font-weight:700;font-size:16px;list-style:none;padding:2px 0}.more>summary::-webkit-details-marker{display:none}.more[open]>summary{margin-bottom:6px}
 .quick{border:1px solid #cfe6d8;background:#f4faf7}.quick textarea{width:100%;font:inherit;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;margin-top:8px;box-sizing:border-box}
 .ghost{font-size:14px;padding:8px 12px;border-radius:10px;border:0;background:var(--accent2);color:var(--accent);cursor:pointer;margin-top:8px}
 .pv{position:fixed;inset:0;z-index:50;background:rgba(20,24,22,.45);display:flex;align-items:flex-end;justify-content:center;animation:pvf .2s ease}
@@ -130,14 +132,7 @@ textarea{resize:vertical;min-height:110px}
 <main id="main">
   <div class="closed" id="closed" hidden>发布功能马上开放，现在提交的内容还不会保存。</div>
 
-<section class="card why"><h2>为什么放到好租</h2><div class="wg"><div><b>🆓 完全免费</b><span>不收中介费、不收上架费</span></div><div><b>⚡ 你不用写</b><span>粘贴一段文字，自动整理成中英文介绍和房屋信息表</span></div><div><b>🗺️ 租客一眼看懂</b><span>自带地图、对口学区、到 CBD 和大学的通勤时间</span></div><div><b>🌏 中英双语</b><span>面向墨尔本各国租客、留学生和家庭，中文英文都能沟通</span></div><div><b>📮 少骚扰</b><span>网上不显示你的电话，咨询先筛再转给你</span></div><div><b>📱 帮你推广</b><span>生成微信分享海报，放进好租在租房源列表</span></div></div></section>
-  <section class="card quick">
-    <h2>⚡ 懒得一项项填？</h2>
-    <div class="hint" style="margin-top:0">把你在微信或小红书写过的房源介绍整段粘贴进来，点一下，几房几卫、租金、家具、入住时间、租期、押金、设施都帮你填好，你看一遍就能发。只写一个地址也行。</div>
-    <textarea id="quickT" rows="4" placeholder="例如：CBD 两房两卫，周租 $720，带家具包网，12月1日起入住，租期一年，楼里有泳池健身房…"></textarea>
-    <button class="ghost" id="quickGo" style="font-size:15px;padding:10px 14px">⚡ 一键帮我填好</button>
-    <div class="hint auto" id="quickR" hidden></div>
-  </section>
+<div class="whyline">🆓 免费 · ⚡ 不用自己写 · 🌏 中英双语 · 📮 不公开电话 · 🗺️ 自带地图学区通勤</div>
 
   <section class="card">
     <h2><span class="n">1</span>上传照片 <span class="opt">最多 15 张，第一张是封面</span></h2>
@@ -148,8 +143,16 @@ textarea{resize:vertical;min-height:110px}
     <div class="hint">建议拍：客厅、卧室、厨房整体、浴室、窗外景色、楼里泳池/健身房。白天开灯、横着拍更好看，不用拍锅碗瓢盆。</div>
   </section>
 
+  <section class="card quick">
+    <h2><span class="n">2</span>粘贴介绍，自动帮你填 <span class="opt">可跳过</span></h2>
+    <div class="hint" style="margin-top:0">有写好的介绍就整段粘贴进来，几房几卫、租金、家具、入住时间、设施会自动填好。没有就跳过。</div>
+    <textarea id="quickT" rows="4" placeholder="例如：CBD 两房两卫，周租 $720，带家具包网，12月1日起入住，租期一年，楼里有泳池健身房…"></textarea>
+    <button class="ghost" id="quickGo" hidden>⚡ 一键帮我填好</button>
+    <div class="hint auto" id="quickR" hidden></div>
+  </section>
+
   <section class="card">
-    <h2><span class="n">2</span>房子情况</h2>
+    <h2><span class="n">3</span>房子基本情况</h2>
     <div class="chips" data-k="kind" data-single>
       <button class="on">整套出租</button><button>单间出租</button><button>转租 / 顶租约</button><button>短租</button>
     </div>
@@ -165,15 +168,26 @@ textarea{resize:vertical;min-height:110px}
       <div class="unit" id="unit"><button class="on" data-u="w">每周</button><button data-u="m">每月</button></div>
     </div>
     <div class="hint" id="rentHint"></div>
-    <label class="l">房屋类型 <span class="opt">可不选</span></label>
-    <div class="chips" data-k="ptype" data-single data-opt>
-      <button>公寓</button><button>联排别墅</button><button>独立屋</button><button>单间</button>
-    </div>
     <label class="l">什么时候能入住</label>
     <div class="chips" data-k="when" data-single>
       <button class="on">马上</button><button>两周内</button><button data-date>选日期</button>
     </div>
     <input type="date" id="date" hidden style="margin-top:8px">
+    <label class="l">地址</label>
+    <input type="text" id="addr" placeholder="输入地址，如 138 Spencer St Melbourne" autocomplete="off">
+    <div id="sug"></div>
+    <div class="hint">房号（Unit）只给审核看，网上只显示街道和区。</div>
+    <div class="hint auto" id="unitHint" hidden></div>
+  </section>
+
+
+
+  <details class="card more" id="more">
+    <summary>➕ 更多信息 <span class="opt">可不填：家具、租期、押金、宠物、设施、介绍…</span></summary>
+    <label class="l">房屋类型 <span class="opt">可不选</span></label>
+    <div class="chips" data-k="ptype" data-single data-opt>
+      <button>公寓</button><button>联排别墅</button><button>独立屋</button><button>单间</button>
+    </div>
     <label class="l">家具</label>
     <div class="chips" data-k="furnished" data-single>
       <button>带家具</button><button>不带家具</button><button>部分家具</button>
@@ -207,18 +221,7 @@ textarea{resize:vertical;min-height:110px}
     <div class="chips" data-k="highlights">
       <button>近火车站</button><button>免费电车区</button><button>近大学</button><button>景观好</button><button>近华人超市</button><button>学区好</button><button>安静</button>
     </div>
-  </section>
-
-  <section class="card">
-    <h2><span class="n">3</span>地址</h2>
-    <input type="text" id="addr" placeholder="输入地址，如 138 Spencer St Melbourne" autocomplete="off">
-    <div id="sug"></div>
-    <div class="hint">房号（Unit）只给审核看，网上只显示街道和区。</div>
-    <div class="hint auto" id="unitHint" hidden></div>
-  </section>
-
-  <section class="card">
-    <h2><span class="n">4</span>标题和介绍 <span class="opt">可不填，或让 AI 帮你写</span></h2>
+    <label class="l">标题和介绍 <span class="opt">不填也行，发布时自动生成中英文</span></label>
     <input type="text" id="title" maxlength="60" placeholder="不填就自动用“区 + 几房几卫”当标题">
     <textarea id="desc" maxlength="2000" placeholder="交通、周边、房子的好处、对租客的要求…" style="margin-top:8px"></textarea>
     <label class="hint" for="descEn" style="display:block;margin-top:8px">English description <span class="opt">英文介绍，可不填；点下面的按钮自动生成</span></label>
@@ -230,13 +233,6 @@ textarea{resize:vertical;min-height:110px}
       <div class="ai-t" id="aiTe" style="margin-top:10px" data-noi18n></div><div class="ai-d" id="aiDe" data-noi18n></div>
       <div class="ai-a"><button class="use" id="aiUse">用这段</button><button id="aiAgain">换一个</button><button id="aiNo">不用</button></div>
     </div>
-  </section>
-
-  <section class="card">
-    <h2><span class="n">5</span>怎么联系你 <span class="opt">微信和手机至少填一个</span></h2>
-    <label class="l">称呼</label><input type="text" id="cname" maxlength="30" autocomplete="name" placeholder="如 王先生">
-    <label class="l">微信号</label><input type="text" id="wechat" maxlength="40" placeholder="微信号" autocapitalize="off" autocorrect="off" spellcheck="false">
-    <label class="l">手机</label><input type="tel" id="phone" maxlength="20" autocomplete="tel" placeholder="如 04xx xxx xxx">
     <label class="l">怎么看房 <span class="opt">可不选</span></label>
     <div class="chips" data-k="viewing" data-single data-opt>
       <button>随时可约</button><button>周末看房</button><button>视频看房</button><button data-slots>定好时间</button>
@@ -247,6 +243,13 @@ textarea{resize:vertical;min-height:110px}
     </div>
     <input type="text" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="hint">提交即表示房源信息真实，你有权出租这套房。虚假房源会被删除。</div>
+  </details>
+
+  <section class="card">
+    <h2><span class="n">4</span>怎么联系你 <span class="opt">微信和手机至少填一个</span></h2>
+    <label class="l">称呼</label><input type="text" id="cname" maxlength="30" autocomplete="name" placeholder="如 王先生">
+    <label class="l">微信号</label><input type="text" id="wechat" maxlength="40" placeholder="微信号" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <label class="l">手机</label><input type="tel" id="phone" maxlength="20" autocomplete="tel" placeholder="如 04xx xxx xxx">
   </section>
   <div class="err" id="err"></div>
 </main>
@@ -489,6 +492,8 @@ function setChip(k, text, on = true) {
   if (g.hasAttribute("data-single")) bs.forEach(x => x.classList.toggle("on", x === b && on)); else b.classList.toggle("on", on);
   g.dataset.auto = "-"; return true;
 }
+// 粘贴或输入后自动识别（不用点按钮）
+let quickTm; $("#quickT").addEventListener("input", () => { clearTimeout(quickTm); quickTm = setTimeout(() => { if ($("#quickT").value.trim().length >= 6) $("#quickGo").onclick(); }, 700); });
 $("#quickGo").onclick = () => {
   const t = $("#quickT").value.trim(), out = $("#quickR"); if (!t) { $("#quickT").focus(); return; }
   const x = PostParse.parse(t); let n = 0;
@@ -508,9 +513,10 @@ $("#quickGo").onclick = () => {
   if (x.contact.wechat && !$("#wechat").value) $("#wechat").value = x.contact.wechat;
   if (x.contact.phone && !$("#phone").value) $("#phone").value = x.contact.phone;
   if (typeof rentHint === "function") rentHint(); save(); progress();
-  const left = x.missing.filter(m => !/地址|区域/.test(m) || !$("#addr").value.trim());
+  // 只提醒必填的（照片、租金、地址、联系方式）；其它可选项不催
+  const left = missing();
   out.hidden = false;
-  out.innerHTML = `✅ 已帮你填好 ${n} 项。${x.rentNote ? x.rentNote + "。" : ""}${left.length ? `还要你补：<b>${left.join("、")}</b>（下面对应的地方点一下就行）。` : "信息齐全，传几张照片就能发布。"}`;
+  out.innerHTML = `✅ 已帮你填好 ${n} 项${x.rentNote ? "（" + x.rentNote + "）" : ""}。${left.length ? `还差：<b>${left.join("、")}</b>，其余都可以不填。` : "可以直接发布了。"}`;
 };
 // ---------- draft（文字、选项、日期都保存；照片不存） ----------
 const KEY = "howzu-post-draft";
@@ -554,6 +560,8 @@ $("#pv").addEventListener("click", e => { if (e.target.id === "pv") hidePreview(
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#pv").hidden) hidePreview(); });
 $("#pvYes").onclick = () => { hidePreview(); PV_OK = true; $("#go").onclick(); };
 $("#go").onclick = async () => {
+  // 没写介绍就自动生成中英文介绍（免费模板），房东不用另外点
+  if (!missing().length && (!$("#desc").value.trim() || !$("#descEn").value.trim())) { const r = templateWrite(factsNow()); if (!$("#title").value.trim()) $("#title").value = r.title; if (!$("#desc").value.trim()) $("#desc").value = r.description; if (!$("#descEn").value.trim()) $("#descEn").value = r.description_en || ""; save(); }
   const m = missing(); $("#err").textContent = "";
   if (m.length) {
     $("#err").textContent = "还差：" + m.join("、");
