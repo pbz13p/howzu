@@ -43,12 +43,12 @@
   <url><loc>https://howzu.com.au/guide/first-rental.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/foreign-owner.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/frcgw.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://howzu.com.au/guide/fx.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/inherited-property.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/land-tax.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/landlord.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/lease-check.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/main-residence.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://howzu.com.au/guide/fx.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/move-in-cost.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/negative-gearing.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://howzu.com.au/guide/notice-to-vacate.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -138,6 +138,5 @@
   <url><loc>https://howzu.com.au/rent/4803b-wsp.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://howzu.com.au/rent/6309d-lonsdale.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://howzu.com.au/rent/3817-victoria.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://howzu.com.au/rent/2801b-wsp.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://howzu.com.au/sale/29-dehnert-doncaster-east.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
