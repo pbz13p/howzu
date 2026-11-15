@@ -49,9 +49,11 @@ input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border
 <main id="app"><div class="empty">加载中…</div></main>
 <script src="js/listing-page.js?v=20261113d"></script>
 <script src="js/admin-check.js?v=20261112b"></script>
+<script src="js/post-parse.js?v=20261115"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
+import { loadImport } from "./js/admin-import.js?v=20261115";
 const C = window.HOWZU || {}; const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 if (!C.SUPABASE_URL) { $("#app").innerHTML = '<div class="empty">后台还没设置好。</div>'; throw 0; }
@@ -69,8 +71,9 @@ async function start() {
 async function load() {
   if (tab === "lead") return loadLeads();
   if (tab === "stats") return loadStats();
-  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询)").order("created_at", { ascending: false });
-  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询)"); // 用来查重复（只取地址和状态）
+  if (tab === "import") return loadImport({ sb, $, esc, head: tabsHtml(), C });
+  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询,待房东确认)").order("created_at", { ascending: false });
+  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询,待房东确认)"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   const J = JUST; JUST = null;
   const just = J ? `<div class="just" role="status"><b>✅ 已通过上线</b><div class="m">「${esc(J.title || J.address || "")}」</div><div class="m">下一步：把上线消息发给房东 ${esc(J.contact_name || "")}（微信 ${esc(J.contact_wechat || "—")} · 手机 ${esc(J.contact_phone || "—")}）</div><div class="acts"><button class="ok" data-notice="${esc(J.id)}">📨 复制「已上线 + 链接」</button>${J.contact_phone ? `<a class="gr" style="font-size:15px;padding:10px 14px;border-radius:10px;text-decoration:none" href="sms:${esc(J.contact_phone)}?&body=${encodeURIComponent(AdminCheck.ownerNotice(J))}">💬 直接发短信</a>` : ""}</div></div>` : "";
@@ -90,7 +93,7 @@ async function load() {
       <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-notice="${esc(x.id)}">📨 通知房东</button><button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
-const TABS = [["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"], ["stats", "访问统计"]];
+const TABS = [["import", "📥 贴帖入库"], ["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"], ["stats", "访问统计"]];
 const tabsHtml = () => `<div class="tabs">${TABS.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>`;
 // 租客留的需求：不给"通过上线"（会公开联系方式），只能复制联系方式 / 标记已联系 / 删除
 // 访问统计：最近 30 天每天多少人看、多少次点击，哪些页面和房源最热（数据来自 js/track.js 写入的 pageviews 表）
@@ -168,6 +171,11 @@ document.addEventListener("click", async e => {
     const x = D[b.dataset.ask] || {}, t = AdminCheck.askOwner(x, AdminCheck.missingSpecs(x, window.ListingPage)), old = b.textContent;
     try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制，去微信发给房东"; } catch (_) { prompt("复制下面这段发给房东：", t); }
     setTimeout(() => b.textContent = old, 2200);
+  }
+  if (b.dataset.cp || b.dataset.copytext) { // 贴帖入库：复制话术
+    const t = b.dataset.copytext || (document.querySelector(b.dataset.cp) || {}).textContent || "", old = b.textContent;
+    try { await navigator.clipboard.writeText(t); b.textContent = "✅ 已复制"; } catch (_) { prompt("复制下面这段：", t); }
+    setTimeout(() => b.textContent = old, 1800); return;
   }
   if (b.dataset.copy) {
     const t = AdminCheck.shareText(D[b.dataset.id], b.dataset.copy), old = b.textContent;

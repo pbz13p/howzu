@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>确认房源信息 · 好租 Howzu</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32"><meta name="theme-color" content="#0f6b4f">
+<style>
+:root{--bg:#f6f4ef;--ink:#1d2321;--muted:#5d6461;--line:#e4e1d8;--accent:#0f6b4f;--accent2:#e8f3ee;--warnbg:#fff6e5;--warn:#8a5a00;--bad:#a12b2b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--accent);color:#fff;padding:14px 18px;font-weight:700}
+main{max-width:640px;margin:0 auto;padding:14px 14px 120px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+h1{font-size:19px;margin:0 0 4px}
+.m{font-size:13px;color:var(--muted)}
+.strip{display:flex;gap:6px;overflow-x:auto;margin:10px -2px 0}.strip img{height:120px;border-radius:10px}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:10px;border:1px solid #d6dcd9;border-radius:10px;background:#fff}
+.g4{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.need{border-color:#e0a84a;background:#fffaf0}
+.tbc{font-size:13px;color:var(--warn);background:var(--warnbg);border-radius:10px;padding:8px 10px;margin-top:10px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:14px}.chk input{width:22px;height:22px;flex:none;margin-top:2px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.bar button{width:100%;max-width:640px;display:block;margin:0 auto;font-size:17px;padding:14px;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.bar button:disabled{opacity:.6}
+.err{color:var(--bad);font-size:14px;margin-top:8px}
+.done{text-align:center;padding:30px 10px}.done b{display:block;font-size:20px;margin:8px 0}
+</style>
+</head>
+<body>
+<header>好租 Howzu · 房源确认</header>
+<main id="app"><div class="card">加载中…</div></main>
+<script src="/js/config.js?v=20261107"></script>
+<script>
+(function () {
+  const C = window.HOWZU || {}, $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const q = new URLSearchParams(location.search), id = q.get("id"), t = q.get("t");
+  const rpc = (fn, body) => fetch(`${C.SUPABASE_URL}/rest/v1/rpc/${fn}`, { method: "POST", headers: { apikey: C.SUPABASE_ANON_KEY, Authorization: "Bearer " + C.SUPABASE_ANON_KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(r => r.json());
+  const fail = m => { $("#app").innerHTML = `<div class="card">${m}</div>`; };
+  if (!id || !t) return fail("链接不完整，请向好租要一个新的确认链接。");
+  const KINDS = ["整套出租", "单间出租", "转租 / 顶租约", "短租"], FURN = ["带家具", "不带家具", "部分家具"];
+  rpc("howzu_get_draft", { p_id: id, p_token: t }).then(x => {
+    if (!x || !x.id) return fail("链接已失效或不正确，请向好租要一个新的确认链接。");
+    const photos = (x.photos || []).map(p => `<img src="${esc(p)}" alt="">`).join("");
+    // 已确认、已上线：显示“还在出租，续期”
+    if (x.kind !== "待房东确认") {
+      $("#app").innerHTML = `<div class="card"><h1>${esc(x.title)}</h1><div class="m">${x.status === "live" ? "正在好租上展示" : x.status === "pending" ? "已确认，等好租审核上线" : "已下架"}${x.renewed_at ? " · 上次确认 " + new Date(x.renewed_at).toLocaleDateString("zh-CN") : ""}</div><div class="strip">${photos}</div>
+        ${x.status === "live" ? `<label>周租（澳元）</label><input id="r" inputmode="numeric" value="${x.rent_weekly || ""}"><label>可入住</label><input id="a" value="${esc(x.available || "")}"><div class="m" style="margin-top:10px">房子还在出租的话，每月点一下“还在出租”。45 天没确认会自动下架，避免租客咨询已经租出的房子。</div>` : ""}</div>
+        ${x.status === "live" ? `<div class="bar"><button id="go">✓ 还在出租</button></div>` : ""}`;
+      if (x.status === "live") $("#go").onclick = async () => { const b = $("#go"); b.disabled = true; const r = await rpc("howzu_renew", { p_id: id, p_token: t, p_rent: +$("#r").value || null, p_available: $("#a").value.trim() });
+        if (r === "ok") $("#app").innerHTML = `<div class="card done">✅<b>已续期</b><div class="m">谢谢！一个月后我们会再提醒你。</div></div>`; else { b.disabled = false; alert("没成功，请稍后再试。"); } };
+      return;
+    }
+    const hl = (x.highlights || []).join("，"), need = v => v == null || v === "" ? " need" : "";
+    $("#app").innerHTML = `<div class="card"><h1>请核对你的房源信息</h1><div class="m">好租已经帮你整理好了，还没有公开。改好后点底部“确认上线”，好租审核后挂出（一般当天）。免费，不收任何费用。</div><div class="strip">${photos}</div></div>
+    <div class="card">
+      <label>周租（澳元，必填）<span class="m"> · 维州法律规定出租广告必须写固定租金</span></label><input id="f_rent" class="${need(x.rent_weekly).trim()}" inputmode="numeric" value="${x.rent_weekly || ""}" placeholder="例如 650">
+      <label>标题</label><input id="f_title" value="${esc(x.title)}">
+      <label>类型</label><select id="f_kind">${KINDS.map(k => `<option>${k}</option>`).join("")}</select>
+      <label>地址 <span class="m">· 网站上只显示街名，不显示单元号</span></label><input id="f_addr" class="${/待确认/.test(x.address) ? "need" : ""}" value="${/待确认/.test(x.address) ? "" : esc(x.address)}" placeholder="例如 12/34 Example St, Box Hill">
+      <div class="g4"><div><label>卧室</label><input id="f_beds" class="${need(x.beds).trim()}" inputmode="numeric" value="${x.beds ?? ""}"></div><div><label>卫生间</label><input id="f_baths" class="${need(x.baths).trim()}" inputmode="numeric" value="${x.baths ?? ""}"></div><div><label>车位</label><input id="f_cars" class="${need(x.cars).trim()}" inputmode="numeric" value="${x.cars ?? ""}"></div></div><div><label>家具</label><select id="f_furn" class="${need(x.furnished).trim()}"><option value="">请选</option>${FURN.map(k => `<option${k === x.furnished ? " selected" : ""}>${k}</option>`).join("")}</select></div>
+      <label>可入住日期</label><input id="f_avail" class="${need(x.available).trim()}" value="${esc(x.available || "")}" placeholder="例如 马上 / 2026-12-01">
+      <label>租期、押金、宠物、水电网、设施 <span class="m">· 用逗号隔开，例如：租期 12 个月，押金 4 周，不可养宠物，包网</span></label><input id="f_hl" value="${esc(hl)}">
+      <label>描述</label><textarea id="f_desc" rows="6">${esc(x.description || "")}</textarea>
+      <label class="chk"><input type="checkbox" id="f_auth"><span>我是这套房的业主，或已获业主书面同意出租和刊登；房子符合维州最低租住标准。</span></label>
+      <div class="m" style="margin-top:8px">上线后网站不显示你的电话和微信，租客咨询由好租转给你。</div>
+      <div class="err" id="err"></div>
+    </div>
+    <div class="bar"><button id="go">确认上线</button></div>`;
+    $("#f_kind").value = KINDS.includes(x.kind) ? x.kind : "整套出租";
+    $("#go").onclick = async () => {
+      const v = s => $(s).value.trim(), err = $("#err"); err.textContent = "";
+      const rent = +v("#f_rent");
+      if (!(rent >= 50 && rent <= 20000)) { err.textContent = "请填写固定的周租金额（例如 650）。"; $("#f_rent").focus(); return; }
+      if (!$("#f_auth").checked) { err.textContent = "请勾选上面的业主授权声明。"; return; }
+      const b = $("#go"); b.disabled = true; b.textContent = "提交中…";
+      const p = { rent_weekly: rent, title: v("#f_title"), kind: v("#f_kind"), address: v("#f_addr"), beds: v("#f_beds"), baths: v("#f_baths"), cars: v("#f_cars"), furnished: v("#f_furn"), available: v("#f_avail"),
+        highlights: v("#f_hl").split(/[,，、]\s*/).map(s => s.trim()).filter(Boolean), description: v("#f_desc"), authority: true };
+      const r = await rpc("howzu_confirm_draft", { p_id: id, p_token: t, p });
+      if (r === "ok") { $("#app").innerHTML = `<div class="card done">✅<b>已确认，谢谢！</b><div class="m">好租审核后就会上线（一般当天）。以后房子租出去了，或租金有变化，打开同一个链接就能改。</div></div>`; return; }
+      b.disabled = false; b.textContent = "确认上线";
+      err.textContent = { need_rent: "请填写固定周租。", need_authority: "请勾选业主授权声明。", already: "这套房源已经确认过了。", bad_token: "链接已失效，请向好租要新的链接。" }[r] || "提交失败，请稍后再试。";
+    };
+  }).catch(() => fail("网络不太好，请稍后刷新再试。"));
+})();
+</script>
+</body>
+</html>

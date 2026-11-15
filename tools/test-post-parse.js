@@ -1,0 +1,20 @@
+// 贴帖入库：用 3 条仿真帖子（不是真实他人内容）检查识别结果；识别不出的必须进“待确认”，不准编
+const P = require("../js/post-parse.js");
+const posts = require("./fixtures/fake-posts.json");
+let fail = 0; const ok = (n, c) => { console.log((c ? "✓ " : "✗ ") + n); if (!c) fail++; };
+const today = new Date("2026-11-15T10:00:00+11:00");
+const [a, b, c] = posts.map(p => P.parse(p.text, today));
+ok("帖 1：周租 720、2 房 2 卫 1 车位、CBD、地址", a.rent_weekly === 720 && a.beds === 2 && a.baths === 2 && a.cars === 1 && a.suburb === "Melbourne CBD" && a.address === "123 Example St, Melbourne VIC 3000");
+ok("帖 1：带家具、12/1 入住、租期 12 个月、押金 4 周、不可养宠物、包网", a.furnished === "带家具" && a.available === "2026-12-01" && a.highlights.includes("租期 12 个月") && a.highlights.includes("押金 4 周") && a.highlights.includes("不可养宠物") && a.highlights.includes("包网"));
+ok("帖 1：设施和卖点（泳池、健身房、电梯、近大学、免费电车区）", ["泳池", "健身房", "电梯", "近大学", "免费电车区"].every(h => a.highlights.includes(h)));
+ok("帖 1：个人电话和微信从描述里去掉，单独存", a.contact.phone === "0412345678" && a.contact.wechat === "rentmelb_test01" && !/0412|rentmelb/.test(a.description) && !/#墨尔本/.test(a.description));
+ok("帖 1：信息齐全，没有待确认项（地址、类型都识别到）", a.missing.length === 0 || (console.log("   待确认：", a.missing), false));
+ok("帖 2：单间、月租 1300 折算周租 300 并提示", b.kind === "单间出租" && b.rent_weekly === 300 && /月租 \$1300/.test(b.rentNote));
+ok("帖 2：包 bills = 包水费、电费、网；马上入住；租期 6 个月", ["包水费", "包电费", "包网"].every(h => b.highlights.includes(h)) && b.available === "马上" && b.highlights.includes("租期 6 个月"));
+ok("帖 2：没写的项进待确认（押金、宠物、家具、地址），不编", ["押金", "能否养宠物", "家具", "地址"].every(m => b.missing.includes(m)) && !b.highlights.some(h => /^押金|宠物/.test(h)));
+ok("帖 2：微信号去掉", b.contact.wechat === "boxhill_room88" && !/boxhill_room88/.test(b.description));
+ok("帖 3：转租、3 房 2 卫、$780/周、独立屋、不带家具、可养宠物", c.kind === "转租 / 顶租约" && c.beds === 3 && c.baths === 2 && c.rent_weekly === 780 && c.highlights.includes("类型 独立屋") && c.furnished === "不带家具" && c.highlights.includes("可养宠物"));
+ok("帖 3：入住日期、租期、押金、车位都没写 → 待确认", ["可入住日期", "租期", "押金", "车位"].every(m => c.missing.includes(m)));
+ok("话术：征求同意在先，确认链接在后，不说“已同步”", /确认后才会上线/.test(P.askMsg()) && P.confirmMsg("https://x").includes("https://x") && !/已.*同步/.test(P.askMsg() + P.confirmMsg("")));
+console.log(fail ? `贴帖入库：${fail} 项失败` : "贴帖入库：全部通过");
+process.exit(fail ? 1 : 0);

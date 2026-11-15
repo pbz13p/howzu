@@ -85,3 +85,4 @@
 - 11/7 已定：VRLT 若 SRO 原文确认连续空置第 2 年 2%、第 3 年起 3%，就按原文改，并在页面写明；没有原文不改。
 - 11/13 督导：地图库 Leaflet 和二维码库已改成本站自带（vendor/leaflet、vendor/qrcode），**不要改回 unpkg / jsdelivr 等外部 CDN**（国内家长和微信里打不开）。新增 404.html（404 记成路径前加“404 ”的一次浏览）、工作台“📝 对外房源还缺”卡片、工作台手机版导航修复。
 - 11/13 督导：机器人这轮没改代码就不再自动接着跑（等下一次定时）。没发现真问题就直接结束，不要为了花预算找事做。
+- 11/15 督导：新增“贴帖入库（房东授权版）”：admin.html 的“📥 贴帖入库” + js/admin-import.js + js/post-parse.js + confirm.html + supabase/import.sql。规则：没有房东确认的不公开；没写固定周租不能上线（维州 s30F，tools/test-listing-rules.js 会拦）；房东电话只存私密表 listing_owners，不放进 listings；话术只生成不自动发，先征得同意再入库，不准写“已同步”。识别规则改动要同步更新 tools/test-post-parse.js 和 tools/fixtures/fake-posts.json（都是仿真帖子，不放真实他人内容）。
