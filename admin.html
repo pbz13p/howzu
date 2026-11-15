@@ -120,7 +120,14 @@ async function loadStats() {
   const tbl = (t, rows) => `<div class="card"><div class="t">${t}</div>${rows.length ? rows.slice(0, 12).map(([k, n]) => `<div class="m" style="display:flex;justify-content:space-between;gap:12px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k)}</span><b>${n}</b></div>`).join("") : '<div class="m">还没有数据</div>'}</div>`;
   const today = day(Date.now()), wk = days.slice(0, 7);
   const sum = (m, ds) => ds.reduce((a, d) => a + (m.get(d) || 0), 0);
-  $("#app").innerHTML = head + `<div class="card"><div class="t">最近 30 天</div>
+  // 实时：近 5 分钟、30 分钟的浏览（统计不记访客身份，所以用“近 5 分钟浏览次数”近似在线人数）；停在这页每分钟自动刷新
+  const ago = m => Date.now() - m * 6e4, live5 = V.filter(r => Date.parse(r.at) > ago(5)), live30 = V.filter(r => Date.parse(r.at) > ago(30));
+  const nowPages = by(live30, r => r.path.replace(/\?.*$/, "")).slice(0, 5);
+  const liveCard = `<div class="card" style="border-color:#cfe6d8;background:#f4faf7"><div class="t">🟢 现在 <span class="m">· 每分钟自动刷新</span></div>
+    <div style="display:flex;gap:18px;margin-top:6px"><div><b style="font-size:28px">${live5.length}</b><div class="m">近 5 分钟浏览<br>（≈ 在线人数）</div></div><div><b style="font-size:28px">${live30.length}</b><div class="m">近 30 分钟浏览</div></div><div><b style="font-size:28px">${vd.get(day(Date.now())) || 0}</b><div class="m">今天浏览</div></div></div>
+    ${nowPages.length ? `<div class="m" style="margin-top:8px">正在看：${nowPages.map(([p, n]) => esc(p) + "（" + n + "）").join("、")}</div>` : ""}</div>`;
+  clearTimeout(window.__statsT); window.__statsT = setTimeout(() => { if (tab === "stats") loadStats(); }, 60000);
+  $("#app").innerHTML = head + liveCard + `<div class="card"><div class="t">最近 30 天</div>
     <div class="m">今天 <b>${vd.get(today) || 0}</b> 次浏览 · <b>${ed.get(today) || 0}</b> 次点击　|　近 7 天 <b>${sum(vd, wk)}</b> 次浏览 · <b>${sum(ed, wk)}</b> 次点击　|　30 天 <b>${sum(vd, days)}</b> / <b>${sum(ed, days)}</b>　|　手机占 ${V.length ? Math.round(V.filter(r => r.mobile).length / V.length * 100) : 0}%</div>
     <div style="display:flex;gap:2px;align-items:flex-end;margin-top:10px">${bars}</div><div class="m" style="display:flex;justify-content:space-between"><span>${days[29]}</span><span>今天</span></div></div>` +
     (data.length >= 1000 ? `<div class="m" style="margin:0 4px 8px">下面的排行按最近 ${data.length} 条记录统计。</div>` : "") + tbl("最热门页面（浏览）", by(V, r => r.path.replace(/\?.*$/, "") + (/[?&]id=/.test(r.path) ? " · " + (r.path.match(/[?&]id=([^&]+)/) || [])[1] : ""))) +

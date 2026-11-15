@@ -15,6 +15,6 @@ ok("帖 2：没写的项进待确认（押金、宠物、家具、地址），�
 ok("帖 2：微信号去掉", b.contact.wechat === "boxhill_room88" && !/boxhill_room88/.test(b.description));
 ok("帖 3：转租、3 房 2 卫、$780/周、独立屋、不带家具、可养宠物", c.kind === "转租 / 顶租约" && c.beds === 3 && c.baths === 2 && c.rent_weekly === 780 && c.highlights.includes("类型 独立屋") && c.furnished === "不带家具" && c.highlights.includes("可养宠物"));
 ok("帖 3：入住日期、租期、押金、车位都没写 → 待确认", ["可入住日期", "租期", "押金", "车位"].every(m => c.missing.includes(m)));
-ok("话术：征求同意在先，确认链接在后，不说“已同步”", /确认后才会上线/.test(P.askMsg()) && P.confirmMsg("https://x").includes("https://x") && !/已.*同步/.test(P.askMsg() + P.confirmMsg("")));
+ok("话术：征求同意在先，确认链接在后，不说“已同步”", /确认后才上线/.test(P.askMsg()) && /免费/.test(P.askMsg()) && /不显示你的电话/.test(P.askMsg()) && P.confirmMsg("https://x").includes("https://x") && !/已.*同步/.test(P.askMsg() + P.confirmMsg("")));
 console.log(fail ? `贴帖入库：${fail} 项失败` : "贴帖入库：全部通过");
 process.exit(fail ? 1 : 0);
