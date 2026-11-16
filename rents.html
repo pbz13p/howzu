@@ -74,6 +74,7 @@ th{font-size:13px;color:#6b726f;font-weight:600}
   </div>
   <noscript><p>请打开 JavaScript 查看数据。</p></noscript>
   <div class="src" id="src"></div>
+<div id="llCard"></div>
 </main>
 <script>
 const $=s=>document.querySelector(s);
@@ -98,6 +99,7 @@ function yieldCard(rent,price,label){
 }
 function showGroup(gi, saleName){
   const g=D.groups[gi];
+  try{ if(window.HowzuLL) HowzuLL.set(g.name); else document.getElementById("llCard").dataset.suburb=g.name; }catch(_){}
   const rows=Object.entries(g.rents).map(([dw,r])=>`<tr><td>${D.dwellings[dw]}</td><td class="big">$${fmt(r.now)}</td><td>${pct(r.yoy)}</td><td>${pct(r.y5)}</td><td>${fmt(r.lettings)}</td><td>${spark(r.hist)}</td></tr>`).join("");
   const sales=salesFor(g);
   let sh="", yc="";
@@ -163,5 +165,6 @@ fetch("data/rent_check.json").then(r=>r.json()).then(d=>{
 $("#q").addEventListener("input",search);
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){const b=$("#sug button[data-i]"); if(b) b.click();}});
 </script>
+<script src="/js/config.js?v=20261107"></script><script src="/js/owner-lead.js?v=20261113"></script><script src="/js/landlord-card.js?v=20261116" defer></script><script src="/js/track.js?v=20261114" defer></script>
 </body>
 </html>

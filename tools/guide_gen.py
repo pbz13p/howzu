@@ -15,6 +15,9 @@ def build(a):
     disc = a.get("disc","本文只是通俗说明，不构成税务、法律或财务建议。每个人情况不同，具体请咨询注册税务师（Registered Tax Agent），并以官方网站为准。")
     cta = a.get("cta") or ('<section class="cta">\n<h3>在墨尔本有房出租？</h3>\n<p>好租 / 胜腾 Cendant 持牌管理：全程中文、押金交政府 RTBA 托管、账单代付、每月对账。</p>\n<div class="b"><a href="/rentals.html">看在租房源</a><a class="g" href="/post.html">免费发布房源</a></div>\n</section>' if section=="property" else '<section class="cta">\n<h3>在墨尔本找房？</h3>\n<p>好租房源全程中文、持牌管理、押金交政府 RTBA 托管、租客零中介费。</p>\n<div class="b"><a href="/rentals.html">看在租房源</a><a class="g" href="/rentals.html#leadCard">留下需求，有房通知你</a></div>\n</section>')
     sums="".join(f"<li>{s}</li>" for s in a["sum"])
+    # 房东卡片“我的房能租多少？”（js/landlord-card.js）：传 ll=区名 时加上
+    ll = f'<div id="llCard" data-suburb="{a["ll"]}"></div>\n' if a.get("ll") else ""
+    llj = '<script src="/js/owner-lead.js?v=20261113"></script><script src="/js/landlord-card.js?v=20261116" defer></script>' if a.get("ll") else ""
     out=f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -50,7 +53,7 @@ def build(a):
 </section>
 {a["body"]}
 {cta}
-<section class="src">
+{ll}<section class="src">
 <h2>官方来源（2026 年 11 月查阅）</h2>
 <ul>
 {src}
@@ -58,7 +61,7 @@ def build(a):
 <p>{disc}</p>
 </section>
 </main>
-<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>
+<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>{llj}
 </body>
 </html>
 '''

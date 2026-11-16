@@ -84,7 +84,7 @@ for A in AREAS:
 <ul class="dot"><li><a href="/guide/first-rental.html">留学生第一次在墨尔本租房</a></li><li><a href="/guide/apply.html">租房申请新规：哪些钱不该付</a></li><li><a href="/guide/bond.html">押金怎么交、怎么退</a></li><li><a href="/guide/utilities.html">水电煤网谁付</a></li><li><a href="/guide/sublet.html">找二房东租房间安全吗</a></li></ul>'''
     title=f"{A['name']} 租房指南：免费电车区、到大学距离、对口学区和在租房源"
     desc=f"在墨尔本 {A['en']} 租房：{A['ftz'][:30]}… 到墨尔本大学、RMIT、莫纳什的直线距离，区中心点对口的公立学校学区，以及好租在该区的在租房源。"
-    gen.build(dict(slug=A["slug"],section="rental",kick="区域",org="PTV 和维州教育部 ",title=title,desc=desc,sum=sm,body=body,
+    gen.build(dict(ll=A["sub"],slug=A["slug"],section="rental",kick="区域",org="PTV 和维州教育部 ",title=title,desc=desc,sum=sm,body=body,
       disc="本文只是通俗说明，不构成法律或租房建议。距离为直线估算，学区按区中心点计算，仅供参考，以 PTV、Find my School 和官方网站为准。",
       sources=[("PTV · Free Tram Zone（免费电车区范围）","https://www.ptv.vic.gov.au/getting-around/visiting-melbourne"),("Find my School（维州官方学区查询）","https://www.findmyschool.vic.gov.au"),("DataVic · Victorian Government School Zones 2027","https://discover.data.vic.gov.au/dataset/victorian-government-school-zones-2027")]))
     print(A["slug"],len(sz),len(pz),len(live))
