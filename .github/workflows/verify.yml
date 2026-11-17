@@ -8,7 +8,9 @@ on:
   schedule:
     - cron: "13 19 * * *" # 墨尔本夏令时早上 6:13
   workflow_dispatch:
-concurrency: { group: verify-${{ github.event_name }}, cancel-in-progress: true }
+concurrency:
+  group: verify-${{ github.event_name }}
+  cancel-in-progress: true
 jobs:
   verify:
     runs-on: ubuntu-latest
