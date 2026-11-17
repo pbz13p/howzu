@@ -131,6 +131,8 @@ window.HOWZU_EN = {
 "✅ 已帮你填好 {n} 项。还差：": "✅ Filled in {n} items. Still needed: ", "✅ 已帮你填好 {n} 项。可以直接发布了。": "✅ Filled in {n} items. Ready to publish.", "，其余都可以不填。": ". Everything else is optional.", "照片": "Photos", "租金": "Rent", "联系方式": "Contact",
 "🔑 我是房东：我的房能租多少？": "🔑 Landlord? What could my place rent for?", "约 {n} / 周": "approx. {n} / week", "免费上架到好租": "List it free on Howzu", "想找人托管": "Find a property manager", "提交，我们联系你": "Submit — we'll contact you", "微信号或手机": "WeChat or mobile",
 "这是参考价，不是正式评估": "This is a guide only, not a formal appraisal", "，实际租金看装修、楼层和朝向。": "; actual rent depends on condition, floor and aspect.", "✅ 收到了！我们会尽快联系你。": "✅ Got it! We'll be in touch soon.",
+"💬 联系我们": "💬 Contact us", "有问题？我们回电给你": "Questions? We'll call you back", "📞 直接打电话": "📞 Call now", "💬 发短信": "💬 Text us", "租房": "Renting", "我是房东": "I'm a landlord", "买房": "Buying",
+"你的电话或微信号": "Your phone or WeChat", "称呼（可不填）": "Name (optional)", "请回电给我": "Call me back", "一般 1 个工作日内联系你。联系方式只有好租工作人员能看到。": "We usually reply within 1 business day. Only Howzu staff can see your details.", "✅ 收到了！我们会尽快回电。": "✅ Got it! We'll call you back soon.",
 // ---- 房东确认页 ----
 "好租 Howzu · 房源确认": "Howzu · Confirm your listing", "确认房源信息 · 好租 Howzu": "Confirm your listing · Howzu", "请核对你的房源信息": "Please check your listing",
 "好租已经帮你整理好了，还没有公开。改好后点底部“确认上线”，好租审核后挂出（一般当天）。免费，不收任何费用。": "We've prepared your listing; it isn't public yet. Make any changes and tap “Confirm” at the bottom — we'll review and publish it, usually the same day. It's free.",

@@ -56,8 +56,9 @@
     var b = document.createElement("a"); b.href = "#"; b.className = "howzu-lang"; b.setAttribute("data-noi18n", "");
     b.textContent = lang === "en" ? "中文" : "EN"; b.title = lang === "en" ? "切换到中文" : "Switch to English";
     b.onclick = function (e) { e.preventDefault(); setLang(lang === "en" ? "zh" : "en"); };
-    var host = document.querySelector("nav .in .links");
-    if (host) { host.insertBefore(b, host.firstChild); b.style.cssText = "margin-right:4px;padding:4px 10px;border:1px solid currentColor;border-radius:14px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;opacity:.9;align-self:center;flex:none;color:inherit"; }
+    var host = document.querySelector("nav .in .links"), top = document.querySelector("header.top .all");
+    if (top) { b.style.cssText = "margin-left:10px;padding:3px 9px;border:1px solid #cfe6d8;border-radius:12px;font-size:12.5px;font-weight:600;text-decoration:none;color:#0f6b4f"; top.parentNode.insertBefore(b, top.nextSibling); }
+    else if (host) { host.insertBefore(b, host.firstChild); b.style.cssText = "margin-right:4px;padding:4px 10px;border:1px solid currentColor;border-radius:14px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;opacity:.9;align-self:center;flex:none;color:inherit"; }
     else { b.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999;padding:6px 12px;border-radius:16px;background:#fff;color:#0f6b4f;border:1px solid #cfe6d8;font:600 13px -apple-system,sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.08)"; document.body.appendChild(b); }
   }
   function start() {

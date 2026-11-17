@@ -61,7 +61,7 @@ def build(a):
 <p>{disc}</p>
 </section>
 </main>
-<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>{llj}
+<script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>{llj}<script src="/js/contact-fab.js?v=20261117" defer></script>
 </body>
 </html>
 '''

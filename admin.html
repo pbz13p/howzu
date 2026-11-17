@@ -72,8 +72,8 @@ async function load() {
   if (tab === "lead") return loadLeads();
   if (tab === "stats") return loadStats();
   if (tab === "import") return loadImport({ sb, $, esc, head: tabsHtml(), C });
-  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询)").order("created_at", { ascending: false });
-  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询)"); // 用来查重复（只取地址和状态）
+  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求)").order("created_at", { ascending: false });
+  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求)"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   const J = JUST; JUST = null;
   const just = J ? `<div class="just" role="status"><b>✅ 已通过上线</b><div class="m">「${esc(J.title || J.address || "")}」</div><div class="m">下一步：把上线消息发给房东 ${esc(J.contact_name || "")}（微信 ${esc(J.contact_wechat || "—")} · 手机 ${esc(J.contact_phone || "—")}）</div><div class="acts"><button class="ok" data-notice="${esc(J.id)}">📨 复制「已上线 + 链接」</button>${J.contact_phone ? `<a class="gr" style="font-size:15px;padding:10px 14px;border-radius:10px;text-decoration:none" href="sms:${esc(J.contact_phone)}?&body=${encodeURIComponent(AdminCheck.ownerNotice(J))}">💬 直接发短信</a>` : ""}</div></div>` : "";
@@ -105,7 +105,7 @@ async function loadStats() {
   const day = t => new Date(t).toLocaleDateString("en-CA", { timeZone: "Australia/Melbourne" });
   const V = data.filter(r => r.ev === "view" && !/^404 /.test(r.path)), NF = data.filter(r => r.ev === "view" && /^404 /.test(r.path)), E = data.filter(r => r.ev !== "view");
   // 询盘 = 真正联系我们的动作（电话、短信、微信、提交预约、提交需求、房东咨询、一键问清）；点“相关房源”等只算浏览行为
-  const CONTACT = /^(call|sms|wechat|book-send|lead-send|owner-lead|ask-tbc)(:|@|$)/, Q = E.filter(r => CONTACT.test(r.ev));
+  const CONTACT = /^(call|sms|wechat|book-send|lead-send|owner-lead|ask-tbc|callback)(:|@|$)/, Q = E.filter(r => CONTACT.test(r.ev));
   const chOf = r => (r.ev.split("@")[1] || "未记录（11/14 前）");
   const CH = { google: "Google", search: "其它搜索引擎", xiaohongshu: "小红书", facebook: "Facebook / Instagram", wechat: "微信", direct: "直接打开" };
   const refCh = h => { h = String(h || ""); if (!h) return "直接打开"; if (/(^|\.)google\./.test(h)) return "Google"; if (/xiaohongshu|xhslink/.test(h)) return "小红书"; if (/facebook|fb\.com|instagram/.test(h)) return "Facebook / Instagram"; if (/wechat|weixin/.test(h)) return "微信"; if (/bing|baidu|duckduckgo|yahoo/.test(h)) return "其它搜索引擎"; return CH[h] || h; };
@@ -140,7 +140,7 @@ async function loadStats() {
     (NF.length ? tbl("打不开的链接（404，可能是旧房源或打错的地址）", by(NF, r => r.path.slice(4) + (r.ref ? " ← " + r.ref : ""))) : "");
 }
 async function loadLeads() {
-  const { data, error } = await sb.from("listings").select("*").in("kind", ["求租需求", "房东托管咨询", "买房咨询"]).order("created_at", { ascending: false });
+  const { data, error } = await sb.from("listings").select("*").in("kind", ["求租需求", "房东托管咨询", "买房咨询", "回电请求"]).order("created_at", { ascending: false });
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   // 现在在租的房源（自管 listings.json + 用户发布已上线的），用来给每条需求配房
   const [own, pub] = await Promise.all([fetch("data/listings.json", { cache: "no-store" }).then(r => r.json()).then(j => j.listings || []).catch(() => []),
