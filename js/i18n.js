@@ -43,12 +43,12 @@
       var ens = root.querySelectorAll ? root.querySelectorAll("[data-en]") : [];
       for (var e = 0; e < ens.length; e++) if (ens[e].textContent !== ens[e].getAttribute("data-en")) ens[e].textContent = ens[e].getAttribute("data-en");
       if (root.nodeType === 1 && root.hasAttribute("data-en") && root.textContent !== root.getAttribute("data-en")) root.textContent = root.getAttribute("data-en");
-      var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { var p = n.parentElement; return p && !/^(SCRIPT|STYLE|TEXTAREA|NOSCRIPT)$/.test(p.tagName) && !p.closest("[data-noi18n]") && HAN.test(n.nodeValue) ? 1 : 2; } }), n, list = [];
+      var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { var p = n.parentElement; return p && !/^(SCRIPT|STYLE|TEXTAREA|NOSCRIPT)$/.test(p.tagName) && !p.closest("[data-noi18n],[data-en]") && HAN.test(n.nodeValue) ? 1 : 2; } }), n, list = [];
       while ((n = w.nextNode())) list.push(n);
       list.forEach(function (t) { var v = tr(t.nodeValue); if (v !== t.nodeValue) t.nodeValue = v; });
       var els = root.querySelectorAll ? root.querySelectorAll("[placeholder],[title],[aria-label],[alt]") : [];
-      for (var i = 0; i < els.length; i++) for (var a = 0; a < ATTRS.length; a++) { var x = els[i].getAttribute(ATTRS[a]); if (x && HAN.test(x)) els[i].setAttribute(ATTRS[a], tr(x)); }
-      if (root.nodeType === 1) for (var b = 0; b < ATTRS.length; b++) { var y = root.getAttribute(ATTRS[b]); if (y && HAN.test(y)) root.setAttribute(ATTRS[b], tr(y)); }
+      for (var i = 0; i < els.length; i++) for (var a = 0; a < ATTRS.length; a++) { var x = els[i].getAttribute(ATTRS[a]); if (x && HAN.test(x)) { var xv = tr(x); if (xv !== x) els[i].setAttribute(ATTRS[a], xv); } }
+      if (root.nodeType === 1) for (var b = 0; b < ATTRS.length; b++) { var y = root.getAttribute(ATTRS[b]); if (y && HAN.test(y)) { var yv = tr(y); if (yv !== y) root.setAttribute(ATTRS[b], yv); } }
     } finally { busy = false; }
   }
   function setLang(l) { try { localStorage.setItem(KEY, l); } catch (e) {} var u = location.href.replace(/([?&])lang=(en|zh)&?/, "$1").replace(/[?&]$/, ""); location.href = u + (u.indexOf("?") < 0 ? "?" : "&") + "lang=" + l; }
@@ -67,14 +67,16 @@
     document.documentElement.lang = "en";
     document.title = tr(document.title);
     walk(document.body);
-    new MutationObserver(function (ms) {
+    var mo = new MutationObserver(function (ms) {
       if (busy) return;
       ms.forEach(function (m) {
         if (m.type === "characterData") walk(m.target);
         else if (m.type === "attributes") walk(m.target);
         else m.addedNodes.forEach(function (n) { walk(n); });
       });
-    }).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+      mo.takeRecords(); // 丢掉翻译自己引起的变化，否则会无限循环把页面卡死
+    });
+    mo.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();
