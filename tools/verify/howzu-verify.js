@@ -293,7 +293,8 @@ J.post = async (t) => {
 // 英文界面：?lang=en 后标题变英文，选过会记住
 J.english = async (t) => {
   const { ctx, page, ev } = await t.phone();
-  await page.goto(BASE + "/rentals.html?lang=en", { waitUntil: "networkidle" });
+  await page.goto(BASE + "/rentals.html?lang=en", { waitUntil: "load" });
+  await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {}); // 地图瓦片等外部请求可能一直不停，不让它卡住
   const h = await page.getByRole("heading", { level: 1 }).first().innerText();
   t.check(!/[一-鿿]/.test(h), "租房页标题是英文", h);
   await page.goto(BASE + "/index.html", { waitUntil: "networkidle" });

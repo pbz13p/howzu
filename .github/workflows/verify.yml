@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npm i --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
       - name: 跑验证
         run: node tools/verify/howzu-verify.js run ${{ github.event_name == 'schedule' && '--live' || '' }}
       - name: 写进运行摘要
