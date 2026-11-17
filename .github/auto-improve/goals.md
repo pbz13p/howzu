@@ -91,3 +91,4 @@
 - 11/15 督导：新增“贴帖入库（房东授权版）”：admin.html 的“📥 贴帖入库” + js/admin-import.js + js/post-parse.js + confirm.html + supabase/import.sql。规则：没有房东确认的不公开；没写固定周租不能上线（维州 s30F，tools/test-listing-rules.js 会拦）；房东电话只存私密表 listing_owners，不放进 listings；话术只生成不自动发，先征得同意再入库，不准写“已同步”。识别规则改动要同步更新 tools/test-post-parse.js 和 tools/fixtures/fake-posts.json（都是仿真帖子，不放真实他人内容）。
 - 11/15 督导：英文界面靠 js/i18n.js + js/i18n-en.js（词典）。改或新增界面中文文字时，要在 js/i18n-en.js 补对应英文（数字写 {n}）；房源英文描述放 listings.json 的 descEn。按钮文字别用拼接碎片，整句写，方便翻译。
 - 11/15 Frank 定的总原则：**所有操作都要傻瓜式**——点最少的次数、不绕弯子、可选项收起来、能自动填的自动填、只催必填项。新功能先问“能不能少一步”。发房源页现在是 4 步（照片 → 粘贴介绍可跳过 → 基本情况 → 联系方式），其余收在“➕ 更多信息”，介绍不填会在发布时自动生成中英文。
+- 11/17 督导：上线“需求热度 + METRICS 自动读数”（ROADMAP 第 4 位）之后，每次开工先读 data/demand.json 和 METRICS.md 最新一行，再决定当天做什么。
