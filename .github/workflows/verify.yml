@@ -1,0 +1,28 @@
+# 好租验证：每次改网站后本地跑一遍；每天早上对线上跑一遍（只读，写库请求全部拦下）。
+# 用法和判断方法见 .claude/skills/verify-howzu/SKILL.md
+name: verify
+on:
+  push:
+    branches: [main]
+    paths: ["**/*.html", "js/**", "css/**", "data/listings.json", "data/rent_check.json", "tools/verify/**"]
+  schedule:
+    - cron: "13 19 * * *" # 墨尔本夏令时早上 6:13
+  workflow_dispatch:
+concurrency: { group: verify-${{ github.event_name }}, cancel-in-progress: true }
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
+      - name: 跑验证
+        run: node tools/verify/howzu-verify.js run ${{ github.event_name == 'schedule' && '--live' || '' }}
+      - name: 写进运行摘要
+        if: always()
+        run: cat .verify/*/summary.md >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: verify-evidence, path: .verify/, retention-days: 14 }
