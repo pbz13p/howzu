@@ -29,6 +29,15 @@ put("index.html", s => { const R = HR.html(list);
   return s.replace(/<section class="card hr( hidden)?" id="homeRent"/, `<section class="card hr${R.n ? "" : " hidden"}" id="homeRent"`)
     .replace(/<span id="hrN">[^<]*<\/span>/, `<span id="hrN">${R.n ? R.n + " 套" : ""}</span>`)
     .replace(/<div class="hr-r" id="hrR">[\s\S]*?<\/div><!--\/hrR-->|<div class="hr-r" id="hrR"><\/div>/, `<div class="hr-r" id="hrR">${R.cards}</div><!--/hrR-->`); });
+// 首页“好租干货”：在租房源下面放最新文章（区域页、学区页除外），新的在前；同一天的租房类排前面
+{ const gd = path.join(root, "guide"), N = 6;
+  const posts = fs.readdirSync(gd).filter(f => f.endsWith(".html") && !/^(area-|zone-)/.test(f) && f !== "property.html").map(f => {
+    const h = fs.readFileSync(path.join(gd, f), "utf8"), d = h.match(/(20\d\d) 年 (\d+) 月 (\d+) 日更新/), t = (h.match(/<h1>([^<]*)<\/h1>/) || [])[1], k = (h.match(/class="kick">([^<]*)/) || [])[1] || "";
+    const ds = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
+    return t && d && { f, t, k: k.replace(/^租房指南 · |^房产干货 · /, ""), rent: /租房/.test(k), date: d[1] + String(d[2]).padStart(2, "0") + String(d[3]).padStart(2, "0"), md: `${+d[2]}/${+d[3]}`, ds: ds.slice(0, 46) + (ds.length > 46 ? "…" : "") };
+  }).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date) || (b.rent - a.rent)).slice(0, N);
+  const items = posts.map(p => `<a class="hn-a" href="guide/${e(p.f)}"><span class="hn-k">${e(p.k)} · ${e(p.md)}</span><b>${e(p.t)}</b><span class="hn-d">${e(p.ds)}</span></a>`).join("");
+  put("index.html", s => s.replace(/<div class="hn-l" id="hnL">[\s\S]*?<\/div><!--\/hnL-->/, `<div class="hn-l" id="hnL">${items}</div><!--/hnL-->`)); }
 // 租房页底部：全部在租房源的静态链接（放页尾，不影响首屏布局）
 put("rentals.html", s => s.replace(/<nav class="ssr" aria-label="全部在租房源">[\s\S]*?<\/nav>/,
   `<nav class="ssr" aria-label="全部在租房源"><b>全部在租房源</b>${live.map(x => `<a href="rent/${e(x.id)}.html">${e(x.title)}${x.rentWeekly ? ` · $${e(x.rentWeekly)}/周` : ""}</a>`).join("")}</nav>`));

@@ -121,5 +121,5 @@ A=dict(slug="study-abroad",section="rent",kick="开学季专区",title="人在�
 gen.build(A)
 f=f"{R}/guide/study-abroad.html";s=open(f,encoding="utf8").read()
 s=s.replace("2026 年 11 月 12 日更新","2026 年 11 月 18 日更新").replace('"2026-11-12"','"2026-11-18"').replace("</head>",STY+"\n</head>",1)
-s=s.replace('<script src="/js/contact-fab.js','<script src="/js/inspect-book.js?v=20261118" defer></script><script src="/js/i18n-en.js?v=20261118" defer></script><script src="/js/i18n.js?v=20261117b" defer></script><script src="/js/contact-fab.js',1)
+s=s.replace('<script src="/js/contact-fab.js','<script src="/js/inspect-book.js?v=20261118" defer></script><script src="/js/i18n-en.js?v=20261119" defer></script><script src="/js/i18n.js?v=20261117b" defer></script><script src="/js/contact-fab.js',1)
 open(f,"w",encoding="utf8").write(s);print("guide/study-abroad.html")
