@@ -32,6 +32,11 @@ put("index.html", s => { const R = HR.html(list);
 // 租房页底部：全部在租房源的静态链接（放页尾，不影响首屏布局）
 put("rentals.html", s => s.replace(/<nav class="ssr" aria-label="全部在租房源">[\s\S]*?<\/nav>/,
   `<nav class="ssr" aria-label="全部在租房源"><b>全部在租房源</b>${live.map(x => `<a href="rent/${e(x.id)}.html">${e(x.title)}${x.rentWeekly ? ` · $${e(x.rentWeekly)}/周` : ""}</a>`).join("")}</nav>`));
+// 留学生专区：每所学校附近在租房源（ul 的 data-subs 写着包含哪些区）
+put("guide/study-abroad.html", s => s.replace(/<ul class="dot" id="sa-([a-z]+)" data-subs="([^"]*)">[\s\S]*?<\/ul>/g, (all, k, subsAttr) => {
+  const subs = JSON.parse(subsAttr.replace(/&quot;/g, '"')), L = live.filter(x => subs.includes(x.suburb));
+  const inner = L.length ? L.map(x => `<li><a href="/rent/${e(x.id)}.html">${e(x.title)}${x.rentWeekly ? ` · $${e(x.rentWeekly)}/周` : ""}</a></li>`).join("") : `<li>这几个区暂时没有在租房源。<a href="/rentals.html#leadCard">留下需求</a>，有房第一时间通知你。</li>`;
+  return `<ul class="dot" id="sa-${k}" data-subs="${subsAttr}">${inner}</ul>`; }));
 // 区域页：该区在租房源
 for (const g of fs.readdirSync(path.join(root, "guide")).filter(f => /^area-[a-z0-9-]+\.html$/.test(f))) {
   put("guide/" + g, s => { const m = s.match(/x\.suburb===("[^"]+")/); if (!m) return s; const sub = JSON.parse(m[1]);

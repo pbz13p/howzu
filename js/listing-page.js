@@ -204,7 +204,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .bar a.g{background:#e8f3ee;color:#0f6b4f}.bar a.p{flex:1.6}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.hero{aspect-ratio:16/9}}
 </style>
-<script src="/js/i18n-en.js?v=20261115" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/i18n-en.js?v=20261118" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
 <script src="/js/config.js?v=20261107" defer></script><script src="/js/contact-fab.js?v=20261117" defer></script>
 </head>
 <body>
@@ -219,7 +219,7 @@ ${tags.length ? `<div class="facts">${tags.map(esc).join("<span></span>")}</div>
 ${isLet(x) ? "" : `<div class="kf">${kf.cells.map(([k, v]) => `<div><small>${esc(k)}</small><b${v === "咨询" ? ' class="m"' : ""}>${esc(v)}</b></div>`).join("")}</div>`}
 ${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
 ${isLet(x) ? "" : `<div class="sp"><div class="sp-h">房屋信息</div><dl>${specs(x).map(([k, v]) => `<div${k === "设施" ? ' class="w"' : ""}><dt>${esc(k)}</dt><dd${v === TBC ? ' class="m"' : ""}>${esc(v)}</dd></div>`).join("")}</dl></div>`}
-${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}${AREA_G[x.suburb] ? `<a class="tr-l" href="/guide/${AREA_G[x.suburb]}.html">住在 ${esc(x.suburb)}：免费电车区、到大学距离、对口学区 ›</a>` : ""}
+${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</div><div class="tr-g">${T.items.map(([b, s]) => `<div><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join("")}</div>${T.note ? `<div class="tr-n">${esc(T.note)}</div>` : ""}${T.guide ? `<a class="tr-l" href="${esc(T.guide)}">押金怎么交、怎么退？看中文指南 ›</a>` : ""}</div>`)(trust(x, letCount))}${isLet(x) ? "" : `<a class="tr-l" href="/guide/study-abroad.html?house=${encodeURIComponent(x.id)}#book">✈️ 人在国外？预约代看房 ›</a>`}${AREA_G[x.suburb] ? `<a class="tr-l" href="/guide/${AREA_G[x.suburb]}.html">住在 ${esc(x.suburb)}：免费电车区、到大学距离、对口学区 ›</a>` : ""}
 ${x.desc ? `<div class="desc"${x.descEn ? ` data-en="${esc(x.descEn)}"` : ""}>${esc(x.desc)}</div>` : ""}
 ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map((p, i) => `<a href="${esc(full)}" aria-label="查看第 ${i + 2} 张照片"><img src="${esc(rel(sized(p, "s")))}" width="480" height="360" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
 ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</a>` : ""}
