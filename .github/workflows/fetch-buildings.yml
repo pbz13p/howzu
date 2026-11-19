@@ -1,0 +1,19 @@
+name: 楼盘数据（CLUE + OpenStreetMap）
+on:
+  push:
+    paths: ["tools/fetch_buildings.py", ".github/workflows/fetch-buildings.yml"]
+  workflow_dispatch:
+  schedule: [{ cron: "17 3 1 */3 *" }]
+permissions:
+  contents: write
+concurrency: { group: build-pages, cancel-in-progress: false }
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_buildings.py
+      - run: |
+          git config user.name "pbz13p"; git config user.email "pbz13p@users.noreply.github.com"
+          git add data/clue_buildings.json data/osm_pois.json
+          git diff --cached --quiet || (git commit -m "楼盘数据：CLUE + OpenStreetMap 更新" && git pull --rebase && git push)
