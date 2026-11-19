@@ -7,13 +7,13 @@ def get(url, data=None):
     return json.load(urllib.request.urlopen(req, timeout=180))
 def latest_year(ds):
     r = get(API + ds + "/records?" + urllib.parse.urlencode({"select": "max(census_year) as y", "limit": 1}))
-    return int(r["results"][0]["y"])
+    return int(str(r["results"][0]["y"])[:4])
 def export(ds, where):
     return get(API + ds + "/exports/json?" + urllib.parse.urlencode({"where": where}))
 today = datetime.date.today().isoformat()
 # 1 住宅套数（按楼）
 DW = "residential-dwellings"; ydw = latest_year(DW)
-dw = export(DW, f"census_year={ydw}")
+dw = export(DW, f"year(census_year)={ydw}")
 by = collections.defaultdict(lambda: {"dwellings": 0})
 for r in dw:
     k = r.get("property_id") or r.get("building_address")
@@ -22,7 +22,7 @@ for r in dw:
     b.setdefault("types", collections.Counter())[r.get("dwelling_type") or "?"] += int(r.get("dwelling_number") or 0)
 # 2 楼名、建成年份、层数
 BL = "buildings-with-name-age-size-accessibility-and-bicycle-facilities"; ybl = latest_year(BL)
-bl = {str(r.get("property_id")): r for r in export(BL, f"census_year={ybl}")}
+bl = {str(r.get("property_id")): r for r in export(BL, f"year(census_year)={ybl}")}
 AREAS = {"Melbourne (CBD)", "Southbank", "Docklands", "Carlton", "West Melbourne (Residential)", "North Melbourne", "East Melbourne", "Parkville"}
 out = []
 for b in by.values():
