@@ -1,0 +1,5170 @@
+{
+"source": "City of Melbourne Open Data — CLUE: Residential dwellings (census 2024) and Buildings with name, age, size (census 2024). CC BY 4.0",
+"fetched": "2026-11-19",
+"dwellings_year": 2024,
+"buildings_year": 2024,
+"buildings": [
+{
+"property_id": "110766",
+"address": "68-82 Southbank Boulevard SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82319912,
+"lon": 144.963930537,
+"dwellings": 1099,
+"dwelling_types": {
+"Residential Apartments": 1099
+},
+"name": "Australia 108",
+"built": "2020",
+"floors": 101,
+"use": "Residential Apartment"
+},
+{
+"property_id": "644814",
+"address": "156-172 Victoria Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80614561,
+"lon": 144.961940792,
+"dwellings": 1045,
+"dwelling_types": {
+"Residential Apartments": 1045
+},
+"name": null,
+"built": "2020",
+"floors": 72,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105485",
+"address": "224-252 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80965592,
+"lon": 144.962340893,
+"dwellings": 952,
+"dwelling_types": {
+"Residential Apartments": 700,
+"Student Apartments": 252
+},
+"name": null,
+"built": "2016",
+"floors": 86,
+"use": "Residential Apartment"
+},
+{
+"property_id": "724325",
+"address": "624-648 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81437529,
+"lon": 144.952954607,
+"dwellings": 835,
+"dwelling_types": {
+"Residential Apartments": 835
+},
+"name": "Tower 4",
+"built": null,
+"floors": 73,
+"use": "Residential Apartment"
+},
+{
+"property_id": "713467",
+"address": "143-171 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81002684,
+"lon": 144.959099041,
+"dwellings": 815,
+"dwelling_types": {
+"Residential Apartments": 815
+},
+"name": "Queen's Place",
+"built": "2021",
+"floors": 81,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104084",
+"address": "151-165 Franklin Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80904835,
+"lon": 144.959575429,
+"dwellings": 805,
+"dwelling_types": {
+"Residential Apartments": 805
+},
+"name": "Fulton Lane",
+"built": "2015",
+"floors": 45,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108965",
+"address": "134-160 Spencer Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81738969,
+"lon": 144.953751967,
+"dwellings": 795,
+"dwelling_types": {
+"Residential Apartments": 795
+},
+"name": null,
+"built": "2021",
+"floors": 79,
+"use": "Residential Apartment"
+},
+{
+"property_id": "559277",
+"address": "614-644 Flinders Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82111038,
+"lon": 144.953345643,
+"dwellings": 719,
+"dwelling_types": {
+"Residential Apartments": 719
+},
+"name": null,
+"built": "2018",
+"floors": 45,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105449",
+"address": "293-303 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81082676,
+"lon": 144.960466822,
+"dwellings": 715,
+"dwelling_types": {
+"Student Apartments": 715
+},
+"name": "The Duke of Kent Hotel",
+"built": null,
+"floors": 48,
+"use": "Student Accommodation"
+},
+{
+"property_id": "711416",
+"address": "635-663 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81437529,
+"lon": 144.952954607,
+"dwellings": 714,
+"dwelling_types": {
+"Residential Apartments": 714
+},
+"name": "Tower 2 (West)",
+"built": "2021",
+"floors": 63,
+"use": "Residential Apartment"
+},
+{
+"property_id": "641556",
+"address": "220 Spencer Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81537494,
+"lon": 144.953525588,
+"dwellings": 700,
+"dwelling_types": {
+"Residential Apartments": 700
+},
+"name": "Hudson",
+"built": "2014",
+"floors": 47,
+"use": "Residential Apartment"
+},
+{
+"property_id": "711415",
+"address": "244-262 Spencer Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81437529,
+"lon": 144.952954607,
+"dwellings": 663,
+"dwelling_types": {
+"Residential Apartments": 663
+},
+"name": "Tower 1 (West)",
+"built": "2021",
+"floors": 82,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108045",
+"address": "31-49 Queens Bridge Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82293435,
+"lon": 144.961393855,
+"dwellings": 659,
+"dwelling_types": {
+"Residential Apartments": 659
+},
+"name": "Prima Pearl Apartments",
+"built": "2014",
+"floors": 73,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103296",
+"address": "478-488 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80755391,
+"lon": 144.960491501,
+"dwellings": 657,
+"dwelling_types": {
+"Student Apartments": 657
+},
+"name": null,
+"built": "2022",
+"floors": 53,
+"use": "Student Accommodation"
+},
+{
+"property_id": "105723",
+"address": "560-566 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81369679,
+"lon": 144.955597221,
+"dwellings": 646,
+"dwelling_types": {
+"Residential Apartments": 646
+},
+"name": null,
+"built": null,
+"floors": 59,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103300",
+"address": "452-472 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80783746,
+"lon": 144.960624495,
+"dwellings": 643,
+"dwelling_types": {
+"Residential Apartments": 643
+},
+"name": null,
+"built": "2017",
+"floors": 79,
+"use": "Residential Apartment"
+},
+{
+"property_id": "674546",
+"address": "21-39 Rose Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81537494,
+"lon": 144.953525588,
+"dwellings": 641,
+"dwelling_types": {
+"Residential Apartments": 641
+},
+"name": "Manhattan",
+"built": "2016",
+"floors": 54,
+"use": "Residential Apartment"
+},
+{
+"property_id": "100156",
+"address": "111-125 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80974646,
+"lon": 144.960185918,
+"dwellings": 635,
+"dwelling_types": {
+"Residential Apartments": 635
+},
+"name": null,
+"built": null,
+"floors": 65,
+"use": "Residential Apartment"
+},
+{
+"property_id": "639236",
+"address": "127-141 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80988902,
+"lon": 144.959762876,
+"dwellings": 633,
+"dwelling_types": {
+"Residential Apartments": 633
+},
+"name": "EQ Tower",
+"built": "2017",
+"floors": 64,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103301",
+"address": "442-450 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8083077,
+"lon": 144.960858758,
+"dwellings": 627,
+"dwelling_types": {
+"Residential Apartments": 627
+},
+"name": "Lighthouse",
+"built": "2017",
+"floors": 71,
+"use": "Residential Apartment"
+},
+{
+"property_id": "706735",
+"address": "18 Hoff Boulevard SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82580013,
+"lon": 144.963565642,
+"dwellings": 620,
+"dwelling_types": {
+"Residential Apartments": 620
+},
+"name": null,
+"built": "2020",
+"floors": 70,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110420",
+"address": "54-68 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82409347,
+"lon": 144.963728712,
+"dwellings": 595,
+"dwelling_types": {
+"Residential Apartments": 595
+},
+"name": "Southbank Place Apartments",
+"built": "2018",
+"floors": 53,
+"use": "Residential Apartment"
+},
+{
+"property_id": "712829",
+"address": "367-375 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81200936,
+"lon": 144.961134388,
+"dwellings": 594,
+"dwelling_types": {
+"Residential Apartments": 594
+},
+"name": null,
+"built": "2021",
+"floors": 69,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110357",
+"address": "71-87 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.8224068,
+"lon": 144.965441816,
+"dwellings": 591,
+"dwelling_types": {
+"Residential Apartments": 591
+},
+"name": null,
+"built": "2022",
+"floors": 50,
+"use": "Residential Apartment"
+},
+{
+"property_id": "642252",
+"address": "639 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81537494,
+"lon": 144.953525588,
+"dwellings": 584,
+"dwelling_types": {
+"Residential Apartments": 584
+},
+"name": "Madison",
+"built": "2014",
+"floors": 51,
+"use": "Residential Apartment"
+},
+{
+"property_id": "559161",
+"address": "Eureka Tower 3-7 Riverside Quay SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82166548,
+"lon": 144.96456679,
+"dwellings": 573,
+"dwelling_types": {
+"Residential Apartments": 573
+},
+"name": "Eureka Tower",
+"built": "2006",
+"floors": 92,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103293",
+"address": "496-504 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80719768,
+"lon": 144.960349763,
+"dwellings": 557,
+"dwelling_types": {
+"Residential Apartments": 557
+},
+"name": null,
+"built": "2016",
+"floors": 70,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109359",
+"address": "College Square on Swanston 768-804 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79780844,
+"lon": 144.965164004,
+"dwellings": 553,
+"dwelling_types": {
+"Student Apartments": 553
+},
+"name": "College Square on Swanston",
+"built": "2006",
+"floors": 11,
+"use": "Student Accommodation"
+},
+{
+"property_id": "106028",
+"address": "Australis Apartments 593-611 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81380956,
+"lon": 144.953829359,
+"dwellings": 552,
+"dwelling_types": {
+"Residential Apartments": 552
+},
+"name": null,
+"built": "2016",
+"floors": 46,
+"use": "Residential Apartment"
+},
+{
+"property_id": "661677",
+"address": "555 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80569627,
+"lon": 144.962507912,
+"dwellings": 536,
+"dwelling_types": {
+"Residential Apartments": 536
+},
+"name": "Swanston Square Building",
+"built": "2015",
+"floors": 32,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109679",
+"address": "23-29 Victoria Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.807324,
+"lon": 144.966818453,
+"dwellings": 533,
+"dwelling_types": {
+"Student Apartments": 533
+},
+"name": null,
+"built": "2024",
+"floors": 25,
+"use": "Student Accommodation"
+},
+{
+"property_id": "575820",
+"address": "Freshwater Place Residential 1-9 Freshwater Place SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82167833,
+"lon": 144.962153946,
+"dwellings": 532,
+"dwelling_types": {
+"Residential Apartments": 532
+},
+"name": "Freshwater Place Residential Tower",
+"built": "2005",
+"floors": 63,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105319",
+"address": "295-309 King Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81335654,
+"lon": 144.953927627,
+"dwellings": 530,
+"dwelling_types": {
+"Residential Apartments": 530
+},
+"name": null,
+"built": "2024",
+"floors": 66,
+"use": "Residential Apartment"
+},
+{
+"property_id": "627659",
+"address": "231-245 Harbour Esplanade DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81354365,
+"lon": 144.942989624,
+"dwellings": 521,
+"dwelling_types": {
+"Residential Apartments": 521
+},
+"name": "The Quays",
+"built": "2014",
+"floors": 33,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110364",
+"address": "141-155 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82376393,
+"lon": 144.963252968,
+"dwellings": 515,
+"dwelling_types": {
+"Residential Apartments": 515
+},
+"name": null,
+"built": "2015",
+"floors": 44,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102112",
+"address": "568-580 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81836573,
+"lon": 144.955424417,
+"dwellings": 498,
+"dwelling_types": {
+"Residential Apartments": 498
+},
+"name": null,
+"built": "2016",
+"floors": 67,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109492",
+"address": "93-129 Therry Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8076845,
+"lon": 144.959088605,
+"dwellings": 490,
+"dwelling_types": {
+"Residential Apartments": 490
+},
+"name": null,
+"built": null,
+"floors": 41,
+"use": "Residential Apartment"
+},
+{
+"property_id": "608820",
+"address": "1-13 Balston Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82517172,
+"lon": 144.96164099,
+"dwellings": 489,
+"dwelling_types": {
+"Residential Apartments": 489
+},
+"name": "Southbank Central Apartments",
+"built": "2017",
+"floors": 49,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103304",
+"address": "75-89 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8093373,
+"lon": 144.961333844,
+"dwellings": 488,
+"dwelling_types": {
+"Residential Apartments": 488
+},
+"name": "Empire",
+"built": "2016",
+"floors": 62,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103303",
+"address": "410-420 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80894909,
+"lon": 144.961157281,
+"dwellings": 487,
+"dwelling_types": {
+"Residential Apartments": 487
+},
+"name": "Silver Skies MY80",
+"built": "2014",
+"floors": 56,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105719",
+"address": "Melbourne One Apartments 612-620 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81421045,
+"lon": 144.953922371,
+"dwellings": 477,
+"dwelling_types": {
+"Residential Apartments": 477
+},
+"name": "Melbourne One",
+"built": "2015",
+"floors": 49,
+"use": "Residential Apartment"
+},
+{
+"property_id": "101269",
+"address": "557-591 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.8051713,
+"lon": 144.962816483,
+"dwellings": 473,
+"dwelling_types": {
+"Student Apartments": 473
+},
+"name": null,
+"built": "2020",
+"floors": 22,
+"use": "Student Accommodation"
+},
+{
+"property_id": "587736",
+"address": "QV1 Apartments 22-24 Jane Bell Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.810658,
+"lon": 144.965703374,
+"dwellings": 466,
+"dwelling_types": {
+"Residential Apartments": 466
+},
+"name": "QV1 Apartments",
+"built": "2004",
+"floors": 36,
+"use": "Residential Apartment"
+},
+{
+"property_id": "593732",
+"address": "6-22 Pearl River Road DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81533509,
+"lon": 144.938176814,
+"dwellings": 460,
+"dwelling_types": {
+"Residential Apartments": 460
+},
+"name": null,
+"built": "2017",
+"floors": 44,
+"use": "Residential Apartment"
+},
+{
+"property_id": "598612",
+"address": "Victoria Point Units 100-108 Harbour Esplanade DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81817241,
+"lon": 144.947217029,
+"dwellings": 449,
+"dwelling_types": {
+"Residential Apartments": 449
+},
+"name": "Victoria Point Units",
+"built": "2005",
+"floors": 42,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103811",
+"address": "19-35 Flemington Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.80067768,
+"lon": 144.955200107,
+"dwellings": 449,
+"dwelling_types": {
+"Residential Apartments": 449
+},
+"name": null,
+"built": "2016",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108947",
+"address": "57-77 Dudley Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81026195,
+"lon": 144.950593866,
+"dwellings": 445,
+"dwelling_types": {
+"Residential Apartments": 445
+},
+"name": null,
+"built": "2017",
+"floors": 40,
+"use": "Residential Apartment"
+},
+{
+"property_id": "674536",
+"address": "East Tower 888 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82059451,
+"lon": 144.94250585,
+"dwellings": 443,
+"dwelling_types": {
+"Residential Apartments": 443
+},
+"name": "East Tower",
+"built": "2016",
+"floors": 41,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110099",
+"address": "189-203 William Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8146364,
+"lon": 144.95704074,
+"dwellings": 443,
+"dwelling_types": {
+"Residential Apartments": 443
+},
+"name": "The William",
+"built": "1966",
+"floors": 25,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106367",
+"address": "9-23 MacKenzie Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80768212,
+"lon": 144.967394785,
+"dwellings": 443,
+"dwelling_types": {
+"Residential Apartments": 443
+},
+"name": "Conservatory",
+"built": null,
+"floors": 39,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110372",
+"address": "Platinum Apartments 43-47 Clarke Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82686934,
+"lon": 144.959516664,
+"dwellings": 437,
+"dwelling_types": {
+"Residential Apartments": 437
+},
+"name": "Platinum Apartments",
+"built": "2015",
+"floors": 54,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108566",
+"address": "302-324 Russell Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80930218,
+"lon": 144.966805117,
+"dwellings": 436,
+"dwelling_types": {
+"Residential Apartments": 436
+},
+"name": "Adobe 318 Apartments",
+"built": "2014",
+"floors": 58,
+"use": "Residential Apartment"
+},
+{
+"property_id": "624495",
+"address": "Zen Apartments 23-39 Therry Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80709681,
+"lon": 144.961032218,
+"dwellings": 427,
+"dwelling_types": {
+"Residential Apartments": 427
+},
+"name": "ZEN Tower",
+"built": "2011",
+"floors": 49,
+"use": "Residential Apartment"
+},
+{
+"property_id": "706736",
+"address": "11 Bale Circuit SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82580013,
+"lon": 144.963565642,
+"dwellings": 419,
+"dwelling_types": {
+"Residential Apartments": 419
+},
+"name": null,
+"built": "2020",
+"floors": 54,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105523",
+"address": "108-128 Leicester Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80335267,
+"lon": 144.960971679,
+"dwellings": 418,
+"dwelling_types": {
+"Student Apartments": 418
+},
+"name": null,
+"built": "2016",
+"floors": 14,
+"use": "Student Accommodation"
+},
+{
+"property_id": "570683",
+"address": "110-120 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82548246,
+"lon": 144.962059888,
+"dwellings": 415,
+"dwelling_types": {
+"Residential Apartments": 415
+},
+"name": "Epic",
+"built": "2013",
+"floors": 39,
+"use": "Residential Apartment"
+},
+{
+"property_id": "559514",
+"address": "Arrow On Swanston 470-496 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80555235,
+"lon": 144.963513163,
+"dwellings": 413,
+"dwelling_types": {
+"Student Apartments": 413
+},
+"name": "Arrow On Swanston Apartments",
+"built": "2000",
+"floors": 12,
+"use": "Student Accommodation"
+},
+{
+"property_id": "110389",
+"address": "256-258 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82590804,
+"lon": 144.959486577,
+"dwellings": 403,
+"dwelling_types": {
+"Residential Apartments": 403
+},
+"name": null,
+"built": "2022",
+"floors": 62,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105717",
+"address": "20-40 Rose Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81498784,
+"lon": 144.954249339,
+"dwellings": 402,
+"dwelling_types": {
+"Residential Apartments": 402
+},
+"name": "The Fifth Apartments",
+"built": "2017",
+"floors": 52,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110399",
+"address": "105-107 Clarendon Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.8271138,
+"lon": 144.958224358,
+"dwellings": 399,
+"dwelling_types": {
+"Residential Apartments": 399
+},
+"name": "Shadow Play by PEPPERS",
+"built": "2018",
+"floors": 47,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106368",
+"address": "MacKenzie Tower 27-39 MacKenzie Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80781082,
+"lon": 144.966952868,
+"dwellings": 388,
+"dwelling_types": {
+"Residential Apartments": 388
+},
+"name": "Mackenzie Tower",
+"built": "2011",
+"floors": 32,
+"use": "Residential Apartment"
+},
+{
+"property_id": "100170",
+"address": "52-64 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80876331,
+"lon": 144.961474036,
+"dwellings": 378,
+"dwelling_types": {
+"Residential Apartments": 378
+},
+"name": "Avant",
+"built": "2017",
+"floors": 56,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104010",
+"address": "The Empire Apartments 256-268 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8176078,
+"lon": 144.965626331,
+"dwellings": 377,
+"dwelling_types": {
+"Residential Apartments": 377
+},
+"name": "The Empire Apartments",
+"built": "2006",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "566659",
+"address": "NEO 200 Apartments 182-200 Spencer Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81625435,
+"lon": 144.953298685,
+"dwellings": 371,
+"dwelling_types": {
+"Residential Apartments": 371
+},
+"name": "NEO 200 Apartment",
+"built": "2007",
+"floors": 43,
+"use": "Residential Apartment"
+},
+{
+"property_id": "705840",
+"address": "101-113 Batman Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81158829,
+"lon": 144.949895376,
+"dwellings": 360,
+"dwelling_types": {
+"Residential Apartments": 360
+},
+"name": null,
+"built": "2020",
+"floors": 28,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110373",
+"address": "The Bank Apartments 269-283 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82730522,
+"lon": 144.959050704,
+"dwellings": 360,
+"dwelling_types": {
+"Residential Apartments": 360
+},
+"name": "Bank Apartments",
+"built": "2011",
+"floors": 42,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110456",
+"address": "The Guilfoyle 35-47 Coventry Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82956555,
+"lon": 144.96939214,
+"dwellings": 353,
+"dwelling_types": {
+"Residential Apartments": 353
+},
+"name": "The Guilfoyle",
+"built": "2013",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110370",
+"address": "241-243 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82650265,
+"lon": 144.960020143,
+"dwellings": 350,
+"dwelling_types": {
+"Residential Apartments": 350
+},
+"name": "MainPoint Melbourne Apartments",
+"built": "2012",
+"floors": 43,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109370",
+"address": "558-566 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80355391,
+"lon": 144.963909099,
+"dwellings": 350,
+"dwelling_types": {
+"Student Apartments": 350
+},
+"name": null,
+"built": "2021",
+"floors": 14,
+"use": "Student Accommodation"
+},
+{
+"property_id": "632373",
+"address": "555-563 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.84726398,
+"lon": 144.980663059,
+"dwellings": 329,
+"dwelling_types": {
+"Residential Apartments": 329
+},
+"name": "Parque",
+"built": "2017",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "722459",
+"address": "63 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80827436,
+"lon": 144.969565823,
+"dwellings": 325,
+"dwelling_types": {
+"Residential Apartments": 325
+},
+"name": null,
+"built": null,
+"floors": 51,
+"use": "Residential Apartment"
+},
+{
+"property_id": "682680",
+"address": "915-941 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82060831,
+"lon": 144.939620064,
+"dwellings": 321,
+"dwelling_types": {
+"Residential Apartments": 321
+},
+"name": "No 1 Collins",
+"built": "2019",
+"floors": 29,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110486",
+"address": "Vue Grande Apartments 61-67 Whiteman Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82606727,
+"lon": 144.956828951,
+"dwellings": 320,
+"dwelling_types": {
+"Residential Apartments": 320
+},
+"name": "Vue Grande Apartments",
+"built": "2009",
+"floors": 35,
+"use": "Residential Apartment"
+},
+{
+"property_id": "621414",
+"address": "218-236 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81015871,
+"lon": 144.956601159,
+"dwellings": 320,
+"dwelling_types": {
+"Residential Apartments": 320
+},
+"name": "The Istana Apartments",
+"built": "2015",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "590044",
+"address": "City Tower 181-187 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82476189,
+"lon": 144.962185859,
+"dwellings": 319,
+"dwelling_types": {
+"Residential Apartments": 319
+},
+"name": "City Tower",
+"built": "2004",
+"floors": 38,
+"use": "Residential Apartment"
+},
+{
+"property_id": "627658",
+"address": "Harbour One Apartments 2-10 Marmion Place DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81341856,
+"lon": 144.942311804,
+"dwellings": 319,
+"dwelling_types": {
+"Residential Apartments": 319
+},
+"name": "Harbour One Apartments",
+"built": "2011",
+"floors": 23,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110622",
+"address": "152-166 Sturt Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82539902,
+"lon": 144.966071447,
+"dwellings": 317,
+"dwelling_types": {
+"Residential Apartments": 317
+},
+"name": "Guild Apartments",
+"built": "2013",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110385",
+"address": "Southbank One 174-184 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82382191,
+"lon": 144.961891785,
+"dwellings": 317,
+"dwelling_types": {
+"Residential Apartments": 317
+},
+"name": "Southbank One",
+"built": "2009",
+"floors": 38,
+"use": "Residential Apartment"
+},
+{
+"property_id": "650593",
+"address": "Melbourne Star Apartments 8 Sutherland Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81131628,
+"lon": 144.960948366,
+"dwellings": 317,
+"dwelling_types": {
+"Residential Apartments": 317
+},
+"name": "Melbourne Star Apartments",
+"built": "2013",
+"floors": 41,
+"use": "Residential Apartment"
+},
+{
+"property_id": "554417",
+"address": "Infinity 8 Apartments 243-263 Franklin Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80967008,
+"lon": 144.956662638,
+"dwellings": 316,
+"dwelling_types": {
+"Residential Apartments": 316
+},
+"name": "Infinity 8 & Infinity 88 & Grand 8",
+"built": "2011",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "590043",
+"address": "Melbourne Tower 171-179 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82476189,
+"lon": 144.962185859,
+"dwellings": 315,
+"dwelling_types": {
+"Residential Apartments": 315
+},
+"name": "Melbourne Tower",
+"built": "2004",
+"floors": 38,
+"use": "Residential Apartment"
+},
+{
+"property_id": "684273",
+"address": "North Tower 889 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82121282,
+"lon": 144.941883113,
+"dwellings": 313,
+"dwelling_types": {
+"Residential Apartments": 313
+},
+"name": "North Tower",
+"built": "2017",
+"floors": 31,
+"use": "Residential Apartment"
+},
+{
+"property_id": "669632",
+"address": "673-675 La Trobe Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81486994,
+"lon": 144.947536811,
+"dwellings": 312,
+"dwelling_types": {
+"Residential Apartments": 312
+},
+"name": "Lacrosse Docklands - East Tower",
+"built": "2012",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "681466",
+"address": "93-105 South Wharf Drive DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82214362,
+"lon": 144.934799828,
+"dwellings": 310,
+"dwelling_types": {
+"Residential Apartments": 310
+},
+"name": null,
+"built": "2021",
+"floors": 43,
+"use": "Residential Apartment"
+},
+{
+"property_id": "688499",
+"address": "North Tower 883 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82148991,
+"lon": 144.942978909,
+"dwellings": 309,
+"dwelling_types": {
+"Residential Apartments": 309
+},
+"name": "North Tower",
+"built": "2017",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105446",
+"address": "Eporo Tower 279-289 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81073635,
+"lon": 144.960864124,
+"dwellings": 307,
+"dwelling_types": {
+"Residential Apartments": 307
+},
+"name": "Eporo Tower",
+"built": "2016",
+"floors": 44,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109326",
+"address": "1-13 Lincoln Square South CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80359538,
+"lon": 144.963002757,
+"dwellings": 306,
+"dwelling_types": {
+"Student Apartments": 306
+},
+"name": null,
+"built": "2021",
+"floors": 15,
+"use": "Student Accommodation"
+},
+{
+"property_id": "558316",
+"address": "City Point On Bourke Apartments 654-670 Bourke Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81626997,
+"lon": 144.954037087,
+"dwellings": 302,
+"dwelling_types": {
+"Residential Apartments": 302
+},
+"name": "City Point on Bourke",
+"built": "2003",
+"floors": 32,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108646",
+"address": "519-539 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.8455379,
+"lon": 144.979819038,
+"dwellings": 299,
+"dwelling_types": {
+"Residential Apartments": 299
+},
+"name": "Chevron Apartments",
+"built": "2007",
+"floors": 11,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108083",
+"address": "ABeckett 181 175-181 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81022044,
+"lon": 144.958211968,
+"dwellings": 297,
+"dwelling_types": {
+"Residential Apartments": 297
+},
+"name": "CityTempo Apartments",
+"built": "2010",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103980",
+"address": "Flinders Wharf Apartments 40-66 Siddeley Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82290352,
+"lon": 144.952548545,
+"dwellings": 297,
+"dwelling_types": {
+"Residential Apartments": 297
+},
+"name": "Flinders Wharf Apartments",
+"built": "2003",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "604778",
+"address": "Verve501 Apartments 483 Swanston Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80728963,
+"lon": 144.962090701,
+"dwellings": 293,
+"dwelling_types": {
+"Residential Apartments": 293
+},
+"name": "Verve 501",
+"built": "2007",
+"floors": 41,
+"use": "Residential Apartment"
+},
+{
+"property_id": "500323",
+"address": "A'Beckett Tower 19-37 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80894099,
+"lon": 144.962610056,
+"dwellings": 287,
+"dwelling_types": {
+"Residential Apartments": 287
+},
+"name": "ABeckett Tower",
+"built": "2010",
+"floors": 34,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110435",
+"address": "Elm Apartments 18-24 Dorcas Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.83002436,
+"lon": 144.969568044,
+"dwellings": 286,
+"dwelling_types": {
+"Residential Apartments": 286
+},
+"name": "Elm Apartments",
+"built": "2010",
+"floors": 23,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108046",
+"address": "63-85 Queens Bridge Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82386991,
+"lon": 144.961291549,
+"dwellings": 284,
+"dwelling_types": {
+"Residential Apartments": 284
+},
+"name": "Southbank Towers",
+"built": "1997",
+"floors": 28,
+"use": "Residential Apartment"
+},
+{
+"property_id": "642253",
+"address": "1-19 Rose Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81537494,
+"lon": 144.953525588,
+"dwellings": 282,
+"dwelling_types": {
+"Residential Apartments": 282
+},
+"name": "Midtown",
+"built": "2016",
+"floors": 32,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110371",
+"address": "245-251 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82672904,
+"lon": 144.959821255,
+"dwellings": 281,
+"dwelling_types": {
+"Residential Apartments": 281
+},
+"name": null,
+"built": "2021",
+"floors": 53,
+"use": "Residential Apartment"
+},
+{
+"property_id": "533992",
+"address": "2-14 Leicester Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80604275,
+"lon": 144.960300316,
+"dwellings": 280,
+"dwelling_types": {
+"Residential Apartments": 280
+},
+"name": "The Vic",
+"built": "2014",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "576748",
+"address": "Sentinel 70-92 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82468536,
+"lon": 144.963033845,
+"dwellings": 276,
+"dwelling_types": {
+"Residential Apartments": 276
+},
+"name": "Sentinel",
+"built": "2002",
+"floors": 34,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103989",
+"address": "532-536 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.82024711,
+"lon": 144.956435223,
+"dwellings": 275,
+"dwelling_types": {
+"Residential Apartments": 275
+},
+"name": "Aura Apartments",
+"built": "2013",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109311",
+"address": "335-347 Swanston Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8103651,
+"lon": 144.963750616,
+"dwellings": 270,
+"dwelling_types": {
+"Student Apartments": 270
+},
+"name": "Melbourne Campus Apartments",
+"built": "1941",
+"floors": 15,
+"use": "Student Accommodation"
+},
+{
+"property_id": "105670",
+"address": "Unilodge on Lonsdale 35-41 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80996122,
+"lon": 144.971149576,
+"dwellings": 268,
+"dwelling_types": {
+"Residential Apartments": 268
+},
+"name": "Unilodge on Lonsdale",
+"built": "2003",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "678377",
+"address": "421 Docklands Drive DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.8147229,
+"lon": 144.939704199,
+"dwellings": 267,
+"dwelling_types": {
+"Residential Apartments": 267
+},
+"name": null,
+"built": "2017",
+"floors": 23,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110452",
+"address": "25-29 Coventry Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82937769,
+"lon": 144.970037308,
+"dwellings": 260,
+"dwelling_types": {
+"Residential Apartments": 260
+},
+"name": "Botanic Melbourne",
+"built": "2020",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "588604",
+"address": "The Blue Tower 68 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80822376,
+"lon": 144.966457516,
+"dwellings": 259,
+"dwelling_types": {
+"Residential Apartments": 259
+},
+"name": "The Blue Tower",
+"built": "2004",
+"floors": 27,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106035",
+"address": "La Banque Apartments 380-386 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81209868,
+"lon": 144.958101898,
+"dwellings": 257,
+"dwelling_types": {
+"Residential Apartments": 257
+},
+"name": "La Banque Apartments",
+"built": "2010",
+"floors": 37,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104013",
+"address": "Unilodge On Flinders Apartments 238-242 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81733218,
+"lon": 144.966353165,
+"dwellings": 251,
+"dwelling_types": {
+"Student Apartments": 251
+},
+"name": "Home @ Flinders",
+"built": "1932",
+"floors": 14,
+"use": "Student Accommodation"
+},
+{
+"property_id": "108642",
+"address": "497-503 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.84331737,
+"lon": 144.97907614,
+"dwellings": 249,
+"dwelling_types": {
+"Residential Apartments": 249
+},
+"name": "The Fawkner",
+"built": "2019",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103818",
+"address": "Unilodge on Villiers Apartments 51-63 Villiers Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79895071,
+"lon": 144.953347234,
+"dwellings": 246,
+"dwelling_types": {
+"Student Apartments": 246
+},
+"name": "Unilodge on Villiers Apartments",
+"built": "2011",
+"floors": 9,
+"use": "Student Accommodation"
+},
+{
+"property_id": "576747",
+"address": "Victoria Tower 94-108 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82512506,
+"lon": 144.962537312,
+"dwellings": 244,
+"dwelling_types": {
+"Residential Apartments": 244
+},
+"name": "Victoria Tower",
+"built": "2002",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110491",
+"address": "Clarendon Towers 41-55 Haig Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82723191,
+"lon": 144.95734323,
+"dwellings": 242,
+"dwelling_types": {
+"Residential Apartments": 242
+},
+"name": "Clarendon Towers",
+"built": "2001",
+"floors": 27,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108978",
+"address": "35-47 Spring Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81419762,
+"lon": 144.973948408,
+"dwellings": 241,
+"dwelling_types": {
+"Residential Apartments": 241
+},
+"name": null,
+"built": "2016",
+"floors": 43,
+"use": "Residential Apartment"
+},
+{
+"property_id": "100848",
+"address": "15-31 Batman Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81089752,
+"lon": 144.952316675,
+"dwellings": 240,
+"dwelling_types": {
+"Residential Apartments": 240
+},
+"name": "Flagstaff Green",
+"built": "2018",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110436",
+"address": "68-70 Dorcas Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.83063263,
+"lon": 144.967466569,
+"dwellings": 238,
+"dwelling_types": {
+"Residential Apartments": 238
+},
+"name": "Kings Domain Apartments",
+"built": "2018",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "623575",
+"address": "Concavo 1-13 Waterside Place DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82007613,
+"lon": 144.941406774,
+"dwellings": 238,
+"dwelling_types": {
+"Residential Apartments": 238
+},
+"name": "Concavo",
+"built": "2016",
+"floors": 31,
+"use": "Residential Apartment"
+},
+{
+"property_id": "627248",
+"address": "63-75 Coventry Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82998246,
+"lon": 144.967959041,
+"dwellings": 237,
+"dwelling_types": {
+"Residential Apartments": 237
+},
+"name": "Sunday Apartments",
+"built": "2013",
+"floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110140",
+"address": "Oaks on William 330-352 William Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81124427,
+"lon": 144.956578269,
+"dwellings": 234,
+"dwelling_types": {
+"Residential Apartments": 234
+},
+"name": "Art on the Park/Singers Lane",
+"built": "2013",
+"floors": 37,
+"use": "Commercial Accommodation"
+},
+{
+"property_id": "102109",
+"address": "Liberty Tower 612-624 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81867544,
+"lon": 144.954350485,
+"dwellings": 232,
+"dwelling_types": {
+"Residential Apartments": 232
+},
+"name": "Liberty Tower",
+"built": "2002",
+"floors": 28,
+"use": "Residential Apartment"
+},
+{
+"property_id": "627016",
+"address": "73-91 South Wharf Drive DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82225919,
+"lon": 144.935968372,
+"dwellings": 228,
+"dwelling_types": {
+"Residential Apartments": 228
+},
+"name": null,
+"built": "2017",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110387",
+"address": "248-254 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82570623,
+"lon": 144.959652624,
+"dwellings": 228,
+"dwelling_types": {
+"Residential Apartments": 228
+},
+"name": "Bella hotel apartments",
+"built": "2015",
+"floors": 34,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108090",
+"address": "Paragon Apartments 318 Queen Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81120286,
+"lon": 144.959302261,
+"dwellings": 227,
+"dwelling_types": {
+"Residential Apartments": 227
+},
+"name": "Paragon",
+"built": "2022",
+"floors": 50,
+"use": "Residential Apartment"
+},
+{
+"property_id": "661088",
+"address": "28-44 Bouverie Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80568588,
+"lon": 144.961947969,
+"dwellings": 225,
+"dwelling_types": {
+"Residential Apartments": 225
+},
+"name": null,
+"built": "2016",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103312",
+"address": "222-260 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81261442,
+"lon": 144.962878241,
+"dwellings": 225,
+"dwelling_types": {
+"Residential Apartments": 225
+},
+"name": "250E Apartments",
+"built": "1976",
+"floors": 27,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102120",
+"address": "464-466 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81746449,
+"lon": 144.958592038,
+"dwellings": 223,
+"dwelling_types": {
+"Residential Apartments": 223
+},
+"name": "Arise Collins House",
+"built": "2019",
+"floors": 60,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103607",
+"address": "Regency Towers Apartments 265 Exhibition Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80965317,
+"lon": 144.968886013,
+"dwellings": 222,
+"dwelling_types": {
+"Residential Apartments": 222
+},
+"name": "Regency Towers Apartments",
+"built": "1997",
+"floors": 34,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105496",
+"address": "36-40 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80812961,
+"lon": 144.967575238,
+"dwellings": 221,
+"dwelling_types": {
+"Residential Apartments": 221
+},
+"name": "The Trillium",
+"built": "2018",
+"floors": 39,
+"use": "Residential Apartment"
+},
+{
+"property_id": "684601",
+"address": "South Tower 889 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82121282,
+"lon": 144.941883113,
+"dwellings": 221,
+"dwelling_types": {
+"Residential Apartments": 221
+},
+"name": "South Tower",
+"built": "2017",
+"floors": 23,
+"use": "Residential Apartment"
+},
+{
+"property_id": "623574",
+"address": "Convesso 2-14 Waterside Place DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81981342,
+"lon": 144.942190394,
+"dwellings": 220,
+"dwelling_types": {
+"Residential Apartments": 220
+},
+"name": "Convesso Concavo",
+"built": "2012",
+"floors": 33,
+"use": "Residential Apartment"
+},
+{
+"property_id": "688500",
+"address": "South Tower 883 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82148991,
+"lon": 144.942978909,
+"dwellings": 219,
+"dwelling_types": {
+"Residential Apartments": 219
+},
+"name": "South Tower",
+"built": "2017",
+"floors": 25,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102125",
+"address": "Temple Court 422-428 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81679183,
+"lon": 144.959996443,
+"dwellings": 219,
+"dwelling_types": {
+"Residential Apartments": 219
+},
+"name": "Temple Court",
+"built": "1924",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "578981",
+"address": "Wills Court 25 Wills Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81071591,
+"lon": 144.957162073,
+"dwellings": 219,
+"dwelling_types": {
+"Residential Apartments": 219
+},
+"name": "Wills Court",
+"built": "2002",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109366",
+"address": "127-135 Pelham Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80276989,
+"lon": 144.963945272,
+"dwellings": 219,
+"dwelling_types": {
+"Student Apartments": 219
+},
+"name": "MICASA 8",
+"built": "2009",
+"floors": 13,
+"use": "Student Accommodation"
+},
+{
+"property_id": "105737",
+"address": "University City Apartments 402-408 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81244232,
+"lon": 144.960325405,
+"dwellings": 218,
+"dwelling_types": {
+"Residential Apartments": 218
+},
+"name": "University City Apartments",
+"built": "1950",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110474",
+"address": "Tiara Apartments 46-50 Haig Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82683009,
+"lon": 144.956945796,
+"dwellings": 211,
+"dwelling_types": {
+"Residential Apartments": 211
+},
+"name": "Tiara",
+"built": "2013",
+"floors": 34,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105453",
+"address": "La Trobe Tower 323-331 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81102516,
+"lon": 144.959794532,
+"dwellings": 206,
+"dwelling_types": {
+"Residential Apartments": 206
+},
+"name": "La Trobe Tower",
+"built": "2016",
+"floors": 43,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108960",
+"address": "Atlantis Hotel & Tower 284-302 Spencer Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81370497,
+"lon": 144.952054549,
+"dwellings": 205,
+"dwelling_types": {
+"Residential Apartments": 205
+},
+"name": "Atlantis Tower & Hotel",
+"built": "2009",
+"floors": 37,
+"use": "Commercial Accommodation"
+},
+{
+"property_id": "604779",
+"address": "Milano Apartments 8 Franklin Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80728963,
+"lon": 144.962090701,
+"dwellings": 203,
+"dwelling_types": {
+"Residential Apartments": 203
+},
+"name": "Milano Apartments",
+"built": "2007",
+"floors": 37,
+"use": "Parking - Private Covered"
+},
+{
+"property_id": "579363",
+"address": "Yarra Point Apartments 1-13 Point Park Crescent DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82354217,
+"lon": 144.941274287,
+"dwellings": 201,
+"dwelling_types": {
+"Residential Apartments": 201
+},
+"name": "Yarra Point Apartments",
+"built": "2012",
+"floors": 31,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573327",
+"address": "The Nolan 37-43 Caravel Lane DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.8149263,
+"lon": 144.940659333,
+"dwellings": 200,
+"dwelling_types": {
+"Residential Apartments": 200
+},
+"name": "The Nolan",
+"built": "2004",
+"floors": 24,
+"use": "Residential Apartment"
+},
+{
+"property_id": "650594",
+"address": "Melbourne Sky Apartments 5 Sutherland Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81131628,
+"lon": 144.960948366,
+"dwellings": 200,
+"dwelling_types": {
+"Residential Apartments": 200
+},
+"name": "Melbourne Sky Apartments",
+"built": "2013",
+"floors": 37,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110366",
+"address": "The Summit Concierge Apartments 157-165 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82425012,
+"lon": 144.962678206,
+"dwellings": 200,
+"dwelling_types": {
+"Residential Apartments": 200
+},
+"name": "The Summit - Concierge Apartments",
+"built": "2002",
+"floors": 27,
+"use": "Residential Apartment"
+},
+{
+"property_id": "584059",
+"address": "The Conder 2-16 Newquay Promenade DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81389099,
+"lon": 144.943683537,
+"dwellings": 199,
+"dwelling_types": {
+"Residential Apartments": 199
+},
+"name": "The Conder",
+"built": "2005",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "611696",
+"address": "92-102 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82438863,
+"lon": 144.943550585,
+"dwellings": 199,
+"dwelling_types": {
+"Residential Apartments": 199
+},
+"name": "Array Apartments",
+"built": "2014",
+"floors": 40,
+"use": "Residential Apartment"
+},
+{
+"property_id": "707565",
+"address": "60-66 Dorcas Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.83047507,
+"lon": 144.968009286,
+"dwellings": 196,
+"dwelling_types": {
+"Residential Apartments": 196
+},
+"name": null,
+"built": "2020",
+"floors": 24,
+"use": "Residential Apartment"
+},
+{
+"property_id": "611394",
+"address": "545-557 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.82099397,
+"lon": 144.956518441,
+"dwellings": 196,
+"dwelling_types": {
+"Residential Apartments": 196
+},
+"name": "Northbank Place Central Tower",
+"built": "2009",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573207",
+"address": "The Palladio 15 Caravel Lane DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81434524,
+"lon": 144.942139035,
+"dwellings": 195,
+"dwelling_types": {
+"Residential Apartments": 195
+},
+"name": "The Palladio",
+"built": "2002",
+"floors": 24,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106024",
+"address": "Metro Park West Apartments 557-561 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8133526,
+"lon": 144.955365965,
+"dwellings": 195,
+"dwelling_types": {
+"Residential Apartments": 195
+},
+"name": "Metro Park West",
+"built": "2014",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "107867",
+"address": "139-155 Queensberry Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80493297,
+"lon": 144.963920625,
+"dwellings": 193,
+"dwelling_types": {
+"Residential Apartments": 193
+},
+"name": "The Eminence",
+"built": "2017",
+"floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "579362",
+"address": "84-90 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82438863,
+"lon": 144.943550585,
+"dwellings": 191,
+"dwelling_types": {
+"Residential Apartments": 191
+},
+"name": "90 LORIMER STREET",
+"built": "2005",
+"floors": 40,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110347",
+"address": "The Centurion Apartments 81-89 Whiteman Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82697694,
+"lon": 144.955986592,
+"dwellings": 190,
+"dwelling_types": {
+"Residential Apartments": 190
+},
+"name": "Centurion Apartments",
+"built": "2001",
+"floors": 31,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104026",
+"address": "104-112 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81600001,
+"lon": 144.971154413,
+"dwellings": 189,
+"dwelling_types": {
+"Residential Apartments": 189
+},
+"name": "108 Flinders St",
+"built": "2013",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104080",
+"address": "83-93 Franklin Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80816922,
+"lon": 144.961762745,
+"dwellings": 189,
+"dwelling_types": {
+"Residential Apartments": 189
+},
+"name": "Franklin Lofts",
+"built": "2001",
+"floors": 32,
+"use": "Residential Apartment"
+},
+{
+"property_id": "588061",
+"address": "V1 Village Docklands 8-18 McCrae Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82153057,
+"lon": 144.950801172,
+"dwellings": 189,
+"dwelling_types": {
+"Residential Apartments": 189
+},
+"name": "V1 Village Docklands",
+"built": "2005",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "611395",
+"address": "561-581 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.82113126,
+"lon": 144.95586492,
+"dwellings": 188,
+"dwelling_types": {
+"Residential Apartments": 188
+},
+"name": "Northbank Place West Tower",
+"built": "2009",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "101043",
+"address": "97-115 Berkeley Street MELBOURNE VIC 3000",
+"area": "Carlton",
+"lat": -37.80309914,
+"lon": 144.958792359,
+"dwellings": 187,
+"dwelling_types": {
+"Student Apartments": 187
+},
+"name": "Urbanest Berkeley",
+"built": "2014",
+"floors": 13,
+"use": "Student Accommodation"
+},
+{
+"property_id": "111372",
+"address": "Southbank Condos Apartments 88-98 Southbank Boulevard SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82344175,
+"lon": 144.964499259,
+"dwellings": 187,
+"dwelling_types": {
+"Residential Apartments": 187
+},
+"name": "Southbank Condos",
+"built": "1999",
+"floors": 25,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110857",
+"address": "233-239 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81602805,
+"lon": 144.966088099,
+"dwellings": 186,
+"dwelling_types": {
+"Residential Apartments": 186
+},
+"name": "The Collins",
+"built": "1959",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "680223",
+"address": "48 Balston Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82669113,
+"lon": 144.962519553,
+"dwellings": 185,
+"dwelling_types": {
+"Residential Apartments": 185
+},
+"name": "West Tower",
+"built": "2017",
+"floors": 35,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110417",
+"address": "Southpoint Apartments 20-22 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82280752,
+"lon": 144.965827262,
+"dwellings": 183,
+"dwelling_types": {
+"Residential Apartments": 183
+},
+"name": "Southpoint",
+"built": "2003",
+"floors": 32,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106174",
+"address": "480 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79465838,
+"lon": 144.969095378,
+"dwellings": 180,
+"dwelling_types": {
+"Residential Apartments": 180
+},
+"name": null,
+"built": null,
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106871",
+"address": "478 Drummond Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79465838,
+"lon": 144.969095378,
+"dwellings": 180,
+"dwelling_types": {
+"Residential Apartments": 180
+},
+"name": null,
+"built": "1966",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104095",
+"address": "Stargate Apartments 114-122 Franklin Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80819713,
+"lon": 144.958936644,
+"dwellings": 180,
+"dwelling_types": {
+"Residential Apartments": 180
+},
+"name": "Stargate Apartment Complex",
+"built": "2001",
+"floors": 11,
+"use": "Residential Apartment"
+},
+{
+"property_id": "616163",
+"address": "12 Sutton Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79162745,
+"lon": 144.940954383,
+"dwellings": 180,
+"dwelling_types": {
+"Residential Apartments": 180
+},
+"name": null,
+"built": null,
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "100002",
+"address": "268-296 Adderley Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80718955,
+"lon": 144.94336642,
+"dwellings": 179,
+"dwelling_types": {
+"Residential Apartments": 179
+},
+"name": null,
+"built": "2023",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110362",
+"address": "WRAP Residences 133-139 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82348388,
+"lon": 144.963582557,
+"dwellings": 178,
+"dwelling_types": {
+"Residential Apartments": 178
+},
+"name": "WRAP Residence",
+"built": "2014",
+"floors": 43,
+"use": "Commercial Accommodation"
+},
+{
+"property_id": "105441",
+"address": "141-149 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80880629,
+"lon": 144.967507032,
+"dwellings": 177,
+"dwelling_types": {
+"Residential Apartments": 177
+},
+"name": null,
+"built": "2020",
+"floors": 45,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106056",
+"address": "EastEnd Apartments 2-14 Exploration Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80913993,
+"lon": 144.968446286,
+"dwellings": 177,
+"dwelling_types": {
+"Residential Apartments": 177
+},
+"name": "East End Apartments",
+"built": "2010",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103987",
+"address": "550-554 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8203648,
+"lon": 144.955979036,
+"dwellings": 176,
+"dwelling_types": {
+"Residential Apartments": 176
+},
+"name": "Eifel Tower Apartments",
+"built": "2006",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104830",
+"address": "71-111 Hobsons Road KENSINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.7961234,
+"lon": 144.916592996,
+"dwellings": 176,
+"dwelling_types": {
+"Residential Apartments": 176
+},
+"name": null,
+"built": "2018",
+"floors": 7,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105483",
+"address": "312-318 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81028748,
+"lon": 144.960069879,
+"dwellings": 176,
+"dwelling_types": {
+"Student Apartments": 176
+},
+"name": null,
+"built": "2014",
+"floors": 24,
+"use": "Student Accommodation"
+},
+{
+"property_id": "560001",
+"address": "The Arkley 16-32 Rakaia Way DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81460532,
+"lon": 144.941261396,
+"dwellings": 176,
+"dwelling_types": {
+"Residential Apartments": 176
+},
+"name": "The Arkley",
+"built": "2001",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "560261",
+"address": "50-56 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82461483,
+"lon": 144.947647139,
+"dwellings": 175,
+"dwelling_types": {
+"Residential Apartments": 175
+},
+"name": "Yarras Edge",
+"built": "2002",
+"floors": 31,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105111",
+"address": "Cityside 50-64 Jeffcott Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81156971,
+"lon": 144.951621938,
+"dwellings": 175,
+"dwelling_types": {
+"Residential Apartments": 175
+},
+"name": "Cityside",
+"built": "2009",
+"floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106408",
+"address": "Evo Apartments 107-115 Manningham Street PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.78440293,
+"lon": 144.940737002,
+"dwellings": 175,
+"dwelling_types": {
+"Residential Apartments": 175
+},
+"name": "Evo Apartments",
+"built": "2013",
+"floors": 6,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108367",
+"address": "135-157 Hawke Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80847505,
+"lon": 144.946146553,
+"dwellings": 172,
+"dwelling_types": {
+"Residential Apartments": 172
+},
+"name": null,
+"built": "2023",
+"floors": 7,
+"use": "Residential Apartment"
+},
+{
+"property_id": "593697",
+"address": "The Victoria 162 Albert Street EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.81004656,
+"lon": 144.985625385,
+"dwellings": 172,
+"dwelling_types": {
+"Residential Apartments": 172
+},
+"name": "The Victoria",
+"built": null,
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "653560",
+"address": "81-97 Galada Avenue PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.77889389,
+"lon": 144.939016144,
+"dwellings": 172,
+"dwelling_types": {
+"Residential Apartments": 172
+},
+"name": "Prosper Parkside",
+"built": "2019",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105910",
+"address": "25-35 Little Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8129051,
+"lon": 144.972706442,
+"dwellings": 171,
+"dwelling_types": {
+"Residential Apartments": 171
+},
+"name": null,
+"built": "2014",
+"floors": 33,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573206",
+"address": "The Boyd 5 Caravel Lane DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81434524,
+"lon": 144.942139035,
+"dwellings": 170,
+"dwelling_types": {
+"Residential Apartments": 170
+},
+"name": "The Boyd",
+"built": "2002",
+"floors": 23,
+"use": "Residential Apartment"
+},
+{
+"property_id": "560005",
+"address": "1-11 Aquitania Way DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81376227,
+"lon": 144.941562264,
+"dwellings": 170,
+"dwelling_types": {
+"Residential Apartments": 170
+},
+"name": "Escala",
+"built": "2022",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "707763",
+"address": "52-58 Dorcas Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.83047507,
+"lon": 144.968009286,
+"dwellings": 170,
+"dwelling_types": {
+"Residential Apartments": 170
+},
+"name": null,
+"built": "2020",
+"floors": 24,
+"use": "Residential Apartment"
+},
+{
+"property_id": "704479",
+"address": "280 Albert Street EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.80971262,
+"lon": 144.981710725,
+"dwellings": 170,
+"dwelling_types": {
+"Residential Apartments": 170
+},
+"name": null,
+"built": "2018",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "705841",
+"address": "385-399 Spencer Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81158829,
+"lon": 144.949895376,
+"dwellings": 169,
+"dwelling_types": {
+"Residential Apartments": 169
+},
+"name": null,
+"built": "2020",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102950",
+"address": "45-55 Dudley Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81010661,
+"lon": 144.951027974,
+"dwellings": 169,
+"dwelling_types": {
+"Residential Apartments": 169
+},
+"name": null,
+"built": "2022",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110472",
+"address": "61-63 Haig Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82774781,
+"lon": 144.956787217,
+"dwellings": 167,
+"dwelling_types": {
+"Residential Apartments": 167
+},
+"name": null,
+"built": "2018",
+"floors": 39,
+"use": "Residential Apartment"
+},
+{
+"property_id": "563922",
+"address": "Central Building No.5 College Square Apartments 570 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79315689,
+"lon": 144.969126528,
+"dwellings": 167,
+"dwelling_types": {
+"Student Apartments": 167
+},
+"name": "College Square Apartments",
+"built": "2000",
+"floors": 10,
+"use": "Student Accommodation"
+},
+{
+"property_id": "110482",
+"address": "109-117 Clarendon Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82774004,
+"lon": 144.958469044,
+"dwellings": 166,
+"dwelling_types": {
+"Residential Apartments": 166
+},
+"name": "109 Clarendon",
+"built": "2010",
+"floors": 34,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106041",
+"address": "296-300 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81147825,
+"lon": 144.960635427,
+"dwellings": 165,
+"dwelling_types": {
+"Residential Apartments": 165
+},
+"name": "Merlin Apartments",
+"built": null,
+"floors": 37,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110943",
+"address": "Spring Street Tower 283 Spring Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80814525,
+"lon": 144.97101463,
+"dwellings": 165,
+"dwelling_types": {
+"Residential Apartments": 165
+},
+"name": "Spring Street Towers",
+"built": "1997",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "678375",
+"address": "15 Doepel Way DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.8147229,
+"lon": 144.939704199,
+"dwellings": 164,
+"dwelling_types": {
+"Residential Apartments": 164
+},
+"name": null,
+"built": "2017",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "111336",
+"address": "South Tower No.1 College Square Apartments 570 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79315689,
+"lon": 144.969126528,
+"dwellings": 162,
+"dwelling_types": {
+"Student Apartments": 162
+},
+"name": "South Tower",
+"built": "2001",
+"floors": 11,
+"use": "Student Accommodation"
+},
+{
+"property_id": "108948",
+"address": "404-418 Spencer Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81066373,
+"lon": 144.950636957,
+"dwellings": 161,
+"dwelling_types": {
+"Residential Apartments": 161
+},
+"name": null,
+"built": null,
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110346",
+"address": "73-79 Whiteman Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82663604,
+"lon": 144.956353387,
+"dwellings": 161,
+"dwelling_types": {
+"Residential Apartments": 161
+},
+"name": "Rivergarden Condos",
+"built": "2000",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "598657",
+"address": "South Tower 8 Waterview Walk DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81925128,
+"lon": 144.947975341,
+"dwellings": 161,
+"dwelling_types": {
+"Residential Apartments": 161
+},
+"name": "South Tower",
+"built": "2004",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "617035",
+"address": "76 Canning Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79525144,
+"lon": 144.94066288,
+"dwellings": 160,
+"dwelling_types": {
+"Residential Apartments": 160
+},
+"name": null,
+"built": "1965",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110348",
+"address": "Yarra Crest Apartments 91-99 Whiteman Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.8273773,
+"lon": 144.955641325,
+"dwellings": 159,
+"dwelling_types": {
+"Residential Apartments": 159
+},
+"name": "Yarra Crest Apartments",
+"built": "2001",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "581508",
+"address": "Building D Seasons Apartments 604 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80188571,
+"lon": 144.96431186,
+"dwellings": 157,
+"dwelling_types": {
+"Residential Apartments": 157
+},
+"name": "Building D - Seasons Apartments",
+"built": "2004",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110413",
+"address": "Triptych Apartments 8-10 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82241845,
+"lon": 144.966605453,
+"dwellings": 157,
+"dwelling_types": {
+"Residential Apartments": 157
+},
+"name": "Triptych",
+"built": "2010",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108411",
+"address": "109-133 Rosslyn Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80906098,
+"lon": 144.950650784,
+"dwellings": 157,
+"dwelling_types": {
+"Residential Apartments": 157
+},
+"name": null,
+"built": "2018",
+"floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105376",
+"address": "262-274 King Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81372352,
+"lon": 144.954929347,
+"dwellings": 157,
+"dwelling_types": {
+"Residential Apartments": 157
+},
+"name": "W.H.Holmes House",
+"built": "1974",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "598656",
+"address": "North Tower 18 Waterview Walk DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81925128,
+"lon": 144.947975341,
+"dwellings": 156,
+"dwelling_types": {
+"Residential Apartments": 156
+},
+"name": "North Tower",
+"built": "2004",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "563935",
+"address": "Bouverie Close Apartments 1-19 Bouverie Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80609287,
+"lon": 144.961090206,
+"dwellings": 155,
+"dwelling_types": {
+"Residential Apartments": 155
+},
+"name": "Bouverie Close Apartments",
+"built": "2002",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "703221",
+"address": "188 Macaulay Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79616005,
+"lon": 144.940736597,
+"dwellings": 153,
+"dwelling_types": {
+"Residential Apartments": 153
+},
+"name": "MacAulay Tower",
+"built": "2019",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "594107",
+"address": "522-536 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80430744,
+"lon": 144.963640222,
+"dwellings": 152,
+"dwelling_types": {
+"Residential Apartments": 152
+},
+"name": null,
+"built": "2005",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105083",
+"address": "1-9 Dryburgh Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80671459,
+"lon": 144.942416906,
+"dwellings": 152,
+"dwelling_types": {
+"Residential Apartments": 152
+},
+"name": null,
+"built": "2018",
+"floors": 11,
+"use": "Residential Apartment"
+},
+{
+"property_id": "101219",
+"address": "The Paramount 100-116 Bourke Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81170307,
+"lon": 144.969777753,
+"dwellings": 152,
+"dwelling_types": {
+"Residential Apartments": 152
+},
+"name": "Paramount Apartments",
+"built": "1996",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106173",
+"address": "510 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79465838,
+"lon": 144.969095378,
+"dwellings": 152,
+"dwelling_types": {
+"Residential Apartments": 152
+},
+"name": null,
+"built": null,
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "712830",
+"address": "18-30 Timothy Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81200936,
+"lon": 144.961134388,
+"dwellings": 151,
+"dwelling_types": {
+"Residential Apartments": 151
+},
+"name": null,
+"built": "2021",
+"floors": 52,
+"use": "Residential Apartment"
+},
+{
+"property_id": "727623",
+"address": "37-49 Galada Avenue PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.78072083,
+"lon": 144.939763926,
+"dwellings": 151,
+"dwelling_types": {
+"Residential Apartments": 151
+},
+"name": null,
+"built": "2023",
+"floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "104822",
+"address": "3-11 High Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.7995839,
+"lon": 144.953818366,
+"dwellings": 150,
+"dwelling_types": {
+"Student Apartments": 150
+},
+"name": "Sunshine",
+"built": "2011",
+"floors": 8,
+"use": "Student Accommodation"
+},
+{
+"property_id": "105452",
+"address": "315-321 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81097638,
+"lon": 144.959961235,
+"dwellings": 149,
+"dwelling_types": {
+"Residential Apartments": 149
+},
+"name": null,
+"built": "2016",
+"floors": 35,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108591",
+"address": "Hero Apartments 114-120 Russell Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81350285,
+"lon": 144.968975222,
+"dwellings": 148,
+"dwelling_types": {
+"Residential Apartments": 148
+},
+"name": "Hero Apartments",
+"built": "1954",
+"floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108961",
+"address": "Mondriane Tower 278-282 Spencer Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81395176,
+"lon": 144.952167439,
+"dwellings": 148,
+"dwelling_types": {
+"Residential Apartments": 148
+},
+"name": "Mondriane Tower",
+"built": "2005",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110468",
+"address": "58 Clarke Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82786327,
+"lon": 144.959336791,
+"dwellings": 147,
+"dwelling_types": {
+"Residential Apartments": 147
+},
+"name": "Habitat",
+"built": "2012",
+"floors": 36,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103817",
+"address": "52-60 Villiers Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79930773,
+"lon": 144.953791933,
+"dwellings": 147,
+"dwelling_types": {
+"Residential Apartments": 147
+},
+"name": null,
+"built": "2019",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103262",
+"address": "149-155 Berkeley Street MELBOURNE VIC 3000",
+"area": "Carlton",
+"lat": -37.80219264,
+"lon": 144.958240197,
+"dwellings": 147,
+"dwelling_types": {
+"Residential Apartments": 147
+},
+"name": "Royal Elizabeth",
+"built": "2017",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110426",
+"address": "90-104 Wells Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82792355,
+"lon": 144.967981883,
+"dwellings": 146,
+"dwelling_types": {
+"Residential Apartments": 146
+},
+"name": "Southbank Royale",
+"built": "1995",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109645",
+"address": "388-410 Victoria Parade EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.80995597,
+"lon": 144.984833987,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": "Victoria Albert Town Residence",
+"built": "1990",
+"floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105104",
+"address": "19-41 Jeffcott Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81217238,
+"lon": 144.952744452,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": "Royal Flagstaff",
+"built": "1996",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110621",
+"address": "120-150 Sturt Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82478159,
+"lon": 144.966258199,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": "Sutherland Place Apartments",
+"built": "1994",
+"floors": 5,
+"use": "Residential Apartment"
+},
+{
+"property_id": "707372",
+"address": "387-395 Docklands Drive DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81401983,
+"lon": 144.940837098,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": null,
+"built": "2017",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103615",
+"address": "333-351 Exhibition Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8078604,
+"lon": 144.968026666,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": "Mantra 100 Exhibition Melbourne",
+"built": "1988",
+"floors": 19,
+"use": "Parking - Commercial Covered"
+},
+{
+"property_id": "611366",
+"address": "Serrata Apartments 813-817 Bourke Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81993674,
+"lon": 144.944683539,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": "Serrata",
+"built": "2012",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "632639",
+"address": "481-495 Rathdowne Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79417641,
+"lon": 144.970688917,
+"dwellings": 143,
+"dwelling_types": {
+"Residential Apartments": 143
+},
+"name": null,
+"built": "2016",
+"floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103819",
+"address": "81-85 Flemington Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79878801,
+"lon": 144.953140982,
+"dwellings": 143,
+"dwelling_types": {
+"Residential Apartments": 143
+},
+"name": null,
+"built": "2016",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "604119",
+"address": "Dock 5 41-55 Victoria Harbour Promenade DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81938143,
+"lon": 144.942988824,
+"dwellings": 143,
+"dwelling_types": {
+"Residential Apartments": 143
+},
+"name": "Dock 5",
+"built": "2006",
+"floors": 31,
+"use": "Residential Apartment"
+},
+{
+"property_id": "616162",
+"address": "33 Alfred Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79162745,
+"lon": 144.940954383,
+"dwellings": 143,
+"dwelling_types": {
+"Residential Apartments": 143
+},
+"name": null,
+"built": "1965",
+"floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109368",
+"address": "College House Apartments 568-576 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80331597,
+"lon": 144.963940039,
+"dwellings": 142,
+"dwelling_types": {
+"Residential Apartments": 142
+},
+"name": "College House Apartments",
+"built": "1998",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110646",
+"address": "104-112 Haines Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79830833,
+"lon": 144.943470929,
+"dwellings": 140,
+"dwelling_types": {
+"Residential Apartments": 140
+},
+"name": "Reflections",
+"built": "2018",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "100850",
+"address": "49-53 Batman Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81112017,
+"lon": 144.95155268,
+"dwellings": 140,
+"dwelling_types": {
+"Residential Apartments": 140
+},
+"name": "Flagstaff Place",
+"built": "2014",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "708084",
+"address": "433 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8180082,
+"lon": 144.959868643,
+"dwellings": 138,
+"dwelling_types": {
+"Residential Apartments": 138
+},
+"name": "East Tower Residential",
+"built": "2020",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573454",
+"address": "Wills Tower 28 Wills Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81071591,
+"lon": 144.957162073,
+"dwellings": 138,
+"dwelling_types": {
+"Residential Apartments": 138
+},
+"name": "Wills Tower",
+"built": "2002",
+"floors": 27,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573825",
+"address": "33-43 Batman Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81101399,
+"lon": 144.951901343,
+"dwellings": 137,
+"dwelling_types": {
+"Residential Apartments": 137
+},
+"name": "Park West Apartments",
+"built": "2012",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103187",
+"address": "Nova Apartments 219-233 Elizabeth Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81321386,
+"lon": 144.962283023,
+"dwellings": 136,
+"dwelling_types": {
+"Residential Apartments": 136
+},
+"name": "The Nova",
+"built": "1974",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "587734",
+"address": "QV2 Apartments 300 Swanston Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.810658,
+"lon": 144.965703374,
+"dwellings": 136,
+"dwelling_types": {
+"Residential Apartments": 136
+},
+"name": "QV2 Apartments",
+"built": "2004",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "111373",
+"address": "Yarra Condos Apartments 34-52 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82375971,
+"lon": 144.964114163,
+"dwellings": 136,
+"dwelling_types": {
+"Residential Apartments": 136
+},
+"name": "Yarra Condos Apartments",
+"built": "2000",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "111335",
+"address": "North Tower No.2 College Square Apartments 570 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79315689,
+"lon": 144.969126528,
+"dwellings": 135,
+"dwelling_types": {
+"Student Apartments": 135
+},
+"name": "North Tower",
+"built": "2001",
+"floors": 10,
+"use": "Student Accommodation"
+},
+{
+"property_id": "674535",
+"address": "West Tower 888 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82059451,
+"lon": 144.94250585,
+"dwellings": 135,
+"dwelling_types": {
+"Residential Apartments": 135
+},
+"name": "West Tower",
+"built": "2016",
+"floors": 17,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105679",
+"address": "131-137 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81098009,
+"lon": 144.968530007,
+"dwellings": 134,
+"dwelling_types": {
+"Residential Apartments": 134
+},
+"name": "Hotel Grand Chancellor",
+"built": "1972",
+"floors": 17,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103841",
+"address": "Ozanam House 179-191 Flemington Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79527438,
+"lon": 144.948651649,
+"dwellings": 134,
+"dwelling_types": {
+"Residential Apartments": 134
+},
+"name": "Ozanam House",
+"built": null,
+"floors": 11,
+"use": "Institutional Accommodation"
+},
+{
+"property_id": "676588",
+"address": "57-63 Galada Avenue PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.78008908,
+"lon": 144.939486721,
+"dwellings": 134,
+"dwelling_types": {
+"Residential Apartments": 134
+},
+"name": "Ville Apartments Phase 7",
+"built": "2017",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "604118",
+"address": "The Merchant 834-846 Bourke Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81977079,
+"lon": 144.943118818,
+"dwellings": 133,
+"dwelling_types": {
+"Residential Apartments": 133
+},
+"name": "The Merchant",
+"built": "2009",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "579491",
+"address": "60 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82488025,
+"lon": 144.946355947,
+"dwellings": 132,
+"dwelling_types": {
+"Residential Apartments": 132
+},
+"name": "Yarras Edge B2",
+"built": "2003",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110649",
+"address": "33 La Trobe Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80825164,
+"lon": 144.970432583,
+"dwellings": 131,
+"dwelling_types": {
+"Residential Apartments": 131
+},
+"name": "City Gate Tower",
+"built": "1997",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110618",
+"address": "211-229 Sturt Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82967468,
+"lon": 144.966156799,
+"dwellings": 130,
+"dwelling_types": {
+"Residential Apartments": 130
+},
+"name": "Southside Tower Apartments",
+"built": "1970",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106029",
+"address": "536-548 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81359291,
+"lon": 144.953234168,
+"dwellings": 128,
+"dwelling_types": {
+"Residential Apartments": 128
+},
+"name": "Dockside Tower",
+"built": "2000",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "581308",
+"address": "Building A Uropa Apartments 640 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80188571,
+"lon": 144.96431186,
+"dwellings": 127,
+"dwelling_types": {
+"Residential Apartments": 127
+},
+"name": "Building A",
+"built": "2003",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "579492",
+"address": "70 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82488025,
+"lon": 144.946355947,
+"dwellings": 127,
+"dwelling_types": {
+"Residential Apartments": 127
+},
+"name": "Yarras Edge B3",
+"built": "2003",
+"floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110433",
+"address": "Eight Apartments 6-8 Dorcas Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82981139,
+"lon": 144.97021525,
+"dwellings": 123,
+"dwelling_types": {
+"Residential Apartments": 123
+},
+"name": "Eight Apartments",
+"built": "2004",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108643",
+"address": "505-507 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.84371046,
+"lon": 144.979222878,
+"dwellings": 122,
+"dwelling_types": {
+"Residential Apartments": 122
+},
+"name": null,
+"built": "2010",
+"floors": 21,
+"use": "Residential Apartment"
+},
+{
+"property_id": "639239",
+"address": "76-98 Canning Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79697761,
+"lon": 144.973505973,
+"dwellings": 120,
+"dwelling_types": {
+"Residential Apartments": 120
+},
+"name": null,
+"built": "2013",
+"floors": 6,
+"use": "Residential Apartment"
+},
+{
+"property_id": "714408",
+"address": "108-118 Adderley Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81025507,
+"lon": 144.948450986,
+"dwellings": 120,
+"dwelling_types": {
+"Residential Apartments": 120
+},
+"name": "Tower 2 - Adderley",
+"built": "2021",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "533327",
+"address": "2-6 High Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79987585,
+"lon": 144.953929348,
+"dwellings": 120,
+"dwelling_types": {
+"Student Apartments": 120
+},
+"name": null,
+"built": "2004",
+"floors": 7,
+"use": "Student Accommodation"
+},
+{
+"property_id": "110336",
+"address": "Riverside Apartments 1 Riverside Quay SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82193588,
+"lon": 144.963874356,
+"dwellings": 120,
+"dwelling_types": {
+"Residential Apartments": 120
+},
+"name": "Riverside Apartments",
+"built": "1888",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108845",
+"address": "Grand Central Apartments 33-71 Spencer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82020557,
+"lon": 144.954158694,
+"dwellings": 120,
+"dwelling_types": {
+"Residential Apartments": 120
+},
+"name": "Grand Central Apartments",
+"built": "1893",
+"floors": 7,
+"use": "Residential Apartment"
+},
+{
+"property_id": "107541",
+"address": "95-125 Pelham Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80282169,
+"lon": 144.964422015,
+"dwellings": 118,
+"dwelling_types": {
+"Residential Apartments": 118
+},
+"name": null,
+"built": "2014",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110763",
+"address": "The Mark On Collins Apartments 319-325 Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81686635,
+"lon": 144.963649766,
+"dwellings": 117,
+"dwelling_types": {
+"Residential Apartments": 117
+},
+"name": "The Mark on Collins",
+"built": "1960",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "726526",
+"address": "51-67 Rathdowne Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80578725,
+"lon": 144.968594354,
+"dwellings": 117,
+"dwelling_types": {
+"Residential Apartments": 117
+},
+"name": null,
+"built": "1994",
+"floors": 4,
+"use": "Residential Apartment"
+},
+{
+"property_id": "111078",
+"address": "16-26 Orr Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80634019,
+"lon": 144.965400643,
+"dwellings": 116,
+"dwelling_types": {
+"Student Apartments": 116
+},
+"name": "Unilodge D2 Apartments",
+"built": "2008",
+"floors": 9,
+"use": "Student Accommodation"
+},
+{
+"property_id": "554313",
+"address": "33 Clarke Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82632413,
+"lon": 144.959131614,
+"dwellings": 114,
+"dwelling_types": {
+"Residential Apartments": 114
+},
+"name": "Banque 88",
+"built": "2016",
+"floors": 23,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103995",
+"address": "492-500 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81999599,
+"lon": 144.957828786,
+"dwellings": 114,
+"dwelling_types": {
+"Residential Apartments": 114
+},
+"name": null,
+"built": "1975",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "626356",
+"address": "453-463 Docklands Drive DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.8152289,
+"lon": 144.937369101,
+"dwellings": 113,
+"dwelling_types": {
+"Residential Apartments": 113
+},
+"name": "The Mariner",
+"built": "2011",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103988",
+"address": "546-548 Flinders Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.82050993,
+"lon": 144.956146818,
+"dwellings": 113,
+"dwelling_types": {
+"Residential Apartments": 113
+},
+"name": "Flinders Towers",
+"built": "2004",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "639238",
+"address": "30-50 Elgin Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79749228,
+"lon": 144.973490549,
+"dwellings": 112,
+"dwelling_types": {
+"Residential Apartments": 112
+},
+"name": null,
+"built": "2014",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110451",
+"address": "62-104 Coventry Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.8291378,
+"lon": 144.967815916,
+"dwellings": 112,
+"dwelling_types": {
+"Residential Apartments": 112
+},
+"name": "Coventry Gardens Apartments",
+"built": "1993",
+"floors": 3,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106435",
+"address": "21-31 Market Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81864584,
+"lon": 144.960420557,
+"dwellings": 111,
+"dwelling_types": {
+"Residential Apartments": 111
+},
+"name": "The Port Apartments",
+"built": "1931",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110608",
+"address": "28-32 Southgate Avenue SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.8206787,
+"lon": 144.967498489,
+"dwellings": 111,
+"dwelling_types": {
+"Residential Apartments": 111
+},
+"name": "28 Southgate",
+"built": "1960",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106172",
+"address": "530 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79465838,
+"lon": 144.969095378,
+"dwellings": 111,
+"dwelling_types": {
+"Residential Apartments": 111
+},
+"name": null,
+"built": null,
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103822",
+"address": "91-95 Flemington Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79856463,
+"lon": 144.952858592,
+"dwellings": 111,
+"dwelling_types": {
+"Residential Apartments": 111
+},
+"name": null,
+"built": "2016",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108977",
+"address": "25-31 Spring Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81454561,
+"lon": 144.974101897,
+"dwellings": 110,
+"dwelling_types": {
+"Residential Apartments": 110
+},
+"name": "The Philadelphia Apartments",
+"built": "1974",
+"floors": 25,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109377",
+"address": "514-520 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80483648,
+"lon": 144.96352823,
+"dwellings": 110,
+"dwelling_types": {
+"Residential Apartments": 110
+},
+"name": null,
+"built": "2014",
+"floors": 17,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110425",
+"address": "The Sovereign 6-10 Wells Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82620877,
+"lon": 144.96861071,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": "The Sovereign",
+"built": "1996",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105945",
+"address": "601-611 Little Collins Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81802782,
+"lon": 144.954905366,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": null,
+"built": "2004",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108636",
+"address": "469-471 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.84143542,
+"lon": 144.978475962,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": "Park Central",
+"built": "1997",
+"floors": 22,
+"use": "Residential Apartment"
+},
+{
+"property_id": "577280",
+"address": "72-82 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82470448,
+"lon": 144.944965024,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": null,
+"built": "2002",
+"floors": 30,
+"use": "Residential Apartment"
+},
+{
+"property_id": "616164",
+"address": "159 Melrose Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79162745,
+"lon": 144.940954383,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": null,
+"built": null,
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110968",
+"address": "Elm Towers Apartments 306-320 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81158232,
+"lon": 144.960280316,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": "Elm Tower Apartments",
+"built": "2001",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110415",
+"address": "Century Tower Apartments 12-16 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82261378,
+"lon": 144.966258139,
+"dwellings": 108,
+"dwelling_types": {
+"Residential Apartments": 108
+},
+"name": "Century Tower",
+"built": "1999",
+"floors": 29,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102465",
+"address": "56 Derby Street KENSINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.79735385,
+"lon": 144.927410182,
+"dwellings": 108,
+"dwelling_types": {
+"Residential Apartments": 108
+},
+"name": null,
+"built": "1970",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "603183",
+"address": "Banksia NewQuay 2 Glenti Place DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81518961,
+"lon": 144.93905572,
+"dwellings": 108,
+"dwelling_types": {
+"Residential Apartments": 108
+},
+"name": "Banksia New Quay",
+"built": "2018",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110424",
+"address": "12-80 Wells Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82673966,
+"lon": 144.968338186,
+"dwellings": 107,
+"dwelling_types": {
+"Residential Apartments": 107
+},
+"name": "Kings Park On Southbank",
+"built": "1995",
+"floors": 5,
+"use": "Residential Apartment"
+},
+{
+"property_id": "592858",
+"address": "127-133 Leicester Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80290295,
+"lon": 144.960208799,
+"dwellings": 106,
+"dwelling_types": {
+"Student Apartments": 106
+},
+"name": null,
+"built": "2006",
+"floors": 9,
+"use": "Student Accommodation"
+},
+{
+"property_id": "103840",
+"address": "Royal Park Towers 163-177 Flemington Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.7958209,
+"lon": 144.949015389,
+"dwellings": 106,
+"dwelling_types": {
+"Residential Apartments": 106
+},
+"name": "Royal Park Towers",
+"built": "1970",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "101119",
+"address": "The Metropolitan 137-141 Bourke Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81279907,
+"lon": 144.969165311,
+"dwellings": 104,
+"dwelling_types": {
+"Residential Apartments": 104
+},
+"name": null,
+"built": "2016",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102960",
+"address": "104-128 Dudley Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80925936,
+"lon": 144.951279686,
+"dwellings": 103,
+"dwelling_types": {
+"Residential Apartments": 103
+},
+"name": "Market Square",
+"built": "2005",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "714411",
+"address": "2-24 Wominjeka Walk WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81025507,
+"lon": 144.948450986,
+"dwellings": 102,
+"dwelling_types": {
+"Residential Apartments": 102
+},
+"name": "Tower 5 - Spencer",
+"built": "2021",
+"floors": 11,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108950",
+"address": "386-394 Spencer Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81132597,
+"lon": 144.950945718,
+"dwellings": 101,
+"dwelling_types": {
+"Residential Apartments": 101
+},
+"name": "Bond Quarter",
+"built": "2017",
+"floors": 17,
+"use": "Residential Apartment"
+},
+{
+"property_id": "111338",
+"address": "Lygon Building No.4 546-568 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79342031,
+"lon": 144.968510734,
+"dwellings": 100,
+"dwelling_types": {
+"Student Apartments": 100
+},
+"name": "Lygon Building No 4",
+"built": "2000",
+"floors": 4,
+"use": "Student Accommodation"
+},
+{
+"property_id": "630705",
+"address": "677-681 La Trobe Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81486994,
+"lon": 144.947536811,
+"dwellings": 99,
+"dwelling_types": {
+"Residential Apartments": 99
+},
+"name": "Lacrosse Docklands - West Tower",
+"built": "2016",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106942",
+"address": "141 Nicholson Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79730821,
+"lon": 144.974437692,
+"dwellings": 98,
+"dwelling_types": {
+"Residential Apartments": 98
+},
+"name": null,
+"built": "1964",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "703220",
+"address": "111 Canning Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79616005,
+"lon": 144.940736597,
+"dwellings": 98,
+"dwelling_types": {
+"Residential Apartments": 98
+},
+"name": "Canning Tower",
+"built": "2019",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103164",
+"address": "20 Elgin Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79730821,
+"lon": 144.974437692,
+"dwellings": 98,
+"dwelling_types": {
+"Residential Apartments": 98
+},
+"name": null,
+"built": "1964",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "714409",
+"address": "1-9 Wominjeka Walk WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81025507,
+"lon": 144.948450986,
+"dwellings": 98,
+"dwelling_types": {
+"Residential Apartments": 98
+},
+"name": "Tower 3 - Mailhouse Apartments",
+"built": "2021",
+"floors": 11,
+"use": "Residential Apartment"
+},
+{
+"property_id": "599747",
+"address": "Kensington Village Elderly Persons Units 78 Clifford Terrace KENSINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.79735385,
+"lon": 144.927410182,
+"dwellings": 97,
+"dwelling_types": {
+"Residential Apartments": 97
+},
+"name": "Kensington Village Elderly Persons Units",
+"built": "2005",
+"floors": 6,
+"use": "Residential Apartment"
+},
+{
+"property_id": "107085",
+"address": "9-13 Earl Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80616709,
+"lon": 144.965430634,
+"dwellings": 97,
+"dwelling_types": {
+"Student Apartments": 97
+},
+"name": "Melbourne UniLodge On Campus",
+"built": "2003",
+"floors": 8,
+"use": "Student Accommodation"
+},
+{
+"property_id": "588500",
+"address": "Deco Tower 336 Russell Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80822376,
+"lon": 144.966457516,
+"dwellings": 96,
+"dwelling_types": {
+"Residential Apartments": 96
+},
+"name": "Deco Tower",
+"built": "1940",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105632",
+"address": "68-82 Leveson Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.80247804,
+"lon": 144.951711457,
+"dwellings": 96,
+"dwelling_types": {
+"Residential Apartments": 96
+},
+"name": null,
+"built": "2015",
+"floors": 5,
+"use": "Residential Apartment"
+},
+{
+"property_id": "609481",
+"address": "EXO Apartments 33-61 Merchant Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82092615,
+"lon": 144.943788121,
+"dwellings": 96,
+"dwelling_types": {
+"Residential Apartments": 96
+},
+"name": "Exo Apartments",
+"built": "2013",
+"floors": 13,
+"use": "Parking - Commercial Covered"
+},
+{
+"property_id": "107056",
+"address": "94 Ormond Street KENSINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.79735385,
+"lon": 144.927410182,
+"dwellings": 95,
+"dwelling_types": {
+"Residential Apartments": 95
+},
+"name": null,
+"built": "1970",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "109995",
+"address": "Jolimont Vista Apartments 162-168 Wellington Parade EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.81593731,
+"lon": 144.984514239,
+"dwellings": 94,
+"dwelling_types": {
+"Residential Apartments": 94
+},
+"name": "Jolimont Vista Apartments",
+"built": "2001",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "566660",
+"address": "Stadium Apartments 635-639 Little Bourke Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81615956,
+"lon": 144.953623512,
+"dwellings": 94,
+"dwelling_types": {
+"Residential Apartments": 94
+},
+"name": "Stadium Apartments",
+"built": "1925",
+"floors": 11,
+"use": "Residential Apartment"
+},
+{
+"property_id": "101248",
+"address": "139-143 Bouverie Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80322367,
+"lon": 144.961699343,
+"dwellings": 93,
+"dwelling_types": {
+"Student Apartments": 93
+},
+"name": "D1 Apartments",
+"built": "2006",
+"floors": 9,
+"use": "Student Accommodation"
+},
+{
+"property_id": "108629",
+"address": "427-431 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.83854242,
+"lon": 144.977193113,
+"dwellings": 93,
+"dwelling_types": {
+"Residential Apartments": 93
+},
+"name": "Fawkner Towers",
+"built": "1983",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110616",
+"address": "161-173 Sturt Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82818554,
+"lon": 144.966639264,
+"dwellings": 92,
+"dwelling_types": {
+"Residential Apartments": 92
+},
+"name": "Cityview",
+"built": "1959",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "100167",
+"address": "Uni On A'Beckett Apartments 106-116 A'Beckett Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80914342,
+"lon": 144.959996913,
+"dwellings": 92,
+"dwelling_types": {
+"Residential Apartments": 51,
+"Student Apartments": 41
+},
+"name": "Unilodge on Abeckett",
+"built": "1999",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "101147",
+"address": "393-413 Bourke Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81510975,
+"lon": 144.962207824,
+"dwellings": 92,
+"dwelling_types": {
+"Residential Apartments": 92
+},
+"name": "The Foundry",
+"built": "2019",
+"floors": 39,
+"use": "Office"
+},
+{
+"property_id": "108344",
+"address": "87-101 Roden Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80752752,
+"lon": 144.948831036,
+"dwellings": 92,
+"dwelling_types": {
+"Residential Apartments": 92
+},
+"name": "Illura Apartments",
+"built": "2013",
+"floors": 6,
+"use": "Residential Apartment"
+},
+{
+"property_id": "620318",
+"address": "3-43 Waterfront Way DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.81372512,
+"lon": 144.939127001,
+"dwellings": 92,
+"dwelling_types": {
+"Residential Apartments": 92
+},
+"name": "Docklands Marriott",
+"built": "2020",
+"floors": 20,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110405",
+"address": "21-55 Kavanagh Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82384747,
+"lon": 144.965397937,
+"dwellings": 91,
+"dwelling_types": {
+"Residential Apartments": 91
+},
+"name": "Southside Gardens",
+"built": "1993",
+"floors": 4,
+"use": "Residential Apartment"
+},
+{
+"property_id": "569749",
+"address": "West Tower 250 St Kilda Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82570254,
+"lon": 144.970145773,
+"dwellings": 91,
+"dwelling_types": {
+"Residential Apartments": 91
+},
+"name": "West Tower",
+"built": "2001",
+"floors": 24,
+"use": "Parking - Private Covered"
+},
+{
+"property_id": "653923",
+"address": "67 Galada Avenue PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.77959037,
+"lon": 144.939144375,
+"dwellings": 91,
+"dwelling_types": {
+"Residential Apartments": 91
+},
+"name": null,
+"built": "2017",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "627568",
+"address": "494-516 Drummond Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79357997,
+"lon": 144.970022772,
+"dwellings": 91,
+"dwelling_types": {
+"Residential Apartments": 91
+},
+"name": "The Residences",
+"built": "2017",
+"floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "559405",
+"address": "547-555 Flinders Lane MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.82001952,
+"lon": 144.955837928,
+"dwellings": 91,
+"dwelling_types": {
+"Residential Apartments": 91
+},
+"name": "Morgan Place",
+"built": "2000",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "102197",
+"address": "20-26 Coromandel Place MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81302823,
+"lon": 144.969254282,
+"dwellings": 90,
+"dwelling_types": {
+"Residential Apartments": 90
+},
+"name": "The Coromandel",
+"built": "2011",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "592857",
+"address": "42-50 Barry Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80296442,
+"lon": 144.960007965,
+"dwellings": 90,
+"dwelling_types": {
+"Student Apartments": 90
+},
+"name": null,
+"built": "1987",
+"floors": 8,
+"use": "Student Accommodation"
+},
+{
+"property_id": "105680",
+"address": "139-143 Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81079362,
+"lon": 144.968260016,
+"dwellings": 89,
+"dwelling_types": {
+"Residential Apartments": 89
+},
+"name": "Mayflower on Lonsdale",
+"built": "2005",
+"floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103824",
+"address": "George Apartments 97-103 Flemington Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79844294,
+"lon": 144.952705279,
+"dwellings": 88,
+"dwelling_types": {
+"Residential Apartments": 88
+},
+"name": null,
+"built": "2011",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "107860",
+"address": "Panorama On Rathdowne 1-15 Queensberry Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80540754,
+"lon": 144.968750066,
+"dwellings": 87,
+"dwelling_types": {
+"Residential Apartments": 87
+},
+"name": "Panorama On Rathdowne",
+"built": "1976",
+"floors": 18,
+"use": "Residential Apartment"
+},
+{
+"property_id": "611568",
+"address": "126-158 Clarendon Street EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.81229599,
+"lon": 144.984161853,
+"dwellings": 87,
+"dwelling_types": {
+"Residential Apartments": 87
+},
+"name": "No. 150 Clarendon Street",
+"built": "2010",
+"floors": 13,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105456",
+"address": "299-319 Queen Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81145082,
+"lon": 144.958660108,
+"dwellings": 87,
+"dwelling_types": {
+"Residential Apartments": 87
+},
+"name": "Republic Tower",
+"built": "1999",
+"floors": 36,
+"use": "Residential Apartment"
+},
+{
+"property_id": "679272",
+"address": "140-142 Dudley Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80951681,
+"lon": 144.950604342,
+"dwellings": 86,
+"dwelling_types": {
+"Residential Apartments": 86
+},
+"name": "Keshi",
+"built": "2016",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "597180",
+"address": "84-102 Altona Street KENSINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.79662208,
+"lon": 144.925653197,
+"dwellings": 86,
+"dwelling_types": {
+"Residential Apartments": 86
+},
+"name": "86 Altona Street",
+"built": "2006",
+"floors": 5,
+"use": "Residential Apartment"
+},
+{
+"property_id": "103391",
+"address": "Quest Flemington Inn 552-600 Epsom Road FLEMINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.78881343,
+"lon": 144.921820772,
+"dwellings": 86,
+"dwelling_types": {
+"Residential Apartments": 86
+},
+"name": null,
+"built": "2000",
+"floors": 4,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110987",
+"address": "Astorial Apartments 660-674 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80099105,
+"lon": 144.964288533,
+"dwellings": 85,
+"dwelling_types": {
+"Residential Apartments": 85
+},
+"name": "Astorial Apartments",
+"built": "2000",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110354",
+"address": "57-61 City Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.8221579,
+"lon": 144.965993291,
+"dwellings": 85,
+"dwelling_types": {
+"Residential Apartments": 85
+},
+"name": "Opus tower",
+"built": "2015",
+"floors": 37,
+"use": "Commercial Accommodation"
+},
+{
+"property_id": "580629",
+"address": "239-293 Wellington Parade South EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.81642072,
+"lon": 144.975927502,
+"dwellings": 85,
+"dwelling_types": {
+"Residential Apartments": 85
+},
+"name": "One East Melbourne",
+"built": "2009",
+"floors": 19,
+"use": "Residential Apartment"
+},
+{
+"property_id": "613251",
+"address": "The Montage 1 Encounter Way DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82038364,
+"lon": 144.945784069,
+"dwellings": 84,
+"dwelling_types": {
+"Residential Apartments": 84
+},
+"name": "The Montage",
+"built": "2009",
+"floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573290",
+"address": "740-750 Swanston Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79899938,
+"lon": 144.964765292,
+"dwellings": 84,
+"dwelling_types": {
+"Student Apartments": 84
+},
+"name": "Uni Lodge",
+"built": "2003",
+"floors": 13,
+"use": "Student Accommodation"
+},
+{
+"property_id": "627567",
+"address": "518-538 Drummond Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79297932,
+"lon": 144.970146664,
+"dwellings": 84,
+"dwelling_types": {
+"Residential Apartments": 84
+},
+"name": null,
+"built": "2011",
+"floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110021",
+"address": "207-221 Wellington Parade South EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.81663964,
+"lon": 144.977469422,
+"dwellings": 83,
+"dwelling_types": {
+"Residential Apartments": 83
+},
+"name": null,
+"built": null,
+"floors": 4,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105901",
+"address": "24-38 Little Bourke Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81033978,
+"lon": 144.971413781,
+"dwellings": 83,
+"dwelling_types": {
+"Residential Apartments": 83
+},
+"name": "Gordon Place Apartments",
+"built": "1884",
+"floors": 3,
+"use": "Residential Apartment"
+},
+{
+"property_id": "546732",
+"address": "Drummond Building No.6 College Square Apartments 570 Lygon Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.79315689,
+"lon": 144.969126528,
+"dwellings": 83,
+"dwelling_types": {
+"Student Apartments": 83
+},
+"name": "Drummond Building",
+"built": "2000",
+"floors": 4,
+"use": "Student Accommodation"
+},
+{
+"property_id": "100732",
+"address": "24-30 Barkly Place CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80300313,
+"lon": 144.961447769,
+"dwellings": 83,
+"dwelling_types": {
+"Student Apartments": 83
+},
+"name": "Global House",
+"built": "2006",
+"floors": 6,
+"use": "Student Accommodation"
+},
+{
+"property_id": "105659",
+"address": "16-22 Liverpool Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.81106615,
+"lon": 144.97155135,
+"dwellings": 83,
+"dwelling_types": {
+"Residential Apartments": 83
+},
+"name": "16 Liverpool Street",
+"built": "2005",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108850",
+"address": "DUO Apartments 423-435 Spencer Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81055016,
+"lon": 144.949893616,
+"dwellings": 83,
+"dwelling_types": {
+"Residential Apartments": 83
+},
+"name": "Duo Apartments",
+"built": "2016",
+"floors": 17,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105526",
+"address": "34-58 Leicester Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80530687,
+"lon": 144.960806262,
+"dwellings": 82,
+"dwelling_types": {
+"Residential Apartments": 82
+},
+"name": "Leicester Garden",
+"built": "1994",
+"floors": 4,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108635",
+"address": "Kingstoun 459-465 St Kilda Road MELBOURNE VIC 3004",
+"area": "Melbourne (Remainder)",
+"lat": -37.84079806,
+"lon": 144.978154316,
+"dwellings": 82,
+"dwelling_types": {
+"Residential Apartments": 82
+},
+"name": "Kingstoun",
+"built": "1985",
+"floors": 24,
+"use": "Residential Apartment"
+},
+{
+"property_id": "617678",
+"address": "33-39 Racecourse Road NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.7897193,
+"lon": 144.940737227,
+"dwellings": 82,
+"dwelling_types": {
+"Residential Apartments": 82
+},
+"name": null,
+"built": "2016",
+"floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "684098",
+"address": "51-55 Galada Avenue PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.78036037,
+"lon": 144.939616719,
+"dwellings": 81,
+"dwelling_types": {
+"Residential Apartments": 81
+},
+"name": "Flourish Parkside",
+"built": "2017",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110427",
+"address": "82-88 Wells Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82728306,
+"lon": 144.968173791,
+"dwellings": 81,
+"dwelling_types": {
+"Residential Apartments": 81
+},
+"name": "The Keep",
+"built": "1995",
+"floors": 4,
+"use": "Residential Apartment"
+},
+{
+"property_id": "569748",
+"address": "East Tower 250 St Kilda Road SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82570254,
+"lon": 144.970145773,
+"dwellings": 81,
+"dwelling_types": {
+"Residential Apartments": 81
+},
+"name": "East Tower",
+"built": "2001",
+"floors": 24,
+"use": "Residential Apartment"
+},
+{
+"property_id": "581061",
+"address": "Building B 70 Speakmen Street KENSINGTON VIC 3031",
+"area": "Kensington",
+"lat": -37.79387621,
+"lon": 144.916363552,
+"dwellings": 81,
+"dwelling_types": {
+"Residential Apartments": 81
+},
+"name": "Building B",
+"built": "2003",
+"floors": 12,
+"use": "Residential Apartment"
+},
+{
+"property_id": "106047",
+"address": "158-162 Little Lonsdale Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.80954055,
+"lon": 144.967186648,
+"dwellings": 80,
+"dwelling_types": {
+"Residential Apartments": 80
+},
+"name": null,
+"built": "2004",
+"floors": 10,
+"use": "Residential Apartment"
+},
+{
+"property_id": "108158",
+"address": "107-123 Rathdowne Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80418552,
+"lon": 144.968786097,
+"dwellings": 80,
+"dwelling_types": {
+"Residential Apartments": 80
+},
+"name": "St Nicholas Place",
+"built": "1994",
+"floors": 4,
+"use": "Residential Apartment"
+}
+]
+}
