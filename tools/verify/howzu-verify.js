@@ -267,6 +267,11 @@ J.post = async (t) => {
   await page.locator("#addr").fill("138 Spencer St Melbourne");
   await page.getByPlaceholder("微信号").fill("verify_test");
   for (let i = 0; i < 20 && await page.getByText("照片还在压缩").count(); i++) await page.waitForTimeout(500);
+  // 没勾“符合最低租住标准”不能发布（维州 s65B）：点发布应提示“勾选确认”，不出预览
+  await page.getByRole("button", { name: "发布" }).click();
+  await page.waitForTimeout(600);
+  t.check(!(await page.locator("#pv").isVisible()) && /勾选确认/.test(await page.locator("#err").innerText()), "没勾最低标准确认时不能发布", await page.locator("#err").innerText());
+  await page.locator("#std").check();
   await page.getByRole("button", { name: "发布" }).click();
   const pv = page.locator("#pv");
   try { await pv.waitFor({ state: "visible", timeout: 8000 }); } catch (_) {
@@ -285,6 +290,7 @@ J.post = async (t) => {
   t.check(row && row.body.rent_weekly === 720, "提交的周租 = 720", row && String(row.body.rent_weekly));
   t.check(row && /Spencer/.test(row.body.address), "提交的地址正确");
   t.check(row && row.body.contact_wechat === "verify_test", "联系方式存进去了");
+  t.check(row && (row.body.highlights || []).includes("房东已确认符合最低租住标准"), "提交里记下了房东的最低标准确认");
   t.check(row && !row.body.status || (row && row.body.status !== "live"), "提交后不会直接上线（要审核）", row && row.body.status);
   t.check(ev.errors.length === 0, "没有页面报错", ev.errors.join(" | "));
   await ctx.close();

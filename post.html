@@ -98,6 +98,7 @@ textarea{resize:vertical;min-height:110px}
 .done b{font-size:20px;display:block;margin:10px 0}
 .closed{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:12px;font-size:14px;margin-bottom:12px}
 .hp{position:absolute;left:-9999px}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:16px 0 0;font-size:15px;line-height:1.5;color:var(--ink);cursor:pointer}.chk input{width:22px;height:22px;flex:none;margin:1px 0 0;accent-color:var(--accent)}.chk a{color:var(--accent)}
 .aibox{margin-top:10px;border:1px solid #cfe3d8;background:#f4faf6;border-radius:12px;padding:12px}
 .ai-h{font-size:13px;color:#0f6b4f;font-weight:600;margin-bottom:6px}
 .ai-t{font-weight:600;font-size:15px;margin-bottom:6px}
@@ -119,7 +120,7 @@ textarea{resize:vertical;min-height:110px}
 .ba-l{left:8px}.ba-r{right:8px;background:rgba(15,107,79,.9)}
 @media(min-width:721px){.demo{grid-template-columns:1fr 1.3fr;align-items:center}}
 </style>
-<script src="/js/i18n-en.js?v=20261119" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/i18n-en.js?v=20261119b" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
 </head>
 <body>
 <nav class="nav"><div class="in">
@@ -250,6 +251,8 @@ textarea{resize:vertical;min-height:110px}
     <label class="l">称呼</label><input type="text" id="cname" maxlength="30" autocomplete="name" placeholder="如 王先生">
     <label class="l">微信号</label><input type="text" id="wechat" maxlength="40" placeholder="微信号" autocapitalize="off" autocorrect="off" spellcheck="false">
     <label class="l">手机</label><input type="tel" id="phone" maxlength="20" autocomplete="tel" placeholder="如 04xx xxx xxx">
+    <label class="chk" id="stdWrap"><input type="checkbox" id="std"><span>我确认：我是业主或已获业主同意出租；房子现在符合维州<a href="/guide/repairs.html#std" target="_blank" rel="noopener">最低租住标准</a>（门锁、暖气、厨房、卫浴、通风、照明、电气安全等）。</span></label>
+    <div class="hint">维州法律：不符合最低标准的房子不能打出租广告。</div>
   </section>
   <div class="err" id="err"></div>
 </main>
@@ -259,7 +262,7 @@ textarea{resize:vertical;min-height:110px}
   <div class="pr" id="pvP"></div><div class="tt" id="pvT"></div><div class="fx" id="pvF"></div><div class="fx" id="pvM"></div><div class="tg" id="pvG"></div>
   <div class="bt"><button class="back" id="pvBack">再改改</button><button class="yes" id="pvYes">确认发布</button></div>
 </div></div>
-<div class="bar"><span class="prog" id="prog">还差：照片、租金、地址、联系方式</span><button class="submit" id="go">发布</button></div>
+<div class="bar"><span class="prog" id="prog">还差：照片、租金、地址、联系方式、勾选确认</span><button class="submit" id="go">发布</button></div>
 
 <script src="js/post-form.js?v=20261112i"></script>
 <script src="js/post-parse.js?v=20261115"></script>
@@ -479,10 +482,12 @@ function missing() {
   if (!weekly()) m.push("租金");
   if ($("#addr").value.trim().length < 5) m.push("地址");
   if (!$("#wechat").value.trim() && !$("#phone").value.trim()) m.push("联系方式");
+  if (!$("#std").checked) m.push("勾选确认");
   return m;
 }
 function progress() { const m = missing(); $("#prog").textContent = m.length ? "还差：" + m.join("、") : "✅ 都填好了"; }
 ["#wechat", "#phone", "#cname", "#title", "#desc", "#descEn", "#date"].forEach(s => $(s).addEventListener("input", () => { progress(); save(); }));
+$("#std").addEventListener("change", progress);
 
 
 // ---------- 一键填好：粘贴自己写过的房源介绍 → 自动填表（js/post-parse.js，规则识别，识别不出的不填、不编） ----------
@@ -583,7 +588,7 @@ $("#go").onclick = async () => {
 };
 // 错误提示在页面最底下，手机上看不到：直接带用户去第一个没填的地方（点“发布”或点底部“还差…”都会跳）
 function jumpMissing(m) {
-    const el = $({ 照片: "#drop", 租金: "#rent", 地址: "#addr", 联系方式: "#wechat" }[m[0]]);
+    const el = $({ 照片: "#drop", 租金: "#rent", 地址: "#addr", 联系方式: "#wechat", 勾选确认: "#stdWrap" }[m[0]]);
     const pr = $("#prog"); pr.classList.add("bad"); setTimeout(() => pr.classList.remove("bad"), 2500);
     if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("need"); void el.offsetWidth; el.classList.add("need"); setTimeout(() => el.classList.remove("need"), 2500); if (el.tagName === "INPUT") setTimeout(() => el.focus({ preventScroll: true }), 400); }
 }
@@ -613,7 +618,7 @@ async function go2() {
       beds: S.beds, baths: S.baths, cars: S.cars, rent_weekly: weekly(),
       // “两周内”存成具体日期：过了日期列表自动显示“尽快”，不会一直挂着“两周内”
       available: when === "选日期" ? ($("#date").value || null) : when === "两周内" ? new Date(Date.now() + 14 * 864e5).toISOString().slice(0, 10) : when,
-      furnished: chips("furnished")[0] || null, highlights: tags(),
+      furnished: chips("furnished")[0] || null, highlights: tags().concat("房东已确认符合最低租住标准"), // 房东发布时勾选的记录（维州 s65B），不改表结构
       // 英文介绍和中文放在同一个 description 字段（不改表结构），用分隔行隔开；租房页按分隔行拆开，英文界面显示英文
       description: ([$("#desc").value.trim(), $("#descEn").value.trim() ? "—— English ——\n" + $("#descEn").value.trim() : ""].filter(Boolean).join("\n\n")).slice(0, 3000) || null,
       contact_name: $("#cname").value.trim() || null, contact_wechat: $("#wechat").value.trim() || null, contact_phone: $("#phone").value.trim() || null,
