@@ -68,7 +68,7 @@
     const hs = (x.highlights || []).map(String), got = {};
     const rest = hs.filter(h => !/^开放看房 |^不可养宠|^不包水电网$/.test(h)).filter(h => { const k = KEY.find(([, re]) => re.test(h)); if (k && !got[k[0]]) { got[k[0]] = h.replace(k[1], "").trim(); return false; } return true; });
     const avail = isLet(x) ? "已租出" : x.available ? availText(x.available) : "咨询";
-    const cells = [["押金", got["押金"] || "咨询"], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] === "定好时间" ? "定时开放" : got["看房"] || "预约看房"]];
+    const cells = [["押金", got["押金"] || (x.bondWeeks ? x.bondWeeks + " 周" : "咨询")], ["可入住", avail], ["租期", got["租期"] || "咨询"], ["看房", got["看房"] === "定好时间" ? "定时开放" : got["看房"] || "预约看房"]];
     return { cells, rest };
   }
 
@@ -97,9 +97,10 @@
     const avail = isLet(x) ? "已租出" : x.available ? availText(x.available) : TBC;
     return [
       ["类型", type], ["卧室", num(x.beds, "间", "开间 Studio")], ["卫生间", num(x.baths, "个", TBC)], ["车位", num(x.cars, "个", "无")],
-      ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", bondWithAmt(tag("押金 "), x.rentWeekly) || TBC],
-      ["宠物", pets], ["包水电网", bills.length ? "包" + bills.join("、") + "费" : hs.includes("不包水电网") ? "不包，租客自付" : TBC], ["楼层", tag("楼层 ") || (floor ? `${floor} 层` : /高层|high[- ]?rise/i.test(all) ? "高层" : TBC)], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
+      ["家具", furn], ["可入住", avail], ["租期", tag("租期 ") || TBC], ["押金", bondWithAmt(x.bondWeeks ? x.bondWeeks + " 周" : tag("押金 "), x.rentWeekly) || TBC],
+      ["宠物", pets], ["包水电网", Array.isArray(x.bills) ? (x.bills.length ? "包" + x.bills.join("、") + "费" : "不包，租客自付") : bills.length ? "包" + bills.join("、") + "费" : hs.includes("不包水电网") ? "不包，租客自付" : TBC], ["楼层", tag("楼层 ") || (floor ? `${floor} 层` : /高层|high[- ]?rise/i.test(all) ? "高层" : TBC)], ["看房", tag("看房 ") === "定好时间" ? "定时开放" : tag("看房 ") || "预约看房"],
       ["设施", amen.length ? amen.join("、") : TBC],
+      ...(x.verified ? [["核实日期", x.verified]] : []),
     ];
   }
 
@@ -141,10 +142,18 @@
     };
     if (x.beds != null) ld.numberOfRooms = x.beds;
     if (x.baths != null) ld.numberOfBathroomsTotal = x.baths;
-    if (x.furnished === true || x.furnished === false) ld.amenityFeature = [{ "@type": "LocationFeatureSpecification", name: "Furnished", value: x.furnished }];
+    if (x.beds != null) ld.numberOfBedrooms = x.beds;
+    const feat = [];
+    if (x.furnished === true || x.furnished === false) feat.push({ "@type": "LocationFeatureSpecification", name: "Furnished", value: x.furnished });
+    if (x.cars != null) feat.push({ "@type": "LocationFeatureSpecification", name: "Parking spaces", value: Number(x.cars) });
+    if (Array.isArray(x.bills)) feat.push({ "@type": "LocationFeatureSpecification", name: "Bills included", value: x.bills.length ? x.bills.map(b => ({ 水: "water", 电: "electricity", 网: "internet", 气: "gas" })[b] || b).join(", ") : false });
+    if (x.bondWeeks && x.rentWeekly) feat.push({ "@type": "LocationFeatureSpecification", name: "Bond", value: `${x.bondWeeks} weeks rent (AUD ${x.bondWeeks * x.rentWeekly})` });
+    if (feat.length) ld.amenityFeature = feat;
+    if (x.pets === true || x.pets === false) ld.petsAllowed = x.pets;
+    if (x.verified) ld.dateModified = x.verified;
     // 租金报价：没写周租就不写价格（不编数据），只标可租状态
     const offer = { "@type": "Offer", url, priceCurrency: "AUD", businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
-      availability: isLet(x) ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+      availability: isLet(x) ? "https://schema.org/SoldOut" : "https://schema.org/InStock", ...(x.available && !isLet(x) && /^\d{4}-\d{2}-\d{2}$/.test(x.available) ? { availabilityStarts: x.available } : {}),
       offeredBy: { "@type": "Organization", name: "好租 Howzu", url: SITE } };
     if (x.rentWeekly && !isLet(x)) { offer.price = String(x.rentWeekly); offer.priceSpecification = { "@type": "UnitPriceSpecification", price: Number(x.rentWeekly), priceCurrency: "AUD", unitCode: "WEE", unitText: "week" }; }
     ld.offers = offer;

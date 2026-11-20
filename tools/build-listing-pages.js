@@ -7,7 +7,9 @@ const data = JSON.parse(fs.readFileSync(path.join(root, "data/listings.json"), "
 const list = (data.listings || []).filter(x => LP.safeId(x.id));
 fs.mkdirSync(path.join(root, "rent"), { recursive: true });
 let n = 0;
-for (const x of list) {
+for (const x0 of list) {
+  // 草稿（如 Cendant 待上线）没点“上线”前不公开：页面按“已租出”渲染，不显示新租金和入住日期
+  const x = x0.status === "draft" ? Object.assign({}, x0, { status: "let", rentWeekly: null, available: null }) : x0;
   const f = path.join(root, "rent", x.id + ".html"), html = LP.render(x, data.contact, (data.listings || []).filter(y => y.status === "let").length, LP.related(x, list, 3));
   if (!fs.existsSync(f) || fs.readFileSync(f, "utf8") !== html) { fs.writeFileSync(f, html); n++; }
 }

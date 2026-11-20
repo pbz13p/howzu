@@ -47,9 +47,10 @@ input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border
 <body>
 <header><h1>审核房源</h1></header>
 <main id="app"><div class="empty">加载中…</div></main>
-<script src="js/listing-page.js?v=20261118"></script>
+<script src="js/listing-page.js?v=20261120"></script>
 <script src="js/admin-check.js?v=20261112b"></script>
 <script src="js/post-parse.js?v=20261115"></script>
+<script src="js/admin-cendant.js?v=20261120"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -72,6 +73,7 @@ async function load() {
   if (tab === "lead") return loadLeads();
   if (tab === "stats") return loadStats();
   if (tab === "import") return loadImport({ sb, $, esc, head: tabsHtml(), C });
+  if (tab === "cendant") return window.loadCendant({ $, head: tabsHtml() });
   const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求,代看房)").order("created_at", { ascending: false });
   const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求,代看房)"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
@@ -93,7 +95,7 @@ async function load() {
       <div class="acts">${tab !== "live" ? `<button class="ok" data-set="live" data-id="${x.id}">✅ 通过上线</button>` : `<button class="gr" data-notice="${esc(x.id)}">📨 通知房东</button><button class="gr" data-set="let" data-id="${x.id}">已租出</button>`}${tab !== "rejected" ? `<button class="no" data-set="rejected" data-id="${x.id}">✕ 拒绝</button>` : ""}<button class="gr" data-edit="${esc(x.id)}">✏️ 修改</button><button class="gr" data-copy="wx" data-id="${esc(x.id)}">📋 微信文案</button><button class="gr" data-copy="xhs" data-id="${esc(x.id)}">📕 小红书文案</button><button class="gr" data-del="${x.id}">删除</button></div>
     </div>`).join(""));
 }
-const TABS = [["import", "📥 贴帖入库"], ["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"], ["stats", "访问统计"]];
+const TABS = [["import", "📥 贴帖入库"], ["cendant", "📋 待上线（Cendant）"], ["pending", "待审核"], ["live", "已上线"], ["let", "已租出"], ["rejected", "已拒绝"], ["lead", "租客需求 / 房东咨询"], ["stats", "访问统计"]];
 const tabsHtml = () => `<div class="tabs">${TABS.map(([k, l]) => `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${l}</button>`).join("")}<button data-out style="margin-left:auto">退出</button></div>`;
 // 租客留的需求：不给"通过上线"（会公开联系方式），只能复制联系方式 / 标记已联系 / 删除
 // 访问统计：最近 30 天每天多少人看、多少次点击，哪些页面和房源最热（数据来自 js/track.js 写入的 pageviews 表）
