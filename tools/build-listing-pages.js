@@ -17,7 +17,11 @@ const guides = fs.readdirSync(path.join(root, "guide")).filter(f => f.endsWith("
 // sale/ 下的在售页（不含 noindex 的）也进 sitemap
 const saleDir = path.join(root, "sale");
 const sale = fs.existsSync(saleDir) ? fs.readdirSync(saleDir).filter(f => /^[a-z0-9-]+\.html$/.test(f) && !/name="robots" content="noindex"/.test(fs.readFileSync(path.join(saleDir, f), "utf8"))).sort().map(f => "https://howzu.com.au/sale/" + f) : [];
-const sm = LP.sitemap(list, guides, sale), sf = path.join(root, "sitemap.xml");
+let sm = LP.sitemap(list, guides, sale); const sf = path.join(root, "sitemap.xml");
+// 今日要闻：/news/ 和每期页面
+{ const nd = path.join(root, "news"); if (fs.existsSync(nd)) { const ns = fs.readdirSync(nd).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f)).sort().reverse();
+  const add = [`  <url><loc>https://howzu.com.au/news/</loc><changefreq>daily</changefreq></url>`].concat(ns.map(f => `  <url><loc>https://howzu.com.au/news/${f}</loc></url>`)).join("\n");
+  sm = sm.replace("</urlset>", add + "\n</urlset>"); } }
 if (fs.readFileSync(sf, "utf8") !== sm) fs.writeFileSync(sf, sm);
 console.log(`房源独立页：${list.length} 套（更新 ${n} 个文件），sitemap 在租 ${list.filter(x => x.status === "live").length} 套 + 文章 ${guides.length} 篇 + 在售 ${sale.length} 套`);
 

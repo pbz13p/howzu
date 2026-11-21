@@ -1,0 +1,285 @@
+{
+"date": "2026-11-21",
+"items": [
+{
+"cat": "墨尔本",
+"t": "维州大选：Kew 选区预计自由党选民“回流”",
+"s": "独立候选人仍看好自己的机会；Kew 是反对党领袖 Jess Wilson 的选区。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/jess-wilson-kew-district-sophie-torney-victorian-electorate/107400636"
+},
+{
+"cat": "墨尔本",
+"t": "绿党申请紧急禁令：有候选人的投票指引卡模仿绿党配色",
+"s": "该候选人的指引卡把票导向别的方向，绿党要求法院介入。",
+"src": "卫报澳洲",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/victorian-greens-seek-urgent-injunction-over-how-to-vote-cards-mimicking-branding-but-preferencing-it-last-ntwnfb"
+},
+{
+"cat": "墨尔本",
+"t": "维州大选进入最后一周：地方选区最关心哪些事",
+"s": "可再生能源项目、医院和道路是乡镇选民的主要关注点。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/victorian-election-regional-voters-issues-seat-by-seat/107390056"
+},
+{
+"cat": "墨尔本",
+"t": "维州建筑业皇家调查：工地“免费午餐”和假发票",
+"s": "调查建筑业腐败与犯罪的皇家委员会第二周听证披露多宗开支问题。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/victoria-big-build-royal-commission-week-two/107409538"
+},
+{
+"cat": "墨尔本",
+"t": "前州长 Bracks 为工党领袖 Carroll 站台",
+"s": "在多数民调不看好的情况下，Carroll 为政府政绩辩护。",
+"src": "卫报澳洲",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/steve-bracks-believes-labor-can-win-the-victorian-election"
+},
+{
+"cat": "墨尔本",
+"t": "维州大选 11 月 28 日：提前投票开到 11 月 27 日",
+"s": "提前投票每天 9am–6pm（11 月 22 日周日除外），不需要理由；选举日可去全州任意投票站。",
+"src": "维州选举委员会 VEC",
+"link": "https://www.vec.vic.gov.au/voting/2026-state-election/voting-options"
+},
+{
+"cat": "墨尔本",
+"t": "墨尔本买家觉得“现在是买房好时机”，却仍在观望",
+"s": "多数买家认可时机，但实际出手的人不多。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/victorian-homebuyers-hold-back-despite-pro-buying-sentiment-rise/"
+},
+{
+"cat": "墨尔本",
+"t": "维州自己装修小心石棉：处理不当可能花上十万",
+"s": "省钱自己动手的装修可能把旧房里的石棉翻出来。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/victorian-renovators-warned-over-100k-hidden-asbestos-nightmare/"
+},
+{
+"cat": "墨尔本",
+"t": "墨尔本买地提醒：开发商送 9 万返现，小心估值风险",
+"s": "开发商用返现维持标价，银行估值可能低于成交价。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/melbourne-land-buyers-warned-of-valuation-risks-as-developers-offer-90k-rebates/"
+},
+{
+"cat": "墨尔本",
+"t": "过去一年墨尔本最贵成交：Toorak 包揽前列",
+"s": "豪宅区 Toorak 占据墨尔本最高成交榜。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/toorak-dominates-melbournes-most-expensive-home-sales/"
+},
+{
+"cat": "墨尔本",
+"t": "Geelong 春季拍卖房源少了 63%，新法规改变卖房方式",
+"s": "今年春季 Geelong 拍卖挂牌数比去年大跌。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/geelong-auction-listings-plunge-63-per-cent-as-new-laws-reshape-spring-market/"
+},
+{
+"cat": "墨尔本",
+"t": "Geelong 地块越买越小，开发商警告土地短缺",
+"s": "有买家抢购网球场大小的地块。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/geelong-home-buyers-squeeze-onto-smaller-blocks-as-developers-warn-of-land-shortages/"
+},
+{
+"cat": "地产",
+"t": "墨尔本拍卖清空率跌到 47.8%，2021 年 9 月以来最低",
+"s": "Cotality 初步数据（截至 11 月 15 日的一周），比前一周的 59.1% 跌了 11 个百分点。",
+"src": "Cotality",
+"link": "https://www.cotality.com/au/press-releases/preliminary-clearance-rate-dropped-to-44-0-the-lowest-since-april-2020"
+},
+{
+"cat": "地产",
+"t": "McGrath 点名墨尔本六个有望回升的平价区",
+"s": "墨尔本房价仍比 2022 年高点低 7 万多。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/john-mcgrath-reveals-six-affordable-melbourne-suburbs-primed-for-property-recovery/"
+},
+{
+"cat": "地产",
+"t": "房价下跌，澳洲买家重新回到市场",
+"s": "尽管价格在跌、利率在升，买家情绪反而改善。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/game-on-why-falling-home-prices-are-bringing-aussie-buyers-back-to-the-table/"
+},
+{
+"cat": "地产",
+"t": "房价回落后，买家情绪明显回升",
+"s": "越来越多人认为现在入场合适。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/buyer-sentiment-surges-following-price-falls/"
+},
+{
+"cat": "地产",
+"t": "失业率上升，澳联储的信誉面临考验",
+"s": "央行行长 Bullock 在利率上压力加大。",
+"src": "The Conversation",
+"link": "https://theconversation.com/view-from-the-hill-jobless-numbers-highlight-that-the-reserve-banks-credibility-is-on-the-line-296269"
+},
+{
+"cat": "地产",
+"t": "欠市政费的“最后手段”：两户家庭面临房子被拍卖",
+"s": "一个缺钱的市政府准备拍卖 62 处欠费房产。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/last-resort-families-face-eviction-in-rates-debt-shock/"
+},
+{
+"cat": "地产",
+"t": "外国业主收到空置费账单，金额高达 16 万",
+"s": "海外业主房子空着没住，被征年度空置费。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/homeowner-caught-out-by-annual-vacancy-fee/"
+},
+{
+"cat": "地产",
+"t": "悉尼哪些区受 AI 裁员冲击最大，房价风险最高",
+"s": "新数据列出 45 个可能受 AI 裁员和工资停滞影响的区。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/sydney-suburbs-where-ai-job-cuts-pose-biggest-home-value-risk/"
+},
+{
+"cat": "地产",
+"t": "三分之一澳洲房子含石棉，装修热潮下专家示警",
+"s": "装修支出创新高，石棉暴露风险随之上升。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/one-in-three-homes-at-risk-as-asbestos-experts-sound-alarm/"
+},
+{
+"cat": "地产",
+"t": "黄金海岸开发商推出 100 万以下新房，帮首置买家",
+"s": "20 套新房定价远低于当地中位数。",
+"src": "realestate 新闻",
+"link": "https://www.realestate.com.au/news/gold-coast-developers-slash-new-home-prices-under-1m-to-help-firsthome-buyers/"
+},
+{
+"cat": "地产",
+"t": "租房提醒：房东和中介不能再收申请费、付租金手续费",
+"s": "维州 2026 年 10 月 13 日起全面实行；之前已禁止第三方租房平台收这类费用。",
+"src": "维州消费者事务局 CAV",
+"link": "https://www.consumer.vic.gov.au/housing/renting/new-changes-to-rental-laws"
+},
+{
+"cat": "移民",
+"t": "澳洲移民政策为什么总是“很奇怪”？从慢吞吞的文书说起",
+"s": "回顾移民政策的历史，以及当下的新一轮讨论。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/labors-migration-plan-based-on-paperwork/107408422"
+},
+{
+"cat": "移民",
+"t": "一桩问题签证计划，如何把新州前州长的秘密伴侣送进监狱",
+"s": "涉事前议员当年的丑闻终结了一位州长的政治生涯。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/daryl-maguire-from-parliament-to-prison/107411066"
+},
+{
+"cat": "中澳",
+"t": "澳中达成人工智能对话协议",
+"s": "阿尔巴尼斯在 APEC 后争取到与中国就 AI 开展新的对话。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/australia-strikes-deal-on-ai-talks-with-china-after-apec/107411592"
+},
+{
+"cat": "中澳",
+"t": "习近平：中澳关系已实现“全面转圜”，称赞阿尔巴尼斯",
+"s": "两国领导人在深圳 APEC 峰会期间会面。",
+"src": "卫报澳洲",
+"link": "https://www.theguardian.com/world/2026/nov/20/xi-jinping-says-a-full-turnaround-has-been-achieved-in-australia-china-relations-praising-anthony-albanese"
+},
+{
+"cat": "中澳",
+"t": "习特会避开难题，双方各取所需",
+"s": "分析：会谈气氛友好，反映两国当前的关系状态。",
+"src": "The Conversation",
+"link": "https://theconversation.com/xi-trump-meeting-avoids-difficult-conversations-and-both-leaders-get-what-they-want-297046"
+},
+{
+"cat": "中澳",
+"t": "特朗普扬言对在海外建数据中心的公司征“重税”",
+"s": "美国总统称不允许数据中心建到别的国家。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/trump-vows-tax-companies-building-data-centres-overseas/107412162"
+},
+{
+"cat": "生活",
+"t": "专家：科技服务可能突然中断，大家要准备后备方案",
+"s": "数字生活不是永远在线，要想好停摆时怎么办。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/microsoft-nsa-tech-outages-latest/107403042"
+},
+{
+"cat": "生活",
+"t": "大规模裁员潮下，澳洲白领前路如何",
+"s": "有被裁的白领不得不卖房维持生活。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/australians-lose-jobs-recession-fears-some-forced-to-sell-homes/107408374"
+},
+{
+"cat": "生活",
+"t": "AI 被指导致大裁员，怎样让员工得到更公平的对待",
+"s": "多起大规模裁员凸显加强劳工权益的必要。",
+"src": "The Conversation",
+"link": "https://theconversation.com/with-ai-blamed-for-mass-layoffs-heres-how-we-can-ensure-workers-get-a-fairer-go-296948"
+},
+{
+"cat": "生活",
+"t": "Anthropic 创纪录上市后市值下跌，全球股市走低",
+"s": "科技股大跌，拖累各地股市。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/anthropic-ipo-fails-to-calm-ai-jitters-stock-market-debut/107412118"
+},
+{
+"cat": "生活",
+"t": "为什么有的专科医生收费那么高",
+"s": "研究分析收费差异来自病情、专科还是地区。",
+"src": "The Conversation",
+"link": "https://theconversation.com/why-do-some-specialists-charge-so-much-when-others-fees-are-more-reasonable-296601"
+},
+{
+"cat": "生活",
+"t": "新保险规定可能影响在家分娩，助产士担忧",
+"s": "助产士长期保险豁免将于 12 月 31 日到期。",
+"src": "卫报澳洲",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/homebirth-insurance-rules-midwives-fear-freebirth-rise-ntwnfb"
+},
+{
+"cat": "生活",
+"t": "夏天的“体感温度”怎么算",
+"s": "算错可能穿错衣服、误判户外活动是否合适。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/nsw-weather-how-bureau-of-meteorology-predicts-forecast/107409102"
+},
+{
+"cat": "生活",
+"t": "毕业季狂欢周开幕：今年流行匹克球和排舞",
+"s": "数千名高中毕业生今天涌向黄金海岸。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/schoolies-2026-evolves-changing-tastes-pickleball-line-dancing/107402348"
+},
+{
+"cat": "生活",
+"t": "青少年篮球赛装 AI 摄像头，反对请愿已有 1.3 万人签名",
+"s": "澳洲篮协在社区比赛试用 AI 智能摄像头。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/concerns-over-basketball-australia-ai-cameras-junior-games/107406442"
+},
+{
+"cat": "生活",
+"t": "澳洲板球“砂纸门”风波新进展：一文看懂",
+"s": "不懂板球规则也能看明白的来龙去脉。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/sandpapergate-ball-tampering-scandal/107404386"
+},
+{
+"cat": "生活",
+"t": "2026 年 AFL 选秀要点",
+"s": "今年选秀被认为人才特别多。",
+"src": "ABC 新闻",
+"link": "https://www.abc.net.au/news/2026-11-21/afl-draft-2026-dougie-cochrane-top-pick/107412216"
+}
+]
+}

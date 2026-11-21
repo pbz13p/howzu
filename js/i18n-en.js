@@ -4,7 +4,7 @@ window.HOWZU_EN = {
 // ---- 导航、通用 ----
 "好租 Howzu": "Howzu", "好": "H", "墨尔本 · 学区 · 租房 · 投资": "Melbourne · Schools · Rentals · Investing",
 "🏫 查学区": "🏫 School zones", "🏠 在租房源": "🏠 Rentals", "🏠 看在租房源": "🏠 Browse rentals", "🏠 看房源": "🏠 Rentals", "🏡 在售房源": "🏡 For sale",
-"📈 投资测算": "📈 Investing", "💱 换汇比价": "💱 FX rates", "✈️ 留学生租房": "✈️ Overseas students", "好租干货": "Howzu guides", "全部文章 ›": "All articles ›", "📚 房产干货": "📚 Guides", "🔑 房东托管": "🔑 Landlords", "👤 登录": "👤 Log in", "员工登录": "Staff login",
+"📈 投资测算": "📈 Investing", "💱 换汇比价": "💱 FX rates", "✈️ 留学生租房": "✈️ Overseas students", "好租干货": "Howzu guides", "今日要闻": "Today's news", "📰 今日要闻": "📰 News", "全部 40 条 ›": "All 40 ›", "全部文章 ›": "All articles ›", "📚 房产干货": "📚 Guides", "🔑 房东托管": "🔑 Landlords", "👤 登录": "👤 Log in", "员工登录": "Staff login",
 "＋ 免费发房源": "＋ List for free", "免费发房源": "List for free", "在租房源": "Rentals", "全部在租房源": "All rentals", "其他在租房源": "Other rentals", "全部房源 ›": "All rentals ›",
 "在售房源 ›": "Homes for sale ›", "看在租房源": "Browse rentals", "看看其他在租房源 ›": "See other rentals ›", "这套已租出，看看其他在租房源 ›": "This one is leased. See other rentals ›",
 "出售": "For sale", "分享": "Share", "收藏": "Save", "♥ 收藏": "♥ Save", "关闭": "Close", "上一张": "Previous", "下一张": "Next", "清除": "Clear", "查询": "Search", "全部": "All",
