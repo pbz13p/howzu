@@ -1,0 +1,278 @@
+{
+ "date": "2026-11-22",
+ "items": [
+  {
+   "cat": "墨尔本",
+   "t": "专家：维州工党或将在大选中惨败",
+   "s": "距 11 月 28 日投票还剩一周，州长 Ben Carroll 和反对党领袖 Jess Wilson 都在提前投票站拉票。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/victorian-election-final-week/107412434"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "深入工党传统票仓：维州选民怎么想",
+   "s": "ABC 节目走访工党的传统支持区，看这次大选的民意变化。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/victoria-votes-insiders-on-background/107412562"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "种族主义涂鸦险些让一位原住民候选人退选",
+   "s": "她的竞选海报被画上纳粹标志，报道说类似遭遇的候选人不止她一个。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/australia-news/2026/nov/22/talia-gulpilil-first-nations-victorian-greens-campaign-posters-racism-ntwnfb"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "One Nation 称若执政将撤销维州气候变化部门",
+   "s": "维州大选竞选动态汇总，Barnaby Joyce 代表 One Nation 公布这一主张。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-20/victorian-election-live-campaign-liberal-labor/107407614"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "墨尔本 CBD 发生持刀伤人，一名男子入院",
+   "s": "事发于周六下午 Bourke Street Mall 一家商店外，警方正在寻找一名 30 多岁的男子。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/man-in-hospital-after-stabbing-on-bourke-street-mall/107412922"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "警方：17 岁少年涉嫌在墨尔本“餐饮业之争”中策划纵火和绑架",
+   "s": "警方称他用 Signal 和其他涉案人员联络。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/australia-news/2026/nov/21/teenager-allegedly-organised-arsons-and-kidnapping-on-signal-during-melbourne-hospitality-wars-ntwnfb"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "1956 年墨尔本奥运会双金得主 Jon Henricks 去世，享年 91 岁",
+   "s": "这位游泳名将曾多次打破世界纪录。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/australian-swimming-star-jon-henricks-dies/107413060"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "澳洲队在 MCG 创纪录逆转，击败世界第一英格兰",
+   "s": "这是双方五场 T20 国际赛的第一场，阵容年轻的澳洲队完成 MCG 史上最高追分。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/australia-win-t20-international-against-england-at-mcg/107413150"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "AFLW：北墨尔本连续第四年进总决赛，周五对阵墨尔本队",
+   "s": "两届卫冕冠军北墨尔本将在周五的决赛中迎战 Demons。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/aflw-preliminary-finals-kangaroos-swans-demons-blues-results/107412906"
+  },
+  {
+   "cat": "地产",
+   "t": "维州大选各党改革对房价、租金有何影响",
+   "s": "专家逐一分析各主要政党的政策，有人认为部分政策可能让房价涨上五位数。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/vic-election-reforms-could-trigger-fivefigure-property-price-surge/"
+  },
+  {
+   "cat": "地产",
+   "t": "维州大选：工党和自由党的住房供应方案对比",
+   "s": "两大党在增加住房供应上思路不同，选民需要在投票时作出选择。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-20/victorian-election-liberal-labor-housing-supply-plan/107395436"
+  },
+  {
+   "cat": "地产",
+   "t": "经济学家警告澳洲正接近衰退",
+   "s": "多位经济学家认为最新经济数据显示衰退风险上升。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-19/asx-markets-business-news-live-updates-thursday-19-november/107401802"
+  },
+  {
+   "cat": "地产",
+   "t": "联邦部长淡化衰退担忧",
+   "s": "经济学家发出警告后，联邦政府部长表示不必过度担心。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-20/federal-politics-live-blog-recession-concerns/107407116"
+  },
+  {
+   "cat": "地产",
+   "t": "换房靠净值：澳洲业主平均手握 76 万澳元房产净值",
+   "s": "多数计划换房的业主依靠房子增值的净值，而不是收入增长来筹钱。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/aussie-homeowners-rely-on-760k-avg-equity-to-fund-next-move/"
+  },
+  {
+   "cat": "地产",
+   "t": "悉尼拍卖市场给卖家上了一课：定价要合理",
+   "s": "市场转冷下，定价合适的房子周六仍吸引了激烈竞争。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/sydney-auctions-deliver-blunt-pricing-lesson/"
+  },
+  {
+   "cat": "地产",
+   "t": "布里斯班开发商：到 2032 年新房或缩小到 100 平米",
+   "s": "建筑成本不断上涨，开发商称买家将不得不接受更小的房子。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/needs-to-shrink-brisbane-developer-warns-homes-to-hit-100-sqm-by-2032/"
+  },
+  {
+   "cat": "地产",
+   "t": "已故 Wallace Cameron 家人挂牌出售 Brighton 豪宅",
+   "s": "这位商人生前在房产交易中有过多次大起大落。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/late-wallace-camerons-family-list-brighton-mansion/"
+  },
+  {
+   "cat": "地产",
+   "t": "已故板球名将 Ian Redpath 在 Waurn Ponds 的旧居以 192.5 万成交",
+   "s": "这座 Geelong 附近的农舍挂牌近七个月后售出。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/late-test-batsman-ian-redpaths-waurn-ponds-home-sells-for-1925m/"
+  },
+  {
+   "cat": "地产",
+   "t": "霍巴特租金差距：最便宜和最贵的区每周差 330 澳元",
+   "s": "Primrose Sands 每周约 465 澳元，Sandy Bay 约 795 澳元。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/the-330-gap-hobarts-cheapest-and-priciest-rental-suburbs/"
+  },
+  {
+   "cat": "地产",
+   "t": "达尔文老监狱看守房改建成多套住宅，每周租金收入 3000 澳元",
+   "s": "Fannie Bay 监狱旧看守房被改造成多户住宅。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/historic-fannie-bay-gaol-guard-house-transformed/"
+  },
+  {
+   "cat": "地产",
+   "t": "家族墓穴每平米价格竟超过豪宅",
+   "s": "部分高端墓地的每平米价格比澳洲顶级豪宅还贵。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/australian-family-burial-vaults-now-cost-more-per-square-metre-than-mega-mansions/"
+  },
+  {
+   "cat": "地产",
+   "t": "放弃半岛度假屋，墨尔本一家人买下巴斯海峡私人小岛",
+   "s": "忘了买牛奶就得开船去买：一家墨尔本人用买度假屋的钱换了一座小岛。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/aussie-familys-520k-private-island-escape/"
+  },
+  {
+   "cat": "移民",
+   "t": "One Nation 提出把难民名额削减九成、取消父母签证",
+   "s": "Pauline Hanson 公布移民政策，主张大幅减少人道主义签证和父母团聚签证。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-18/pauline-hanson-announces-plan-to-cut-refugee-intake-parent-visas/107397374"
+  },
+  {
+   "cat": "移民",
+   "t": "业界施压后，Tony Burke 放宽打工度假签证限制",
+   "s": "政府调整此前收紧的背包客签证方案。",
+   "src": "SBS 新闻",
+   "link": "https://www.sbs.com.au/news/article/backpacker-visa-changes-tony-burke-industry-pressure/7bt1z7pij"
+  },
+  {
+   "cat": "移民",
+   "t": "专家：AI“间谍设备”已混入澳洲大学考场",
+   "s": "隐蔽的作弊设备出现在考试中，引起教育界担忧。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/inside-the-new-high-tech-era-of-exam-cheating-australia/107403692"
+  },
+  {
+   "cat": "中澳",
+   "t": "习近平、普京、特朗普同场：谁是最大赢家",
+   "s": "ABC 分析文章认为三方的“和平宣言”更多关乎几位领导人自身的利益。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/trump-xi-putin-summit-had-more-flair-than-substance/107405592"
+  },
+  {
+   "cat": "中澳",
+   "t": "澳洲签署美国主导的 AI 供应链协议",
+   "s": "协议签署之际，中美在 AI 领域的竞争日益激烈。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-17/australia-signs-us-led-ai-supply-chain-agreement/107392252"
+  },
+  {
+   "cat": "中澳",
+   "t": "与特朗普同处一室：谁掌握主导权一目了然",
+   "s": "特朗普似乎对阿尔巴尼斯态度转暖，但总理仍在适应对方多变的规则。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-22/albanese-trump-quad-xi-putin-summits-analysis/107410572"
+  },
+  {
+   "cat": "生活",
+   "t": "在海外更容易实现“澳洲梦”？三个移居柏林的澳洲人",
+   "s": "受不了澳洲高生活成本，三位澳洲人搬到柏林寻找机会和更低的开销。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-22/housing-cost-of-living-australian-dream-move-overseas-berlin/107390924"
+  },
+  {
+   "cat": "生活",
+   "t": "Spirit IV 渡轮再次晚点",
+   "s": "新的塔斯马尼亚之灵渡轮本月第二次比预定时间晚几个小时到港。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/spirit-iv-technical-issue-geelong-delay/107412682"
+  },
+  {
+   "cat": "生活",
+   "t": "新州音乐节遭雷击，四人受伤",
+   "s": "恶劣天气让 Tocumwal 的 Strawberry Fields 音乐节一片混乱。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/four-strawberry-fields-festivalgoers-struck-by-lightning/107412498"
+  },
+  {
+   "cat": "生活",
+   "t": "东帝汶 6.8 级地震，北领地有震感",
+   "s": "地震发生在周六，北领地居民感到明显摇晃。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/top-end-nt-shaken-as-major-earthquake-hits-east-timor/107413134"
+  },
+  {
+   "cat": "生活",
+   "t": "麦觉理岛地震站停用，海啸预警时间变短",
+   "s": "来自南大洋的海啸，应急部门可用的反应时间将减少。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-22/tsunami-response-time-reduced-macquarie-island-staff-removal/107404714"
+  },
+  {
+   "cat": "生活",
+   "t": "“老人味”真的存在吗？社交媒体怎样利用羞耻感卖货",
+   "s": "商家借“老人味”的说法推销昂贵香皂。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/health/2026-11-22/old-person-smell-2-nonenal-persimmon/107341328"
+  },
+  {
+   "cat": "生活",
+   "t": "邪教泄露视频曝光：以“转世”为名敛财数百万",
+   "s": "一段流出的网络研讨会内容显示，该组织向临终信徒收取巨额费用。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-22/universal-medicine-soliciting-cancer-victim-estate-bequests/107390886"
+  },
+  {
+   "cat": "生活",
+   "t": "邦迪美妆品牌发布会用银盘端香烟，被移交调查",
+   "s": "新州卫生监管部门已接到转介，联邦政府表示“深感关切”。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/australia-news/2026/nov/22/cigarette-platter-bondi-copini-beauty-event-investigation"
+  },
+  {
+   "cat": "生活",
+   "t": "全澳多地集会：担心新保险规定让无助产士在家分娩激增",
+   "s": "数千人上街，警告新规会让有助产士陪同的分娩服务大幅萎缩。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-21/homebirth-rallies-midwife-insurance-freebirth/107412380"
+  },
+  {
+   "cat": "生活",
+   "t": "Anthropic 上市创纪录，CEO Dario Amodei 面临“奥本海默时刻”",
+   "s": "尽管创始人近来多次发出警告，Anthropic 仍在 AI 开发上领跑。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-22/dario-amodei-facing-an-oppenheimer-moment-races-ahead/107264748"
+  },
+  {
+   "cat": "生活",
+   "t": "美媒：FBI 数据库疑遭黑客入侵",
+   "s": "多家媒体报道，FBI 和美国农业部遭遇网络攻击。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-22/fbi-database-hacked-according-to-media-outlets/107413682"
+  }
+ ]
+}
