@@ -67,6 +67,7 @@ for it in sorted(items, key=lambda x: x["when"], reverse=True):
     k = re.sub(r"\W+", "", it["title"].lower())[:60]
     if k in seen: continue
     seen.add(k); out.append(it)
+import os; os.makedirs("data/news", exist_ok=True)
 day = (now + datetime.timedelta(hours=11)).date().isoformat()
 json.dump({"fetched": now.isoformat(), "log": log, "items": out[:150]}, open(f"data/news/raw-{day}.json", "w"), ensure_ascii=False, indent=0)
 print("\n".join(log)); print("共", len(out), "条，按分类：", {c: sum(1 for x in out if x["cat"] == c) for c in set(x["cat"] for x in out)})
