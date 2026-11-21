@@ -13,12 +13,18 @@ def zhlink(x):
 def zh(d): y, m, dd = d.split("-"); return f"{y} 年 {int(m)} 月 {int(dd)} 日"
 def page(d, items, canon, archive):
     side = SIDE
-    blocks = ""
+    cols3 = [[], [], []]; load = [0, 0, 0]
     for c, label in CATS:
         xs = [x for x in items if x["cat"] == c]
         if not xs: continue
+        i = load.index(min(load)); load[i] += len(xs) + 2; cols3[i].append((c, label, xs))
+    blocks = ""
+    for col in cols3:
+      blocks += '<div class="col">'
+      for c, label, xs in col:
         blocks += f'<section class="nc" id="{c}"><h2>{label}<small>{len(xs)} 条</small></h2><ol>' + "".join(
             f'<li><a href="{e(zhlink(x))}" target="_blank" rel="noopener nofollow">{e(x["t"])}</a><p>{e(x["s"])}</p><span>{e(x["src"])}</span>{"" if zhlink(x)==x["link"] else f' · <a class="en" href="{e(x["link"])}" target="_blank" rel="noopener nofollow">英文原文</a>'}</li>' for x in xs) + "</ol></section>"
+      blocks += "</div>"
     jump = "".join(f'<a href="#{c}">{l.split(" ",1)[1]}</a>' for c, l in CATS if any(x["cat"] == c for x in items))
     arch = "".join(f'<a href="/news/{a}.html">{zh(a)}</a>' for a in archive[:30])
     title = f"墨尔本今日要闻 {zh(d)} | 澳洲生活、移民、地产新闻 | 好租 Howzu"
@@ -27,10 +33,10 @@ def page(d, items, canon, archive):
     return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{canon}">
 <link rel="icon" href="/favicon.svg"><meta name="theme-color" content="#0f6b4f"><script type="application/ld+json">{bc}</script>
-<style>body{{margin:0;font:16px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#1d2b26;background:#f7f6f2}}main{{max-width:1280px;margin:0 auto;padding:12px 18px 90px}}.wrap{{display:grid;gap:20px}}.cols{{columns:1}}.nc{{break-inside:avoid}}aside .box{{background:#fff;border:1px solid #e6ece9;border-radius:12px;padding:10px 14px;margin:12px 0}}aside h3{{font-size:16px;margin:6px 0}}aside ul{{list-style:none;margin:0;padding:0}}aside li{{padding:7px 0;border-top:1px solid #f0f0f0;font-size:14px}}aside li a{{color:#1d2b26;text-decoration:none;font-weight:600}}aside li small{{display:block;color:#0f6b4f;font-weight:400}}@media(min-width:900px){{.wrap{{grid-template-columns:minmax(0,1fr) 300px}}.cols{{columns:2;column-gap:16px}}h1{{font-size:26px}}}}@media(min-width:1500px){{main{{max-width:1480px}}.cols{{columns:3}}}}
+<style>body{{margin:0;font:16px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#1d2b26;background:#f7f6f2}}main{{max-width:1280px;margin:0 auto;padding:12px 18px 90px}}.wrap{{display:grid;gap:20px}}.cols{{display:grid;gap:14px}}.col{{min-width:0}}.nc{{break-inside:avoid}}aside .box{{background:#fff;border:1px solid #e6ece9;border-radius:12px;padding:10px 14px;margin:12px 0}}aside h3{{font-size:16px;margin:6px 0}}aside ul{{list-style:none;margin:0;padding:0}}aside li{{padding:7px 0;border-top:1px solid #f0f0f0;font-size:14px}}aside li a{{color:#1d2b26;text-decoration:none;font-weight:600}}aside li small{{display:block;color:#0f6b4f;font-weight:400}}@media(min-width:1100px){{main{{max-width:1500px}}.wrap{{grid-template-columns:minmax(0,1fr) 270px}}.cols{{grid-template-columns:repeat(3,minmax(0,1fr))}}h1{{font-size:26px}}}}
 header{{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid #e6ece9}}header a.logo{{white-space:nowrap;flex:none;font-weight:700;color:#0f6b4f;text-decoration:none;font-size:18px}}header a.r{{margin-left:auto;color:#0f6b4f;font-size:14px}}
 h1{{font-size:22px;margin:14px 0 4px}}.meta{{color:#666;font-size:13px;margin:0 0 10px}}.jump{{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px;position:sticky;top:0;background:#f7f6f2;padding:6px 0;z-index:5}}.jump a{{border:1px solid #cfe3da;background:#fff;border-radius:16px;padding:4px 11px;font-size:14px;color:#0f6b4f;text-decoration:none}}
-.nc{{background:#fff;border:1px solid #e6ece9;border-radius:12px;padding:6px 14px;margin:0 0 14px;display:inline-block;width:100%;box-sizing:border-box}}aside .box:first-child{{margin-top:0}}.nc h2{{font-size:17px;margin:8px 0}}.nc h2 small{{font-weight:400;color:#888;font-size:12px;margin-left:6px}}.nc ol{{margin:0;padding:0;list-style:none}}
+.nc{{background:#fff;border:1px solid #e6ece9;border-radius:12px;padding:6px 14px;margin:0 0 14px}}aside .box:first-child{{margin-top:0}}.nc h2{{font-size:17px;margin:8px 0}}.nc h2 small{{font-weight:400;color:#888;font-size:12px;margin-left:6px}}.nc ol{{margin:0;padding:0;list-style:none}}
 .nc li{{padding:9px 0;border-top:1px solid #f0f0f0}}.nc li a{{color:#1d2b26;font-weight:600;text-decoration:none}}.nc li a:active,.nc li a:hover{{color:#0f6b4f}}.nc li p{{margin:3px 0 0;color:#555;font-size:14px}}.nc li span{{font-size:12px;color:#0f6b4f}}.nc li a.en{{font-size:12px;font-weight:400;color:#888}}
 .arch{{display:flex;flex-wrap:wrap;gap:6px}}.arch a{{font-size:13px;color:#0f6b4f}}aside .box.cta,.cta{{background:#0f6b4f;color:#fff;border-color:#0f6b4f;line-height:2}}nav.top{{display:flex;gap:4px;overflow-x:auto;margin-left:10px}}nav.top a{{white-space:nowrap;padding:6px 10px;border-radius:8px;color:#1d2b26;text-decoration:none;font-size:15px}}nav.top a.on{{background:#e8f3ee;color:#0f6b4f;font-weight:600}}.cta a{{color:#fff;font-weight:700}}.note{{font-size:12px;color:#888}}</style></head><body>
 <header><a class="logo" href="/">好租 Howzu</a><nav class="top"><a href="/news/" class="on">📰 今日要闻</a><a href="/rentals.html">🏠 在租房源</a><a href="/sale/">🏡 在售</a><a href="/invest.html">📈 投资</a><a href="/guide/fx.html">💱 换汇</a><a href="/guide/property.html">📚 干货</a><a href="/">🏫 查学区</a></nav></header><main>
