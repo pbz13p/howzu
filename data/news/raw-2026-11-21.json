@@ -1,0 +1,842 @@
+{
+"fetched": "2026-11-21T02:03:49.304530+00:00",
+"log": [
+"ABC 新闻: 25",
+"ABC 新闻: 25",
+"SBS 新闻: 0",
+"SBS 中文: 失败 HTTPError",
+"卫报澳洲: 13",
+"The Conversation: 14",
+"澳联储 RBA: 0",
+"Domain 新闻: 失败 HTTPError",
+"realestate 新闻: 41",
+"维州州长新闻稿: 失败 HTTPError",
+"移民局新闻: 失败 HTTPError"
+],
+"items": [
+{
+"src": "ABC 新闻",
+"title": "Liberal voters expected to 'come home' in Victorian leader's seat of Kew",
+"link": "https://www.abc.net.au/news/2026-11-21/jess-wilson-kew-district-sophie-torney-victorian-electorate/107400636",
+"when": "2026-11-21T01:37:55+00:00",
+"desc": "A returning independent candidate in Jess Wilson's home electorate is optimistic about her chances, but the local member's high profile may help the Liberals claw back voters in the formerly safe Libe",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Texas inmate screams during drawn-out execution",
+"link": "https://www.abc.net.au/news/2026-11-21/texas-death-row-inmate-reinaldo-dennes-screams-execution/107412316",
+"when": "2026-11-21T01:13:34+00:00",
+"desc": "The Texas Department of Criminal Justice has denied claims the execution of Reinaldo Dennes was \"botched\" after he complained of excruciating pain.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Schoolies rolls out pickleball and line dancing as teens' tastes change",
+"link": "https://www.abc.net.au/news/2026-11-21/schoolies-2026-evolves-changing-tastes-pickleball-line-dancing/107402348",
+"when": "2026-11-21T01:12:24+00:00",
+"desc": "Thousands of school leavers hit the Gold Coast today for the beginning of schoolies week, but numbers are down, and the annual celebration is changing.",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "John McGrath reveals six affordable Melbourne suburbs primed for property recovery",
+"link": "https://www.realestate.com.au/news/john-mcgrath-reveals-six-affordable-melbourne-suburbs-primed-for-property-recovery/",
+"when": "2026-11-21T01:00:00+00:00",
+"desc": "With Melbourne home values still more than $70,000 below their 2022 peak, a major real estate report reveals the bargain pockets set to rebound. The post John McGrath reveals six affordable Melbourne ",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "From Marxism to extremism: A Perth teen's descent into radicalisation",
+"link": "https://www.abc.net.au/news/2026-11-21/james-hollands-inquest-examines-years-leading-to-police-shooting/107404726",
+"when": "2026-11-21T00:36:10+00:00",
+"desc": "James Hollands was just 16 when he was fatally shot by police after almost killing a random stranger he stabbed with a kitchen knife — now a coroner will determine if the teenager could have been save",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Victorian Greens seek urgent injunction over how-to-vote cards mimicking party’s branding but preferencing it last",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/victorian-greens-seek-urgent-injunction-over-how-to-vote-cards-mimicking-branding-but-preferencing-it-last-ntwnfb",
+"when": "2026-11-21T00:26:56+00:00",
+"desc": "Exclusive: Independent candidate Tosh-Jake Finnigan’s cards instruct people to vote in a way that would benefit Liberal party Get our daily political email , free app or daily news podcast The Victori",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "At 192cm tall, Tiny Tim could be a national cattle record breaker",
+"link": "https://www.abc.net.au/news/2026-11-21/tiny-tim-could-be-australias-next-biggest-steer/107396504",
+"when": "2026-11-21T00:04:22+00:00",
+"desc": "A Holstein-Friesian named Tiny Tim is thought to be Australia's biggest living steer, inheriting the crown from the late legend Knickers.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Man convicted of starting deadly 2025 LA Palisades Fire",
+"link": "https://www.abc.net.au/news/2026-11-21/man-convicted-of-starting-2025-la-palisades-fire/107412326",
+"when": "2026-11-20T23:53:06+00:00",
+"desc": "Jonathan Rinderknecht is found guilty at his second trial of sparking last year's deadly Palisades Fire, which killed 12 people.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Petition against AI cameras at junior basketball attracts 13,000 signatures",
+"link": "https://www.abc.net.au/news/2026-11-21/concerns-over-basketball-australia-ai-cameras-junior-games/107406442",
+"when": "2026-11-20T23:49:05+00:00",
+"desc": "Basketball Australia has started trialling AI-powered \"smart cameras\" at community games, ahead of a wider rollout, sparking concerns for some.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Hatching a plan to ensure Australia's native turtles survive and thrive",
+"link": "https://www.abc.net.au/news/2026-11-21/1-million-turtles-conservation-project-closing-in-on-milestone/107398472",
+"when": "2026-11-20T23:32:49+00:00",
+"desc": "How a citizen science program is saving thousands of turtles even as researchers learn more about them.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Secret police recording of parent murderer released",
+"link": "https://www.abc.net.au/news/2026-11-21/court-releases-murderer-raelene-polymiadis-secret-recordings/107410402",
+"when": "2026-11-20T23:30:21+00:00",
+"desc": "A month after she murdered her elderly father by injecting him with a lethal dose of insulin, double murderer Raelene Polymiadis begged God for forgiveness.",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Inside real estate fortunes of daytime soap TV royalty",
+"link": "https://www.realestate.com.au/news/inside-real-estate-fortunes-of-daytime-soap-tv-royalty/",
+"when": "2026-11-20T23:25:00+00:00",
+"desc": "From compounds to separate-home marriages, daytime television’s biggest stars have built massive real estate fortunes. The post Inside real estate fortunes of daytime soap TV royalty appeared first on",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Hazlewood backs Cummins as sandpaper saga continues",
+"link": "https://www.abc.net.au/news/2026-11-21/pat-cummins-josh-hazlewood-sandpaper-ball-tampering-cricket/107412300",
+"when": "2026-11-20T23:20:08+00:00",
+"desc": "Josh Hazlewood defends Pat Cummins amid speculation about his future as Australian men's captain following the resurfacing of the ball-tampering scandal.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "A 28-day stay in a Darwin hostel helped a family escape homelessness",
+"link": "https://www.abc.net.au/news/2026-11-21/transitional-housing-yissa-helps-nt-family-escape-homelessness/107359370",
+"when": "2026-11-20T23:18:07+00:00",
+"desc": "Getting a room at Darwin's largest short-stay hostel was a circuit breaker for Andrina Blitner. She is worried the shelter's recent closure means others will not have the same chance.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "NSW passes Mount Pleasant coalmine law as Greens claim change an attempt to head off One Nation",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/nsw-passes-hunter-valley-coalmine-law-as-greens-claim-change-an-attempt-to-head-off-one-nation-ntwnfb",
+"when": "2026-11-20T23:09:57+00:00",
+"desc": "Labor says allowing mine to increase production reflects ‘gravity of situation facing hundreds of workers’ – but critics call it ‘unprecedented and dangerous’ Get our breaking news email , free app or",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Angela’s home birth could be upended by Australia’s new insurance rules. Midwives fear it will drive women to freebirths",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/homebirth-insurance-rules-midwives-fear-freebirth-rise-ntwnfb",
+"when": "2026-11-20T23:00:41+00:00",
+"desc": "Expiry of longstanding insurance exemption for midwives on 31 December threatens to throw private home birth sector into collapse Sign up for a weekly email featuring our best reads Sydney mother Ange",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "‘We don’t talk about the God stuff’: a day with Padre Dave, the outback’s flying minister",
+"link": "https://www.theguardian.com/australia-news/ng-interactive/2026/nov/21/padre-dave-the-minister-flies-to-outback-stations",
+"when": "2026-11-20T23:00:41+00:00",
+"desc": "David Shrimpton has helped draft cattle and dehorn bulls in his decades visiting remote properties. Religion rarely gets a mention The plane rattles as it bounces in the wind. Olive vinyl and carpet l",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "'Marriage bar' reminder things can change with stroke of 'legislative pen'",
+"link": "https://www.abc.net.au/news/2026-11-21/60-years-since-ban-married-women-public-service-lifted/107406214",
+"when": "2026-11-20T23:00:17+00:00",
+"desc": "When Elizabeth Scrivener said yes to a marriage proposal in 1966, she knew she would have to leave her job with the Australian Public Service.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Farmer hopes MND trial could give her more time with family",
+"link": "https://www.abc.net.au/news/2026-11-21/kilkivan-farmer-places-hope-in-national-mnd-trial/107400112",
+"when": "2026-11-20T22:59:07+00:00",
+"desc": "A Queensland farmer recently diagnosed with MND hopes to take part in what could be a \"game changer\" clinical trial aimed at halting the disease and restoring lost function.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Young mother rated 'high risk' in months before her death, inquest hears",
+"link": "https://www.abc.net.au/news/2026-11-21/ngukurr-inquest-mirniyowan-suicide-domestic-violence/107406224",
+"when": "2026-11-20T22:33:41+00:00",
+"desc": "A coronial inquest has heard disturbing evidence about repeated assaults on a young mother from a remote Northern Territory community in the months before her suicide.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "The key takeaways from 2026 AFL Draft",
+"link": "https://www.abc.net.au/news/2026-11-21/afl-draft-2026-dougie-cochrane-top-pick/107412216",
+"when": "2026-11-20T22:11:00+00:00",
+"desc": "This year's AFL Draft is considered to be particularly deep, with a series of fresh faces set to dominate footballing discourse over coming years.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Victorian homebuyers hold back despite pro buying sentiment rise",
+"link": "https://www.realestate.com.au/news/victorian-homebuyers-hold-back-despite-pro-buying-sentiment-rise/",
+"when": "2026-11-20T22:00:00+00:00",
+"desc": "The majority of Melbourne homebuyers believe now is a good time to buy, but they’re refusing for two key reasons and it’s bad news for sellers this weekend. The post Victorian homebuyers hold back des",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Farmers warned to pay up or potentially lose drivers licences",
+"link": "https://www.abc.net.au/news/2026-11-21/farmers-could-lose-drivers-licence-for-fine-payment-refusal/107401972",
+"when": "2026-11-20T21:57:45+00:00",
+"desc": "Farmers who are refusing to pay fines for not letting VNI West developers access their land could have their drivers licences suspended and their vehicles deregistered.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Calls to fund Indigenous disaster response ahead of more flooding",
+"link": "https://www.abc.net.au/news/2026-11-21/calls-to-fund-indigenous-disaster-response/107404992",
+"when": "2026-11-20T21:29:22+00:00",
+"desc": "As Central Australia faces another wet season, researchers warn Aboriginal organisations are being left without the resources they need to prepare communities for disasters.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "One Nation lands $25k donation from Tasmanian salmon company",
+"link": "https://www.abc.net.au/news/2026-11-21/salmon-farm-owner-lobbyist-donate-big-one-nation-tasmania/107407728",
+"when": "2026-11-20T21:19:08+00:00",
+"desc": "They are the largest donations received by a political party in Tasmania since new disclosure rules came into effect last year.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Canberra United star on 'reclaiming the narrative' as she marks 200 games",
+"link": "https://www.abc.net.au/news/2026-11-21/act-michelle-heyman-200-games-milestone-canberra-united/107407628",
+"when": "2026-11-20T21:09:14+00:00",
+"desc": "Matildas striker Michelle Heyman marks her 200th game playing for Canberra United this weekend, becoming the first player in the A-League Women to mark the milestone at a single club.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Widow's campaign against gambling after husband 'lost in a web of lies'",
+"link": "https://www.abc.net.au/news/2026-11-21/widow-janina-anstee-lifetime-calling-for-gambling-reforms/107112444",
+"when": "2026-11-20T21:03:16+00:00",
+"desc": "Janina Anstee's husband died by suicide, overwhelmed by debt acquired from gambling in 1987. She has since been calling for change.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Seat by seat, these are the major election issues in regional Victoria",
+"link": "https://www.abc.net.au/news/2026-11-21/victorian-election-regional-voters-issues-seat-by-seat/107390056",
+"when": "2026-11-20T20:46:42+00:00",
+"desc": "As Victoria heads into the last week of the election campaign, renewables projects, hospitals and the state of roads are what voters in the state's regions are thinking about.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "How a dodgy visa scheme put a NSW premier's secret partner behind bars",
+"link": "https://www.abc.net.au/news/2026-11-21/daryl-maguire-from-parliament-to-prison/107411066",
+"when": "2026-11-20T20:30:48+00:00",
+"desc": "The former NSW MP was at the centre of a scandal that ended a premier's career. Now he is behind bars over a fraudulent visa scheme.",
+"cat": "移民"
+},
+{
+"src": "ABC 新闻",
+"title": "Trump vows 'tremendous tax' on companies building data centres abroad",
+"link": "https://www.abc.net.au/news/2026-11-21/trump-vows-tax-companies-building-data-centres-overseas/107412162",
+"when": "2026-11-20T20:27:15+00:00",
+"desc": "US President Donald Trump says he is \"not allowing data centres to go into other countries\", so that America can win the AI fight against China.",
+"cat": "中澳"
+},
+{
+"src": "ABC 新闻",
+"title": "Blackout prompts questions over ElectraNet's recent $300m network upgrade",
+"link": "https://www.abc.net.au/news/2026-11-21/eyre-peninsula-blackout-puts-scrutiny-on-electranet/107410274",
+"when": "2026-11-20T20:25:27+00:00",
+"desc": "The blackout that left nearly 24,000 Eyre Peninsula properties in the dark comes only three years after ElectraNet finished a $300 million upgrade that promised more reliable power to the region.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Anthropic value drops after record-breaking IPO",
+"link": "https://www.abc.net.au/news/2026-11-21/anthropic-ipo-fails-to-calm-ai-jitters-stock-market-debut/107412118",
+"when": "2026-11-20T20:24:10+00:00",
+"desc": "Technology shares have nosedived and dragged stocks into the red across the world, after AI firm Anthropic's market debut.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "There's no such thing as a free lunch, except on a Victorian building site",
+"link": "https://www.abc.net.au/news/2026-11-21/victoria-big-build-royal-commission-week-two/107409538",
+"when": "2026-11-20T19:42:05+00:00",
+"desc": "The royal commission probing corruption and criminality in Victoria's construction sector has aired evidence of pay cheques for bikies and union officials worth hundreds of thousands of dollars for wo",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "The formula Australians rely on during summer to stay cool",
+"link": "https://www.abc.net.au/news/2026-11-21/nsw-weather-how-bureau-of-meteorology-predicts-forecast/107409102",
+"when": "2026-11-20T19:35:35+00:00",
+"desc": "The wrong answer could lead to a misjudgement of both wardrobe requirements and the suitability of outdoor activities.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Australia strikes deal on AI talks with China",
+"link": "https://www.abc.net.au/news/2026-11-21/australia-strikes-deal-on-ai-talks-with-china-after-apec/107411592",
+"when": "2026-11-20T19:12:47+00:00",
+"desc": "Anthony Albanese has secured an agreement for new talks with China on artificial intelligence as the prime minister returns to Australia.",
+"cat": "中澳"
+},
+{
+"src": "ABC 新闻",
+"title": "IDF refuses ABC requests for evidence journalist was Hamas operative",
+"link": "https://www.abc.net.au/news/2026-11-21/idf-gives-abc-no-evidence-palestinian-journalist-was-hamas/107407710",
+"when": "2026-11-20T19:03:53+00:00",
+"desc": "Israel's military has ignored or declined to answer the ABC's multiple requests for evidence a Palestinian journalist it engaged as a freelancer in Gaza was a Hamas operative.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Historic cottage reborn: Sandy Bay’s second oldest home for sale",
+"link": "https://www.realestate.com.au/news/historic-cottage-reborn-sandy-bays-second-oldest-home-for-sale/",
+"when": "2026-11-20T18:03:00+00:00",
+"desc": "Once home to a colonial surveyor, this 1830s cottage blends heritage charm with modern sophistication. The post Historic cottage reborn: Sandy Bay’s second oldest home for sale appeared first on reale",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Questions over future for Australian workers as mass lay-offs hit",
+"link": "https://www.abc.net.au/news/2026-11-21/australians-lose-jobs-recession-fears-some-forced-to-sell-homes/107408374",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Laid-off white-collar workers are being forced to sell their homes to make ends meet amid mounting concerns the country is heading into a recession.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Xi, Putin and Trump walked into a room and one walked out the biggest winner",
+"link": "https://www.abc.net.au/news/2026-11-21/trump-xi-putin-summit-had-more-flair-than-substance/107405592",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Donald Trump, Xi Jinping and Vladimir Putin's \"declaration of peace\" is less about world peace than the peace of mind of powerful men.",
+"cat": "中澳"
+},
+{
+"src": "ABC 新闻",
+"title": "How slow paperwork became the basis for Australia's migration policy",
+"link": "https://www.abc.net.au/news/2026-11-21/labors-migration-plan-based-on-paperwork/107408422",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Australia's migration polices have a long history of being a bit weird. Now, amid renewed debate on the issue, the government has come up with another odd way to manage things.",
+"cat": "移民"
+},
+{
+"src": "ABC 新闻",
+"title": "Australians urged to have back-up plan for when tech services go dark",
+"link": "https://www.abc.net.au/news/2026-11-21/microsoft-nsa-tech-outages-latest/107403042",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Experts say people need to understand there is a possibility their digital lives could be disrupted, and they need to prepare, train and be careful about what they are sharing.",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "A beginner's guide to Sandpapergate and the ongoing fallout",
+"link": "https://www.abc.net.au/news/2026-11-21/sandpapergate-ball-tampering-scandal/107404386",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Here's a quick guide to the Sandpapergate drama — absolutely zero knowledge of cricket rules needed.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Geelong home buyers squeeze onto smaller blocks as developers warn of land shortages",
+"link": "https://www.realestate.com.au/news/geelong-home-buyers-squeeze-onto-smaller-blocks-as-developers-warn-of-land-shortages/",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Geelong homebuyers are racing to snap up home blocks as small as a tennis court as developers warn the city is building itself into a corner. The post Geelong home buyers squeeze onto smaller blocks a",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Victorian renovators warned over $100k hidden asbestos nightmare",
+"link": "https://www.realestate.com.au/news/victorian-renovators-warned-over-100k-hidden-asbestos-nightmare/",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Victorians trying to save money on home renovations are unknowingly unleashing are risking a toxic nightmare that can cost more than $100,000 to fix. The post Victorian renovators warned over $100k hi",
+"cat": "墨尔本"
+},
+{
+"src": "realestate 新闻",
+"title": "Record $15 billion renovation boom sparks warnings over deadly NSW asbestos risks",
+"link": "https://www.realestate.com.au/news/record-15-billion-renovation-boom-sparks-warnings-over-deadly-nsw-asbestos-risks/",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Sydneysiders chasing cheap DIY renovations are unknowingly exposing their families to a deadly carcinogen that kills more Aussies than car crashes. The post Record $15 billion renovation boom sparks w",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Geelong auction listings plunge 63 per cent as new laws reshape spring market",
+"link": "https://www.realestate.com.au/news/geelong-auction-listings-plunge-63-per-cent-as-new-laws-reshape-spring-market/",
+"when": "2026-11-20T18:00:00+00:00",
+"desc": "Geelong’s auction listings have plummeted 63 per cent this spring compared to last, but one agent says the method still delivers results – and a $1.01m sale proves it. The post Geelong auction listing",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "“Dangerous”: renovators discover asbestos still hiding in their home after it passed inspection",
+"link": "https://www.realestate.com.au/news/dangerous-renovators-discover-asbestos-still-hiding-in-their-home-after-it-passed-inspection/",
+"when": "2026-11-20T17:00:00+00:00",
+"desc": "A renovating couple was scared for their family’s safety when they discovered asbestos still hiding in their property after an inspection. The post “Dangerous”: renovators discover asbestos still hidi",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "DIY builders at risk of asbestos exposure as Queenslanders drop $1.2b more on renovations",
+"link": "https://www.realestate.com.au/news/diy-builders-at-risk-of-asbestos-exposure-as-queenslanders-drop-12b-more-on-renovations/",
+"when": "2026-11-20T17:00:00+00:00",
+"desc": "Experts have warned it even a small renovation can expose you to asbestos – while Queenslanders are now spending $1.2b more on fixing up their homes. The post DIY builders at risk of asbestos exposure",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Idea of Britain rejoining EU still on table after key summit",
+"link": "https://www.abc.net.au/news/2026-11-21/key-takeaways-from-uk-eu-summit/107406986",
+"when": "2026-11-20T14:04:59+00:00",
+"desc": "Leaders from Britain and the European Union say they have agreed several new deals in Brussels, as the United Kingdom's Prime Minister Andy Burnham attempts to reshape his country's relationship with ",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Steve Bracks is on board: Ben Carroll finds a believer as most write off Labor’s Victorian election chances",
+"link": "https://www.theguardian.com/australia-news/2026/nov/21/steve-bracks-believes-labor-can-win-the-victorian-election",
+"when": "2026-11-20T14:00:33+00:00",
+"desc": "The former premier arrives to deliver a morale boost as Carroll defends his government’s record and says the royal commission might ‘help save the labour movement’ Get our breaking news email , free a",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "The politics of sandpapergate - Back to Back Barries podcast",
+"link": "https://www.theguardian.com/australia-news/audio/2026/nov/20/the-politics-of-sandpapergate-back-to-back-barries-podcast",
+"when": "2026-11-20T14:00:33+00:00",
+"desc": "As early polls open in Victoria, Tony Barry and Barrie Cassidy kick off by taking a look at the Big Build royal commission. They contrast this inquiry with another investigation making headlines this ",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "Anthony Albanese didn’t dazzle on the world stage, but he didn’t miss when he challenged Vladimir Putin",
+"link": "https://www.theguardian.com/australia-news/2026/nov/20/anthony-albanese-didnt-dazzle-on-the-world-stage-but-he-didnt-miss-when-he-challenged-vladimir-putin",
+"when": "2026-11-20T13:59:03+00:00",
+"desc": "The prime minister’s flourish-free, middle-power ethos guided his classic performance on this major foreign policy trip Get our daily political email , free app or daily news podcast For days leading ",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "The politics of sandpapergate - podcast",
+"link": "https://www.theguardian.com/australia-news/audio/2026/nov/21/the-politics-of-sandpapergate-back-to-back-barries-podcast",
+"when": "2026-11-20T13:57:29+00:00",
+"desc": "As early polls open in Victoria, Tony Barry and Barrie Cassidy kick off by taking a look at the Big Build royal commission. They contrast this inquiry with another investigation making headlines this ",
+"cat": "墨尔本"
+},
+{
+"src": "realestate 新闻",
+"title": "One in three homes at risk as asbestos experts sound alarm",
+"link": "https://www.realestate.com.au/news/one-in-three-homes-at-risk-as-asbestos-experts-sound-alarm/",
+"when": "2026-11-20T13:30:00+00:00",
+"desc": "One in three Australian homes contains asbestos, yet a record $4.15 billion renovation boom is pushing unsuspecting homeowners directly into harm’s way. The post One in three homes at risk as asbestos",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Asbestos warning for renovators as home updates surge",
+"link": "https://www.realestate.com.au/news/asbestos-warning-for-renovators-as-home-updates-surge/",
+"when": "2026-11-20T13:30:00+00:00",
+"desc": "Renovation activity is at a 50-year high, raising serious concerns about deadly asbestos exposure in one in three South Australian homes. The post Asbestos warning for renovators as home updates surge",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "View from The Hill: Jobless numbers highlight that the Reserve Bank’s credibility is on the line",
+"link": "https://theconversation.com/view-from-the-hill-jobless-numbers-highlight-that-the-reserve-banks-credibility-is-on-the-line-296269",
+"when": "2026-11-20T08:22:21+00:00",
+"desc": "With unemployment up, Michele Bullock is under increasing pressure on interest rates.",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Mia Freedman’s new mansion deemed ‘not in the public interest’",
+"link": "https://www.realestate.com.au/news/mia-freedmans-new-mansion-deemed-not-in-the-public-interest/",
+"when": "2026-11-20T05:33:00+00:00",
+"desc": "It’s back to the drawing board for Mamamia founder Mia Freedman and her husband Jason Lavigne, who have had their dream plans for a new Point Piper mansion rejected. The post Mia Freedman’s new mansio",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Couple’s travels inspire Mediterranean makeover of Sunshine Coast home",
+"link": "https://www.realestate.com.au/news/couples-travels-inspire-mediterranean-makeover-of-sunshine-coast-home/",
+"when": "2026-11-20T05:17:44+00:00",
+"desc": "A designer-builder couple have transformed a tired 1970s-style brick home into an idyllic Mediterranean villa ... The post Couple’s travels inspire Mediterranean makeover of Sunshine Coast home appear",
+"cat": "地产"
+},
+{
+"src": "卫报澳洲",
+"title": "Kellie Sloane says she’s ‘pretty sure’ NSW Liberals exodus is over after Mark Speakman resigns",
+"link": "https://www.theguardian.com/australia-news/2026/nov/19/mark-speakman-resigns-and-says-liberals-face-existential-threat-as-nsw-exodus-continues",
+"when": "2026-11-20T05:02:16+00:00",
+"desc": "Former opposition leader warns party against being ‘One Nation lite’ as he becomes eighth out of 24 Liberal MPs not to recontest seat in March Get our daily political email , free app or daily news po",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Was Anthropic’s record US$81 billion listing a vote of confidence in AI – and what’s next?",
+"link": "https://theconversation.com/was-anthropics-record-us-81-billion-listing-a-vote-of-confidence-in-ai-and-whats-next-297151",
+"when": "2026-11-20T04:53:50+00:00",
+"desc": "Now that Anthropic has become a publicly listed company, the AI industry will come under even more intense scrutiny.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Game on: Why falling home prices are bringing Aussie buyers back to the table",
+"link": "https://www.realestate.com.au/news/game-on-why-falling-home-prices-are-bringing-aussie-buyers-back-to-the-table/",
+"when": "2026-11-20T04:20:37+00:00",
+"desc": "Prospective home buyers are feeling hopeful despite falling property prices and increasing mortgage pressures, new ... The post Game on: Why falling home prices are bringing Aussie buyers back to the ",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Aussie couple ditches city to buy private island",
+"link": "https://www.realestate.com.au/news/aussie-familys-520k-private-island-escape/",
+"when": "2026-11-20T04:00:00+00:00",
+"desc": "Forget the milk and you need a boat. Inside the wild Bass Strait getaway a Melbourne family bought instead of a Mornington Peninsula weekender. The post Aussie couple ditches city to buy private islan",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "What is ‘fascia release’ and do I need to do it? A physiotherapy expert unpacks the evidence",
+"link": "https://theconversation.com/what-is-fascia-release-and-do-i-need-to-do-it-a-physiotherapy-expert-unpacks-the-evidence-292606",
+"when": "2026-11-20T03:59:01+00:00",
+"desc": "Without your fascia, you’d be a pile of parts. But can you actually train or release it? And why would you need to?",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "What a genuine fixed‑price building contract should cover in Queensland",
+"link": "https://www.realestate.com.au/news/what-a-genuine-fixed-price-building-contract-should-cover-in-queensland/",
+"when": "2026-11-20T03:20:12+00:00",
+"desc": "Building a new home is one of life’s biggest investments, so it is important to ... The post What a genuine fixed‑price building contract should cover in Queensland appeared first on realestate.com.au",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "They wanted kombucha, but got a killer SCOBY instead. Zombucha! is a wonderfully silly Aussie film",
+"link": "https://theconversation.com/they-wanted-kombucha-but-got-a-killer-scoby-instead-zombucha-is-a-wonderfully-silly-aussie-film-296815",
+"when": "2026-11-20T03:08:51+00:00",
+"desc": "A killer kombucha culture makes for a gory (if overlong) comedy that doubles as a sharp commentary on wellness culture.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Xi Jinping says a ‘full turnaround’ has been achieved in Australia-China relations, praising Anthony Albanese",
+"link": "https://www.theguardian.com/world/2026/nov/20/xi-jinping-says-a-full-turnaround-has-been-achieved-in-australia-china-relations-praising-anthony-albanese",
+"when": "2026-11-20T02:59:56+00:00",
+"desc": "Comments come after the leaders met on the sidelines of the Apec summit in Shenzhen, China Get our daily political email , free app or daily news podcast Xi Jinping says a “full turnaround” has been a",
+"cat": "中澳"
+},
+{
+"src": "卫报澳洲",
+"title": "Yet another Walkleys win for the Age’s star reporter leaves his own paper slightly confused | Weekly Beast",
+"link": "https://www.theguardian.com/media/2026/nov/20/murdoch-movie-offers-a-dark-take-on-the-rise-of-the-sun-and-news-corp-invites-its-staff-ntwnfb",
+"when": "2026-11-20T02:11:26+00:00",
+"desc": "Nick McKenzie wins Gold Walkley for the second time, but the Age accidentally celebrates his 2024 triumph on its front page. Plus: invoking the BRS spirit Want to get this in your inbox every Friday? ",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "‘Carrot juice’: Home water panic grips Aus town",
+"link": "https://www.realestate.com.au/news/carrot-juice-home-water-panic-grips-aus-town/",
+"when": "2026-11-20T02:10:00+00:00",
+"desc": "An Aussie woman who likened her water to “fluorescent carrot juice” says she was repeatedly reassured it was safe, until test results told a different story. The post ‘Carrot juice’: Home water panic ",
+"cat": "地产"
+},
+{
+"src": "卫报澳洲",
+"title": "Big tech is already building datacentres in Australia. Why is Labor so desperate to give them loopholes?",
+"link": "https://www.theguardian.com/technology/commentisfree/2026/nov/20/big-tech-is-already-building-datacentres-in-australia-why-is-labor-desperate-to-give-them-loopholes",
+"when": "2026-11-20T02:00:18+00:00",
+"desc": "If the government bends to AI companies, artists, creatives and journalists will be the sacrificial lamb – and Australia will become a global pariah Get our breaking news email , free app or daily new",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Bargain buy Davoren Park home ‘fire damaged but salvageable’",
+"link": "https://www.realestate.com.au/news/bargain-buy-davoren-park-home-fire-damaged-but-salvageable/",
+"when": "2026-11-20T02:00:00+00:00",
+"desc": "Househunters chasing a bargain buy are keen to snap up this property, but there’s a catch – and whoever secures it will have a big challenge ahead of them. The post Bargain buy Davoren Park home ‘fire",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Six home design centres where you can see the options up close",
+"link": "https://www.realestate.com.au/news/six-home-design-centres-where-you-can-see-the-options-up-close/",
+"when": "2026-11-20T01:10:38+00:00",
+"desc": "From working kitchens to one-on-one design advice, these centres help homebuyers compare finishes that can ... The post Six home design centres where you can see the options up close appeared first on",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "Xi-Trump meeting avoids difficult conversations, and both leaders get what they want",
+"link": "https://theconversation.com/xi-trump-meeting-avoids-difficult-conversations-and-both-leaders-get-what-they-want-297046",
+"when": "2026-11-20T01:10:25+00:00",
+"desc": "Ultimately, the summit entailed a cordial conversation between the two that reflected their respective desire to maintain stability.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Melbourne land buyers warned of valuation risks as developers offer $90k rebates",
+"link": "https://www.realestate.com.au/news/melbourne-land-buyers-warned-of-valuation-risks-as-developers-offer-90k-rebates/",
+"when": "2026-11-20T01:00:00+00:00",
+"desc": "Developers are dangling massive cash incentives to keep headline prices flat as sales sink, leaving buyers exposed to a costly bank trap. The post Melbourne land buyers warned of valuation risks as de",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "As the likes of Trump and Hanson demonise the press, journalists must rally for what matters | Linton Besser",
+"link": "https://www.theguardian.com/media/commentisfree/2026/nov/20/as-the-likes-of-trump-and-hanson-demonise-the-press-journalists-must-rally-for-what-matters",
+"when": "2026-11-20T00:57:20+00:00",
+"desc": "We must compete with each other. But in these straitened times, a sense of justice and collegiality has never been more important At this lectern last year, Kerry O’Brien struck home when he warned of",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Clayton Larcombe’s French chateau cops $10m price cut",
+"link": "https://www.realestate.com.au/news/clayton-larcombes-french-chateau-cops-10m-price-cut/",
+"when": "2026-11-20T00:54:00+00:00",
+"desc": "With interiors drawn on the grand homes of France and Italy, this grand country escape has had a massive price cut. The post Clayton Larcombe’s French chateau cops $10m price cut appeared first on rea",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "A seismic ICJ ruling has found Myanmar responsible for genocide. But will it help the Rohingya?",
+"link": "https://theconversation.com/a-seismic-icj-ruling-has-found-myanmar-responsible-for-genocide-but-will-it-help-the-rohingya-296700",
+"when": "2026-11-20T00:35:00+00:00",
+"desc": "A world-first ruling from the International Court of Justice could change how courts treat genocide – but how the ruling will be enforced remains an open question.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Wars and cost of living have pushed climate change off the priority list",
+"link": "https://theconversation.com/wars-and-cost-of-living-have-pushed-climate-change-off-the-priority-list-296984",
+"when": "2026-11-20T00:31:15+00:00",
+"desc": "We’re heading past 1.5 degrees. What will it take to put COP climate summits back on the global agenda?",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Sydney suburbs where AI job cuts pose biggest home value risk",
+"link": "https://www.realestate.com.au/news/sydney-suburbs-where-ai-job-cuts-pose-biggest-home-value-risk/",
+"when": "2026-11-19T23:45:00+00:00",
+"desc": "New data has flagged 45 Sydney suburbs at high risk of AI-driven job losses and wage freezes that could slash local home values. The post Sydney suburbs where AI job cuts pose biggest home value risk ",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Why your DIY roof fix may be making things worse",
+"link": "https://www.realestate.com.au/news/why-your-diy-roof-fix-may-be-making-things-worse/",
+"when": "2026-11-19T23:23:00+00:00",
+"desc": "The money-saving roof repair that ends up costing more – experts say nearly two-thirds of Australians are making this costly mistake without realising it. The post Why your DIY roof fix may be making ",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Biggest deals revealed: Australia’s priciest home sales",
+"link": "https://www.realestate.com.au/news/biggest-deals-revealed-australias-priciest-home-sales/",
+"when": "2026-11-19T22:54:06+00:00",
+"desc": "Australians have shelled out eye-watering sums for luxury homes over the past year, with the ... The post Biggest deals revealed: Australia’s priciest home sales appeared first on realestate.com.au .",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Buyer sentiment surges following price falls",
+"link": "https://www.realestate.com.au/news/buyer-sentiment-surges-following-price-falls/",
+"when": "2026-11-19T22:52:26+00:00",
+"desc": "Home price declines have triggered a significant improvement in buyer sentiment, with more buyers believing ... The post Buyer sentiment surges following price falls appeared first on realestate.com.a",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "We found a seaweed that hadn’t been spotted in 90 years - and discovered vast underwater forests",
+"link": "https://theconversation.com/we-found-a-seaweed-that-hadnt-been-spotted-in-90-years-and-discovered-vast-underwater-forests-291975",
+"when": "2026-11-19T22:30:41+00:00",
+"desc": "Adult specimens of the Sargassum howeanum seaweed were last found in the 1930s.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Toorak dominates Melbourne’s most expensive home sales",
+"link": "https://www.realestate.com.au/news/toorak-dominates-melbournes-most-expensive-home-sales/",
+"when": "2026-11-19T22:00:00+00:00",
+"desc": "Melbourne’s top sales for the past 12 months have revealed eye-watering purchases, and stamp duty bills. See your area’s biggest price. The post Toorak dominates Melbourne’s most expensive home sales ",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "NZ’s pay equity law has been found to breach women’s rights. How can it stand?",
+"link": "https://theconversation.com/nzs-pay-equity-law-has-been-found-to-breach-womens-rights-how-can-it-stand-297057",
+"when": "2026-11-19T21:25:55+00:00",
+"desc": "A High Court ruling points to a major vulnerability in NZ’s democracy: when parliament passes discriminatory laws under urgency, the courts can’t overturn them.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "The most iconic sports film of all time taught us winning isn’t everything: 50 years of Rocky",
+"link": "https://theconversation.com/the-most-iconic-sports-film-of-all-time-taught-us-winning-isnt-everything-50-years-of-rocky-276876",
+"when": "2026-11-19T19:05:54+00:00",
+"desc": "Rocky’s underdog story is in many ways also Sylvester Stallone’s story.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "With AI blamed for mass layoffs, here’s how we can ensure workers get a fairer go",
+"link": "https://theconversation.com/with-ai-blamed-for-mass-layoffs-heres-how-we-can-ensure-workers-get-a-fairer-go-296948",
+"when": "2026-11-19T19:05:25+00:00",
+"desc": "A string of mass redundancies highlights the need to strengthen workers’ rights. Countries such as Germany and Denmark offer approaches that could work here, too.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Friday essay: nostalgia or neoliberal collapse? – John Birmingham investigates Pauline Hanson’s appeal",
+"link": "https://theconversation.com/friday-essay-nostalgia-or-neoliberal-collapse-john-birmingham-investigates-pauline-hansons-appeal-295662",
+"when": "2026-11-19T19:05:04+00:00",
+"desc": "‘Gonzo journalist’ John Birmingham returns to his home town of Ipswich, Queensland, to start his investigation of Pauline Hanson’s dramatic resurgence.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Why do some specialists charge so much, when others’ fees are more reasonable?",
+"link": "https://theconversation.com/why-do-some-specialists-charge-so-much-when-others-fees-are-more-reasonable-296601",
+"when": "2026-11-19T19:04:29+00:00",
+"desc": "New research examined whether the patient’s health, the doctor’s specialty, or where the patient lives explain the huge gaps.",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Historic Fannie Bay Gaol guard house transformed",
+"link": "https://www.realestate.com.au/news/historic-fannie-bay-gaol-guard-house-transformed/",
+"when": "2026-11-19T19:00:00+00:00",
+"desc": "A former Fannie Bay Gaol guard’s house has been transformed into a multi-dwelling compound generating $3000 a week in rental income. Check it out! The post Historic Fannie Bay Gaol guard house transfo",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Gold Coast developer John Potter lists luxury Hedges Ave mansion for $32 million",
+"link": "https://www.realestate.com.au/news/gold-coast-developer-john-potter-lists-luxury-hedges-ave-mansion-for-32-million/",
+"when": "2026-11-19T19:00:00+00:00",
+"desc": "Boutique Gold Coast developer John Potter has listed his personal $32 million Hedges Ave beachfront home, complete with an eight-car garage and boxing ring. The post Gold Coast developer John Potter l",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "‘Like a storybook’: Historic Hamilton manor Greenaway End listed after 25 years",
+"link": "https://www.realestate.com.au/news/like-a-storybook-historic-hamilton-manor-greenaway-end-listed-after-25-years/",
+"when": "2026-11-19T19:00:00+00:00",
+"desc": "A Brisbane home that looked so extraordinary it appeared in a 1933 home magazine has finally come up for sale after more than 25 years. See inside! The post ‘Like a storybook’: Historic Hamilton manor",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Gold Coast developers slash new home prices under $1m to help first-home buyers",
+"link": "https://www.realestate.com.au/news/gold-coast-developers-slash-new-home-prices-under-1m-to-help-firsthome-buyers/",
+"when": "2026-11-19T19:00:00+00:00",
+"desc": "Twenty Gold Coast houses have been priced under $1m – well below the city’s $1.391m median – as developers race to qualify first home buyers for federal funding. The post Gold Coast developers slash n",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "New cancer frontiers: Could COVID vaccines help make treatments more effective?",
+"link": "https://theconversation.com/new-cancer-frontiers-could-covid-vaccines-help-make-treatments-more-effective-290627",
+"when": "2026-11-19T18:20:16+00:00",
+"desc": "A surprising link between COVID-19 vaccination and cancer survival suggests mRNA vaccines could help existing immunotherapies work better.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Hobart’s AI job risk suburbs revealed",
+"link": "https://www.realestate.com.au/news/hobarts-ai-job-risk-suburbs-revealed/",
+"when": "2026-11-19T18:02:00+00:00",
+"desc": "A report has mapped Tasmania’s suburbs most exposed to AI disruption — but high homeownership rates could soften the blow. The post Hobart’s AI job risk suburbs revealed appeared first on realestate.c",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "‘Needs to shrink’: Brisbane developer warns homes to hit 100 sqm by 2032",
+"link": "https://www.realestate.com.au/news/needs-to-shrink-brisbane-developer-warns-homes-to-hit-100-sqm-by-2032/",
+"when": "2026-11-19T18:00:00+00:00",
+"desc": "Escalating construction costs are forcing Queensland developers to build smaller homes, with a leading developer warning buyers will have no choice but to downsize by 2032. The post ‘Needs to shrink’:",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Late Wallace Cameron’s family list Brighton mansion",
+"link": "https://www.realestate.com.au/news/late-wallace-camerons-family-list-brighton-mansion/",
+"when": "2026-11-19T18:00:00+00:00",
+"desc": "He’s lost a house to fire and millions in property deals including a looming hit on the place next to where Shane Warne brought Liz Hurley. The post Late Wallace Cameron’s family list Brighton mansion",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Kyle Sandilands’ agent denies price rise for Glenorie mansion",
+"link": "https://www.realestate.com.au/news/kyle-sandilands-agent-denies-price-rise-for-glenorie-mansion/",
+"when": "2026-11-19T18:00:00+00:00",
+"desc": "Kyle Sandilands’ representative has debunked claims over a $5 million secret price hike following his very public $100 million loss in court. The post Kyle Sandilands’ agent denies price rise for Glen",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Late Test batsman Ian Redpath’s Waurn Ponds home sells for $1.925m",
+"link": "https://www.realestate.com.au/news/late-test-batsman-ian-redpaths-waurn-ponds-home-sells-for-1925m/",
+"when": "2026-11-19T18:00:00+00:00",
+"desc": "The Waurn Ponds farmhouse of late Test batsman Ian Redpath has sold after almost seven months, marking the end of an era for the family. The post Late Test batsman Ian Redpath’s Waurn Ponds home sells",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "‘Last resort’: Families face eviction in rates debt shock",
+"link": "https://www.realestate.com.au/news/last-resort-families-face-eviction-in-rates-debt-shock/",
+"when": "2026-11-19T17:00:00+00:00",
+"desc": "Two families face losing their homes as a cash-strapped council moves to auction 62 properties in a dramatic bid to recover more than $800,000 in unpaid rates. The post ‘Last resort’: Families face ev",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Aussie homeowners share cheap DIY renovation hacks saving thousands amid soaring prices",
+"link": "https://www.realestate.com.au/news/aussie-homeowners-share-cheap-diy-renovation-hacks-saving-thousands-amid-soaring-prices/",
+"when": "2026-11-19T17:00:00+00:00",
+"desc": "Australians are slashing renovation costs by thousands of dollars using DIY tips from an online community that has racked up 350 million views. The post Aussie homeowners share cheap DIY renovation ha",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Not in our backyard: Mansion owners dealt brutal blow in $11m turf war",
+"link": "https://www.realestate.com.au/news/not-in-our-backyard-mansion-owners-dealt-brutal-blow-in-11m-turf-war/",
+"when": "2026-11-19T17:00:00+00:00",
+"desc": "An exclusive Australian street is in meltdown, demanding the public need to keep away from their homes after a proposal brutally escalated. The post Not in our backyard: Mansion owners dealt brutal bl",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Construction crisis forces Queensland developers to build smaller townhouses",
+"link": "https://www.realestate.com.au/news/construction-crisis-forces-queensland-developers-to-build-smaller-townhouses/",
+"when": "2026-11-19T17:00:00+00:00",
+"desc": "A former Block star has exposed his unexpected struggle at 46, claiming that he shouldn’t be forced into a work act that he never wanted. The post Construction crisis forces Queensland developers to b",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Homeowner caught out by annual vacancy fee",
+"link": "https://www.realestate.com.au/news/homeowner-caught-out-by-annual-vacancy-fee/",
+"when": "2026-11-19T17:00:00+00:00",
+"desc": "A foreign homeowner, who complained after copping a massive $160,000 Australian bill , has brutally backfired after people noticed one detail. The post Homeowner caught out by annual vacancy fee appea",
+"cat": "地产"
+}
+]
+}
