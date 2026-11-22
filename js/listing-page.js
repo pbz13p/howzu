@@ -214,8 +214,8 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .bar a.g{background:#e8f3ee;color:#0f6b4f}.bar a.p{flex:1.6}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.hero{aspect-ratio:16/9}}
 </style>
-<script src="/js/i18n-en.js?v=20261122" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
-<script src="/js/config.js?v=20261107" defer></script><script src="/js/contact-fab.js?v=20261117" defer></script>
+<script src="/js/i18n-en.js?v=20261122b" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/config.js?v=20261107" defer></script><script src="/js/alert-sub.js?v=20261122" defer></script><script src="/js/contact-fab.js?v=20261117" defer></script>
 </head>
 <body>
 <header class="top"><a class="logo" href="../rentals.html">好租 Howzu</a><a class="all" href="../rentals.html">全部房源 ›</a></header>
@@ -236,6 +236,7 @@ ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同�
 ${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "这些现在可以租" : "其他在租房源"}</div>${others.map(y => `<a href="${esc(y.id)}.html" data-act="rel" data-id="${esc(y.id)}">${(y.photos || [])[0] ? `<img src="${esc(rel(sized(y.photos[0], "s")))}" width="480" height="360" alt="" loading="lazy">` : ""}<b>${esc(priceText(y))}</b><span>${esc((y.title || y.suburb || "").split("·")[0].trim())}</span><small>${esc([y.beds != null ? y.beds + " 房" : "", y.baths != null ? y.baths + " 卫" : "", y.cars ? y.cars + " 车位" : ""].filter(Boolean).join(" · ") || y.suburb || "")}</small></a>`).join("")}</div>` : ""}
 <a class="more" href="${esc(full)}">查看全部照片 · 看对口学区 ›</a>
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
+<div class="alert-sub" data-suburb="${esc(x.suburb || "")}" data-beds="${esc(x.beds != null ? x.beds : "")}" data-max="${esc(Number(x.rentWeekly) > 0 ? Math.ceil(Number(x.rentWeekly) * 1.1 / 10) * 10 : "")}"></div>
 <p class="trust">好租 Howzu · 持牌物业管理 · 全程中文服务</p>
 </main>
 ${isLet(x) ? `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${esc(x.id)}">看在租房源</a><a class="p" href="${esc(leadUrl(x))}" data-act="lead" data-id="${esc(x.id)}">🔔 同楼或附近有空房通知我</a></div></nav>` : ""}

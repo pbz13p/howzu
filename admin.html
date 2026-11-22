@@ -47,7 +47,7 @@ input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border
 <body>
 <header><h1>审核房源</h1></header>
 <main id="app"><div class="empty">加载中…</div></main>
-<script src="js/listing-page.js?v=20261120"></script>
+<script src="js/listing-page.js?v=20261122"></script>
 <script src="js/admin-check.js?v=20261112b"></script>
 <script src="js/post-parse.js?v=20261115"></script>
 <script src="js/admin-cendant.js?v=20261120"></script>
@@ -74,8 +74,8 @@ async function load() {
   if (tab === "stats") return loadStats();
   if (tab === "import") return loadImport({ sb, $, esc, head: tabsHtml(), C });
   if (tab === "cendant") return window.loadCendant({ $, head: tabsHtml() });
-  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求,代看房)").order("created_at", { ascending: false });
-  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求,代看房)"); // 用来查重复（只取地址和状态）
+  const { data, error } = await sb.from("listings").select("*").eq("status", tab).not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求,代看房,找房订阅,退订)").order("created_at", { ascending: false });
+  const { data: all } = await sb.from("listings").select("id,address,status").not("kind", "in", "(求租需求,房东托管咨询,待房东确认,买房咨询,回电请求,代看房,找房订阅,退订)"); // 用来查重复（只取地址和状态）
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   const J = JUST; JUST = null;
   const just = J ? `<div class="just" role="status"><b>✅ 已通过上线</b><div class="m">「${esc(J.title || J.address || "")}」</div><div class="m">下一步：把上线消息发给房东 ${esc(J.contact_name || "")}（微信 ${esc(J.contact_wechat || "—")} · 手机 ${esc(J.contact_phone || "—")}）</div><div class="acts"><button class="ok" data-notice="${esc(J.id)}">📨 复制「已上线 + 链接」</button>${J.contact_phone ? `<a class="gr" style="font-size:15px;padding:10px 14px;border-radius:10px;text-decoration:none" href="sms:${esc(J.contact_phone)}?&body=${encodeURIComponent(AdminCheck.ownerNotice(J))}">💬 直接发短信</a>` : ""}</div></div>` : "";
@@ -143,16 +143,16 @@ async function loadStats() {
 }
 let LF = ""; // 询盘筛选：""=全部，"代看房"=只看代看房预约
 async function loadLeads() {
-  const { data, error } = await sb.from("listings").select("*").in("kind", LF === "代看房" ? ["代看房"] : ["求租需求", "房东托管咨询", "买房咨询", "回电请求", "代看房"]).order("created_at", { ascending: false });
+  const { data, error } = await sb.from("listings").select("*").in("kind", LF ? [LF] : ["求租需求", "房东托管咨询", "买房咨询", "回电请求", "代看房", "找房订阅"]).order("created_at", { ascending: false });
   D = Object.fromEntries((data || []).map(x => [x.id, x]));
   // 现在在租的房源（自管 listings.json + 用户发布已上线的），用来给每条需求配房
   const [own, pub] = await Promise.all([fetch("data/listings.json", { cache: "no-store" }).then(r => r.json()).then(j => j.listings || []).catch(() => []),
     sb.from("listings").select("id,title,suburb,address,beds,rent_weekly,status,kind").eq("status", "live").then(r => r.data || [], () => [])]);
   const ids = new Set(pub.map(x => String(x.id))); LIVE = [...own.filter(x => !ids.has(String(x.id))), ...pub];
-  const match = x => { if (x.status !== "pending") return ""; if (x.kind === "代看房") return `<div class="tbc ok">✈️ 代看房预约：先微信或邮件报价，对方同意后再约时间</div>`; if (x.kind === "房东托管咨询") return `<div class="tbc ok">🔑 房东托管咨询：尽快联系业主，约时间看房评估</div>`; const m = AdminCheck.leadMatches(x, LIVE);
+  const match = x => { if (x.status !== "pending") return ""; if (x.kind === "找房订阅") return `<div class="tbc ok">🔔 找房订阅：${x.status === "rejected" ? "已退订" : "订阅中"}，每小时自动发邮件，不用手动处理</div>`; if (x.kind === "代看房") return `<div class="tbc ok">✈️ 代看房预约：先微信或邮件报价，对方同意后再约时间</div>`; if (x.kind === "房东托管咨询") return `<div class="tbc ok">🔑 房东托管咨询：尽快联系业主，约时间看房评估</div>`; const m = AdminCheck.leadMatches(x, LIVE);
     return m.length ? `<div class="tbc ok">🏠 现在有 ${m.length} 套合适：${m.slice(0, 3).map(y => esc(String(y.title || y.suburb || "").trim())).join("、")}${m.length > 3 ? " 等" : ""} <button class="gr" data-ln="${esc(x.id)}">复制通知租客的话</button></div>`
       : `<div class="tbc none">🏠 现在没有完全合适的在租房源，有新房上线再来看</div>`; };
-  $("#app").innerHTML = tabsHtml() + `<div class="m" style="margin:0 2px 6px"><button class="gr" data-lf="${LF ? "" : "代看房"}">${LF ? "看全部询盘" : "✈️ 只看代看房预约"}</button></div><div class="m" style="margin:0 2px 10px">租客在房源页 / 学区页留的需求。下面自动列出现在合适的在租房源，一键复制通知话术发给租客。</div>` +
+  $("#app").innerHTML = tabsHtml() + `<div class="m" style="margin:0 2px 6px">${LF ? `<button class="gr" data-lf="">看全部询盘</button>` : `<button class="gr" data-lf="代看房">✈️ 只看代看房预约</button> <button class="gr" data-lf="找房订阅">🔔 只看找房订阅</button>`}</div><div class="m" style="margin:0 2px 10px">租客在房源页 / 学区页留的需求。下面自动列出现在合适的在租房源，一键复制通知话术发给租客。</div>` +
     (error ? `<div class="empty">读取失败：${esc(error.message)}</div>` : !data.length ? '<div class="empty">还没有人留需求</div>' : data.map(x => `<div class="card"${x.status !== "pending" ? ' style="opacity:.55"' : ""}>
       <div class="t">${esc(x.title)}${x.status !== "pending" ? " · 已联系" : ""}</div>
       <div class="m">💰 ${x.rent_weekly ? "$" + x.rent_weekly + "/周" : "预算未填"} · 🗓 ${x.available ? esc(ListingPage.availText(x.available)) + "入住" : "入住时间未填"}</div>

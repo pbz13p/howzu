@@ -24,7 +24,7 @@ const sale = fs.existsSync(saleDir) ? fs.readdirSync(saleDir).filter(f => /^[a-z
 let sm = LP.sitemap(list, guides, sale); const sf = path.join(root, "sitemap.xml");
 // 今日要闻：/news/ 和每期页面
 { const nd = path.join(root, "news"); if (fs.existsSync(nd)) { const ns = fs.readdirSync(nd).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f)).sort().reverse();
-  const add = [`  <url><loc>https://howzu.com.au/news/</loc><changefreq>daily</changefreq></url>`].concat(ns.map(f => `  <url><loc>https://howzu.com.au/news/${f}</loc></url>`)).join("\n");
+  const add = [`  <url><loc>https://howzu.com.au/rent/feed.xml</loc><changefreq>hourly</changefreq></url>`, `  <url><loc>https://howzu.com.au/news/</loc><changefreq>daily</changefreq></url>`].concat(ns.map(f => `  <url><loc>https://howzu.com.au/news/${f}</loc></url>`)).join("\n");
   sm = sm.replace("</urlset>", add + "\n</urlset>"); } }
 if (fs.readFileSync(sf, "utf8") !== sm) fs.writeFileSync(sf, sm);
 console.log(`房源独立页：${list.length} 套（更新 ${n} 个文件），sitemap 在租 ${list.filter(x => x.status === "live").length} 套 + 文章 ${guides.length} 篇 + 在售 ${sale.length} 套`);
@@ -51,6 +51,22 @@ put("index.html", s => { const R = HR.html(list);
 // 租房页底部：全部在租房源的静态链接（放页尾，不影响首屏布局）
 put("rentals.html", s => s.replace(/<nav class="ssr" aria-label="全部在租房源">[\s\S]*?<\/nav>/,
   `<nav class="ssr" aria-label="全部在租房源"><b>全部在租房源</b>${live.map(x => `<a href="rent/${e(x.id)}.html">${e(x.title)}${x.rentWeekly ? ` · $${e(x.rentWeekly)}/周` : ""}</a>`).join("")}</nav>`));
+// 找房订阅卡片：25 个区域页（区自动填）和留学生专区
+for (const f of fs.readdirSync(path.join(root, "guide")).filter(f => /^area-.*\.html$/.test(f) || f === "study-abroad.html")) {
+  put("guide/" + f, s => {
+    if (s.includes('class="alert-sub"')) return s;
+    const sub = (s.match(/<div id="llCard" data-suburb="([^"]*)"/) || [])[1] || "";
+    const card = `<div class="alert-sub" data-suburb="${sub}" data-max=""></div>\n`;
+    s = s.includes('<div id="llCard"') ? s.replace('<div id="llCard"', card + '<div id="llCard"') : s.replace('<section id="book"', card + '<section id="book"');
+    return s.replace('<script src="/js/contact-fab.js', '<script src="/js/alert-sub.js?v=20261122" defer></script><script src="/js/contact-fab.js');
+  });
+}
+// 新房源订阅源（Atom）：只含已上线房源的公开字段
+{ const live = list.filter(x => x.status === "live" && Number(x.rentWeekly) > 0), X = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const upd = live.map(x => x.verified || x.listedAt || "2026-11-01").sort().pop() || "2026-11-01";
+  const feed = `<?xml version="1.0" encoding="utf-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom">\n<title>好租 Howzu · 墨尔本在租房源</title>\n<subtitle>好租新上线的墨尔本房源（周租、区、几房、可入住日期）</subtitle>\n<link href="https://howzu.com.au/rent/feed.xml" rel="self"/>\n<link href="https://howzu.com.au/rentals.html"/>\n<id>https://howzu.com.au/rent/feed.xml</id>\n<updated>${upd}T00:00:00+11:00</updated>\n` +
+    live.map(x => `<entry><title>${X(x.title)} · $${X(x.rentWeekly)}/周</title><link href="https://howzu.com.au/rent/${X(x.id)}.html"/><id>https://howzu.com.au/rent/${X(x.id)}.html</id><updated>${X(x.verified || x.listedAt || upd)}T00:00:00+11:00</updated><summary>${X([x.suburb, x.beds != null ? x.beds + " 房" : "", x.baths != null ? x.baths + " 卫" : "", "$" + x.rentWeekly + "/周", x.available ? x.available + " 起可入住" : ""].filter(Boolean).join(" · "))}</summary></entry>`).join("\n") + "\n</feed>\n";
+  const ff = path.join(root, "rent", "feed.xml"); if (!fs.existsSync(ff) || fs.readFileSync(ff, "utf8") !== feed) { fs.writeFileSync(ff, feed); n++; } }
 // 留学生专区：每所学校附近在租房源（ul 的 data-subs 写着包含哪些区）
 put("guide/study-abroad.html", s => s.replace(/<ul class="dot" id="sa-([a-z]+)" data-subs="([^"]*)">[\s\S]*?<\/ul>/g, (all, k, subsAttr) => {
   const subs = JSON.parse(subsAttr.replace(/&quot;/g, '"')), L = live.filter(x => subs.includes(x.suburb));

@@ -221,7 +221,8 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .ssr{max-width:1100px;margin:24px auto 0;padding:0 18px;font-size:13px;line-height:1.9;color:#5d6461}.ssr b{display:block;font-size:14px;color:#1d2321}.ssr a{color:#0f6b4f;margin-right:14px;white-space:nowrap}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://howzu.com.au/#org", "name": "好租 Howzu", "url": "https://howzu.com.au/", "logo": "https://howzu.com.au/apple-touch-icon.png", "areaServed": "Melbourne, Victoria, Australia", "knowsLanguage": ["zh-CN", "en"]}, {"@type": "WebSite", "@id": "https://howzu.com.au/#site", "url": "https://howzu.com.au/", "name": "好租 Howzu", "inLanguage": "zh-CN", "publisher": {"@id": "https://howzu.com.au/#org"}}]}</script>
-<script src="/js/i18n-en.js?v=20261122" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/i18n-en.js?v=20261122b" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<link rel="alternate" type="application/atom+xml" title="好租新房源" href="/rent/feed.xml">
 </head>
 <body>
 <nav class="nav"><div class="in">
@@ -259,6 +260,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
   <div class="lcm" id="lcm"></div>
   <div id="lmap" hidden><div class="lz"><span>🏫 按学区看</span><input id="lzI" list="lzL" placeholder="输入公立中学名，如 University High" autocomplete="off"><button type="button" id="lzX" hidden aria-label="清除学区">✕</button><datalist id="lzL"></datalist></div><div class="lm" id="lmapM"></div><p id="lmapN">位置按地址大致标注，仅供参考</p><p id="lzN" hidden></p></div>
   <div id="list" class="ld"><div class="empty">加载中…</div></div>
+  <div class="alert-sub" data-suburb="" data-max=""></div>
   <section class="lead" id="leadCard">
     <h2>没找到合适的？</h2>
     <p class="sub">留下需求，有新房源第一时间通知你。不用注册，30 秒填完。</p>
@@ -660,6 +662,6 @@ uP.then(u=>{if(u){U=u;merge();}});
 Promise.race([orgListings(),new Promise(r=>setTimeout(()=>r(null),8000))]).then(u=>{if(u&&u.length){I=u;merge();}});
 </script>
 <script src="/js/config.js?v=20261107"></script><script src="/js/track.js?v=20261114" defer></script>
-<script src="/js/contact-fab.js?v=20261117" defer></script>
+<script src="/js/alert-sub.js?v=20261122" defer></script><script src="/js/contact-fab.js?v=20261117" defer></script>
 </body>
 </html>

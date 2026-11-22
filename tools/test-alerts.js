@@ -1,0 +1,21 @@
+// 找房订阅：node tools/test-alerts.js
+const A = require("./alerts.js"), S = require("../js/alert-sub.js"), RV = require("../js/rent-vs.js"), fs = require("fs");
+let bad = 0; const ok = (n, c) => { console.log((c ? "✓ " : "✗ ") + n); if (!c) bad++; };
+ok("没勾同意不能订阅", /同意/.test(S.check({ email: "a@b.com", consent: false })));
+ok("邮箱不对不能订阅", /邮箱/.test(S.check({ email: "abc", consent: true })));
+const r = S.row({ email: "Test@Example.com", consent: true, suburb: "Carlton", beds: "1", max: "650", lang: "zh" }, "https://howzu.com.au/guide/area-carlton.html", "xhs", "2026-11-22T10:00:00Z");
+ok("订阅存成 pending + kind=找房订阅（公众看不到）", r.status === "pending" && r.kind === "找房订阅" && r.suburb === "Carlton" && r.beds === 1 && r.rent_weekly === 650);
+ok("邮箱、同意时间写进描述，不超字段长度", /email:test@example.com/.test(r.description) && /consent:/.test(r.description) && r.title.length <= 80 && r.address.length >= 5);
+const sub = { id: "11111111-2222-3333-4444-555555555555", suburb: "Carlton", beds: 1, rent_weekly: 650, highlights: ["lang:zh"] };
+ok("匹配：同区、房数够、周租在预算内", A.matches(sub, { suburb: "Carlton", beds: 1, rentWeekly: 580 }));
+ok("不匹配：超预算", !A.matches(sub, { suburb: "Carlton", beds: 1, rentWeekly: 700 }));
+ok("不匹配：别的区", !A.matches(sub, { suburb: "Southbank", beds: 2, rentWeekly: 600 }));
+ok("全墨尔本订阅匹配任何区；Melbourne 和 Melbourne CBD 算同一区", A.matches({ suburb: null }, { suburb: "Docklands", rentWeekly: 500 }) && A.matches({ suburb: "Melbourne" }, { suburb: "Melbourne CBD", rentWeekly: 500 }));
+const ev = A.events([{ id: "a", rentWeekly: 600 }, { id: "b", rentWeekly: 500 }, { id: "c", rentWeekly: 700 }], { a: 650, b: 500 });
+ok("找出新上线和降价，不动的不算", ev.length === 2 && ev.find(e => e.x.id === "a").why === "drop" && ev.find(e => e.x.id === "c").why === "new");
+const C = RV.compact(JSON.parse(fs.readFileSync(__dirname + "/../data/rent_check.json", "utf8")));
+const m = A.emailHtml(sub, [{ x: { id: "x", title: "Carlton · 两房一卫公寓", suburb: "Carlton", beds: 2, rentWeekly: 620, available: "2026-12-20", url: "https://howzu.com.au/rent/x.html", address: "1/2 A St" }, why: "new" }], C);
+ok("邮件有周租、区、几房、入住日期、utm_source=alert", /\$620\/周/.test(m.html) && /Carlton/.test(m.html) && /2 房/.test(m.html) && /2026-12-20/.test(m.html) && /utm_source=alert/.test(m.html));
+ok("邮件有发件人信息和一键退订链接（带 token）", /发件人/.test(m.html) && /unsub\.html\?s=11111111-2222-3333-4444-555555555555&amp;t=|unsub\.html\?s=11111111-2222-3333-4444-555555555555&t=[0-9a-f]{32}/.test(m.html));
+ok("退订 token 每个订阅不同", A.token("a") !== A.token("b") && A.token("a").length === 32);
+process.exit(bad ? 1 : 0);

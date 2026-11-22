@@ -1,0 +1,19 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>退订找房邮件 | 好租 Howzu</title><link rel="icon" href="/favicon.svg">
+<style>body{margin:0;font:16px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f7f6f2;color:#1d2b26}main{max-width:520px;margin:12vh auto;padding:20px;background:#fff;border:1px solid #e6ece9;border-radius:14px;text-align:center}h1{font-size:20px;color:#0f6b4f}a{color:#0f6b4f}</style></head>
+<body><main><h1 id="h">正在退订…</h1><p id="p">请稍等。</p><p><a href="/">回好租首页</a></p></main>
+<script src="/js/config.js?v=20261107"></script>
+<script>
+// 一键退订：不用登录。把退订请求写进询盘表（kind=退订），每小时发信前先处理，处理后这个订阅不再收任何邮件。
+(async function () {
+  const q = new URLSearchParams(location.search), s = q.get("s") || "", t = q.get("t") || "", H = window.HOWZU || {};
+  const h = document.getElementById("h"), p = document.getElementById("p");
+  if (!/^[0-9a-f-]{36}$/i.test(s) || !/^[0-9a-f]{16,64}$/i.test(t)) { h.textContent = "链接不完整"; p.textContent = "请直接点邮件里的退订链接，或回复邮件说“退订”。"; return; }
+  try {
+    const r = await fetch(H.SUPABASE_URL + "/rest/v1/listings", { method: "POST", headers: { apikey: H.SUPABASE_ANON_KEY, Authorization: "Bearer " + H.SUPABASE_ANON_KEY, "Content-Type": "application/json", Prefer: "return=minimal" },
+      body: JSON.stringify({ status: "pending", kind: "退订", title: "退订找房订阅", address: "退订请求 · 找房订阅", photos: [], highlights: ["退订"], description: "sub:" + s + "\nt:" + t }) });
+    if (!r.ok) throw 0;
+    h.textContent = "✅ 已退订"; p.textContent = "以后不会再收到这个找房订阅的邮件。想重新订阅，在好租任何房源页下面填邮箱就行。";
+  } catch (_) { h.textContent = "没退订成功"; p.textContent = "请回复那封邮件写“退订”，我们手动帮你退。"; }
+})();
+</script></body></html>

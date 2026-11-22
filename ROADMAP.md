@@ -92,6 +92,25 @@
 在该任务提示词末尾加：
 > 【好租快空房】读 Tracker properties：凡是 tenant 已通知搬走（lease/rent 备注里写明搬走、解约、转租），或 leaseEnd 在今天起 45 天内、lease 备注里没有续约/新租约记录的，在 pbz13p/howzu 的 data/listings.json 里把这套改成 status "draft"：沿用原照片和介绍，rentWeekly 填 Tracker 现租金，available 填 leaseEnd 后一天，bondWeeks 4，verified 今天，加 cendantDraft {reason, created}。已经是 draft/live 的不重复改；房东和租客姓名、电话、租金历史一律不写进房源。跑 node tools/test-cendant-draft.js 和 test-data.js，通过再提交。小结里加一行：“好租新草稿 N 套：…（去后台📋 待上线点上线）”。没有就写“本周没有快空房”。
 
+### F16. 找房订阅发邮件：注册 Resend + 填 4 个密钥（约 15 分钟，只做一次）
+A. Resend（发邮件的服务，免费额度以官网为准）
+1. 打开 https://resend.com/signup ，用 fanicyn@gmail.com 注册。
+2. 左边 Domains → Add Domain → 填 `howzu.com.au` → 区域选 Sydney（ap-southeast-2）→ Add。
+3. 页面会列出 3–4 条 DNS 记录（TXT / MX / CNAME）。另开 Cloudflare → howzu.com.au → DNS → Records → Add record，按 Resend 给的类型、名字、内容一条条加（CNAME 那条把橙色云朵点成灰色“DNS only”）。
+4. 回 Resend 点 Verify，几分钟到几小时变绿 ✅。
+5. 左边 API Keys → Create API Key → 名字 `howzu-alerts`，权限 Sending access，Domain 选 howzu.com.au → 复制那串 `re_...`。
+B. Supabase 的服务密钥
+6. 打开 Supabase → 好租项目 → Project Settings → API Keys → 复制 `service_role`（secret）那一串。**这串只填进 GitHub，不要发给任何人，也不要贴到聊天里。**
+C. 填进 GitHub（我不碰密钥）
+7. 打开 https://github.com/pbz13p/howzu/settings/secrets/actions → New repository secret，填这 4 个（Name 一字不差）：
+   - `RESEND_API_KEY` = 第 5 步的 re_...
+   - `SUPABASE_SERVICE_ROLE_KEY` = 第 6 步那串
+   - `ALERT_SECRET` = 随便敲 32 个以上字母数字（退订链接用来防伪，填完不用记）
+   - `ALERT_FROM` = `好租 Howzu <alerts@howzu.com.au>`
+D. 测试
+8. 手机打开 howzu.com.au/rentals.html，在「🔔 有新房通知我」填 fanicyn@gmail.com、勾同意、点订阅。
+9. 回我“好了”，我触发一次测试（假房源，不上网站），几分钟内你邮箱收到；点邮件最下面「一键退订」，页面显示「已退订」就行。
+
 ### F6. 公司微信号
 详情页底部的咨询栏现在只有短信、电话和预约看房。华人租客最习惯加微信，有了企业微信号或二维码，发我就能加上（预计询盘会明显增加）。
 
@@ -159,7 +178,7 @@
 | 8 | 防骗提醒（不看房先交钱等） | 中 | 小 | 8 | ✅ 已有：个人发布房源显示防骗 3 条 + 防骗 6 招文章 |
 | 9 | 房源加：家具、账单、押金、核实日期 | 中 | 中（字段 + 工作台表单） | 9 | 🟡 11/20：字段和结构化数据已做（bondWeeks、bills、pets、cars、verified）；家具、包不包账单、宠物要 Frank 给每套的答案（F14） |
 | 10 | 微信咨询入口 | 高 | 小（等 F6） | — | 待 F6 |
-| 11 | 找房订阅（有新房源通知） | 中 | 中 | 阶段五 | 待做 |
+| 11 | 找房订阅（有新房源通知） | 中 | 中 | 阶段五 | 🟡 11/22 代码上线：订阅卡片（租房页、25 个区域页、留学生专区、每个房源页；区/几房/预算自动填，只填邮箱 + 勾同意）、一键退订页 unsub.html、每小时发信（.github/workflows/alerts.yml，新上线或降价，一天最多 1 封、多套合并、带本区中位数比较和 utm_source=alert）、订阅源 /rent/feed.xml。**发信要等 F16 填好密钥**；之前订阅照常存，不会丢 |
 | 13 | 汇率工具页（AUD/CNY 中间价、换算、报价比一比、走势、AUSTRAC 查询和防骗），给留学生和新移民引流 | 中 | 小 | — | ✅ 11/14 guide/fx.html |
 | 14 | 根目录加 /llms.txt（中文说明好租是什么、覆盖哪些区、怎么找房和联系，链接首页、租房页、区域页和指南目录；不放私有数据），方便 AI 搜索和问答引用 | 中 | 小 | — | ✅ 11/14 |
 | 12 | 房东自助发布 ≤ 5 步、照片自动压缩和排序、自动描述 | 高（房源数） | 中 | 阶段二 | 部分已有：post.html 已能压缩照片，需复查步骤数 |

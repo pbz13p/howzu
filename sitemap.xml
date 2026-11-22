@@ -142,6 +142,7 @@
   <url><loc>https://howzu.com.au/sale/19-graham-altona-meadows.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://howzu.com.au/sale/29-dehnert-doncaster-east.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://howzu.com.au/sale/index.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://howzu.com.au/rent/feed.xml</loc><changefreq>hourly</changefreq></url>
   <url><loc>https://howzu.com.au/news/</loc><changefreq>daily</changefreq></url>
   <url><loc>https://howzu.com.au/news/2026-11-22.html</loc></url>
   <url><loc>https://howzu.com.au/news/2026-11-21.html</loc></url>

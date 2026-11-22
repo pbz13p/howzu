@@ -1,0 +1,27 @@
+name: 找房订阅邮件（每小时）
+on:
+  schedule: [{ cron: "41 * * * *" }]
+  workflow_dispatch:
+    inputs:
+      test_email: { description: "测试：只给这个邮箱的订阅发一封假房源（不上网站、不动快照）", required: false, default: "" }
+permissions: { contents: write }
+concurrency: { group: build-pages, cancel-in-progress: false }
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node tools/alerts.js
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_SECRET: ${{ secrets.ALERT_SECRET }}
+          ALERT_FROM: ${{ secrets.ALERT_FROM }}
+          ALERT_TEST: ${{ github.event.inputs.test_email != '' && '1' || '' }}
+          ALERT_TEST_EMAIL: ${{ github.event.inputs.test_email }}
+      - run: |
+          git config user.name "pbz13p"; git config user.email "pbz13p@users.noreply.github.com"
+          git add data/alerts/ 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "找房订阅：更新房源快照" && git pull --rebase && git push)

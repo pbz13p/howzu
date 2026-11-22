@@ -42,6 +42,7 @@
 
 ## 租房和房产指南
 - [指南目录：房产干货（买房、卖房、出租的税和规定）](https://howzu.com.au/guide/property.html)
+- [好租新房源订阅源（Atom，已上线房源的周租、区、几房、可入住日期）](https://howzu.com.au/rent/feed.xml)
 - [墨尔本今日要闻（每天约 40 条：墨尔本、地产租房、移民留学、中澳、澳洲生活）](https://howzu.com.au/news/)
 - [人在国内租墨尔本房：留学生开学季专区（各大学附近租金、替代材料、防骗、代看房预约）](https://howzu.com.au/guide/study-abroad.html)
 - [留学生第一次在墨尔本租房：押金、看房、签约、涨租](https://howzu.com.au/guide/first-rental.html)
