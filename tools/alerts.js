@@ -1,13 +1,13 @@
 // 找房订阅：每小时在 GitHub Actions 上跑。node tools/alerts.js
 // 1) 先处理退订请求（kind=退订，校验一次性 token）→ 订阅改 rejected；2) 对比房源快照，找新上线和降价；
 // 3) 按订阅条件匹配，同一人一天最多 1 封，多套合并；4) 用 Resend 发信；5) 写回快照（只含房源 id 和周租，不含任何邮箱）。
-// 需要 GitHub secrets：SUPABASE_SERVICE_ROLE_KEY、RESEND_API_KEY、ALERT_SECRET；可选 ALERT_FROM。缺了就跳过，不报错。
+// 需要 GitHub secrets：SUPABASE_SERVICE_ROLE_KEY、RESEND_API_KEY；ALERT_SECRET、ALERT_FROM 可选（没填就由 service key 派生 / 用默认发件人）。缺了就跳过，不报错。
 // 测试：ALERT_TEST=1 ALERT_TEST_EMAIL=xx@x.com → 用一套假房源只发给这个邮箱的订阅，不动快照，不上网站。
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const root = path.join(__dirname, ".."), RV = require("../js/rent-vs.js");
 const SITE = "https://howzu.com.au", STATE = path.join(root, "data/alerts/state.json");
 const cfg = (() => { const s = fs.readFileSync(path.join(root, "js/config.js"), "utf8"); return { url: (s.match(/SUPABASE_URL\s*:\s*["']([^"']+)/) || [])[1] }; })();
-const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY, RESEND = process.env.RESEND_API_KEY, SECRET = process.env.ALERT_SECRET;
+const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY, RESEND = process.env.RESEND_API_KEY, SECRET = process.env.ALERT_SECRET || (KEY ? require("crypto").createHash("sha256").update("howzu-alert:" + KEY).digest("hex") : "");
 const FROM = process.env.ALERT_FROM || "好租 Howzu <alerts@howzu.com.au>", TEST = process.env.ALERT_TEST === "1", TEST_EMAIL = (process.env.ALERT_TEST_EMAIL || "").toLowerCase();
 const today = () => new Date(Date.now() + 11 * 3600e3).toISOString().slice(0, 10); // 墨尔本日期（夏令时近似，够用）
 
@@ -72,7 +72,7 @@ function liveListings(sbRows) {
   return J.concat(S);
 }
 async function main() {
-  if (!KEY || !RESEND || !SECRET || !cfg.url) { console.log("找房订阅：缺少密钥（SUPABASE_SERVICE_ROLE_KEY / RESEND_API_KEY / ALERT_SECRET），这次跳过。"); return; }
+  if (!KEY || !RESEND || !SECRET || !cfg.url) { console.log("找房订阅：缺少密钥（SUPABASE_SERVICE_ROLE_KEY / RESEND_API_KEY），这次跳过。"); return; }
   // 1 退订
   const uns = await sb(`listings?kind=eq.${encodeURIComponent("退订")}&select=id,description`);
   let nUn = 0;
