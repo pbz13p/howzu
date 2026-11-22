@@ -103,7 +103,6 @@ async function main() {
     if (!TEST && st.sent[s.id] === day) { st.queue[s.id] = q; nSkip++; continue; } // 今天已发过 → 明天合并发
     const byId = Object.fromEntries(live.map(x => [x.id, x]));
     const items = q.map(y => ({ x: byId[y.id], why: y.why, from: y.from })).filter(y => y.x && matches(s, y.x)); // 已下架或不再符合的去掉
-    if (TEST) ev.forEach(e => items.push(e));
     if (!items.length) { delete st.queue[s.id]; continue; }
     await send(to, emailHtml(s, items.slice(0, 12), C)); nMail++;
     if (!TEST) { st.sent[s.id] = day; delete st.queue[s.id]; }
