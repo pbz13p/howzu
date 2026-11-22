@@ -129,8 +129,9 @@
     return live.map((y, i) => [y, sc(y), i]).sort((a, b) => b[1] - a[1] || a[2] - b[2]).slice(0, n || 3).map(a => a[0]);
   }
 
-  function render(x, contact, letCount, others) {
-    contact = contact || {};
+  // extra.vs：比本区中位数高/低的一行（js/rent-vs.js 生成好的 HTML 和 CSS，build-listing-pages.js 传入）
+  function render(x, contact, letCount, others, extra) {
+    contact = contact || {}; const vs = (extra && extra.vs) || null;
     const tel = x.phone || contact.phone, wx = x.wechat || contact.wechat;
     const P = x.photos || [];
     const t = ogTitle(x), d = ogDesc(x), img = ogImage(x), url = pageUrl(x), pt = pageTitle(x), pd = pageDesc(x);
@@ -194,7 +195,7 @@ main{max-width:880px;margin:0 auto;padding:0 20px 120px}
 .hero{position:relative;border-radius:16px;overflow:hidden;background:#eee;aspect-ratio:4/3}.hero img{width:100%;height:100%;object-fit:cover;display:block}
 .hero .n{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;padding:4px 10px;border-radius:99px;text-decoration:none}
 .let{position:absolute;left:12px;top:12px;background:#1d2321;color:#fff;font-size:13px;padding:4px 10px;border-radius:99px}
-.price{font-size:28px;font-weight:700;margin:20px 0 2px;letter-spacing:-.01em}.price small{font-size:15px;font-weight:500;color:#6b726f}
+.price{font-size:28px;font-weight:700;margin:20px 0 2px;letter-spacing:-.01em}.price small{font-size:15px;font-weight:500;color:#6b726f}${vs && !isLet(x) ? vs.css : ""}
 h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:14px}
 .facts{display:flex;gap:18px;margin:14px 0;font-size:15px;color:#1d2321}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.chips span{background:#e8f3ee;color:#0f6b4f;font-size:13px;padding:4px 10px;border-radius:99px}
@@ -213,7 +214,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 .bar a.g{background:#e8f3ee;color:#0f6b4f}.bar a.p{flex:1.6}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.hero{aspect-ratio:16/9}}
 </style>
-<script src="/js/i18n-en.js?v=20261118" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/i18n-en.js?v=20261122" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
 <script src="/js/config.js?v=20261107" defer></script><script src="/js/contact-fab.js?v=20261117" defer></script>
 </head>
 <body>
@@ -221,7 +222,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 <main>
 <nav class="bc" aria-label="面包屑">${crumbs.slice(0, -1).map(([n, u]) => `<a href="${esc(u.replace(SITE, ""))}">${esc(n)}</a>`).join(" › ")}</nav>
 <div class="hero">${P.length ? `<a href="${esc(full)}" aria-label="查看全部照片"><img src="${esc(rel(sized(P[0], "m")))}" srcset="${esc(rel(sized(P[0], "s")))} 480w, ${esc(rel(sized(P[0], "m")))} 960w" sizes="(min-width:880px) 840px, 100vw" width="960" height="720" fetchpriority="high" alt="${esc(x.title)}"></a>` : ""}${isLet(x) ? '<span class="let">已租出</span>' : ""}${P.length > 1 ? `<a class="n" href="${esc(full)}">共 ${P.length} 张照片</a>` : ""}</div>
-<div class="price">${isLet(x) ? "已租出" : x.rentWeekly ? `$${esc(x.rentWeekly)}<small> / 周</small>` : "<small>租金请咨询</small>"}</div>
+<div class="price">${isLet(x) ? "已租出" : x.rentWeekly ? `$${esc(x.rentWeekly)}<small> / 周</small>` : "<small>租金请咨询</small>"}</div>${vs && !isLet(x) ? vs.html : ""}
 <h1>${esc(x.title)}</h1>
 <div class="addr">📍 ${esc(hideUnit(x.address))}</div>
 ${tags.length ? `<div class="facts">${tags.map(esc).join("<span></span>")}</div>` : ""}

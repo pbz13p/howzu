@@ -55,6 +55,7 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .sub{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #list .price{font-size:15px;color:var(--ink);font-weight:400;margin:0 0 2px}#list .price b{font-size:18px;letter-spacing:-.01em}#list .price b.ng{font-size:15px;color:var(--accent)}#list .card.is-let .price b{font-size:13px}#list .fx{font-size:14px;color:var(--ink);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#list .sub{margin-top:1px}
 #list .price b{font-weight:600}
+#list .rvc{font-style:normal;font-size:12px;margin-left:4px;padding:2px 6px;border-radius:6px;background:#eaf5ef;color:#0f6b4f;white-space:nowrap}#list .rvc.hi{background:#fdf3e1;color:#8a5a00}
 .filters{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -16px 12px;padding:0 16px}
 .filters::-webkit-scrollbar{display:none}
 #list .letmore{grid-column:1/-1;display:block;width:100%;font:inherit;font-size:14px;font-weight:600;color:var(--accent);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;margin-top:2px}#list .letmore i{font-style:normal;opacity:.6}
@@ -220,7 +221,7 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 .ssr{max-width:1100px;margin:24px auto 0;padding:0 18px;font-size:13px;line-height:1.9;color:#5d6461}.ssr b{display:block;font-size:14px;color:#1d2321}.ssr a{color:#0f6b4f;margin-right:14px;white-space:nowrap}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://howzu.com.au/#org", "name": "好租 Howzu", "url": "https://howzu.com.au/", "logo": "https://howzu.com.au/apple-touch-icon.png", "areaServed": "Melbourne, Victoria, Australia", "knowsLanguage": ["zh-CN", "en"]}, {"@type": "WebSite", "@id": "https://howzu.com.au/#site", "url": "https://howzu.com.au/", "name": "好租 Howzu", "inLanguage": "zh-CN", "publisher": {"@id": "https://howzu.com.au/#org"}}]}</script>
-<script src="/js/i18n-en.js?v=20261119" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/i18n-en.js?v=20261122" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
 </head>
 <body>
 <nav class="nav"><div class="in">
@@ -284,7 +285,8 @@ footer{max-width:2200px;margin:0 auto;padding:30px clamp(16px,4.2vw,80px)}
 <footer class="note">好租 Howzu · Cendant Property 管理</footer>
 <script src="js/config.js?v=20261107"></script>
 <script src="/vendor/qrcode/qrcode.js"></script>
-<script src="js/listing-page.js?v=20261120"></script>
+<script src="js/listing-page.js?v=20261122"></script>
+<script src="js/rent-vs.js?v=20261122"></script>
 <script src="js/share.js?v=20261112"></script>
 <script src="js/lead.js?v=20261112"></script>
 <script src="js/enquire.js?v=20261112d"></script>
@@ -314,12 +316,15 @@ function favChip(){const b=document.querySelector('#filters [data-f="fav"]');con
 // 本站照片用小图（photos/s 宽 480、photos/m 宽 960，tools/make_thumbs.py 生成），缺了就退回原图
 const SZ=(p,d)=>/^\/?photos\/[^/]+\.(jpe?g|png|webp)$/i.test(String(p))?String(p).replace(/^(\/?photos\/)([^/]+)\.\w+$/i,`$1${d}/$2.jpg`):p;
 const SRCSET=p=>SZ(p,"s")===p?"":` srcset="${esc(SZ(p,"s"))} 480w, ${esc(SZ(p,"m"))} 960w" sizes="(min-width:760px) 380px, 100vw" data-o="${esc(p)}" onerror="if(this.dataset.o&&this.src.indexOf(this.dataset.o)<0){this.removeAttribute('srcset');this.src=this.dataset.o}"`;
+// 比本区同房型中位数高/低（data/rent_vs.json，DFFH 公开数据）：加载完重画一次列表，不挡首屏
+let RVC=null;if(window.RentVs)fetch("/data/rent_vs.json").then(r=>r.ok?r.json():null).then(d=>{if(!d)return;RVC=d;try{if(window.RentVs&&document.head)document.head.appendChild(Object.assign(document.createElement("style"),{textContent:RentVs.CSS}));if(typeof render==="function"&&window.LREADY)render();}catch(_){}}).catch(()=>{});
 let CARDN=0;
 function card(x){
   const P=x.photos||[], first=CARDN++<2;
   const imgs=P.length?P.map((p,i)=>`<img src="${esc(SZ(p,"m"))}"${SRCSET(p)} alt="${esc(x.title)}" loading="${i||!first?"lazy":"eager"}">`).join(""):`<img src="${phImg(x)}" alt="${esc(x.title)}">`;
   const dots=P.length>1?`<div class="dots">${P.slice(0,5).map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div><button class="cnav l" data-cnav="-1" aria-label="上一张">‹</button><button class="cnav r" data-cnav="1" aria-label="下一张">›</button>`:"";
   const price=isLet(x)?`<b>已租出</b>`:x.rentWeekly?`<b>$${x.rentWeekly}</b> / 周`:`<b class="ng">租金面议</b>`;
+  const rv=!isLet(x)&&window.RentVs&&RVC?RentVs.match(x,RVC):null;
   const area=(x.address||"").split(",").slice(-1)[0].replace(/VIC\s*\d+/,"").trim()||"墨尔本";
   const f=[x.beds!=null?`${x.beds} 房`:"",x.baths!=null?`${x.baths} 卫`:"",x.cars!=null?(x.cars?`${x.cars} 车位`:"无车位"):"",x.furnished===true?"带家具":x.furnished===false?"不带家具":x.furnished==="部分家具"?"部分家具":""].filter(Boolean).join(" · ");
   const when=isLet(x)?untilTxt(x):isNow(x)?"可马上入住":(x.available||"")+"入住";
@@ -327,7 +332,7 @@ function card(x){
     <div class="ph"><div class="sl">${imgs}</div>${dots}
       ${isNow(x)?'<span class="badge">马上入住</span>':""}${isLet(x)?'<span class="badge let">已租出</span>':x.status!=="live"?'<span class="badge draft">草稿·未公开</span>':""}
       ${isLet(x)?"":`<button class="sharefab" data-share="${esc(x.id)}" title="分享" aria-label="分享">分享</button>${favBtn(x,"favfab")}`}</div>
-    <div class="body"><div class="price">${price}</div><div class="t">${esc(x.title)}</div>
+    <div class="body"><div class="price">${price}${rv?` <i class="rvc ${rv.pct<=-RentVs.NEAR?"lo":rv.pct>=RentVs.NEAR?"hi":"eq"}">${esc(RentVs.short(rv))}</i>`:""}</div><div class="t">${esc(x.title)}</div>
       ${f?`<div class="fx">${esc(f)}</div>`:""}
       <div class="sub">${esc(area)} · ${esc(when)}</div>${isLet(x)?"":`<div class="cmc" data-cmchip="${esc(x.id)}">${cmChip(x)}</div>`}${(()=>{const k=!isLet(x)&&window.ListingPage&&ListingPage.cardFacts?ListingPage.cardFacts(x):[];return k.length?`<div class="cf">${k.map(v=>`<span>${esc(v)}</span>`).join("")}</div>`:"";})()}
       </div></div>`;
@@ -522,7 +527,7 @@ function openDetail(x,noPush){
    <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt="${esc(x.title||"房源照片")}"><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
    ${P.length>1?`<div class="dt-th">${P.map((p,i)=>`<img src="${esc(p)}" data-i="${i}" class="${i?"":"on"}" loading="lazy" alt="">`).join("")}</div>`:""}
    <div class="dt-b">
-    <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>
+    <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>${!isLet(x)&&window.RentVs&&RVC?RentVs.html(RentVs.match(x,RVC)):""}
     <h2>${esc(x.title)}</h2><div class="addr">📍 ${esc(x.address)}</div>
     ${f?`<div class="facts">${f}</div>`:""}
     ${isLet(x)?`<div class="tags"><span class="tag when">📅 ${esc(untilTxt(x))}</span></div>`:`<div class="kf">${KF.cells.map(([k,v])=>`<div${v==="咨询"?' data-tosp role="button" tabindex="0"':k==="看房"?' data-book role="button" tabindex="0"':""}><small>${esc(k)}</small><b${v==="咨询"?' class="m"':k==="看房"?' class="g"':""}>${k==="可入住"&&isNow(x)?"🔑 ":""}${esc(v)}${v==="咨询"||k==="看房"?" ›":""}</b></div>`).join("")}</div>${insRow(x)}`}
@@ -633,7 +638,7 @@ async function userListings(){
   try{
     const r=await fetch(`${H.SUPABASE_URL}/rest/v1/listings?status=eq.live&kind=neq.%E6%B1%82%E7%A7%9F%E9%9C%80%E6%B1%82&order=created_at.desc&limit=200`,{headers:{apikey:H.SUPABASE_ANON_KEY}});
     const rows=r.ok?await r.json():[];
-    return rows.map(x=>({id:x.id,status:"live",title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:ListingPage.availText(x.available==="两周内"&&x.created_at?new Date(Date.parse(x.created_at)+14*864e5).toISOString().slice(0,10):x.available),furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:String(x.description||"").split(/\n*—— English ——\n/)[0],descEn:(String(x.description||"").split(/\n*—— English ——\n/)[1]||"").trim()||null,phone:x.contact_phone,wechat:x.contact_wechat,createdAt:x.created_at,user:true}));
+    return rows.map(x=>({id:x.id,status:"live",kind:x.kind,title:x.title,address:hideUnit(x.address),suburb:x.suburb,beds:x.beds,baths:x.baths,cars:x.cars,rentWeekly:x.rent_weekly,available:ListingPage.availText(x.available==="两周内"&&x.created_at?new Date(Date.parse(x.created_at)+14*864e5).toISOString().slice(0,10):x.available),furnished:x.furnished==="带家具"?true:x.furnished==="不带家具"?false:x.furnished==="部分家具"?"部分家具":null,photos:x.photos||[],highlights:x.highlights||[],desc:String(x.description||"").split(/\n*—— English ——\n/)[0],descEn:(String(x.description||"").split(/\n*—— English ——\n/)[1]||"").trim()||null,phone:x.contact_phone,wechat:x.contact_wechat,createdAt:x.created_at,user:true}));
   }catch(_){return []}
 }
 // 先显示自有房源，用户发布的房源（Supabase）到了再补上；Supabase 慢或连不上也不会卡在"加载中"
