@@ -45,7 +45,15 @@ nwr["railway"="station"](-37.86,144.92,-37.77,145.00);
 nwr["shop"="supermarket"](-37.86,144.92,-37.77,145.00);
 nwr["amenity"="restaurant"]["cuisine"~"chinese|sichuan|cantonese|dumpling|hot_pot|noodle|taiwanese|malaysian|asian"](-37.86,144.92,-37.77,145.00);
 );out center tags;"""
-o = get("https://overpass-api.de/api/interpreter", data=urllib.parse.urlencode({"data": q}).encode())
+# Overpass 公共服务器偶尔 502 / 504：主站重试 3 次，再换官方列出的镜像
+import time
+o = None
+for i, ep in enumerate(["https://overpass-api.de/api/interpreter"] * 3 + ["https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]):
+    try:
+        o = get(ep, data=urllib.parse.urlencode({"data": q}).encode()); break
+    except Exception as ex:
+        print("Overpass 失败，重试：", ep, ex); time.sleep(20 * (i + 1))
+if o is None: sys.exit("Overpass 全部失败")
 pois = []
 for e in o.get("elements", []):
     t = e.get("tags", {}); lat = e.get("lat") or e.get("center", {}).get("lat"); lon = e.get("lon") or e.get("center", {}).get("lon")
