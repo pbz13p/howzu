@@ -53,3 +53,38 @@
 
 ## Optional
 - [网站地图 sitemap.xml](https://howzu.com.au/sitemap.xml)
+
+## 墨尔本楼盘百科（30 栋）
+每页包括：建成年份、层数、套数、地址、本区一房两房周租中位数（DFFH）、到电车站火车站超市大学的距离、好租在这栋楼的在租房源。
+- [楼盘目录](https://howzu.com.au/building/)
+- [Australia 108](https://howzu.com.au/building/australia-108.html)
+- [Queen's Place](https://howzu.com.au/building/queens-place.html)
+- [Fulton Lane](https://howzu.com.au/building/fulton-lane.html)
+- [Hudson](https://howzu.com.au/building/hudson.html)
+- [Prima Pearl Apartments](https://howzu.com.au/building/prima-pearl-apartments.html)
+- [Manhattan](https://howzu.com.au/building/manhattan.html)
+- [EQ Tower](https://howzu.com.au/building/eq-tower.html)
+- [Lighthouse](https://howzu.com.au/building/lighthouse.html)
+- [Southbank Place Apartments](https://howzu.com.au/building/southbank-place-apartments.html)
+- [Madison](https://howzu.com.au/building/madison.html)
+- [Eureka Tower](https://howzu.com.au/building/eureka-tower.html)
+- [Swanston Square Building](https://howzu.com.au/building/swanston-square-building.html)
+- [Freshwater Place Residential Tower](https://howzu.com.au/building/freshwater-place-residential-tower.html)
+- [The Quays](https://howzu.com.au/building/the-quays.html)
+- [Southbank Central Apartments](https://howzu.com.au/building/southbank-central-apartments.html)
+- [Empire](https://howzu.com.au/building/empire.html)
+- [Silver Skies MY80](https://howzu.com.au/building/silver-skies-my80.html)
+- [Melbourne One](https://howzu.com.au/building/melbourne-one.html)
+- [QV1 Apartments](https://howzu.com.au/building/qv1-apartments.html)
+- [Victoria Point Units](https://howzu.com.au/building/victoria-point-units.html)
+- [East Tower](https://howzu.com.au/building/east-tower.html)
+- [The William](https://howzu.com.au/building/the-william.html)
+- [Conservatory](https://howzu.com.au/building/conservatory.html)
+- [Platinum Apartments](https://howzu.com.au/building/platinum-apartments.html)
+- [Adobe 318 Apartments](https://howzu.com.au/building/adobe-318-apartments.html)
+- [ZEN Tower](https://howzu.com.au/building/zen-tower.html)
+- [Epic](https://howzu.com.au/building/epic.html)
+- [The Fifth Apartments](https://howzu.com.au/building/the-fifth-apartments.html)
+- [Shadow Play by PEPPERS](https://howzu.com.au/building/shadow-play-by-peppers.html)
+- [Mackenzie Tower](https://howzu.com.au/building/mackenzie-tower.html)
+<!--/bld-->

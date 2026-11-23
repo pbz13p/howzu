@@ -13,9 +13,10 @@
   function row(v, page, src, now) {
     const sub = String(v.suburb || "").trim().slice(0, 60), beds = v.beds === "" || v.beds == null ? null : Math.max(0, Math.min(10, parseInt(v.beds, 10) || 0));
     const max = v.max === "" || v.max == null ? null : Math.round(Number(v.max));
-    const where = sub || "全墨尔本";
+    const bld = String(v.building || "").trim().slice(0, 60), bk = String(v.bld || "").trim().slice(0, 80);
+    const where = bld ? bld + (sub ? "（" + sub + "）" : "") : (sub || "全墨尔本");
     return { status: "pending", kind: KIND, title: ("找房订阅 · " + where).slice(0, 80), address: ("订阅：" + where).slice(0, 200), suburb: sub || null,
-      beds, rent_weekly: max, photos: [], highlights: ["找房订阅", "lang:" + (v.lang === "en" ? "en" : "zh"), "type:" + (v.type || "any")],
+      beds, rent_weekly: max, photos: [], highlights: ["找房订阅", "lang:" + (v.lang === "en" ? "en" : "zh"), "type:" + (v.type || "any")].concat(bld && bk ? ["楼:" + bk] : []),
       description: ["email:" + String(v.email).trim().toLowerCase(), "consent:" + now + "（本人在网页上勾选同意接收房源邮件）", "page:" + page, src ? "渠道：" + src : ""].filter(Boolean).join("\n").slice(0, 3000) };
   }
   if (typeof module !== "undefined") { module.exports = { row, check, KIND, EMAIL }; return; }
@@ -29,7 +30,7 @@
   document.head.appendChild(css);
   document.querySelectorAll(".alert-sub").forEach(box => {
     const d = box.dataset;
-    box.innerHTML = `<form class="as" novalidate><b class="h">${T("🔔 有新房通知我")}</b>
+    box.innerHTML = `<form class="as" novalidate><b class="h">${d.building ? "🔔 " + esc(d.building) + " 有新房通知我" : T("🔔 有新房通知我")}</b>
       <div class="m">${T("有符合条件的新房源上线或降价，第一时间发邮件给你，一天最多一封，随时一键退订。")}</div>
       <div class="row"><input class="s" name="suburb" value="${esc(d.suburb || "")}" placeholder="${T("区（空着 = 全墨尔本）")}">
       <label class="lb">${T("几房起")}<input class="n" name="beds" type="number" inputmode="numeric" min="0" max="10" value="${esc(d.beds || "")}" placeholder="${T("不限")}"></label>
@@ -41,7 +42,7 @@
     const f = box.querySelector("form"), msg = f.querySelector(".msg");
     f.onsubmit = async e => {
       e.preventDefault(); if (f.website.value) return;
-      const v = { email: f.email.value, consent: f.consent.checked, suburb: f.suburb.value, beds: f.beds.value, max: f.max.value, type: d.type || "any", lang: en() ? "en" : "zh" };
+      const v = { email: f.email.value, consent: f.consent.checked, suburb: f.suburb.value, beds: f.beds.value, max: f.max.value, type: d.type || "any", building: d.building || "", bld: d.bld || "", lang: en() ? "en" : "zh" };
       const err = check(v); if (err) { msg.textContent = T(err); msg.style.color = "#c0392b"; return; }
       const C = window.HOWZU || {}, src = window.HowzuTrack && HowzuTrack.src ? HowzuTrack.src() : "", b = f.querySelector("button"); b.disabled = true;
       try {

@@ -53,7 +53,9 @@
       }).catch(function () {});
     } catch (e) {}
   }
-  window.HowzuTrack = { ev: send, src: function () { return SRC; }, classify: classify };
+  // 页面类型（统计按 path 前缀归类）：/building/ = 楼盘页，/rent/ = 房源页，/guide/ = 指南，/news/ = 新闻
+  function pageType(p) { p = String(p || location.pathname); return /^\/building\//.test(p) ? "building" : /^\/rent\//.test(p) ? "listing" : /^\/guide\//.test(p) ? "guide" : /^\/news\//.test(p) ? "news" : "other"; }
+  window.HowzuTrack = { ev: send, type: pageType, src: function () { return SRC; }, classify: classify };
   send("view");
   // 咨询类按钮（带 data-act，例如 wechat / call / book / lead / ics）点一下记一条，带上房源 id
   document.addEventListener("click", function (e) {

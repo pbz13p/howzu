@@ -295,5 +295,5 @@ D. 测试
 - 规则：租客通知搬走，或租约 45 天内到期且 Tracker 没有续约记录 → 草稿。11/20 按 Tracker 只命中 1 套（2002 Bouverie）。
 - 2027 年 1–2 月是到期高峰：307 Batman（1/31）、3502A Spencer（2/4）、3504 A'Beckett（2/9）、1304A（2/19，在谈续约）、5605 Victoria（2/25）、1913 Mackenzie（2/26）、1911B（2/28）。建议 12 月中先问这几套租客续不续（按 60–90 天），不续的提前上线，赶 2 月开学季。
 - AI 找房基线（11/20，Claude 网页搜索，3 个问题：CBD 两房 800 以下、Carlton 一房墨大附近 650 以下、华人零中介费租房网站）：好租 **0/3 出现**；结果被 Airbnb、Domain 房源页占满，Domain 每页都写明周租、押金、可入住日期、带不带家具。Gemini 那一半没测（要 Frank 的登录，等有空用他的 Chrome 测）。12/18 再测一次写进 METRICS.md。
-- 楼盘百科（11/19 需求）：CLUE 2024 + OpenStreetMap 数据已由 GitHub Actions 下载到 data/clue_buildings.json（344 栋）和 data/osm_pois.json；页面还没做，排在快空房之后。
+- 楼盘百科（11/19 需求）：✅ 11/24 第一批 30 栋上线（/building/ 目录 + 30 页，tools/build-buildings.js 生成，房源变化时自动重建）。去掉了学生公寓 3 栋和 “Tower 1/2 (West)”“Tower 4” 这种 CLUE 里没有正式楼名的 3 栋。中文俗称只写了有公开来源的 1 个（Eureka Tower = 尤里卡大厦）。楼盘订阅只推这栋楼里的房源。12/14 看收录 ≥60% 才扩下一批 50 栋。
 

@@ -15,7 +15,10 @@ const token = id => crypto.createHmac("sha256", SECRET || "x").update(String(id)
 const emailOf = s => ((s.description || "").match(/^email:(\S+)$/m) || [])[1] || "";
 const tag = (s, k) => ((s.highlights || []).find(h => h.startsWith(k + ":")) || "").slice(k.length + 1);
 // 订阅条件匹配：区（空 = 全墨尔本，不分大小写，“Melbourne”和“Melbourne CBD”算同一区）、几房（≥）、周租上限（≤）
+const BM = require("../js/building-match.js");
 function matches(s, x) {
+  const bt = (s.highlights || []).find(h => /^楼:/.test(h)); // 楼盘订阅：只要这栋楼里的房源
+  if (bt && !BM.inBuilding(x.address, BM.fromKey(bt.slice(2)))) return false;
   const n = v => String(v || "").toLowerCase().replace(/\s+cbd$/, "").trim();
   const subs = String(s.suburb || "").split(/[,，、]/).map(n).filter(Boolean);
   if (subs.length && !subs.includes(n(x.suburb))) return false;
@@ -42,7 +45,7 @@ function emailHtml(sub, items, C) {
       <div style="font-size:14px;color:#333;margin-top:4px">$${x.rentWeekly}/周${why === "drop" ? `（降价，原 $${from}）` : "（新上线）"} · ${esc(x.suburb || "")} · ${x.beds != null ? x.beds + " 房" : ""}${x.available ? " · " + esc(x.available) + " 起可入住" : ""}</div>
       ${vs ? `<div style="font-size:13px;color:#666">📊 ${esc(vs)}（DFFH 本区中位数）</div>` : ""}</td></tr>`;
   }).join("");
-  const where = sub.suburb || "全墨尔本";
+  const where = (sub.highlights || []).some(h => /^楼:/.test(h)) && /^找房订阅 · /.test(sub.title || "") ? sub.title.slice(7) : (sub.suburb || "全墨尔本");
   return { subject: `好租新房源：${where}${items.length > 1 ? " 等 " + items.length + " 套" : " · " + items[0].x.title}`.slice(0, 120), unsub,
     html: `<div style="font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;max-width:560px;margin:auto;color:#1d2b26">
     <h2 style="color:#0f6b4f;font-size:19px">🔔 有符合你条件的房源</h2><p style="font-size:14px;color:#555">订阅条件：${esc(where)}${sub.beds != null ? " · " + sub.beds + " 房及以上" : ""}${sub.rent_weekly != null ? " · 周租 $" + sub.rent_weekly + " 以内" : ""}</p>
@@ -84,7 +87,7 @@ async function main() {
     await sb(`listings?id=eq.${u.id}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
   }
   // 2 订阅和房源
-  const subs = await sb(`listings?kind=eq.${encodeURIComponent("找房订阅")}&status=eq.pending&select=id,created_at,suburb,beds,rent_weekly,highlights,description`);
+  const subs = await sb(`listings?kind=eq.${encodeURIComponent("找房订阅")}&status=eq.pending&select=id,created_at,title,suburb,beds,rent_weekly,highlights,description`);
   const C = RV.compact(JSON.parse(fs.readFileSync(path.join(root, "data/rent_check.json"), "utf8")));
   const st = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, "utf8")) : { snap: null, sent: {}, queue: {} };
   let live;

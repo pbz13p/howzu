@@ -2,7 +2,7 @@ name: 房源页自动生成（小图、独立页、sitemap、静态房源链接�
 on:
   push:
     branches: [main]
-    paths: ["data/listings.json", "photos/**", "sale/**", "js/listing-page.js", "js/home-rent.js", "tools/build-listing-pages.js", "tools/make_thumbs.py", "guide/*.html"]
+    paths: ["data/listings.json", "photos/**", "sale/**", "js/listing-page.js", "js/home-rent.js", "tools/build-listing-pages.js", "tools/build-buildings.js", "js/building-match.js", "data/clue_buildings.json", "data/osm_pois.json", "data/rent_check.json", "tools/make_thumbs.py", "guide/*.html"]
   workflow_dispatch:
 permissions:
   contents: write
@@ -17,10 +17,11 @@ jobs:
       - run: pip install --quiet pillow
       - run: python3 tools/make_thumbs.py
       - run: node tools/build-listing-pages.js
+      - run: node tools/build-buildings.js
       - name: 有变化就提交
         run: |
           git config user.name "pages-bot"; git config user.email "pages-bot@users.noreply.github.com"
-          git add -A photos rent sitemap.xml index.html rentals.html guide
+          git add -A photos rent sitemap.xml index.html rentals.html guide building llms.txt
           git diff --cached --quiet && echo "没有变化" && exit 0
           git commit -m "自动生成房源页、小图和 sitemap"
           for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done; exit 1
