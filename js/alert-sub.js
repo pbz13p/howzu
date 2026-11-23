@@ -13,7 +13,7 @@
   function row(v, page, src, now) {
     const sub = String(v.suburb || "").trim().slice(0, 60), beds = v.beds === "" || v.beds == null ? null : Math.max(0, Math.min(10, parseInt(v.beds, 10) || 0));
     const max = v.max === "" || v.max == null ? null : Math.round(Number(v.max));
-    const bld = String(v.building || "").trim().slice(0, 60), bk = String(v.bld || "").trim().slice(0, 80);
+    const bld = String(v.building || "").trim().slice(0, 60), bk = String(v.bld || "").trim().slice(0, 240);
     const where = bld ? bld + (sub ? "（" + sub + "）" : "") : (sub || "全墨尔本");
     return { status: "pending", kind: KIND, title: ("找房订阅 · " + where).slice(0, 80), address: ("订阅：" + where).slice(0, 200), suburb: sub || null,
       beds, rent_weekly: max, photos: [], highlights: ["找房订阅", "lang:" + (v.lang === "en" ? "en" : "zh"), "type:" + (v.type || "any")].concat(bld && bk ? ["楼:" + bk] : []),

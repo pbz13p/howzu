@@ -18,7 +18,7 @@ const tag = (s, k) => ((s.highlights || []).find(h => h.startsWith(k + ":")) || 
 const BM = require("../js/building-match.js");
 function matches(s, x) {
   const bt = (s.highlights || []).find(h => /^楼:/.test(h)); // 楼盘订阅：只要这栋楼里的房源
-  if (bt && !BM.inBuilding(x.address, BM.fromKey(bt.slice(2)))) return false;
+  if (bt && !bt.slice(2).split(";").some(k => BM.inBuilding(x.address, BM.fromKey(k)))) return false; // 多栋楼（如 West Side Place）用 ; 分隔
   const n = v => String(v || "").toLowerCase().replace(/\s+cbd$/, "").trim();
   const subs = String(s.suburb || "").split(/[,，、]/).map(n).filter(Boolean);
   if (subs.length && !subs.includes(n(x.suburb))) return false;

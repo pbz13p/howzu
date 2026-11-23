@@ -1,0 +1,13 @@
+{
+  "_说明": "楼盘百科：人工核对过的楼名 / 中文名，键是 CLUE property_id。只写公开来源能查到的，每条带来源；查不到就不写。核对日期 2026-11-24。group 相同的几栋合成一页。",
+  "110766": { "zh": "澳大利亚108", "src": "中文维基百科「澳大利亞108」", "url": "https://zh.wikipedia.org/wiki/%E6%BE%B3%E5%A4%A7%E5%88%A9%E4%BA%9E108" },
+  "559161": { "zh": "尤里卡大厦", "src": "gooood 谷德设计网（建筑师 Fender Katsalidis 授权发布）", "url": "https://www.gooood.cn/en/eureka-tower-by-fender-katsalidis.htm" },
+  "105485": { "name": "Aurora Melbourne Central", "built": "2019", "src": "Wikipedia「Aurora Melbourne Central」", "url": "https://en.wikipedia.org/wiki/Aurora_Melbourne_Central",
+    "note": "市政府普查没有登记楼名，楼名按维基百科（地址 224–252 La Trobe Street 一致）。普查把建成年份记为 2016，维基百科写 2019 年完工，这里用 2019。" },
+  "644814": { "name": "Swanston Central", "built": "2019", "src": "Wikipedia「List of tallest buildings in Melbourne」", "url": "https://en.wikipedia.org/wiki/Swanston_Central",
+    "note": "市政府普查没有登记楼名，楼名按维基百科（写作 168 Victoria Street，在普查登记的 156–172 号范围内）。普查把建成年份记为 2020，维基百科写 2019，这里用 2019。" },
+  "711415": { "group": "West Side Place", "tower": "Tower 1", "src": "Wikipedia「West Side Place」", "url": "https://en.wikipedia.org/wiki/West_Side_Place",
+    "note": "市政府普查只写“Tower 1 (West)”“Tower 2 (West)”“Tower 4”。维基百科写 West Side Place（250 Spencer Street）四栋楼分别有 663、714、684、835 套公寓，和普查里这三栋的套数完全一致，所以合成一页。Tower 3 在普查里没有住宅记录，本页不含。" },
+  "711416": { "group": "West Side Place", "tower": "Tower 2" },
+  "724325": { "group": "West Side Place", "tower": "Tower 4" }
+}

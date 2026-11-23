@@ -132,7 +132,10 @@ async function loadStats() {
   $("#app").innerHTML = head + liveCard + `<div class="card"><div class="t">最近 30 天</div>
     <div class="m">今天 <b>${vd.get(today) || 0}</b> 次浏览 · <b>${ed.get(today) || 0}</b> 次点击　|　近 7 天 <b>${sum(vd, wk)}</b> 次浏览 · <b>${sum(ed, wk)}</b> 次点击　|　30 天 <b>${sum(vd, days)}</b> / <b>${sum(ed, days)}</b>　|　手机占 ${V.length ? Math.round(V.filter(r => r.mobile).length / V.length * 100) : 0}%</div>
     <div style="display:flex;gap:2px;align-items:flex-end;margin-top:10px">${bars}</div><div class="m" style="display:flex;justify-content:space-between"><span>${days[29]}</span><span>今天</span></div></div>` +
-    (data.length >= 1000 ? `<div class="m" style="margin:0 4px 8px">下面的排行按最近 ${data.length} 条记录统计。</div>` : "") + tbl("最热门页面（浏览）", by(V, r => r.path.replace(/\?.*$/, "") + (/[?&]id=/.test(r.path) ? " · " + (r.path.match(/[?&]id=([^&]+)/) || [])[1] : ""))) +
+    (data.length >= 1000 ? `<div class="m" style="margin:0 4px 8px">下面的排行按最近 ${data.length} 条记录统计。</div>` : "") +
+    // 楼盘百科三个数（近 30 天）：楼盘页浏览、从楼盘页来的询盘、楼盘订阅（在 /building/ 页面上的 alert:sub）
+    ((isB, bv, bq, bs) => `<div class="card"><div class="t">🏢 楼盘百科（近 30 天）</div><div class="m">楼盘页浏览 <b>${bv}</b> · 询盘 <b>${bq}</b> · 楼盘订阅 <b>${bs}</b></div></div>`)(0, V.filter(r => /^\/building\//.test(r.path)).length, Q.filter(r => /^\/building\//.test(r.path)).length, E.filter(r => /^\/building\//.test(r.path) && /^alert:sub/.test(r.ev)).length) +
+    tbl("最热门页面（浏览）", by(V, r => r.path.replace(/\?.*$/, "") + (/[?&]id=/.test(r.path) ? " · " + (r.path.match(/[?&]id=([^&]+)/) || [])[1] : ""))) +
     `<div class="card"><div class="t">询盘 ${Q.length} 次（近 30 天，电话 / 短信 / 微信 / 提交预约或需求）</div><div class="m">浏览 → 询盘转化率 ${V.length ? (Q.length / V.length * 100).toFixed(1) : 0}%</div></div>` +
     tbl("询盘来自哪个渠道（按访客第一次进站的来源）", by(Q, r => CH[chOf(r)] || chOf(r))) +
     tbl("浏览来自哪个渠道", by(V, r => refCh(r.ref))) +

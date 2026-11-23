@@ -28,7 +28,7 @@ t("第一批正好 30 栋，没有学生公寓、没有 Tower N 这类名字，�
 t("每页：第一段直接给答案、DFFH 租金带日期、周边直线距离、订阅卡带楼名、两段结构化数据能解析", () => {
   for (const b of PICK) {
     const h = fs.readFileSync(path.join(root, "building", b.slug + ".html"), "utf8");
-    assert.ok(/<p class="ans">[^<]*共 \d+ 层、\d+ 套住宅公寓/.test(h) || /<p class="ans">[^<]*共 — 层/.test(h), b.name + " 答案段");
+    assert.ok(/<p class="ans">[^<]*(共 \d+ 层、|最高一栋 \d+ 层，共 )\d+ 套住宅公寓/.test(h) || /<p class="ans">[^<]*共 — 层/.test(h), b.name + " 答案段");
     assert.ok(/DFFH/.test(h) && /截至 20\d\d 年/.test(h), b.name + " 租金来源和日期");
     assert.ok(/直线距离估算/.test(h), b.name);
     assert.ok(h.includes(`data-building="${b.name.replace(/&/g, "&amp;").replace(/"/g, "&quot;")}"`) || /class="dot lst"/.test(h), b.name + " 订阅卡或房源");

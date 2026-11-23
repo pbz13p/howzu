@@ -57,9 +57,12 @@
 ## 墨尔本楼盘百科（30 栋）
 每页包括：建成年份、层数、套数、地址、本区一房两房周租中位数（DFFH）、到电车站火车站超市大学的距离、好租在这栋楼的在租房源。
 - [楼盘目录](https://howzu.com.au/building/)
+- [West Side Place](https://howzu.com.au/building/west-side-place.html)
 - [Australia 108](https://howzu.com.au/building/australia-108.html)
+- [Swanston Central](https://howzu.com.au/building/swanston-central.html)
 - [Queen's Place](https://howzu.com.au/building/queens-place.html)
 - [Fulton Lane](https://howzu.com.au/building/fulton-lane.html)
+- [Aurora Melbourne Central](https://howzu.com.au/building/aurora-melbourne-central.html)
 - [Hudson](https://howzu.com.au/building/hudson.html)
 - [Prima Pearl Apartments](https://howzu.com.au/building/prima-pearl-apartments.html)
 - [Manhattan](https://howzu.com.au/building/manhattan.html)
@@ -84,7 +87,4 @@
 - [Adobe 318 Apartments](https://howzu.com.au/building/adobe-318-apartments.html)
 - [ZEN Tower](https://howzu.com.au/building/zen-tower.html)
 - [Epic](https://howzu.com.au/building/epic.html)
-- [The Fifth Apartments](https://howzu.com.au/building/the-fifth-apartments.html)
-- [Shadow Play by PEPPERS](https://howzu.com.au/building/shadow-play-by-peppers.html)
-- [Mackenzie Tower](https://howzu.com.au/building/mackenzie-tower.html)
 <!--/bld-->

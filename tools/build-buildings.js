@@ -4,7 +4,7 @@
 // 同时：区域页（CBD、Southbank）加“本区楼盘”入口、首页导航入口、sitemap、llms.txt。重复运行结果不变。
 const fs = require("fs"), path = require("path");
 const root = path.join(__dirname, "..");
-const RV = require("../js/rent-vs.js"), BM = require("../js/building-match.js");
+const RV = require("../js/rent-vs.js"), BM = require("../js/building-match.js"), LP = require("../js/listing-page.js");
 const FIRST = 30, SITE = "https://howzu.com.au", TODAY = "2026-11-24";
 const J = f => JSON.parse(fs.readFileSync(path.join(root, f), "utf8"));
 const CLUE = J("data/clue_buildings.json"), OSM = J("data/osm_pois.json"), RC = J("data/rent_check.json");
@@ -13,7 +13,8 @@ const C = RV.compact(RC);
 const e = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 // 只有在公开来源查得到的中文名才写，附来源；查不到就不写
-const ZH = { "Eureka Tower": { zh: "尤里卡大厦", src: "gooood 谷德设计网（建筑师 Fender Katsalidis 授权发布）", url: "https://www.gooood.cn/en/eureka-tower-by-fender-katsalidis.htm" } };
+// 人工核对的楼名、中文名、合并的楼栋都在 data/building_names.json（键 = CLUE property_id，每条带公开来源）
+const NM = J("data/building_names.json"), ZH = {};
 // CBD 环线等车站：OSM 下载里缺了这几个，用公开坐标补（直线距离估算，足够）
 const EXTRA_ST = [["Southern Cross", -37.8183, 144.9525], ["Melbourne Central", -37.8100, 144.9628], ["Flagstaff", -37.8119, 144.9561], ["Parliament", -37.8110, 144.9730]];
 const UNIS = [["墨尔本大学（Parkville 主校区）", -37.7964, 144.9612], ["RMIT（城市校区）", -37.8083, 144.9631]];
@@ -37,11 +38,28 @@ function street(addr) { // 地址里“号段 + 街名 + 区 + 邮编”，去�
   return m ? { line: m[1].replace(/\s+/g, " ").trim(), suburb: title(m[2]), pc: m[3] } : { line: addr, suburb: "", pc: "" };
 }
 
+// 套数只算住宅公寓，学生公寓单独记（Aurora 这类楼两种都有）
+const resid = b => Object.entries(b.dwelling_types || {}).filter(([k]) => !/student/i.test(k)).reduce((a, [, v]) => a + (+v || 0), 0) || b.dwellings;
+// 套用人工核对的楼名；group 相同的几栋（如 West Side Place 三栋）合成一条，号段保留多个
+const GRP = new Map(), BLDS = [];
+for (const b0 of CLUE.buildings) {
+  const o = NM[b0.property_id] || {}, b = { ...b0, name: o.group || o.name || b0.name, built: o.built || b0.built, dwellings: resid(b0), student: b0.dwellings - resid(b0), notes: o.note ? [o.note] : [], srcs: o.url ? [[o.src, o.url]] : [], named: !!(o.group || o.name) };
+  if (o.zh && b.name) ZH[b.name] = { zh: o.zh, src: o.src, url: o.url };
+  if (!o.group) { BLDS.push(b); continue; }
+  b.towers = [{ label: o.tower, address: b0.address, floors: b0.floors, dwellings: resid(b0) }];
+  const g = GRP.get(o.group);
+  if (!g) { GRP.set(o.group, b); BLDS.push(b); continue; }
+  g.towers.push(b.towers[0]); g.built = [g.built, b.built].filter(Boolean).sort()[0] || null; g.dwellings += b.dwellings; g.student += b.student; g.floors = Math.max(g.floors || 0, b.floors || 0) || null;
+  g.lat = (g.lat * (g.towers.length - 1) + b.lat) / g.towers.length; g.lon = (g.lon * (g.towers.length - 1) + b.lon) / g.towers.length;
+  g.notes.push(...b.notes); g.srcs.push(...b.srcs.filter(x => !g.srcs.some(y => y[1] === x[1])));
+}
 // 第一批 30 栋
-const ALL = CLUE.buildings.filter(b => b.name && b.use === "Residential Apartment" && !/^Tower\s*\d|\bHotel\b/i.test(b.name) && b.lat && b.lon);
+const ALL = BLDS.filter(b => b.name && b.use === "Residential Apartment" && (b.named || !/^Tower\s*\d|\bHotel\b/i.test(b.name)) && b.lat && b.lon);
 ALL.sort((a, b) => b.dwellings - a.dwellings);
 const seen = new Set(), PICK = [];
-for (const b of ALL) { const s = slug(b.name); if (seen.has(s)) continue; seen.add(s); PICK.push({ ...b, slug: s, addr: street(b.address), range: BM.parseBuilding(b.address) }); if (PICK.length >= FIRST) break; }
+for (const b of ALL) { const s = slug(b.name); if (seen.has(s)) continue; seen.add(s); const ranges = (b.towers || [b]).map(t => BM.parseBuilding(t.address)).filter(Boolean);
+  if (b.towers) b.towers.sort((x, y) => String(x.label).localeCompare(String(y.label)));
+  PICK.push({ ...b, slug: s, addr: street(b.address), range: ranges[0] || null, ranges }); if (PICK.length >= FIRST) break; }
 
 const live = LIST.filter(x => x.status === "live");
 const rentRow = (sub, k) => { const i = C.s[RV.norm(sub)]; if (i == null) return null; const m = C.g[i][1][k]; return m && m[1] >= RV.MIN_N ? { med: m[0], n: m[1], group: C.g[i][0] } : null; };
@@ -64,9 +82,9 @@ function page(b, others) {
   const r1 = rentRow(sub, "1 bedroom flat"), r2 = rentRow(sub, "2 bedroom flat"), q = qText(C.q);
   const zh = ZH[b.name];
   const yr = b.built ? `${b.built} 年建成` : "建成年份暂无公开记录";
-  const inB = b.range ? live.filter(x => BM.inBuilding(x.address, b.range)) : [];
+  const inB = live.filter(x => b.ranges.some(r => BM.inBuilding(x.address, r)));
   const url = `${SITE}/building/${b.slug}.html`;
-  const ans = `${e(b.name)}${zh ? `（${e(zh.zh)}）` : ""} 位于 ${e(areaZh)} ${e(b.addr.line)}，${e(yr)}，共 ${b.floors || "—"} 层、${b.dwellings} 套住宅公寓。` +
+  const ans = `${e(b.name)}${zh ? `（${e(zh.zh)}）` : ""} 位于 ${e(areaZh)} ${e(b.addr.line)}${b.towers ? ` 等 ${b.towers.length} 栋，${e(yr)}，最高一栋 ${b.floors || "—"} 层，共 ${b.dwellings} 套住宅公寓。` : `，${e(yr)}，共 ${b.floors || "—"} 层、${b.dwellings} 套住宅公寓。`}` +
     (tram ? `步行到最近的电车站 ${e(tramName(tram.n))} 约 ${walk(tram.d)} 分钟` : "") + (st ? `，到 ${e(st.n)} 火车站约 ${walk(st.d)} 分钟` : "") + `（按直线距离估算）。` +
     (r1 || r2 ? `本区公寓周租中位数：${r1 ? `一房 $${r1.med}` : ""}${r1 && r2 ? "，" : ""}${r2 ? `两房 $${r2.med}` : ""}（DFFH，截至 ${e(q)}）。` : "");
   const desc = `${b.name} 租房：${yr}，${b.floors} 层 ${b.dwellings} 套，${b.addr.line}, ${b.addr.suburb}。本区一房、两房周租中位数，到电车站、火车站、超市、大学的距离，以及这栋楼的在租房源。`;
@@ -81,9 +99,9 @@ function page(b, others) {
     : `<p>这个区的公寓租金中位数样本不足，暂不显示。<a href="/rents.html">查各区租金 ›</a></p>`;
   const near = [tram && ["最近电车站", `${tramName(tram.n)} · 约 ${km(tram.d)}，步行约 ${walk(tram.d)} 分钟`], st && ["最近火车站", `${st.n} · 约 ${km(st.d)}，步行约 ${walk(st.d)} 分钟`],
     sm && ["最近超市", `${sm.n || "超市"} · 约 ${km(sm.d)}，步行约 ${walk(sm.d)} 分钟`], ...unis.map(([n, d]) => [n, `约 ${km(d)}${d < 2500 ? `，步行约 ${walk(d)} 分钟` : ""}`])].filter(Boolean);
-  const lst = inB.length ? `<ul class="dot lst">${inB.map(x => `<li><a href="/rent/${e(x.id)}.html">${e(x.title)}</a>${x.rentWeekly ? ` · $${e(x.rentWeekly)}/周` : ""}${x.beds ? ` · ${e(x.beds)} 房` : ""}${x.available ? ` · ${e(x.available)} 起可入住` : ""}</li>`).join("")}</ul>`
+  const lst = inB.length ? `<ul class="dot lst">${inB.map(x => `<li><a href="/rent/${e(x.id)}.html">${e(x.title)}</a>${x.rentWeekly ? ` · $${e(x.rentWeekly)}/周` : ""}${x.beds ? ` · ${e(x.beds)} 房` : ""}${x.available ? ` · ${e(LP.availText(x.available))}入住` : ""}</li>`).join("")}</ul>`
     : `<p>好租在这栋楼暂时没有在租房源。留个邮箱，这栋楼有新房上线第一时间通知你：</p>`;
-  const card = `<div class="alert-sub" data-suburb="${e(sub)}" data-building="${e(b.name)}" data-bld="${e(BM.key(b.range))}" data-max=""></div>
+  const card = `<div class="alert-sub" data-suburb="${e(sub)}" data-building="${e(b.name)}" data-bld="${e(b.ranges.map(BM.key).join(";"))}" data-max=""></div>
 <noscript><p><a href="/rentals.html?la=${encodeURIComponent(sub)}#leadCard">留下需求，有新房通知你 ›</a></p></noscript>`;
   const oth = others.map(o => `<li><a href="/building/${o.slug}.html">${e(o.name)}</a> · ${e(o.addr.line)} · ${o.floors || "—"} 层 ${o.dwellings} 套</li>`).join("");
   const ap = AREA_PAGE[sub];
@@ -109,11 +127,12 @@ ${zh ? `<p class="zh">中文常见叫法：${e(zh.zh)}（来源：<a href="${e(z
 <p class="ans">${ans}</p>
 <h2>楼盘信息</h2>
 <table>
-<tr><th>地址</th><td>${e(b.addr.line)}, ${e(b.addr.suburb)} VIC ${e(b.addr.pc)}</td></tr>
+<tr><th>地址</th><td>${b.towers ? b.towers.map(t => e(street(t.address).line)).join("<br>") : e(b.addr.line)}, ${e(b.addr.suburb)} VIC ${e(b.addr.pc)}</td></tr>
 <tr><th>建成年份</th><td>${b.built ? e(b.built) + " 年" : "暂无公开记录"}</td></tr>
 <tr><th>层数</th><td>${b.floors ? b.floors + " 层（地面以上）" : "—"}</td></tr>
-<tr><th>住宅套数</th><td>${b.dwellings} 套</td></tr>
-</table>
+<tr><th>住宅套数</th><td>${b.dwellings} 套${b.student ? `（另有学生公寓 ${b.student} 套）` : ""}</td></tr>
+${b.towers ? `<tr><th>楼栋</th><td>${b.towers.map(t => `${e(t.label)}：${e(street(t.address).line)}，${t.floors || "—"} 层，${t.dwellings} 套`).join("<br>")}</td></tr>` : ""}</table>
+${b.notes.length ? `<p class="meta">${b.notes.map(e).join(" ")}</p>` : ""}
 <p class="meta">墨尔本市政府 CLUE ${e(CLUE.dwellings_year)} 普查数据。套数为普查时登记的住宅数，可能和开发商宣传的数字略有出入。</p>
 <h2>本区公寓周租中位数</h2>
 ${rentHtml}
@@ -132,6 +151,7 @@ ${oth ? `<h2>附近其他楼盘</h2><ul class="dot">${oth}</ul>` : ""}
 <li>楼盘信息：City of Melbourne Open Data · CLUE ${e(CLUE.buildings_year)}（CC BY 4.0）：<a href="https://data.melbourne.vic.gov.au">data.melbourne.vic.gov.au</a></li>
 <li>租金：Victorian Government DFFH Rental Report（CC BY 4.0）：<a href="https://www.dffh.vic.gov.au/publications/rental-report">www.dffh.vic.gov.au/publications/rental-report</a></li>
 <li>位置和周边：© OpenStreetMap contributors（ODbL）：<a href="https://www.openstreetmap.org/copyright">www.openstreetmap.org/copyright</a></li>
+${b.srcs.map(([t, u]) => `<li>${e(t)}：<a href="${e(u)}" rel="nofollow">${e(u.replace(/^https?:\/\//, ""))}</a></li>`).join("")}
 </ul>
 <p>好租与这栋楼的开发商、业委会和物业管理处没有关系。本页只是公开数据整理，不构成租房或投资建议。</p>
 </section>
@@ -187,7 +207,7 @@ ${SCRIPTS}
 
 // 入口：区域页（CBD、Southbank）加“本区楼盘”
 const put = (rel, fn) => { const f = path.join(root, rel); if (!fs.existsSync(f)) return; const a = fs.readFileSync(f, "utf8"), b = fn(a); if (b !== a) { fs.writeFileSync(f, b); n++; } };
-for (const [file, subs] of [["guide/area-melbourne-cbd.html", ["Melbourne"]], ["guide/area-southbank.html", ["Southbank"]], ["guide/area-docklands.html", ["Docklands"]]]) {
+for (const [file, subs] of [["guide/area-melbourne-cbd.html", ["Melbourne"]], ["guide/area-southbank.html", ["Southbank"]], ["guide/area-docklands.html", ["Docklands"]], ["guide/area-carlton.html", ["Carlton"]]]) {
   const L = PICK.filter(b => subs.includes((AREA[b.area] || [])[1]));
   if (!L.length) continue;
   const blk = `<!--bld--><h2>本区大型公寓楼</h2><ul class="dot">${L.map(b => `<li><a href="/building/${b.slug}.html">${e(b.name)}</a> · ${e(b.addr.line)} · ${b.floors || "—"} 层 ${b.dwellings} 套</li>`).join("")}</ul><p><a href="/building/">墨尔本楼盘百科（全部 ${PICK.length} 栋）›</a></p><!--/bld-->\n`;
