@@ -37,10 +37,11 @@ json.dump({"source": "City of Melbourne Open Data — CLUE: Residential dwelling
            "fetched": today, "dwellings_year": ydw, "buildings_year": ybl, "buildings": out}, open("data/clue_buildings.json", "w"), ensure_ascii=False, indent=0)
 print("CLUE buildings:", len(out), "dwellings census", ydw, "buildings census", ybl)
 # 3 OpenStreetMap：电车站、火车站、超市、中餐（墨尔本 CBD 及周边）
+# 火车站用 nwr：City Loop 地下站（Melbourne Central、Flagstaff、Parliament）和 Southern Cross 在 OSM 里是面（way），只查 node 会漏掉
 q = """[out:json][timeout:120];(
 node["railway"="tram_stop"](-37.86,144.92,-37.77,145.00);
 node["public_transport"="stop_position"]["tram"="yes"](-37.86,144.92,-37.77,145.00);
-node["railway"="station"](-37.86,144.92,-37.77,145.00);
+nwr["railway"="station"](-37.86,144.92,-37.77,145.00);
 nwr["shop"="supermarket"](-37.86,144.92,-37.77,145.00);
 nwr["amenity"="restaurant"]["cuisine"~"chinese|sichuan|cantonese|dumpling|hot_pot|noodle|taiwanese|malaysian|asian"](-37.86,144.92,-37.77,145.00);
 );out center tags;"""
