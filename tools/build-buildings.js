@@ -55,7 +55,7 @@ for (const b0 of CLUE.buildings) {
 }
 // 第一批 30 栋
 const ALL = BLDS.filter(b => b.name && b.use === "Residential Apartment" && (b.named || !/^Tower\s*\d|\bHotel\b/i.test(b.name)) && b.lat && b.lon);
-ALL.sort((a, b) => b.dwellings - a.dwellings);
+ALL.sort((a, b) => b.dwellings - a.dwellings || a.name.localeCompare(b.name)); // 套数一样按楼名，结果稳定
 const seen = new Set(), PICK = [];
 for (const b of ALL) { const s = slug(b.name); if (seen.has(s)) continue; seen.add(s); const ranges = (b.towers || [b]).map(t => BM.parseBuilding(t.address)).filter(Boolean);
   if (b.towers) b.towers.sort((x, y) => String(x.label).localeCompare(String(y.label)));
