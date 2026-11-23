@@ -1,6 +1,6 @@
 {
 "source": "City of Melbourne Open Data — CLUE: Residential dwellings (census 2024) and Buildings with name, age, size (census 2024). CC BY 4.0",
-"fetched": "2026-11-19",
+"fetched": "2026-11-23",
 "dwellings_year": 2024,
 "buildings_year": 2024,
 "buildings": [
@@ -711,21 +711,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "674536",
-"address": "East Tower 888 Collins Street DOCKLANDS VIC 3008",
-"area": "Docklands",
-"lat": -37.82059451,
-"lon": 144.94250585,
-"dwellings": 443,
-"dwelling_types": {
-"Residential Apartments": 443
-},
-"name": "East Tower",
-"built": "2016",
-"floors": 41,
-"use": "Residential Apartment"
-},
-{
 "property_id": "110099",
 "address": "189-203 William Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -738,6 +723,21 @@
 "name": "The William",
 "built": "1966",
 "floors": 25,
+"use": "Residential Apartment"
+},
+{
+"property_id": "674536",
+"address": "East Tower 888 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82059451,
+"lon": 144.94250585,
+"dwellings": 443,
+"dwelling_types": {
+"Residential Apartments": 443
+},
+"name": "East Tower",
+"built": "2016",
+"floors": 41,
 "use": "Residential Apartment"
 },
 {
@@ -1821,21 +1821,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "661088",
-"address": "28-44 Bouverie Street CARLTON VIC 3053",
-"area": "Carlton",
-"lat": -37.80568588,
-"lon": 144.961947969,
-"dwellings": 225,
-"dwelling_types": {
-"Residential Apartments": 225
-},
-"name": null,
-"built": "2016",
-"floors": 22,
-"use": "Residential Apartment"
-},
-{
 "property_id": "103312",
 "address": "222-260 Elizabeth Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -1848,6 +1833,21 @@
 "name": "250E Apartments",
 "built": "1976",
 "floors": 27,
+"use": "Residential Apartment"
+},
+{
+"property_id": "661088",
+"address": "28-44 Bouverie Street CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80568588,
+"lon": 144.961947969,
+"dwellings": 225,
+"dwelling_types": {
+"Residential Apartments": 225
+},
+"name": null,
+"built": "2016",
+"floors": 22,
 "use": "Residential Apartment"
 },
 {
@@ -1926,21 +1926,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "688500",
-"address": "South Tower 883 Collins Street DOCKLANDS VIC 3008",
-"area": "Docklands",
-"lat": -37.82148991,
-"lon": 144.942978909,
-"dwellings": 219,
-"dwelling_types": {
-"Residential Apartments": 219
-},
-"name": "South Tower",
-"built": "2017",
-"floors": 25,
-"use": "Residential Apartment"
-},
-{
 "property_id": "102125",
 "address": "Temple Court 422-428 Collins Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -1968,6 +1953,21 @@
 "name": "Wills Court",
 "built": "2002",
 "floors": 26,
+"use": "Residential Apartment"
+},
+{
+"property_id": "688500",
+"address": "South Tower 883 Collins Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82148991,
+"lon": 144.942978909,
+"dwellings": 219,
+"dwelling_types": {
+"Residential Apartments": 219
+},
+"name": "South Tower",
+"built": "2017",
+"floors": 25,
 "use": "Residential Apartment"
 },
 {
@@ -2076,21 +2076,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "573327",
-"address": "The Nolan 37-43 Caravel Lane DOCKLANDS VIC 3008",
-"area": "Docklands",
-"lat": -37.8149263,
-"lon": 144.940659333,
-"dwellings": 200,
-"dwelling_types": {
-"Residential Apartments": 200
-},
-"name": "The Nolan",
-"built": "2004",
-"floors": 24,
-"use": "Residential Apartment"
-},
-{
 "property_id": "650594",
 "address": "Melbourne Sky Apartments 5 Sutherland Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -2103,6 +2088,21 @@
 "name": "Melbourne Sky Apartments",
 "built": "2013",
 "floors": 37,
+"use": "Residential Apartment"
+},
+{
+"property_id": "573327",
+"address": "The Nolan 37-43 Caravel Lane DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.8149263,
+"lon": 144.940659333,
+"dwellings": 200,
+"dwelling_types": {
+"Residential Apartments": 200
+},
+"name": "The Nolan",
+"built": "2004",
+"floors": 24,
 "use": "Residential Apartment"
 },
 {
@@ -2571,21 +2571,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "560261",
-"address": "50-56 Lorimer Street DOCKLANDS VIC 3008",
-"area": "Docklands",
-"lat": -37.82461483,
-"lon": 144.947647139,
-"dwellings": 175,
-"dwelling_types": {
-"Residential Apartments": 175
-},
-"name": "Yarras Edge",
-"built": "2002",
-"floors": 31,
-"use": "Residential Apartment"
-},
-{
 "property_id": "105111",
 "address": "Cityside 50-64 Jeffcott Street WEST MELBOURNE VIC 3003",
 "area": "West Melbourne (Residential)",
@@ -2598,6 +2583,21 @@
 "name": "Cityside",
 "built": "2009",
 "floors": 15,
+"use": "Residential Apartment"
+},
+{
+"property_id": "560261",
+"address": "50-56 Lorimer Street DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.82461483,
+"lon": 144.947647139,
+"dwellings": 175,
+"dwelling_types": {
+"Residential Apartments": 175
+},
+"name": "Yarras Edge",
+"built": "2002",
+"floors": 31,
 "use": "Residential Apartment"
 },
 {
@@ -2766,21 +2766,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "110472",
-"address": "61-63 Haig Street SOUTHBANK VIC 3006",
-"area": "Southbank",
-"lat": -37.82774781,
-"lon": 144.956787217,
-"dwellings": 167,
-"dwelling_types": {
-"Residential Apartments": 167
-},
-"name": null,
-"built": "2018",
-"floors": 39,
-"use": "Residential Apartment"
-},
-{
 "property_id": "563922",
 "address": "Central Building No.5 College Square Apartments 570 Lygon Street CARLTON VIC 3053",
 "area": "Carlton",
@@ -2794,6 +2779,21 @@
 "built": "2000",
 "floors": 10,
 "use": "Student Accommodation"
+},
+{
+"property_id": "110472",
+"address": "61-63 Haig Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82774781,
+"lon": 144.956787217,
+"dwellings": 167,
+"dwelling_types": {
+"Residential Apartments": 167
+},
+"name": null,
+"built": "2018",
+"floors": 39,
+"use": "Residential Apartment"
 },
 {
 "property_id": "110482",
@@ -3066,21 +3066,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "105083",
-"address": "1-9 Dryburgh Street WEST MELBOURNE VIC 3003",
-"area": "West Melbourne (Residential)",
-"lat": -37.80671459,
-"lon": 144.942416906,
-"dwellings": 152,
-"dwelling_types": {
-"Residential Apartments": 152
-},
-"name": null,
-"built": "2018",
-"floors": 11,
-"use": "Residential Apartment"
-},
-{
 "property_id": "101219",
 "address": "The Paramount 100-116 Bourke Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -3108,6 +3093,21 @@
 "name": null,
 "built": null,
 "floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "105083",
+"address": "1-9 Dryburgh Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.80671459,
+"lon": 144.942416906,
+"dwellings": 152,
+"dwelling_types": {
+"Residential Apartments": 152
+},
+"name": null,
+"built": "2018",
+"floors": 11,
 "use": "Residential Apartment"
 },
 {
@@ -3261,6 +3261,21 @@
 "use": "Residential Apartment"
 },
 {
+"property_id": "105104",
+"address": "19-41 Jeffcott Street WEST MELBOURNE VIC 3003",
+"area": "West Melbourne (Residential)",
+"lat": -37.81217238,
+"lon": 144.952744452,
+"dwellings": 144,
+"dwelling_types": {
+"Residential Apartments": 144
+},
+"name": "Royal Flagstaff",
+"built": "1996",
+"floors": 14,
+"use": "Residential Apartment"
+},
+{
 "property_id": "109645",
 "address": "388-410 Victoria Parade EAST MELBOURNE VIC 3002",
 "area": "East Melbourne",
@@ -3276,19 +3291,19 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "105104",
-"address": "19-41 Jeffcott Street WEST MELBOURNE VIC 3003",
-"area": "West Melbourne (Residential)",
-"lat": -37.81217238,
-"lon": 144.952744452,
+"property_id": "103615",
+"address": "333-351 Exhibition Street MELBOURNE VIC 3000",
+"area": "Melbourne (CBD)",
+"lat": -37.8078604,
+"lon": 144.968026666,
 "dwellings": 144,
 "dwelling_types": {
 "Residential Apartments": 144
 },
-"name": "Royal Flagstaff",
-"built": "1996",
-"floors": 14,
-"use": "Residential Apartment"
+"name": "Mantra 100 Exhibition Melbourne",
+"built": "1988",
+"floors": 19,
+"use": "Parking - Commercial Covered"
 },
 {
 "property_id": "110621",
@@ -3319,21 +3334,6 @@
 "built": "2017",
 "floors": 18,
 "use": "Residential Apartment"
-},
-{
-"property_id": "103615",
-"address": "333-351 Exhibition Street MELBOURNE VIC 3000",
-"area": "Melbourne (CBD)",
-"lat": -37.8078604,
-"lon": 144.968026666,
-"dwellings": 144,
-"dwelling_types": {
-"Residential Apartments": 144
-},
-"name": "Mantra 100 Exhibition Melbourne",
-"built": "1988",
-"floors": 19,
-"use": "Parking - Commercial Covered"
 },
 {
 "property_id": "611366",
@@ -3426,21 +3426,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "110646",
-"address": "104-112 Haines Street NORTH MELBOURNE VIC 3051",
-"area": "North Melbourne",
-"lat": -37.79830833,
-"lon": 144.943470929,
-"dwellings": 140,
-"dwelling_types": {
-"Residential Apartments": 140
-},
-"name": "Reflections",
-"built": "2018",
-"floors": 13,
-"use": "Residential Apartment"
-},
-{
 "property_id": "100850",
 "address": "49-53 Batman Street WEST MELBOURNE VIC 3003",
 "area": "West Melbourne (Residential)",
@@ -3453,6 +3438,21 @@
 "name": "Flagstaff Place",
 "built": "2014",
 "floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110646",
+"address": "104-112 Haines Street NORTH MELBOURNE VIC 3051",
+"area": "North Melbourne",
+"lat": -37.79830833,
+"lon": 144.943470929,
+"dwellings": 140,
+"dwelling_types": {
+"Residential Apartments": 140
+},
+"name": "Reflections",
+"built": "2018",
+"floors": 13,
 "use": "Residential Apartment"
 },
 {
@@ -3921,21 +3921,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "626356",
-"address": "453-463 Docklands Drive DOCKLANDS VIC 3008",
-"area": "Docklands",
-"lat": -37.8152289,
-"lon": 144.937369101,
-"dwellings": 113,
-"dwelling_types": {
-"Residential Apartments": 113
-},
-"name": "The Mariner",
-"built": "2011",
-"floors": 8,
-"use": "Residential Apartment"
-},
-{
 "property_id": "103988",
 "address": "546-548 Flinders Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -3948,6 +3933,21 @@
 "name": "Flinders Towers",
 "built": "2004",
 "floors": 16,
+"use": "Residential Apartment"
+},
+{
+"property_id": "626356",
+"address": "453-463 Docklands Drive DOCKLANDS VIC 3008",
+"area": "Docklands",
+"lat": -37.8152289,
+"lon": 144.937369101,
+"dwellings": 113,
+"dwelling_types": {
+"Residential Apartments": 113
+},
+"name": "The Mariner",
+"built": "2011",
+"floors": 8,
 "use": "Residential Apartment"
 },
 {
@@ -4071,21 +4071,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "110425",
-"address": "The Sovereign 6-10 Wells Street SOUTHBANK VIC 3006",
-"area": "Southbank",
-"lat": -37.82620877,
-"lon": 144.96861071,
-"dwellings": 109,
-"dwelling_types": {
-"Residential Apartments": 109
-},
-"name": "The Sovereign",
-"built": "1996",
-"floors": 13,
-"use": "Residential Apartment"
-},
-{
 "property_id": "105945",
 "address": "601-611 Little Collins Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -4098,6 +4083,21 @@
 "name": null,
 "built": "2004",
 "floors": 14,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110425",
+"address": "The Sovereign 6-10 Wells Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82620877,
+"lon": 144.96861071,
+"dwellings": 109,
+"dwelling_types": {
+"Residential Apartments": 109
+},
+"name": "The Sovereign",
+"built": "1996",
+"floors": 13,
 "use": "Residential Apartment"
 },
 {
@@ -4551,21 +4551,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "110616",
-"address": "161-173 Sturt Street SOUTHBANK VIC 3006",
-"area": "Southbank",
-"lat": -37.82818554,
-"lon": 144.966639264,
-"dwellings": 92,
-"dwelling_types": {
-"Residential Apartments": 92
-},
-"name": "Cityview",
-"built": "1959",
-"floors": 10,
-"use": "Residential Apartment"
-},
-{
 "property_id": "100167",
 "address": "Uni On A'Beckett Apartments 106-116 A'Beckett Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -4579,6 +4564,21 @@
 "name": "Unilodge on Abeckett",
 "built": "1999",
 "floors": 8,
+"use": "Residential Apartment"
+},
+{
+"property_id": "110616",
+"address": "161-173 Sturt Street SOUTHBANK VIC 3006",
+"area": "Southbank",
+"lat": -37.82818554,
+"lon": 144.966639264,
+"dwellings": 92,
+"dwelling_types": {
+"Residential Apartments": 92
+},
+"name": "Cityview",
+"built": "1959",
+"floors": 10,
 "use": "Residential Apartment"
 },
 {
@@ -4657,21 +4657,6 @@
 "use": "Parking - Private Covered"
 },
 {
-"property_id": "653923",
-"address": "67 Galada Avenue PARKVILLE VIC 3052",
-"area": "Parkville",
-"lat": -37.77959037,
-"lon": 144.939144375,
-"dwellings": 91,
-"dwelling_types": {
-"Residential Apartments": 91
-},
-"name": null,
-"built": "2017",
-"floors": 8,
-"use": "Residential Apartment"
-},
-{
 "property_id": "627568",
 "address": "494-516 Drummond Street CARLTON VIC 3053",
 "area": "Carlton",
@@ -4684,6 +4669,21 @@
 "name": "The Residences",
 "built": "2017",
 "floors": 9,
+"use": "Residential Apartment"
+},
+{
+"property_id": "653923",
+"address": "67 Galada Avenue PARKVILLE VIC 3052",
+"area": "Parkville",
+"lat": -37.77959037,
+"lon": 144.939144375,
+"dwellings": 91,
+"dwelling_types": {
+"Residential Apartments": 91
+},
+"name": null,
+"built": "2017",
+"floors": 8,
 "use": "Residential Apartment"
 },
 {
@@ -4942,21 +4942,6 @@
 "use": "Residential Apartment"
 },
 {
-"property_id": "110021",
-"address": "207-221 Wellington Parade South EAST MELBOURNE VIC 3002",
-"area": "East Melbourne",
-"lat": -37.81663964,
-"lon": 144.977469422,
-"dwellings": 83,
-"dwelling_types": {
-"Residential Apartments": 83
-},
-"name": null,
-"built": null,
-"floors": 4,
-"use": "Residential Apartment"
-},
-{
 "property_id": "105901",
 "address": "24-38 Little Bourke Street MELBOURNE VIC 3000",
 "area": "Melbourne (CBD)",
@@ -4987,19 +4972,19 @@
 "use": "Student Accommodation"
 },
 {
-"property_id": "100732",
-"address": "24-30 Barkly Place CARLTON VIC 3053",
-"area": "Carlton",
-"lat": -37.80300313,
-"lon": 144.961447769,
+"property_id": "110021",
+"address": "207-221 Wellington Parade South EAST MELBOURNE VIC 3002",
+"area": "East Melbourne",
+"lat": -37.81663964,
+"lon": 144.977469422,
 "dwellings": 83,
 "dwelling_types": {
-"Student Apartments": 83
+"Residential Apartments": 83
 },
-"name": "Global House",
-"built": "2006",
-"floors": 6,
-"use": "Student Accommodation"
+"name": null,
+"built": null,
+"floors": 4,
+"use": "Residential Apartment"
 },
 {
 "property_id": "105659",
@@ -5015,6 +5000,21 @@
 "built": "2005",
 "floors": 12,
 "use": "Residential Apartment"
+},
+{
+"property_id": "100732",
+"address": "24-30 Barkly Place CARLTON VIC 3053",
+"area": "Carlton",
+"lat": -37.80300313,
+"lon": 144.961447769,
+"dwellings": 83,
+"dwelling_types": {
+"Student Apartments": 83
+},
+"name": "Global House",
+"built": "2006",
+"floors": 6,
+"use": "Student Accommodation"
 },
 {
 "property_id": "108850",
