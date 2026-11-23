@@ -35,3 +35,15 @@
 - 法规核对：CAV 列表上 2026-10-13 之后下一批是 2027-03-01（最低节能标准）和 2027-06-01（提前退租赔偿上限、不能因直接付 RTBA 拒租等）。核对了 guide/rental-law-changes.html、apply.html、bond.html、break-lease.html、landlord.html 和区域页“不收申请费”的说法，都和 CAV 一致，**不需要改正文字**。
 - 清单变化：末尾新增第 16、17 条（17 是合规小改动，建议先做）。
 用量：token 总计 2,611,904（输入 2,601,605 / 输出 10,299；输入里缓存读取 2,521,373），折合约 $2.02（按 Opus 档 API 价折算，截至写报告时，实际扣订阅额度）
+
+## 2026-11-23（每周需求周报）
+说明：小红书、知乎、亿忆网、Reddit、Whirlpool 本周搜索仍找不到近 1–2 周可引用的公开新帖（搜索引擎基本没收录，按规则不登录）；本周证据来自行业数据和官方新闻。
+
+| 需求 / 痛点（大白话） | 证据 | 来源 | 好租可以做什么 |
+|---|---|---|---|
+| 市场转松了：租客想比价、想讲价，不想租贵 | SQM：墨尔本 10 月空置率 2.0%（首都城市最高），综合租金跌 1.0% 至约 $686/周，连续第二个月下跌，在租约 1.08 万套；Domain 9 月季度墨尔本房屋/公寓周租中位数都持平在 $600，空置率 1.2%→1.4% | [Australian Broker 11/18（SQM）](https://www.brokernews.com.au/news/breaking-news/rental-vacancy-rate-rises-to-1-5-as-sydney-and-melbourne-ease-290337.aspx)、[Time Out 10/14（Domain）](https://www.timeout.com/melbourne/news/melbourne-rents-have-finally-stopped-rising-according-to-new-data-101426) | 已有第 16 条（租客看到“比本区中位数高/低 X%”）。**新加第 18 条**：发房源时给房东显示本区中位数做定价参考。注意：11/16 周报“租金还在涨”的说法已过时，第 16 条的理由改为“租客在比价”，功能本身仍对 |
+| 11/28（本周六）州选举，租客关心会不会限制涨租 | 绿党：涨租不超过工资涨幅、建 8.8 万套公屋；工党和联盟：土地税免税门槛提到 $300k 地价；工党 8/27 承诺租房专项组常设（已罚约 $90 万） | [Elite Agent 11/17（REIV 问卷）](https://eliteagent.com/victorian-election-parties-split-on-land-tax-rental-supply/)、[州长新闻 8/27](https://www.premier.vic.gov.au/renting-taskforce-here-stay-under-labor) | 只观察：选举结果出来后，下周核对 guide/rental-law-changes.html 是否要加“新政府承诺”一段；未立法前不写成规则 |
+
+- 法规核对：本周没有新生效的租房规定（CAV 下一批仍是 2027-03-01 和 2027-06-01）。全站搜了“空置率”“租金上涨”类说法，网站上没有过时数字，**不需要改正文字**。
+- 清单变化：末尾新增第 18 条（发房源定价参考，复用 js/rent-vs.js，改动小）。其余顺序不变。
+用量：token 总计约 2,056,538（输入 2,051,181，其中缓存读取 1,979,709 / 输出 5,357；另有网页读取子任务 51,284 未计入），折合约 $1.57（按 Opus 档 API 价折算，截至写报告时，实际扣订阅额度）
