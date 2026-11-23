@@ -110,6 +110,13 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 .dt-x{position:absolute;top:12px;right:12px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.95);font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .dt-g{position:relative;background:#111;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center}
 .dt-g img{width:100%;height:100%;object-fit:contain}
+.dt-g #dtImg{cursor:zoom-in}
+#fv{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+#fv img{max-width:100vw;max-height:100vh;max-height:100dvh;width:auto;height:auto;object-fit:contain;transition:transform .18s ease;will-change:transform}
+#fv .fx{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:22px;cursor:pointer;z-index:2}
+#fv .fn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:26px;cursor:pointer;z-index:2}
+#fv .fn.l{left:10px}#fv .fn.r{right:10px}
+#fv .fc{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#fff;font-size:14px;opacity:.85;pointer-events:none}
 .dt-none{color:#aaa}
 .dt-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.9);font-size:26px;line-height:1;cursor:pointer;color:#1d2321}
 .dt-nav.l{left:12px}.dt-nav.r{right:12px}
@@ -551,7 +558,27 @@ function openDetail(x,noPush){
   g.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)go(dx<0?1:-1);sx=null;});
 }
 function go(d){const P=DX.photos||[];if(!P.length)return;DI=(DI+d+P.length)%P.length;show();}
-function show(){const P=DX.photos;document.getElementById("dtImg").src=P[DI];const c=document.getElementById("dtC");if(c)c.textContent=`${DI+1} / ${P.length}`;document.querySelectorAll(".dt-th img").forEach((t,i)=>{t.classList.toggle("on",i===DI);if(i===DI)t.scrollIntoView({block:"nearest",inline:"center"});});}
+function show(){const P=DX.photos;document.getElementById("dtImg").src=P[DI];fvShow();const c=document.getElementById("dtC");if(c)c.textContent=`${DI+1} / ${P.length}`;document.querySelectorAll(".dt-th img").forEach((t,i)=>{t.classList.toggle("on",i===DI);if(i===DI)t.scrollIntoView({block:"nearest",inline:"center"});});}
+
+// 点大图 → 全屏看原图：左右滑或点箭头换张，双击放大（放大后可拖动），点 ✕、按返回键或 Esc 关闭
+let FZ=1,FX=0,FY=0,FVSKIP=false;
+function fvImg(){return document.querySelector("#fv img");}
+function fvApply(){const i=fvImg();if(i)i.style.transform=`translate(${FX}px,${FY}px) scale(${FZ})`;}
+function fvShow(){const f=document.getElementById("fv");if(!f||!DX)return;const P=DX.photos||[];FZ=1;FX=FY=0;const i=fvImg();i.src=P[DI];fvApply();f.querySelector(".fc").textContent=P.length>1?`${DI+1} / ${P.length}`:"";}
+function openFull(){if(!DX||!(DX.photos||[]).length||document.getElementById("fv"))return;const P=DX.photos;
+  const f=document.createElement("div");f.id="fv";f.setAttribute("role","dialog");f.setAttribute("aria-label","全屏看照片");
+  f.innerHTML=`<img alt="${esc(DX.title||"房源照片")}"><button class="fx" data-fvx aria-label="关闭">✕</button>${P.length>1?`<button class="fn l" data-fvn="-1" aria-label="上一张">‹</button><button class="fn r" data-fvn="1" aria-label="下一张">›</button>`:""}<div class="fc"></div>`;
+  document.body.appendChild(f);fvShow();history.pushState({id:DX.id,fv:1},"",location.href);
+  let t0=null,last=0,moved=false;
+  f.addEventListener("touchstart",e=>{if(e.touches.length!==1){t0=null;return;}const p=e.touches[0];t0={x:p.clientX,y:p.clientY,fx:FX,fy:FY};moved=false;},{passive:true});
+  f.addEventListener("touchmove",e=>{if(!t0||e.touches.length!==1)return;const p=e.touches[0],dx=p.clientX-t0.x,dy=p.clientY-t0.y;if(Math.abs(dx)+Math.abs(dy)>8)moved=true;if(FZ>1){FX=t0.fx+dx;FY=t0.fy+dy;const i=fvImg();i.style.transition="none";fvApply();}},{passive:true});
+  f.addEventListener("touchend",e=>{const i=fvImg();i.style.transition="";if(!t0)return;const p=e.changedTouches[0],dx=p.clientX-t0.x,dy=p.clientY-t0.y;t0=null;
+    if(!moved&&!e.target.closest("button")){const now=Date.now();if(now-last<300){fvZoom(p.clientX,p.clientY);last=0;}else last=now;return;}
+    if(FZ===1&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(dx<0?1:-1);else if(FZ===1&&dy>90&&Math.abs(dy)>Math.abs(dx))closeFull(true);});
+  f.addEventListener("dblclick",e=>{if(!e.target.closest("button"))fvZoom(e.clientX,e.clientY);});
+}
+function fvZoom(x,y){if(FZ>1){FZ=1;FX=FY=0;}else{FZ=2.5;FX=(innerWidth/2-x)*1.5;FY=(innerHeight/2-y)*1.5;}fvApply();}
+function closeFull(viaUi){const f=document.getElementById("fv");if(!f)return false;f.remove();if(viaUi&&history.state&&history.state.fv){FVSKIP=true;history.back();}return true;}
 function openBook(){if(!DX||document.getElementById("bk"))return;document.querySelector("#dt .dt").insertAdjacentHTML("beforeend",bookSheet(DX));}
 async function cmpCommute(C3,m){if(!window.HowzuCommute)return;const tb=m.querySelector("tbody");if(!tb)return;
   tb.insertAdjacentHTML("beforeend",HowzuCommute.PLACES.map(p=>`<tr data-cm="${p.k}"><th>到${esc(p.name)}</th>${C3.map(()=>`<td class="m">估算中…</td>`).join("")}</tr>`).join(""));
@@ -570,10 +597,12 @@ function openCmp(){const C3=FAV.map(id=>L.find(y=>String(y.id)===id&&!isLet(y)))
   document.body.appendChild(m);document.body.style.overflow="hidden";cmpCommute(C3,m);}
 document.addEventListener("click",e=>{if(e.target.closest("[data-cmp]")){openCmp();return;}const c=document.getElementById("cmp");if(!c)return;const o=e.target.closest("#cmp [data-go]");if(e.target.closest("[data-cmpx]")||e.target===c||o){c.parentNode.removeChild(c);document.body.style.overflow="";if(o){const x=L.find(y=>String(y.id)===o.dataset.go);if(x)openDetail(x);}e.stopPropagation();}},true);
 function closeDetail(back){const m=document.getElementById("dt");if(!m)return;m.remove();if(window.T0)document.title=T0;document.body.style.overflow="";DX=null;recentRow();if(back!==false&&new URLSearchParams(location.search).get("id"))history.pushState({},"","rentals.html"+(preview?"?preview=1":""));}
-addEventListener("popstate",()=>{const id=new URLSearchParams(location.search).get("id");closeDetail(false);if(id){const x=L.find(y=>String(y.id)===id);if(x)openDetail(x,true);}});
-addEventListener("keydown",e=>{if(!DX)return;if(e.key==="Escape")closeDetail();if(e.key==="Enter"&&e.target.closest&&e.target.closest(".kf [role=button]")){e.preventDefault();e.target.click();return;}if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);});
+addEventListener("popstate",()=>{if(FVSKIP){FVSKIP=false;return;}if(closeFull())return;const id=new URLSearchParams(location.search).get("id");closeDetail(false);if(id){const x=L.find(y=>String(y.id)===id);if(x)openDetail(x,true);}});
+addEventListener("keydown",e=>{if(!DX)return;if(e.key==="Escape"){if(!closeFull(true))closeDetail();return;}if(e.key==="Enter"&&e.target.closest&&e.target.closest(".kf [role=button]")){e.preventDefault();e.target.click();return;}if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);});
 document.addEventListener("click",e=>{
   const t=e.target;
+  if(t.closest("#fv")){if(t.closest("[data-fvx]"))return closeFull(true);const n=t.closest("[data-fvn]");if(n)return go(+n.dataset.fvn);return;}
+  if(t.id==="dtImg"&&DX&&(DX.photos||[]).length)return openFull();
   if(t.closest("#dt")){
     if(t.closest("[data-close]")||t.id==="dt")return closeDetail();
     const n=t.closest("[data-nav]");if(n)return go(+n.dataset.nav);
