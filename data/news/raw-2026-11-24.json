@@ -1,98 +1,442 @@
 {
-"fetched": "2026-11-23T20:15:12.581083+00:00",
+"fetched": "2026-11-24T04:16:11.351578+00:00",
 "log": [
 "ABC 新闻: 25",
 "ABC 新闻: 25",
 "SBS 新闻: 0",
 "SBS 中文: 失败 HTTPError",
-"卫报澳洲: 12",
-"The Conversation: 31",
+"卫报澳洲: 11",
+"The Conversation: 35",
 "澳联储 RBA: 0",
 "Domain 新闻: 失败 HTTPError",
-"realestate 新闻: 38",
+"realestate 新闻: 47",
 "维州州长新闻稿: 失败 HTTPError",
 "移民局新闻: 失败 HTTPError"
 ],
 "items": [
 {
+"src": "卫报澳洲",
+"title": "Australian politics live: Government lacks ‘moral authority’ on decarbonisation, Monique Ryan says; Labor MP kicked out of question time",
+"link": "https://www.theguardian.com/australia-news/live/2026/nov/24/labor-penny-wong-us-china-anthony-albanese-final-sitting-week-ntwnfb",
+"when": "2026-11-24T04:04:10+00:00",
+"desc": "Get our breaking news email , free app or daily news podcast The government will save more than it spends, says Jim Chalmers , but it won’t be a “slash and burn” budget update. Unlike the federal budg",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Social media companies could be fined 5% of global revenue after Labor and Greens join forces on online safety laws",
+"link": "https://www.theguardian.com/technology/2026/nov/24/social-media-big-tech-fines-global-revenue-australia-digital-duty-care-laws",
+"when": "2026-11-24T04:03:16+00:00",
+"desc": "Individual Australians will be able to sue big tech companies for harm suffered online under compromise deal announced on Tuesday Get our breaking news email , free app or daily news podcast Big tech ",
+"cat": "澳洲"
+},
+{
 "src": "ABC 新闻",
-"title": "Pelicot 'deeply shocked' nude photos used to promote psychoanalyst's book",
+"title": "Luxury resort caretakers hope for less intense cyclone season",
+"link": "https://www.abc.net.au/news/2026-11-24/berkeley-river-lodge-cyclone-fina-caretakers-kimberley/107420268",
+"when": "2026-11-24T03:55:55+00:00",
+"desc": "Couple who survived 'apocalyptic' Cyclone Fina in underground bunker brace for another remote caretaker stint",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Munster calls Storm contract offer 'disappointing'",
+"link": "https://www.abc.net.au/news/2026-11-24/cameron-munster-calls-melbourne-offer-disappointing/107421688",
+"when": "2026-11-24T03:55:05+00:00",
+"desc": "Melbourne's fight to keep Cameron Munster and Harry Grant has been made harder after the former rejected the club's latest offer.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Shooter of Tasmania Police officer remains unnamed",
+"link": "https://www.abc.net.au/news/2026-11-24/flinders-island-police-officer-shooting-update/107421460",
+"when": "2026-11-24T03:48:40+00:00",
+"desc": "Police are yet to reveal the name of a man alleged to have ambushed and shot a Tasmanian officer with a stolen firearm. A meeting is being held on Flinders Island to address community concerns over th",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Jensen Huang a 'protected species' after Trump intervened with Nvidia",
+"link": "https://www.abc.net.au/news/2026-11-24/trump-influence-on-jensen-huang-nvidia/107419642",
+"when": "2026-11-24T03:41:35+00:00",
+"desc": "Jensen Huang is back as CEO of Nvidia and US President Donald Trump is taking credit for the move. For Congress and experts alike, that is raising some flags.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Australian social media figure enlists to fight in Ukraine war against Russia",
+"link": "https://www.abc.net.au/news/2026-11-24/nt-social-media-figure-mango-inquirer-fights-in-ukraine/107420638",
+"when": "2026-11-24T03:35:06+00:00",
+"desc": "A prominent social media commentator from the Northern Territory has become a soldier fighting in the Ukrainian war against Russia. Shannon Joyce says during his time with Ukraine's armed forces he's ",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Prisoner who drank toilet water not deemed high risk before death in custody",
+"link": "https://www.abc.net.au/news/2026-11-24/linton-ryan-not-deemed-high-risk-before-death-in-custody/107421038",
+"when": "2026-11-24T03:27:58+00:00",
+"desc": "A prisoner who cut himself and exhibited concerning behaviour in the days before he killed himself in a Western Australian jail was not deemed to be at high risk of self-harm, a coronial inquest hears",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "The second chance van giving high school students a new way to learn",
+"link": "https://www.abc.net.au/news/2026-11-24/high-schools-second-chance-coffee-van-flexible-learning/107398234",
+"when": "2026-11-24T03:26:46+00:00",
+"desc": "Berri Regional Secondary College in SA has established an on-site coffee van, open to the community and run by students struggling to engage with traditional learning pathways.",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "Australia is spending $4 billion on remote NT housing, but risks repeating the same mistakes",
+"link": "https://theconversation.com/australia-is-spending-4-billion-on-remote-nt-housing-but-risks-repeating-the-same-mistakes-297282",
+"when": "2026-11-24T03:04:18+00:00",
+"desc": "The new housing agreement is one of the largest investments in Aboriginal housing in Australia’s history, but may be affected by the same issues as in the past.",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Adelaide suburb turns wild west when horses escape club",
+"link": "https://www.abc.net.au/news/2026-11-24/horses-roaming-freely-in-adelaide-western-surburbs/107420804",
+"when": "2026-11-24T02:52:52+00:00",
+"desc": "Five horses from a local riding club have gone rogue in the streets of Adelaide's western suburbs after they left a paddock through an unlocked gate.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Michael Clarke’s Vaucluse mansion a ‘have to sell’",
+"link": "https://www.realestate.com.au/news/michael-clarkes-vaucluse-mansion-a-have-to-sell/",
+"when": "2026-11-24T02:52:00+00:00",
+"desc": "Aussie cricket great Michael Clarke’s mansion, for sale for almost a year, is ‘now a have to sell’ at a very significant discount. The post Michael Clarke’s Vaucluse mansion a ‘have to sell’ appeared ",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Why there's no time to waste for Matildas ahead of World Cup",
+"link": "https://www.abc.net.au/news/2026-11-24/sam-kerr-matildas-womens-world-cup/107420952",
+"when": "2026-11-24T02:25:17+00:00",
+"desc": "With Mary Fowler and Kyra Cooney-Cross returning to the squad, Matildas skipper Sam Kerr says it is time for the side to crack the whip ahead of next year's World Cup.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Labor does deal with Greens to pass digital duty of care",
+"link": "https://www.abc.net.au/news/2026-11-24/federal-politics-labor-makes-deal-greens-on-digital-duty-of-care/107420982",
+"when": "2026-11-24T02:24:54+00:00",
+"desc": "Social media companies could face lawsuits from Australian users and significantly higher fines after Labor seals a deal to strengthen its proposed online safety laws.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Australians able to sue social media companies under revised digital duty of care laws",
+"link": "https://www.abc.net.au/news/2026-11-24/federal-politics-labor-makes-deal-greens-on-digital-duty-of-care/107420982",
+"when": "2026-11-24T02:24:54+00:00",
+"desc": "Social media companies could face lawsuits from Australian users and significantly higher fines after Labor seals a deal to strengthen its proposed online safety laws.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Confused about who to vote for in the Victoria election? A guide to key promises made by Labor, the Coalition, Greens and One Nation",
+"link": "https://www.theguardian.com/australia-news/2026/nov/16/victoria-election-2026-who-to-vote-for-policies-promises-labor-coalition-greens-one-nation-ntwnfb",
+"when": "2026-11-24T02:24:03+00:00",
+"desc": "From cost of living to health, transport and crime, here are some of the major promises and policies announced by parties ahead of the 2026 Victorian state election See more of our Victorian election ",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "What Victoria's upper house might look like after the state election",
+"link": "https://www.abc.net.au/news/2026-11-24/what-victorian-upper-house-will-look-like-after-state-election/107419706",
+"when": "2026-11-24T02:04:18+00:00",
+"desc": "Expect to see a huge number of new faces on the red benches of the Legislative Council and a lot of current members defeated at the ballot box.",
+"cat": "地产"
+},
+{
+"src": "卫报澳洲",
+"title": "A slash-and-burn budget update could push Australia into a recession. Jim Chalmers has a fine line to tread | Patrick Commins",
+"link": "https://www.theguardian.com/business/2026/nov/24/mid-year-budget-cuts-recession-inflation-unemployment-australia-jim-chalmers",
+"when": "2026-11-24T01:51:56+00:00",
+"desc": "Labor has been complacent. But deep cuts designed to kill inflation would come at least six months too late A pivot towards austerity in next month’s mid-year budget would come far too late in the bat",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Property guru Jack Henderson slams ATO over extra $25k tax bill",
+"link": "https://www.realestate.com.au/news/property-guru-jack-henderson-slams-ato-over-extra-25k-tax-bill/",
+"when": "2026-11-24T01:51:00+00:00",
+"desc": "A man, who boasts of supercars, yachts and multimillion-dollar success, has complained about a $25,000 tax bill - only for it to brutally backfire. The post Property guru Jack Henderson slams ATO over",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Lamarre-Condon's 'disorganised' cover-up supports self-defence claim, jury told",
+"link": "https://www.abc.net.au/news/2026-11-24/beau-lamarre-condon-sydney-murder-trial-defence-closing-argument/107420402",
+"when": "2026-11-24T01:41:40+00:00",
+"desc": "The former police officer's Supreme Court trial is now in its final stages, after about two months of evidence, and closing addresses from the Crown and defence.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Custody dispute over 'handsome' Indonesian shopping centre cat goes viral",
+"link": "https://www.abc.net.au/news/2026-11-24/celebrity-cat-parhan-returned-indonesia-shopping-centre/107408188",
+"when": "2026-11-24T01:33:17+00:00",
+"desc": "Jakarta's city government steps in after a dispute over custody of a shopping centre \"community cat\" goes viral.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Bid to take Indonesian shopping centre's 'handsome' cat to Sydney causes uproar",
+"link": "https://www.abc.net.au/news/2026-11-24/celebrity-cat-parhan-returned-indonesia-shopping-centre/107408188",
+"when": "2026-11-24T01:33:17+00:00",
+"desc": "Jakarta's city government steps in after a dispute over custody of a shopping centre \"community cat\" goes viral.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Cameron Smith keen on PGA return following LIV collapse",
+"link": "https://www.abc.net.au/news/2026-11-24/cameron-smith-pga-liv-golf-australia/107420594",
+"when": "2026-11-24T01:29:15+00:00",
+"desc": "Former British Open winner Cameron Smith has revealed a burning desire to return to the PGA Tour following the collapse of LIV Golf.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Beau Lamarre-Condon chose ‘long walk’ to witness box rather than silence, his barrister tells court",
+"link": "https://www.theguardian.com/australia-news/2026/nov/24/beau-lamarre-condon-trial-barrister-closing-statement-ntwnfb",
+"when": "2026-11-24T01:25:20+00:00",
+"desc": "Former police officer has pleaded not guilty to murders of Jesse Baird and Luke Davies in Baird’s Paddington home in February 2024 Get our breaking news email , free app or daily news podcast Beau Lam",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "From beachside villages to harbourfront living: Discover NSW’s new coastal apartments",
+"link": "https://www.realestate.com.au/news/from-beachside-villages-to-harbourfront-living-discover-nsws-new-coastal-apartments/",
+"when": "2026-11-24T01:24:25+00:00",
+"desc": "There’s more than one way to live by the water in New South Wales. From ... The post From beachside villages to harbourfront living: Discover NSW’s new coastal apartments appeared first on realestate.",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "New modelling suggests presence of hidden ninth planet",
+"link": "https://www.abc.net.au/news/2026-11-24/qld-hypothetical-ninth-planet-research-modelling/107418880",
+"when": "2026-11-24T01:02:11+00:00",
+"desc": "Astrophysicists say an undiscovered planet twice the size of Earth in the far reaches of the Solar System could explain \"strange\" orbits beyond Neptune.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Leaders welcome potential return of income management in WA's East Kimberley",
+"link": "https://www.abc.net.au/news/2026-11-24/welfare-income-management-kununurra-proposal/107409764",
+"when": "2026-11-24T00:59:17+00:00",
+"desc": "Community leaders like Jean O'Reeri believe a return to a form of income management could help address ongoing social issues in Kununurra.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Iran-based operation used ChatGPT to create fake news, influence Australians",
+"link": "https://www.abc.net.au/news/2026-11-24/penny-wong-iran-linked-ai-foreign-influence/107419864",
+"when": "2026-11-24T00:56:23+00:00",
+"desc": "An Iran-based foreign influence operation used AI to create a fake journalist that wrote news articles and posts on X about Australia's involvement in the US-Iran war, the ABC can reveal.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Silver Tongue is a rollicking, queer retelling of the classic tale Treasure Island",
+"link": "https://theconversation.com/silver-tongue-is-a-rollicking-queer-retelling-of-the-classic-tale-treasure-island-296819",
+"when": "2026-11-24T00:48:12+00:00",
+"desc": "The strength of this production is in centring a lesbian pirate without treating her gender or sexuality as exotic.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Longueville ‘tree vandalism’ home sells $2m over guide",
+"link": "https://www.realestate.com.au/news/longueville-tree-vandalism-home-sells-2m-over-guide/",
+"when": "2026-11-24T00:39:00+00:00",
+"desc": "A waterfront home at the heart of a high-profile tree vandalism scandal has been sold for a mighty sum. The post Longueville ‘tree vandalism’ home sells $2m over guide appeared first on realestate.com",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Tenant floods kitchen in botched DIY tap repair, leaving landlord with $920 bill",
+"link": "https://www.realestate.com.au/news/tenant-floods-kitchen-in-botched-diy-tap-repair-leaving-landlord-with-920-bill/",
+"when": "2026-11-24T00:28:00+00:00",
+"desc": "A renter tried to save his landlord a job by fixing a dripping tap himself, turning the kitchen into a “paddling pool” and sparking a furious text row. The post Tenant floods kitchen in botched DIY ta",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Teenage Brisbane girl dies days after allegedly stolen car crashes",
+"link": "https://www.abc.net.au/news/2026-11-24/qld-teenager-dies-days-after-allegedly-stolen-car-crashes/107420192",
+"when": "2026-11-24T00:25:41+00:00",
+"desc": "The alleged driver, a 14-year-old boy, has been charged with dangerous operation of a motor vehicle causing death.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Mylor’s grand 30-acre estate with coach house hits market",
+"link": "https://www.realestate.com.au/news/mylors-grand-30acre-estate-with-coach-house-hits-market/",
+"when": "2026-11-23T23:33:00+00:00",
+"desc": "What was once condemned as unliveable is now one of Mylor’s grandest properties – an 11.8ha entertainer its owners spent more money restoring than they did buying it. The post Mylor’s grand 30-acre es",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Underworld killer to be released on parole",
+"link": "https://www.abc.net.au/news/2026-11-24/underworld-killer-to-be-released-on-parole/107419956",
+"when": "2026-11-23T23:16:49+00:00",
+"desc": "A man who murdered four people, including three members of the same family, is set to be released from a South Australian prison after almost four decades behind bars.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Live: Victorian premier debates One Nation volunteer on the hustings",
+"link": "https://www.abc.net.au/news/2026-11-24/victoria-election-live-updates-labor-liberals-campaign/107419958",
+"when": "2026-11-23T23:07:35+00:00",
+"desc": "There are just four days until polling day in Victoria, with political parties ramping up their campaigns around the state in a last-minute bid to sway undecided voters. Follow live.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Israel's bombardment has turned Gaza into 'toxic wasteland'",
+"link": "https://www.abc.net.au/news/2026-11-24/israel-s-bombardment-turns-gaza-into-toxic-wasteland/107419898",
+"when": "2026-11-23T23:06:22+00:00",
+"desc": "New research suggests more than 99 per cent of the Gaza Strip shows signs of contamination from Israeli attacks.",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Landlord told to pay ‘tenant water bill forever’ or stump up $14k",
+"link": "https://www.realestate.com.au/news/landlord-told-to-pay-tenant-water-bill-forever-or-stump-up-14k/",
+"when": "2026-11-23T23:01:00+00:00",
+"desc": "A landlord, who already spent hundreds of thousands of dollars to fix a neglected property, has now been hit with an unexpected “forever” bill. The post Landlord told to pay ‘tenant water bill forever",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Major airlines shun Brisbane Airport's flight noise reduction trial",
+"link": "https://www.abc.net.au/news/2026-11-24/qantas-virgin-jetstar-shun-brisbane-airport-tailwind-trial/107409604",
+"when": "2026-11-23T22:59:38+00:00",
+"desc": "Pilots and residents are questioning the utility of Brisbane Airport's tailwind trial as the ABC can reveal neither of Australia's major airline groups is participating.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "‘Catastrophic’: Bali bombing survivor in bitter tower feud",
+"link": "https://www.realestate.com.au/news/catastrophic-bali-bombing-survivor-in-bitter-tower-feud/",
+"when": "2026-11-23T22:57:00+00:00",
+"desc": "A Bali bombing double amputee is locked in a bitter million-dollar fight - after a “catastrophic” finding across the entire Australian unit block. The post ‘Catastrophic’: Bali bombing survivor in bit",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Teenager threatened with violent sexual assault after losing tennis match",
+"link": "https://www.abc.net.au/news/2026-11-24/adelaide-tennis-player-subjected-to-death-threats-after-losing/107419670",
+"when": "2026-11-23T22:43:42+00:00",
+"desc": "An 18-year-old junior girls player started receiving \"disgusting\" and \"hurtful\" messages just 15 minutes after losing her live-streamed match.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Donald Masonic hall hits market for $99,000 despite damage, termites",
+"link": "https://www.realestate.com.au/news/donald-masonic-hall-hits-market-for-99000-despite-damage-termites/",
+"when": "2026-11-23T22:35:00+00:00",
+"desc": "A beautiful, sky blue Freemason’s hall with a serious renovation needed has set up a surprising Simpsons meme in rural Victoria, and it has buyers coming from across Australia. The post Donald Masonic",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Australians face Thai court over $1.9m investment scam",
+"link": "https://www.abc.net.au/news/2026-11-24/trial-of-australians-charged-over-thai-scam-continues/107417146",
+"when": "2026-11-23T22:20:32+00:00",
+"desc": "Five Australians return to a Bangkok court, on trial for allegedly running an investment scam that duped at least 14,000 Australians out of $1.9 million.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Jury finds man not guilty of killing woman with trailer",
+"link": "https://www.abc.net.au/news/2026-11-24/kristopher-castle-kylie-saunders-jury-not-guilty-driving-death/107418446",
+"when": "2026-11-23T22:10:06+00:00",
+"desc": "A northern Victorian man has been found not guilty of dangerous driving causing the death of a woman hit by a trailer carrying a car in Yarrawonga.",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "Nvidia’s CEO is back – but the turmoil has exposed the AI boom’s risks for NZ investors",
+"link": "https://theconversation.com/nvidias-ceo-is-back-but-the-turmoil-has-exposed-the-ai-booms-risks-for-nz-investors-296924",
+"when": "2026-11-23T22:01:55+00:00",
+"desc": "Nvidia’s leadership upheaval has shaken investor confidence, revealing how New Zealand retirement savings are exposed to the fortunes of a few tech giants.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Here’s why young voters are the wildcard in Victoria’s election | Lizzie Hedding",
+"link": "https://www.theguardian.com/commentisfree/2026/nov/24/heres-why-young-voters-are-the-wildcard-in-victorias-election",
+"when": "2026-11-23T22:00:58+00:00",
+"desc": "Millennials and gen Z are at the coalface of the cost of living and the climate crisis. No wonder political dissatisfaction is spilling out in every direction It’s a great week to be a 44-year-old as ",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Rescued bushwalkers not prepared, Tasmania Police says",
+"link": "https://www.abc.net.au/news/2026-11-24/rescued-bushwalkers-not-prepared-tasmania-southwest/107419552",
+"when": "2026-11-23T21:49:59+00:00",
+"desc": "Police say two 19-year-old men from interstate were not prepared for the conditions in Tasmania's Southwest National Park on Monday and had to be rescued after weather conditions changed.",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Hobart's stadium and precinct costs rise to $1.54b",
+"link": "https://www.abc.net.au/news/2026-11-24/cost-of-hobart-macquarie-point-stadium-rises/107417074",
+"when": "2026-11-23T21:31:14+00:00",
+"desc": "The state government blames high oil, materials and labour prices for the blowout from a $1.13 billion budget set last year.",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Hugh Jackman and ex-wife Deborra-Lee Furness sell their $43 million NYC marital home",
+"link": "https://www.realestate.com.au/news/hugh-jackman-and-exwife-deborralee-furness-sell-their-43-million-nyc-marital-home/",
+"when": "2026-11-23T21:28:00+00:00",
+"desc": "Hugh Jackman has cut off his final tie with his ex-wife Deborra-Lee Furness, as he moves on with his new life for good. The post Hugh Jackman and ex-wife Deborra-Lee Furness sell their $43 million NYC",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "'Sickening' schoolies assault leaves teen boy critical, eight in custody",
+"link": "https://www.abc.net.au/news/2026-11-24/qld-gold-coast-assaults-leave-two-injured-schoolies/107419590",
+"when": "2026-11-23T21:15:20+00:00",
+"desc": "Two people are injured, including a 15-year-old in a critical condition, after two separate serious assaults on the Gold Coast.",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Turkish heiress paid former prince Andrew $1.4m 'bribe', UK court told",
+"link": "https://www.abc.net.au/news/2026-11-24/ex-prince-andrew-took-bribe-to-help-turkish-heiress-court-told/107419512",
+"when": "2026-11-23T21:07:17+00:00",
+"desc": "A lawyer for the Turkish heiress's former adviser says the payment to Andrew Mountbatten-Windsor \"was a bribe, either for assistance with her passport or her UK residency\".",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Pelicot 'once again humiliated' as nude photos used to promote book",
 "link": "https://www.abc.net.au/news/2026-11-24/pelicot-nude-photos-used-to-promote-psychoanalyst-book/107419434",
 "when": "2026-11-23T20:06:09+00:00",
-"desc": "The nude photographs of Gisèle Pelicot had been used without her consent to promote a psychoanalyst's essay on the concept of coercive control.",
+"desc": "Nude photographs of Gisèle Pelicot have been used without her consent to promote a psychoanalyst's essay on the concept of coercive control.",
 "cat": "澳洲"
 },
 {
 "src": "卫报澳洲",
-"title": "Australian politics live: Penny Wong to defend US alliance; Coalition condemns Vanuatu deal",
-"link": "https://www.theguardian.com/australia-news/live/2026/nov/24/labor-penny-wong-us-china-anthony-albanese-final-sitting-week-ntwnfb",
-"when": "2026-11-23T20:03:13+00:00",
-"desc": "Get our breaking news email , free app or daily news podcast Good morning, Krishani Dhanji with you here, thanks to Martin Farrer for getting us started. The foreign minister, Penny Wong , is doing th",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Traditional owner group votes to strip adopted family of membership",
-"link": "https://www.abc.net.au/news/2026-11-24/djaara-vote-to-remove-members-dunolly-lee-family/107416134",
-"when": "2026-11-23T20:02:59+00:00",
-"desc": "Djaara members vote with a two-thirds majority to cancel the membership of the Dunolly-Lee family, going against its rule book, which allows for cultural adoption.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "W Award winner Georgie 'not anymore' in older sister Maddy's shadow",
-"link": "https://www.abc.net.au/news/2026-11-24/georgie-and-maddy-prespakis-first-sisters-to-win-w-award/107418936",
-"when": "2026-11-23T19:59:30+00:00",
-"desc": "Six years after COVID-19 disruptions saw Georgie Prespakis present the W Award to Maddy in their backyard, she lifts her own to make them the first sisters to win AFLW's best and fairest.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Live: Albanese to meet with Singaporean counterpart for trade talks",
-"link": "https://www.abc.net.au/news/2026-11-24/federal-politics-live-blog-parliament-nov-24/107417818",
-"when": "2026-11-23T19:52:30+00:00",
-"desc": "Prime Minister Anthony Albanese will welcome Singaporean counterpart Lawrence Wong to Canberra this morning for talks on trade. Follow live.",
-"cat": "澳洲"
-},
-{
-"src": "卫报澳洲",
-"title": "Jensen Huang reinstated at Nvidia; DV and smart car warnings; and the word of the year",
+"title": "Morning Mail: Jensen Huang reinstated at Nvidia; DV and smart car warnings; and the word of the year",
 "link": "https://www.theguardian.com/australia-news/2026/nov/24/morning-mail-tuesday-ntwnfb",
 "when": "2026-11-23T19:51:35+00:00",
 "desc": "Want to get this in your inbox every weekday? Sign up for the Morning Mail here , and finish your day with our Politics, really newsletter . Morning everyone. Despite his affair with an alleged Chines",
 "cat": "澳洲"
 },
 {
-"src": "ABC 新闻",
-"title": "Nurse squeezed 18yo's genitals while taking blood, tribunal finds",
-"link": "https://www.abc.net.au/news/2026-11-24/nurse-squeezed-18yo-patients-genitals-at-royal-adelaide-hospital/107404166",
-"when": "2026-11-23T19:42:46+00:00",
-"desc": "An Adelaide nurse found to have deliberately squeezed an 18-year-old patient's genitals while taking a blood sample at the Royal Adelaide Hospital lacks the \"sufficient moral integrity\" to continue in",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Bus driver's 1,000km journey to find affordable home to rent",
-"link": "https://www.abc.net.au/news/2026-11-24/regional-renting-unaffordable-data-shows/107416472",
-"when": "2026-11-23T19:34:29+00:00",
-"desc": "A 69-year-old Newcastle bus driver is planning to move more than 1,000 kilometres away — and keep working — in a bid to afford somewhere to rent.",
+"src": "The Conversation",
+"title": "As climate change creates ‘disasters on steroids’, it’s time we asked: what happens after an evacuation?",
+"link": "https://theconversation.com/as-climate-change-creates-disasters-on-steroids-its-time-we-asked-what-happens-after-an-evacuation-296951",
+"when": "2026-11-23T19:30:32+00:00",
+"desc": "Evacuations are often presented as purely protective – and sometimes they are. But they can also exacerbate existing risks and even generate new forms of harm.",
 "cat": "地产"
-},
-{
-"src": "ABC 新闻",
-"title": "ACT government given 12 months to review 'offensive' Indigenous protocol",
-"link": "https://www.abc.net.au/news/2026-11-24/act-government-to-review-indigenous-protocol-within-12-months/107417430",
-"when": "2026-11-23T19:32:34+00:00",
-"desc": "The ACT government has been given 12 months to deliver a review of how it acknowledges First Nations people.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "More than 91,000 DV-related child protection reports made in NSW in a year",
-"link": "https://www.abc.net.au/news/2026-11-24/91000-child-protection-reports-domestic-violence-nsw-in-a-year/107404086",
-"when": "2026-11-23T19:32:18+00:00",
-"desc": "A new report has found more than 91,000 child protection reports relating to domestic and family violence were made in New South Wales in the past year alone, a statistic one youth advocate describes ",
-"cat": "澳洲"
 },
 {
 "src": "The Conversation",
@@ -136,82 +480,10 @@
 },
 {
 "src": "ABC 新闻",
-"title": "The best Christmas gift? A chance to opt out of buying one",
-"link": "https://www.abc.net.au/news/2026-11-24/the-gift-of-not-giving-this-christmas/107309744",
-"when": "2026-11-23T18:39:47+00:00",
-"desc": "Many Australians are under financial stress, and buying presents is especially burdensome this year. As a financial educator, this is the approach I swear by.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "How much do you know about celebrations around the world?",
-"link": "https://www.abc.net.au/news/2026-11-24/abc-quiz-celebrations-around-the-world/107397288",
-"when": "2026-11-23T18:30:00+00:00",
-"desc": "As the US prepares for Thanksgiving this week, we test your knowledge on other celebrations around the world.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Artist who immortalised Matildas team in film takes on stereotypes in new work",
-"link": "https://www.abc.net.au/news/2026-11-24/angela-tiatia-exhibition-muse-newcastle-art-gallery/107390686",
-"when": "2026-11-23T18:30:00+00:00",
-"desc": "Angela Tiatia — the Sāmoan Australian artist responsible for a moving-image portrait of one of Australia's favourite sport teams — has a major new show at Newcastle Art Gallery.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Union likens job cuts to 'Hunger Games' plotline",
-"link": "https://www.abc.net.au/news/2026-11-24/tasmanian-jobs-reinstated-others-cut-in-department-restructures/107399930",
-"when": "2026-11-23T18:26:16+00:00",
-"desc": "The \"work\" of choosing who would lose their public sector jobs has been done in a \"careful and considered way\", the Tasmanian government says, with a union likening it more to The Hunger Games dystopi",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "As Victorian Labor fights for survival, several unions have left its side",
-"link": "https://www.abc.net.au/news/2026-11-24/victorian-election-unions-abandon-labor/107367014",
-"when": "2026-11-23T18:14:28+00:00",
-"desc": "Some unions have chosen to stay out of the Victorian election campaign, while others are openly calling on members not to vote for Labor after a build-up of grievances with a 12-year-old government.",
-"cat": "墨尔本"
-},
-{
-"src": "ABC 新闻",
-"title": "The AI bubble hasn't burst, but it has significantly deflated",
+"title": "How the AI crash will hit your savings",
 "link": "https://www.abc.net.au/news/2026-11-24/ai-bubble-has-not-burst-but-it-has-significantly-deflated/107416578",
 "when": "2026-11-23T18:00:00+00:00",
 "desc": "Wall Street's loss could be mortgage borrowers' gain as central banks rethink the outlook for interest rates.",
-"cat": "地产"
-},
-{
-"src": "ABC 新闻",
-"title": "China's tourists are coming back to Australia next year",
-"link": "https://www.abc.net.au/news/2026-11-24/year-of-tourism-australia-china/107417630",
-"when": "2026-11-23T18:00:00+00:00",
-"desc": "While the world was watching the trilateral summit, Anthony Albanese was busy behind the scenes, locking in 2027 as the China-Australia Year of Tourism. It's hoped to bring billions into the economy.",
-"cat": "中澳"
-},
-{
-"src": "ABC 新闻",
-"title": "Ute-sized nuclear reactor reignites energy debate",
-"link": "https://www.abc.net.au/news/2026-11-24/australian-made-nuclear-microreactor/107409752",
-"when": "2026-11-23T18:00:00+00:00",
-"desc": "A central Queensland MP wants the federal government to lift the moratorium on nuclear energy, after an Australian company built a microreactor that fits in the back of a ute.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "How to see through bogus food marketing claims",
-"link": "https://www.abc.net.au/news/2026-11-24/the-truth-behind-food-labels/107390344",
-"when": "2026-11-23T18:00:00+00:00",
-"desc": "When you're choosing what food to buy, can you trust the packaging?",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Postnatal depression rates rise to 1 in 5, as experts urge more screening",
-"link": "https://www.abc.net.au/news/2026-11-24/qld-postnatal-depression-rates-rise/107399948",
-"when": "2026-11-23T18:00:00+00:00",
-"desc": "That's according to 250,000 screens. But experts say some parents are still slipping through the cracks.",
 "cat": "地产"
 },
 {
@@ -240,11 +512,11 @@
 },
 {
 "src": "realestate 新闻",
-"title": "‘Catastrophic’: Bali bombing survivor in bitter tower feud",
-"link": "https://www.realestate.com.au/news/catastrophic-bali-bombing-survivor-in-bitter-tower-feud/",
+"title": "Renting in SA now more unaffordable than ever",
+"link": "https://www.realestate.com.au/news/renting-in-sa-now-more-unaffordable-than-ever/",
 "when": "2026-11-23T17:30:00+00:00",
-"desc": "A Bali bombing double amputee is locked in a bitter million-dollar fight over his home of 24 years. The post ‘Catastrophic’: Bali bombing survivor in bitter tower feud appeared first on realestate.com",
-"cat": "生活"
+"desc": "The state’s rental crisis has hit a record low, with some tenants spending 86 per cent of their income on rent and there are virtually no affordable options left. The post Renting in SA now more unaff",
+"cat": "地产"
 },
 {
 "src": "卫报澳洲",
@@ -271,14 +543,6 @@
 "cat": "地产"
 },
 {
-"src": "ABC 新闻",
-"title": "Jensen Huang returns to Nvidia after board hears input from US government",
-"link": "https://www.abc.net.au/news/2026-11-24/nvidia-ceo-jensen-huang-reinstated/107419102",
-"when": "2026-11-23T14:12:51+00:00",
-"desc": "Reinstated Nvidia chief executive Jensen Huang says he \"can't wait to get back to work\", just days after the chip maker's board ruled out the co-founder's return.",
-"cat": "澳洲"
-},
-{
 "src": "卫报澳洲",
 "title": "Queensland has a history of slavery. These unmarked graves tell Australia's dark history – video",
 "link": "https://www.theguardian.com/world/video/2026/nov/24/queensland-has-a-history-of-slavery-these-unmarked-graves-tell-australia-dark-history-video-ntwnfb",
@@ -295,24 +559,8 @@
 "cat": "地产"
 },
 {
-"src": "卫报澳洲",
-"title": "Plant-based lunches could cut Australia’s emissions by 15m tonnes, new research shows",
-"link": "https://www.theguardian.com/environment/2026/nov/23/plant-based-lunches-could-cut-australia-emissions-by-15m-tonnes-new-research-shows",
-"when": "2026-11-23T13:58:01+00:00",
-"desc": "Nationwide change in lunch habits could cut more climate pollution than grounding every domestic flight Get our breaking news email , free app or daily news podcast Australians could collectively cut ",
-"cat": "澳洲"
-},
-{
-"src": "卫报澳洲",
-"title": "Domestic violence perpetrators are using smart car features to abuse, researchers warn",
-"link": "https://www.theguardian.com/society/2026/nov/23/smart-car-tracking-control-features-domestic-violence-warning-ntwnfb",
-"when": "2026-11-23T13:57:45+00:00",
-"desc": "Exclusive: Alarming report reveals how tracking and monitoring functions and digital key access have been used to facilitate abuse Get our breaking news email , free app or daily news podcast Earlier ",
-"cat": "澳洲"
-},
-{
 "src": "ABC 新闻",
-"title": "Big squeeze on Australian renters deepens, spreads",
+"title": "The cities where rental affordability is getting 'worse and worse'",
 "link": "https://www.abc.net.au/news/2026-11-24/rental-affordability-remains-at-crisis-levels-across-australia/107379494",
 "when": "2026-11-23T13:33:51+00:00",
 "desc": "Rental affordability has worsened or remained at crisis levels across much of Australia, but one capital city is bucking the trend.",
@@ -343,14 +591,6 @@
 "cat": "地产"
 },
 {
-"src": "ABC 新闻",
-"title": "Cats star Georgie Prespakis wins AFLW best and fairest",
-"link": "https://www.abc.net.au/news/2026-11-23/geelong-cats-star-georgie-prespakis-wins-aflw-best-and-fairest/107418916",
-"when": "2026-11-23T12:26:32+00:00",
-"desc": "The Geelong midfielder fought back tears when presented with the league's highest individual honour on Monday night.",
-"cat": "澳洲"
-},
-{
 "src": "realestate 新闻",
 "title": "Eagles for neighbours and ocean views: Luxury off-grid South Coast hideaway for sale",
 "link": "https://www.realestate.com.au/lifestyle/eagles-for-neighbours-and-ocean-views-luxury-off-grid-south-coast-hideaway-for-sale/",
@@ -360,27 +600,11 @@
 },
 {
 "src": "ABC 新闻",
-"title": "Penny Wong sounds alarm over US-China rivalry and the risk of conflict",
+"title": "Wong warns US and China are weakening the rules that keep the peace",
 "link": "https://www.abc.net.au/news/2026-11-23/wong-sounds-alarm-over-us-china-rivalry/107418278",
 "when": "2026-11-23T10:33:02+00:00",
 "desc": "Foreign Minister Penny Wong says growing competition between the US and China is making the world more dangerous, and Australia must join forces with other nations to protect its interests.",
 "cat": "中澳"
-},
-{
-"src": "ABC 新闻",
-"title": "Ukraine strikes two Russian vessels off Libyan coast",
-"link": "https://www.abc.net.au/news/2026-11-23/zelensky-says-ukraine-struck-russian-ship-near-libya/107418718",
-"when": "2026-11-23T10:21:12+00:00",
-"desc": "The Ukrainian president claims responsibility for a series of drone strikes which sunk one Russian vessel and severely damaged another.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Meldrum remembered as 'the fan all artists wish to have'",
-"link": "https://www.abc.net.au/news/2026-11-23/molly-meldrum-death-tributes-reactions-/107417564",
-"when": "2026-11-23T09:50:28+00:00",
-"desc": "Kylie Minogue and Jimmy Barnes head a growing list of musicians paying tribute to Ian 'Molly' Meldrum following the death of the iconic TV personality and Australian music champion.",
-"cat": "澳洲"
 },
 {
 "src": "realestate 新闻",
@@ -415,35 +639,11 @@
 "cat": "地产"
 },
 {
-"src": "realestate 新闻",
-"title": "Landlord told to pay ‘tenant water bill forever’ or stump up $14k",
-"link": "https://www.realestate.com.au/news/landlord-told-to-pay-tenant-water-bill-forever-or-stump-up-14k/",
-"when": "2026-11-23T09:00:00+00:00",
-"desc": "A landlord who spent hundreds of thousands trying to fix up a neglected property has been hit with a surprise council charge. The post Landlord told to pay ‘tenant water bill forever’ or stump up $14k",
-"cat": "地产"
-},
-{
-"src": "ABC 新闻",
-"title": "Steve Smith labours on return from injury in Sheffield Shield",
-"link": "https://www.abc.net.au/news/2026-11-23/steve-smith-out-cheaply-in-return-from-neck-injury-in-shield/107418702",
-"when": "2026-11-23T08:42:48+00:00",
-"desc": "Steve Smith has been dismissed cheaply in his batting return from a neck injury for NSW in their Sheffield Shield clash against Queensland.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "No life jackets, lifeboat or functioning radio on airboat during 2023 crash",
-"link": "https://www.abc.net.au/news/2026-11-23/matt-wright-kaia-wright-plead-guilty-top-end-safari-camp-charges/107418486",
-"when": "2026-11-23T08:18:26+00:00",
-"desc": "Top End Safari Camp, owned by Matt and Kaia Wright, pleads guilty to breaching NT work safety laws following an airboat crash in 2023, when the watercraft was not fitted with life jackets or a first-a",
-"cat": "澳洲"
-},
-{
 "src": "卫报澳洲",
-"title": "NSW MP Alex Greenwich drops support for Fred Nile state funeral after blowback from LGBTQ+ community – as it happened",
-"link": "https://www.theguardian.com/australia-news/live/2026/nov/23/anthony-albanese-digital-duty-of-care-labor-greens-coalition-one-nation-angus-taylor-pauline-hanson-penny-wong-ai-ntwnfb",
-"when": "2026-11-23T06:13:21+00:00",
-"desc": "This blog is now closed ‘Very difficult to bridge that divide’: Murray Watt Cabinet minister Murray Watt says it’s increasingly difficult to bridge the divide between nations on climate policy after a",
+"title": "Constitutional law expert brands defence bill allowing secret security rules ‘lazy and irresponsible’",
+"link": "https://www.theguardian.com/australia-news/2026/nov/23/constitutional-law-expert-brands-defence-bill-allowing-secret-security-rules-lazy-and-irresponsible",
+"when": "2026-11-23T08:23:55+00:00",
+"desc": "Anne Twomey says lack of proper debate around bill is ‘flabbergasting’ amid concerns over extension of ministerial powers Get our daily political email , free app or daily news podcast Labor’s new def",
 "cat": "澳洲"
 },
 {
@@ -455,36 +655,12 @@
 "cat": "澳洲"
 },
 {
-"src": "ABC 新闻",
-"title": "Devastating injury blow for Adams days after making Socceroos debut",
-"link": "https://www.abc.net.au/news/2026-11-23/socceroo-eli-adams-suffers-injury-blow/107418142",
-"when": "2026-11-23T05:55:38+00:00",
-"desc": "Talented attacker Eli Adams could be sidelined for up to a year after receiving some nasty injury news right after making his international bow.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Woman on trial for murder after failing to protect baby from abusive father",
-"link": "https://www.abc.net.au/news/2026-11-23/queensland-noemi-kondacs-trial/107417390",
-"when": "2026-11-23T05:45:35+00:00",
-"desc": "During the prosecution's opening address, the jury was told they would hear medical evidence that baby Rhuan suffered significant injuries, including a fractured skull, at his Yugar home.",
-"cat": "澳洲"
-},
-{
 "src": "The Conversation",
 "title": "A trick marketers use to sell you things can also persuade rats to enter traps – new study",
 "link": "https://theconversation.com/a-trick-marketers-use-to-sell-you-things-can-also-persuade-rats-to-enter-traps-new-study-296932",
 "when": "2026-11-23T05:05:17+00:00",
 "desc": "Why an impossible choice can make us choose differently.",
 "cat": "地产"
-},
-{
-"src": "ABC 新闻",
-"title": "Sneaky sales trick lures rats into traps, study finds",
-"link": "https://www.abc.net.au/news/science/2026-11-23/tricking-rats-into-traps-with-human-marketing-psychology/107409412",
-"when": "2026-11-23T05:03:36+00:00",
-"desc": "Black rats can be difficult to trap, but a common marketing tactic in shops and restaurants increases capture rates, a new study shows.",
-"cat": "澳洲"
 },
 {
 "src": "The Conversation",
@@ -511,59 +687,11 @@
 "cat": "澳洲"
 },
 {
-"src": "卫报澳洲",
-"title": "‘Difficult geopolitical times’: Albanese defends Bowen after Cop31 deal failure",
-"link": "https://www.theguardian.com/australia-news/2026/nov/23/difficult-geopolitical-times-albanese-defends-bowen-after-cop31-deal-failure",
-"when": "2026-11-23T04:21:00+00:00",
-"desc": "Coalition calls for climate change minister to resign immediately or be sacked over ‘catastrophic diplomatic disaster’, despite offering no alternatives on reducing emissions Sign up for climate and e",
-"cat": "澳洲"
-},
-{
 "src": "The Conversation",
 "title": "Not getting enough sleep? Here’s how it’s affecting your memory",
 "link": "https://theconversation.com/not-getting-enough-sleep-heres-how-its-affecting-your-memory-294670",
 "when": "2026-11-23T04:20:59+00:00",
 "desc": "Sleep isn’t just a time when the brain shuts down. During sleep, the brain reviews the day’s experiences and strengthens important memories.",
-"cat": "澳洲"
-},
-{
-"src": "卫报澳洲",
-"title": "Unemployment to surpass 5% and ‘things will get a bit harder’, treasurer Jim Chalmers warns",
-"link": "https://www.theguardian.com/australia-news/2026/nov/23/unemployment-to-surpass-5-and-things-will-get-a-bit-harder-treasurer-jim-chalmers-warns",
-"when": "2026-11-23T04:17:27+00:00",
-"desc": "Economists flag rising recession risk as government forecasts economy will grow by less than 2% in 2027 and 2028 Get our daily political email , free app or daily news podcast Jim Chalmers has warned ",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Supreme Court dismisses residents' MotoGP challenge",
-"link": "https://www.abc.net.au/news/2026-11-23/sa-supreme-court-dismisses-motogp-case-by-adelaide-residents/107417058",
-"when": "2026-11-23T04:04:22+00:00",
-"desc": "Another legal challenge to the state government's MotoGP plans has been unsuccessful, with a case launched by an Adelaide residents' group being dismissed in court.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Geoff Henke, Winter Olympics 'dream maker', dies aged 99",
-"link": "https://www.abc.net.au/news/2026-11-23/geoff-henke-winter-olympics-dream-maker/107416768",
-"when": "2026-11-23T03:54:36+00:00",
-"desc": "Geoff Henke, whose own Olympic disappointment fuelled the desire that aided generations of Australian Winter Olympians, has died aged 99.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Lamarre-Condon's defence raises DNA, missing bullet in closing arguments",
-"link": "https://www.abc.net.au/news/2026-11-23/beau-lamarre-condon-double-murder-trial-defence-closing-argument/107415790",
-"when": "2026-11-23T03:43:02+00:00",
-"desc": "Beau Lamarre-Condon's defence team has started making its final submissions in the Supreme Court trial, pointing out the jury might think the former police officer did \"plenty of foolish things\", but ",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "UN climate talk breakdown a disaster for Australia and the Pacific",
-"link": "https://www.abc.net.au/news/2026-11-23/un-climate-talk-breakdown-a-disaster-for-australia/107416230",
-"when": "2026-11-23T03:36:31+00:00",
-"desc": "If ever there was a year when countries should have been motivated to act on climate change, it was this year. But the COP31 result is a disastrous one, once again, for Australia's international clima",
 "cat": "澳洲"
 },
 {
@@ -695,14 +823,6 @@
 "cat": "墨尔本"
 },
 {
-"src": "卫报澳洲",
-"title": "The good news out of Cop31? That most of the world’s governments said no to an agreement stripped of meaning | Bill Hare",
-"link": "https://www.theguardian.com/environment/commentisfree/2026/nov/23/cop31-climate-summit-no-agreement",
-"when": "2026-11-22T22:30:48+00:00",
-"desc": "Co-chairing global climate talks is clearly not something to be repeated, certainly not by Australia, which is exporting climate pain The failure of Cop31 in Antalya was a line in the sand moment, a v",
-"cat": "澳洲"
-},
-{
 "src": "realestate 新闻",
 "title": "Buninyong countryside retreat hits market for $1.8m",
 "link": "https://www.realestate.com.au/news/buninyong-countryside-retreat-hits-market-for-18m/",
@@ -831,14 +951,6 @@
 "cat": "地产"
 },
 {
-"src": "ABC 新闻",
-"title": "More gas for Australia, but one player is called out for not playing fair",
-"link": "https://www.abc.net.au/news/2026-11-23/gas-reservation-policy-looms-amid-feud-in-the-gas-lobby/105923994",
-"when": "2026-11-22T18:00:00+00:00",
-"desc": "The federal government's push for a gas reserve looks likely to succeed, but it has revealed a bitter split between major gas companies.",
-"cat": "澳洲"
-},
-{
 "src": "realestate 新闻",
 "title": "Australian mortgage holders warned bank hardship programs can increase debt and block refinancing",
 "link": "https://www.realestate.com.au/news/australian-mortgage-holders-warned-bank-hardship-programs-can-increase-debt-and-block-refinancing/",
@@ -932,14 +1044,6 @@
 "link": "https://www.realestate.com.au/news/home-battery-audit-exposes-shonky-operators-and-surprise-1k-installation-bills/",
 "when": "2026-11-22T17:00:00+00:00",
 "desc": "More than six in 10 inspected batteries failed standards as experts warn buyers of hidden switchboard charges and systems never even connected to the grid. The post Home battery audit exposes ‘shonky’",
-"cat": "地产"
-},
-{
-"src": "卫报澳洲",
-"title": "The cost-of-living crisis was harming Claudia’s mental wellbeing. Together we worked out strategies to help her cope | Bianca Denny",
-"link": "https://www.theguardian.com/commentisfree/2026/nov/23/cost-of-living-crisis-financial-stress-mental-health-coping-strategies",
-"when": "2026-11-22T14:00:29+00:00",
-"desc": "In trying to save for a house deposit, she had sacrificed activities that brought her joy. And constant checking of her bank balance exacerbated her fears The modern mind is a column where experts dis",
 "cat": "地产"
 }
 ]
