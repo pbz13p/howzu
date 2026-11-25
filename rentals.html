@@ -341,7 +341,7 @@ function card(x){
   const when=isLet(x)?untilTxt(x):isNow(x)?"可马上入住":(x.available||"")+"入住";
   return `<div class="card${isLet(x)?" is-let":""}" id="L-${esc(x.id)}" data-open="${esc(x.id)}">
     <div class="ph"><div class="sl">${imgs}</div>${dots}
-      ${isNow(x)?'<span class="badge">马上入住</span>':""}${isLet(x)?"":x.status!=="live"?'<span class="badge draft">草稿·未公开</span>':""}
+      ${isLet(x)?"":x.status!=="live"?'<span class="badge draft">草稿·未公开</span>':""}
       ${isLet(x)?"":`<button class="sharefab" data-share="${esc(x.id)}" title="分享" aria-label="分享">分享</button>${favBtn(x,"favfab")}`}</div>
     <div class="body"><div class="price">${price}${rv?` <i class="rvc ${rv.pct<=-RentVs.NEAR?"lo":rv.pct>=RentVs.NEAR?"hi":"eq"}">${esc(RentVs.short(rv))}</i>`:""}</div><div class="t">${esc(x.title)}</div>
       ${f?`<div class="fx">${esc(f)}</div>`:""}
