@@ -1,0 +1,72 @@
+{
+ "updated": "2026-11-25",
+ "window": "近 30 天（需求热度近 60 天）",
+ "views30": 469,
+ "enquiries30": 3,
+ "conversionPct": 0.6,
+ "mobilePct": 80,
+ "viewChannels": [
+  [
+   "直接",
+   443
+  ],
+  [
+   "Facebook",
+   11
+  ],
+  [
+   "微信",
+   9
+  ]
+ ],
+ "enquiryChannels": [
+  [
+   "直接",
+   2
+  ],
+  [
+   "未记录",
+   1
+  ]
+ ],
+ "forms30": {
+  "求租需求": 0,
+  "房东托管咨询": 0,
+  "买房咨询": 2,
+  "回电请求": 0,
+  "代看房": 0,
+  "找房订阅": 1
+ },
+ "liveListings": 4,
+ "liveOwn": 4,
+ "livePublic": 0,
+ "studyAbroad": {
+  "views": 3,
+  "inspectOpen": 0,
+  "inspectBook": 0,
+  "enquiries": 0,
+  "inspectRows": 0,
+  "channels": [
+   [
+    "直接",
+    3
+   ]
+  ]
+ },
+ "building": {
+  "views": 5,
+  "enquiries": 0,
+  "subs": 0
+ },
+ "alerts": {
+  "subscribers": 0,
+  "views": 0,
+  "enquiries": 0
+ },
+ "demand60": {
+  "total": 0,
+  "cells": [],
+  "otherN": 0,
+  "budgetMedianAll": null
+ }
+}
