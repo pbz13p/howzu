@@ -221,7 +221,7 @@ h1{font-size:19px;font-weight:600;margin:0 0 4px}.addr{color:#6b726f;font-size:1
 <header class="top"><a class="logo" href="../rentals.html">好租 Howzu</a><a class="all" href="../rentals.html">全部房源 ›</a></header>
 <main>
 <nav class="bc" aria-label="面包屑">${crumbs.slice(0, -1).map(([n, u]) => `<a href="${esc(u.replace(SITE, ""))}">${esc(n)}</a>`).join(" › ")}</nav>
-<div class="hero">${P.length ? `<a href="${esc(full)}" aria-label="查看全部照片"><img src="${esc(rel(sized(P[0], "m")))}" srcset="${esc(rel(sized(P[0], "s")))} 480w, ${esc(rel(sized(P[0], "m")))} 960w" sizes="(min-width:880px) 840px, 100vw" width="960" height="720" fetchpriority="high" alt="${esc(x.title)}"></a>` : ""}${isLet(x) ? '<span class="let">已租出</span>' : ""}${P.length > 1 ? `<a class="n" href="${esc(full)}">共 ${P.length} 张照片</a>` : ""}</div>
+<div class="hero">${P.length ? `<a href="${esc(full)}" aria-label="查看全部照片"><img src="${esc(rel(sized(P[0], "m")))}" srcset="${esc(rel(sized(P[0], "s")))} 480w, ${esc(rel(sized(P[0], "m")))} 960w" sizes="(min-width:880px) 840px, 100vw" width="960" height="720" fetchpriority="high" alt="${esc(x.title)}"></a>` : ""}${P.length > 1 ? `<a class="n" href="${esc(full)}">共 ${P.length} 张照片</a>` : ""}</div>
 <div class="price">${isLet(x) ? "已租出" : x.rentWeekly ? `$${esc(x.rentWeekly)}<small> / 周</small>` : "<small>租金请咨询</small>"}</div>${vs && !isLet(x) ? vs.html : ""}
 <h1>${esc(x.title)}</h1>
 <div class="addr">📍 ${esc(hideUnit(x.address))}</div>
