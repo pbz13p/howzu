@@ -1025,3 +1025,11 @@
 - 下一步：ROADMAP 1f——写 supabase/stats.sql 的只读汇总函数 howzu_stats()，让 METRICS 每周自动读数，再请 Frank 点一次 Run。
 - 待 Frank 处理：如果不想在自家房源上显示“高于中位数”，回我一句“高的不显示”，我改成只显示低于和接近的。其余同前（F10–F14）。
 - 用量：token：未能获取（explain-usage 技能本次会话里没有）
+
+### 2026-11-25（好租产品增长组）
+- 做了：核心数字每天自动读数（ROADMAP 1f 前半）。新增 tools/stats.js + .github/workflows/stats.yml（每天墨尔本早 7 点跑），用已有的 service key 只读 pageviews / listings，写 data/stats.json（只有汇总数）并刷新 METRICS.md「📊 自动读数」，周一自动在主表加一行；口径和后台“访问统计”一致；开学季专区、楼盘百科、找房订阅要的数一起算。原计划要 Frank 在 SQL 页点 Run，现在不用了。测试：tools/test-stats.js 14 项全过（含“输出里没有电话/微信/姓名”）；test-engine、test-data 全过；线上首跑成功（Actions run 45518116078）。
+- 数字（近 30 天，第一次真实读数）：月访问量 469 次浏览（手机 80%）· 月询盘 3 次（转化 0.6%）· 在线房源 4 套。浏览渠道：直接 443、Facebook 11、微信 9，**Google 0**。开学季专区访问 3、代看房 0；楼盘页浏览 5；求租需求 0 条。
+- 发现：Google 一个访问都没有，94% 是直接打开（多半是 Frank 自己和群里转发）。SEO 页做了很多但还没被收录或没排名——F3（Search Console 请求收录）是现在最值钱的一步。
+- 下一步：查 Search Console 收录情况（要 Frank 登录）；需求热度组件 js/demand.js 等求租需求 ≥ 10 条再上。
+- 待 Frank 处理：无新增；F3 请求收录优先做（每页 30 秒，先做首页、rentals.html 和 4 个在租房源页）。
+用量：token 总计 3,854,172（输入 58 / 输出 15,880 / 缓存写 98,760 / 缓存读 3,739,474），折合约 $1.86（按 API 价折算，实际扣订阅额度；未含子代理（本次没有子代理记录））
