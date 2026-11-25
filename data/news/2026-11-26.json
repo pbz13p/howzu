@@ -1,0 +1,285 @@
+{
+ "date": "2026-11-26",
+ "items": [
+  {
+   "cat": "墨尔本",
+   "t": "维州若由联盟党执政，会有哪些变化",
+   "s": "自由党领袖 Jess Wilson 表示要“修复”维州，卫报梳理了联盟党胜选后可能推行的政策。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/australia-news/2026/nov/26/victoria-elections-2026-jess-wilson-coalition-government"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "民调显示维州工党可能连反对党地位都难保",
+   "s": "距投票日仅剩几天，民调显示工党在两党偏好上落后联盟党约十个百分点，两位前州长的选区也可能失守。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/victorian-labor-in-danger-of-losing-opposition-status-at-election-with-former-premiers-seats-likely-to-be-lost-297280"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "数据中心成为维州大选的热点议题",
+   "s": "短短时间内，数据中心从冷门话题变成选民关注的焦点，本周末投票时可能影响部分选区。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/data-centre-anger-vic-election-political-issue/107425482"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "乡村选区 Ripon：维州选民分歧的缩影",
+   "s": "大选前夕，地广人稀的 Ripon 选区反映出选民对政治普遍不满的情绪。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/country-electorate-in-victoria-sums-up-australian-disaffection/107389376"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "能源和气候议题在维州大选中被忽视",
+   "s": "评论指出，这次大选结果可能让维州的气候和能源政策出现明显倒退。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/energy-and-climate-have-been-overlooked-at-victorias-election-but-theres-a-lot-at-stake-295871"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "Hawthorn 两栋历史建筑被拆，居民失望",
+   "s": "数百名当地居民表达不满，两栋老建筑在获得保护前就被推土机推倒。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/hawthorn-residents-gutted-as-historic-buildings-bulldozed/"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "维州建筑工人将用上 AI 助手应对繁琐手续",
+   "s": "维州建筑和技工行业将引入 AI 工具处理行政流程，这也会改变客户与他们打交道的方式。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/victorian-tradies-get-new-ai-assistant-to-fight-back-against-red-tape/"
+  },
+  {
+   "cat": "墨尔本",
+   "t": "美国汉堡连锁 Wendy's 在 Manor Lakes 开新店",
+   "s": "Wendy's 计划在澳开 200 家店，正在外围郊区抢占店址，这次接手了一处倒闭对手的物业。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/us-burger-giant-wendys-targets-fastfood-rivals-with-new-manor-lakes-store/"
+  },
+  {
+   "cat": "地产",
+   "t": "预测：墨尔本房价 2027 年领涨全国，但完全恢复要好几年",
+   "s": "有预测称墨尔本楼市明年将迎来转机，涨幅几乎领先各首府城市，但回到高点仍需时间。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/melbourne-housing-recovery-to-take-years-after-2027-price-gains-forecast/"
+  },
+  {
+   "cat": "地产",
+   "t": "通胀急升，圣诞前加息到 5.10% 的可能性上升",
+   "s": "最新通胀数据公布后，市场认为澳联储在圣诞前再次加息的可能性明显增大。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/sharp-inflation-jump-puts-5-10-cash-rate-on-the-table-before-christmas/"
+  },
+  {
+   "cat": "地产",
+   "t": "通胀升至 4.9%，学者认为澳联储应按兵不动",
+   "s": "燃油价格上涨推高通胀，但失业率上升改变了局面，作者认为应暂停加息。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/inflation-jumps-to-4-9-as-fuel-prices-surge-but-the-rba-should-hold-rates-steady-297288"
+  },
+  {
+   "cat": "地产",
+   "t": "看房的人变少，勇敢的买家能砍价 5.5 万",
+   "s": "房价下跌、开放日冷清，部分买家拿到明显折扣；经济学家担心澳联储加息过头。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/aussie-homebuyers-shunning-inspections-as-shock-data-reveals-market-shift/"
+  },
+  {
+   "cat": "地产",
+   "t": "楼市降温，开发商给投资者最高 3 万元返利",
+   "s": "在买家减少的市场里，开发商竞争激烈，投资者能拿到最高 15% 的折扣或土地返利。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/property-investors-secure-up-to-30000-in-rebates-as-developers-battle-for-buyers/"
+  },
+  {
+   "cat": "地产",
+   "t": "1170 亿元住房投入，仍难完成建房目标",
+   "s": "一年内创纪录的住房支出，看起来仍不足以实现联邦政府承诺的建房数量。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/record-117bn-housing-spend-fails-to-save-aussie-building-target/"
+  },
+  {
+   "cat": "地产",
+   "t": "政府削减学徒补贴，建筑商警告住房危机会加剧",
+   "s": "建筑行业表示，减少学徒补贴会让技工短缺更严重，进一步拖慢建房。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/builders-warn-housing-crisis-will-worsen-as-government-cuts-apprentice-subsidies/"
+  },
+  {
+   "cat": "地产",
+   "t": "墨大研究：超过 200 万澳洲人住在“不健康”的房子里",
+   "s": "研究发现约 250 万人住房存在霉菌等问题，与哮喘、呼吸道疾病等健康问题相关。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/millions-australians-living-houses-linked-poor-health-mould/107425024"
+  },
+  {
+   "cat": "地产",
+   "t": "哪些信号说明楼市快见底了",
+   "s": "很难准确判断底部，但文章列出几个同时出现时值得留意的市场信号。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/the-signals-that-reveal-when-the-market-is-bottoming-out/"
+  },
+  {
+   "cat": "地产",
+   "t": "布里斯班房价 2027 年预计跌幅居首府之首",
+   "s": "专家认为加息和预算调整削弱了购买力，布里斯班明年可能领跌。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/brisbanes-median-home-price-set-for-largest-fall-of-any-capital-city-in-2027/"
+  },
+  {
+   "cat": "地产",
+   "t": "西悉尼拟建 71 层模块化出租公寓楼，投资 6.07 亿",
+   "s": "新提交的方案若获批，将成为全球最高的模块化建筑之一，全部用于出租。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/607m-rental-tower-proposed-as-one-of-worlds-tallest-modular-buildings/"
+  },
+  {
+   "cat": "地产",
+   "t": "闲置 20 年的“失落郊区”或可缓解住房危机",
+   "s": "一处可建大量住房的土地闲置了 20 年，每年还要花纳税人约 280 万元维护。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/sitting-idle-lost-suburb-could-help-solve-housing-crisis/"
+  },
+  {
+   "cat": "移民",
+   "t": "前财政部秘书长 Parkinson：移民政策失去社会认可，但可以修复",
+   "s": "他在演讲中呼吁召开全国移民峰会，逐一审查签证类别，配套规划住房和基础设施，并清理过桥签证积压。",
+   "src": "AAP",
+   "link": "https://aapnews.aap.com.au/news/migration-lost-its-social-licence-but-it-s-fixable"
+  },
+  {
+   "cat": "移民",
+   "t": "首都领地 11 月 12 日州担保结果：发出 352 份 190 提名",
+   "s": "这一轮没有发 491 提名；下一轮暂定在 11 月 30 日那一周。",
+   "src": "AHC Lawyers",
+   "link": "https://ahclawyers.com/news-articles/26/11/25/act-skilled-migration-invitation-round-12-november-2026-results"
+  },
+  {
+   "cat": "移民",
+   "t": "为防 AI 代写，大学要求荣誉学位学生口头答辩",
+   "s": "越来越多大学用口试检验学生论文，悉尼大学已对所有荣誉学位学生强制执行。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/australia-news/2026/nov/25/australian-universities-tackle-ai-plagiarism-oral-assessment-honours-masters-phd"
+  },
+  {
+   "cat": "中澳",
+   "t": "特朗普对中国等主要贸易伙伴加征新关税",
+   "s": "来自中国、巴西、欧盟和越南的商品将面临更高关税，特朗普在中期选举失利后继续加码关税政策。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/trump-new-tariffs-major-trading-partners/107425504"
+  },
+  {
+   "cat": "中澳",
+   "t": "所罗门群岛与澳洲签新防务条约，取代与中国的协议",
+   "s": "新协议废除了所罗门此前与中国的安排，文章分析双方各自能得到什么。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/solomon-islands-and-australia-sign-a-new-defence-treaty-and-theres-plenty-in-it-for-both-countries-297498"
+  },
+  {
+   "cat": "生活",
+   "t": "AI 抛售叠加关税，美股大跌",
+   "s": "芯片股领跌，英伟达跌 8.7%，费城半导体指数跌 7.3%，或影响今天澳股开盘。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/nasdaq-ai-tariffs-rattle-markets/107428016"
+  },
+  {
+   "cat": "中澳",
+   "t": "亚洲考试作弊风波：连衣服纽扣都可能藏设备",
+   "s": "在考试决定人生走向的亚洲多地，可穿戴设备和 AI 眼镜被用来作弊。",
+   "src": "realestate 新闻",
+   "link": "https://www.realestate.com.au/news/brisbane-suburbs-near-cbd-where-you-can-now-buy-from-510k/"
+  },
+  {
+   "cat": "生活",
+   "t": "南澳自由党参议员 Leah Blyth 退党加入 One Nation",
+   "s": "她表示已对自由党失去信心；这是本周联邦政坛的一大变动。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/seeing-sea-country-how-traditional-owners-are-leading-the-way-in-caring-for-our-oceans-294478"
+  },
+  {
+   "cat": "生活",
+   "t": "失业率上升，衰退说法增多，但学者认为言之过早",
+   "s": "最新数据还没算上澳航、NAB、David Jones 等公司的新一轮裁员。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/as-australias-jobless-rate-rises-talk-of-a-recession-is-growing-but-thats-premature-297290"
+  },
+  {
+   "cat": "生活",
+   "t": "投递几百份简历没回音：年轻人求职越来越难",
+   "s": "失业和通胀同时上升，很多年轻人感到焦虑，找不到稳定工作。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/business/2026/nov/26/hundreds-of-applications-no-offers-young-australians-looking-for-work-as-economy-hits-perfect-storm"
+  },
+  {
+   "cat": "生活",
+   "t": "政府让所有养老金领取者免受私人医保补贴削减影响",
+   "s": "绿党在参议院换取了这一让步，养老金领取者的私人医保补贴不变。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/government-to-exempt-all-pensioners-from-cut-to-seniors-health-insurance-rebates-296266"
+  },
+  {
+   "cat": "生活",
+   "t": "工党与绿党达成协议：改全权信托税，取消富人私人飞机燃油补贴",
+   "s": "政府以取消私人飞机燃油补贴换取绿党支持信托改革。",
+   "src": "卫报澳洲",
+   "link": "https://www.theguardian.com/australia-news/2026/nov/25/labor-greens-deal-discretionary-trust-changes-jet-fuel-subsidies-scrapped-for-private-jet-owners"
+  },
+  {
+   "cat": "生活",
+   "t": "黑色星期五购物前的检查清单",
+   "s": "很多商家本月打折，专家提醒网购要防诈骗、别冲动消费。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/black-friday-sales-cyber-monday-scam-shopping-checklist-/107417930"
+  },
+  {
+   "cat": "生活",
+   "t": "“还剩十分钟”的倒计时是真的吗？",
+   "s": "学者建议列好购物清单、守住预算，不要被促销倒计时催着下单。",
+   "src": "The Conversation",
+   "link": "https://theconversation.com/that-black-friday-countdown-says-the-sale-ends-in-ten-minutes-but-is-it-real-296501"
+  },
+  {
+   "cat": "生活",
+   "t": "塔州 Flinders 岛山火失控，威胁民宅",
+   "s": "雷击引发的山火已烧毁约 1.3 万公顷，正快速向南蔓延。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/flinders-island-bushfire-thursday-making-significant-run/107425982"
+  },
+  {
+   "cat": "生活",
+   "t": "GLP-1 减肥药有哪些副作用？专家解答",
+   "s": "Ozempic 类药物越来越流行，但长期影响仍有很多未知。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/health/2026-11-26/glp-1s-side-effects-oral-injectable-explainer/107393886"
+  },
+  {
+   "cat": "生活",
+   "t": "肌肉萎缩症首款药物在美获批，带来希望",
+   "s": "这种药是某类肌肉萎缩症的首个治疗方案，获批对其他患者也是好消息。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/drug-approval-hopeful-development-for-muscular-dystrophy/107423880"
+  },
+  {
+   "cat": "生活",
+   "t": "国防军正式道歉：亲历同性恋禁令的老兵讲述往事",
+   "s": "国防部长在议会向 LGBTQ+ 老兵道歉，亲历者对迟来的道歉感到欣慰。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/adf-members-recall-homosexual-ban-following-formal-apology/107427028"
+  },
+  {
+   "cat": "生活",
+   "t": "Kmart 18 个月内三次因“平替”商品被告",
+   "s": "平替需求越来越大，但法律能否保护原创设计者仍有争议。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/kmart-sued-three-times-for-dupes/107296574"
+  },
+  {
+   "cat": "生活",
+   "t": "邦迪恐袭一周年：社区艺术装置在光明节期间点亮",
+   "s": "数千个陶罐每晚依次点亮，纪念受恐袭影响的人。",
+   "src": "ABC 新闻",
+   "link": "https://www.abc.net.au/news/2026-11-26/federal-politics-live-blog-november-26/107427220"
+  }
+ ]
+}
