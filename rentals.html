@@ -46,7 +46,7 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 #list .card:hover .cnav{opacity:1}
 @media (hover:none){#list .cnav{display:none}}
 #list .badge{position:absolute;top:12px;left:12px;background:#fff;color:#222;font-size:12px;font-weight:600;padding:4px 10px;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
-#list .badge.let{background:#333;color:#fff}
+#list .badge.let{background:#333;color:#fff;left:auto;right:12px}
 #list .card.is-let .sl img{filter:saturate(.85)}
 #list .badge.draft{background:#fde8e8;color:#a12b2b;top:44px}
 #list .body{padding:10px 2px 0}
@@ -68,7 +68,8 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
   #list .card.is-let{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center;margin-top:-12px}
   #list .card.is-let .ph{aspect-ratio:1/1;border-radius:12px}
   #list .card.is-let .sl{overflow:hidden}
-  #list .card.is-let .dots,#list .card.is-let .badge{display:none}
+  #list .card.is-let .dots{display:none}
+  #list .card.is-let .badge.let{top:6px;right:6px;font-size:11px;padding:2px 7px}
   #list .card.is-let .body{padding:0}
   #list .card.is-let .t{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.35}
   #list .card.is-let .price{color:var(--muted);font-size:13px;margin-top:2px}
@@ -120,6 +121,7 @@ main{max-width:2200px;margin:0 auto;padding:24px clamp(16px,4.2vw,80px)}
 .dt-none{color:#aaa}
 .dt-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.9);font-size:26px;line-height:1;cursor:pointer;color:#1d2321}
 .dt-nav.l{left:12px}.dt-nav.r{right:12px}
+.dt-let{position:absolute;top:12px;left:12px;background:#333;color:#fff;font-size:13px;font-weight:600;padding:4px 10px;border-radius:14px;z-index:1}
 .dt-c{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:2px 9px;border-radius:10px}
 .dt-th{display:flex;gap:6px;overflow-x:auto;padding:8px;scrollbar-width:none;background:#f6f4ef}
 .dt-th::-webkit-scrollbar{display:none}
@@ -533,7 +535,7 @@ function openDetail(x,noPush){
   const KF=window.ListingPage?ListingPage.keyFacts(x):{cells:[],rest:x.highlights||[]};
   m.innerHTML=`<div class="dt" role="dialog" aria-label="${esc(x.title)}">
    <button class="dt-x" data-close aria-label="关闭">✕</button>
-   <div class="dt-g">${P.length?`<img id="dtImg" src="${esc(P[0])}" alt="${esc(x.title||"房源照片")}"><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
+   <div class="dt-g">${isLet(x)?'<span class="dt-let">已租出</span>':""}${P.length?`<img id="dtImg" src="${esc(P[0])}" alt="${esc(x.title||"房源照片")}"><button class="dt-nav l" data-nav="-1" aria-label="上一张">‹</button><button class="dt-nav r" data-nav="1" aria-label="下一张">›</button><span class="dt-c" id="dtC">1 / ${P.length}</span>`:`<img id="dtImg" src="${phImg(x)}" alt="">`}</div>
    ${P.length>1?`<div class="dt-th">${P.map((p,i)=>`<img src="${esc(p)}" data-i="${i}" class="${i?"":"on"}" loading="lazy" alt="">`).join("")}</div>`:""}
    <div class="dt-b">
     <div class="price">${isLet(x)?`<small>已租出</small>`:x.rentWeekly?`$${x.rentWeekly}<small> / 周</small>`:`<small>租金面议</small>`}</div>${!isLet(x)&&window.RentVs&&RVC?RentVs.html(RentVs.match(x,RVC)):""}
@@ -684,7 +686,7 @@ let J=[],U=[],I=[],opened=false;
 let DR=[];if(new URLSearchParams(location.search).has("draft")){try{const d=JSON.parse(localStorage.getItem("howzu-draft")||"null");if(d&&d.id){DR=[{...d,address:hideUnit(d.address||"")}];const b=document.createElement("div");b.className="draftbar";b.innerHTML="👁 内部预览：这是外部看到的样子，<b>还没发布的改动只有你自己看得到</b>。<a href=\"work.html\">回工作台</a>";document.body.prepend(b);}}catch(_){}}
 // 工作台房源覆盖 listings.json 同 id 房源时，工作台没填的字段（空值、空数组）保留 listings.json 原值，避免周租等被空值盖掉
 const fillI=x=>{const j=J.find(y=>String(y.id)===String(x.id));if(!j)return x;const o={...j};for(const k in x){const v=x[k];if(v!==null&&v!==undefined&&v!==""&&!(Array.isArray(v)&&!v.length))o[k]=v;}return o;};
-const merge=()=>{const ids=new Set([...I,...DR].map(x=>String(x.id))),dids=new Set(DR.map(x=>String(x.id)));L=[...DR,...J.filter(x=>!ids.has(String(x.id))),...I.filter(x=>!dids.has(String(x.id))).map(fillI),...U];render();if(location.hash==="#leadCard"&&!one&&L.length&&!window.__lcGo){window.__lcGo=1;const lc=document.getElementById("leadCard"),nv=document.querySelector("nav");if(lc)scrollTo({top:lc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12});}if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else{openDetail(x,true);if(location.hash==="#book"){openBook();history.replaceState(history.state,"",location.pathname+location.search);}}}}};
+const merge=()=>{const letJ=new Set(J.filter(x=>x.status==="let").map(x=>String(x.id)));I=I.filter(x=>!letJ.has(String(x.id)));/* listings.json 标了已租出的，以它为准，工作台旧数据不能把它变回在租 */const ids=new Set([...I,...DR].map(x=>String(x.id))),dids=new Set(DR.map(x=>String(x.id)));L=[...DR,...J.filter(x=>!ids.has(String(x.id))),...I.filter(x=>!dids.has(String(x.id))).map(fillI),...U];render();if(location.hash==="#leadCard"&&!one&&L.length&&!window.__lcGo){window.__lcGo=1;const lc=document.getElementById("leadCard"),nv=document.querySelector("nav");if(lc)scrollTo({top:lc.getBoundingClientRect().top+scrollY-(nv?nv.offsetHeight:0)-12});}if(one&&!opened){const x=L.find(y=>String(y.id)===one);if(x){opened=true;if(new URLSearchParams(location.search).has("send")&&window.HowzuShare)HowzuShare.open(x);else{openDetail(x,true);if(location.hash==="#book"){openBook();history.replaceState(history.state,"",location.pathname+location.search);}}}}};
 const uP=Promise.race([userListings(),new Promise(r=>setTimeout(()=>r(null),8000))]);
 fetch("data/listings.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({})).then(j=>{J=(j.listings||[]).map(x=>({...x,address:hideUnit(x.address),_page:/^[\w-]+$/.test(x.id)}));C=j.contact||{};window.LREADY=1;merge();});
 uP.then(u=>{if(u){U=u;merge();}});
