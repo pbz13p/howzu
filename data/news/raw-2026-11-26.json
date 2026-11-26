@@ -1,25 +1,409 @@
 {
-"fetched": "2026-11-25T20:30:10.831133+00:00",
+"fetched": "2026-11-26T02:08:06.622155+00:00",
 "log": [
 "ABC 新闻: 25",
 "ABC 新闻: 25",
 "SBS 新闻: 0",
 "SBS 中文: 失败 HTTPError",
 "卫报澳洲: 14",
-"The Conversation: 31",
+"The Conversation: 34",
 "澳联储 RBA: 0",
 "Domain 新闻: 失败 HTTPError",
-"realestate 新闻: 44",
+"realestate 新闻: 50",
 "维州州长新闻稿: 失败 HTTPError",
 "移民局新闻: 失败 HTTPError"
 ],
 "items": [
 {
+"src": "ABC 新闻",
+"title": "David Warner takes aim at 'bullying' journalists",
+"link": "https://www.abc.net.au/news/2026-11-26/david-warner-accuses-journalists-of-perpetuating-speculation/107429838",
+"when": "2026-11-26T02:04:33+00:00",
+"desc": "David Warner has delivered further barbs on social media amid the sandpaper scandal, accusing journalists of perpetuating speculation instead of finding facts.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Retrospective returns Ken Done to the harbour that inspired him",
+"link": "https://www.abc.net.au/news/2026-11-26/ken-done-exhibition-1980-to-now-mosman-art-gallery/107361266",
+"when": "2026-11-26T02:00:00+00:00",
+"desc": "As the art world finally begins to take Ken Done seriously as an artist, a new exhibition in Sydney looks back at 40 years of his vibrant, brightly coloured art.",
+"cat": "澳洲"
+},
+{
 "src": "卫报澳洲",
-"title": "Australian politics live: federal Liberal senator Leah Blyth defects to One Nation",
+"title": "Australian politics live: Blyth did not ‘feel safe’ in the Liberal party before One Nation defection; ‘coal must be replaced’, Bowen says",
 "link": "https://www.theguardian.com/australia-news/live/2026/nov/26/labor-anthony-albanese-pauline-hanson-one-nation-angus-taylor-coalition-ntwnfb",
-"when": "2026-11-25T20:13:26+00:00",
-"desc": "Get our breaking news email , free app or daily news podcast ‘Turncoat town’: Canavan takes a crack at Blyth and One Nation Nationals leader, Matt Canavan , is pretty salty this morning – taking anoth",
+"when": "2026-11-26T01:59:47+00:00",
+"desc": "Get our breaking news email , free app or daily news podcast Pauline Hanson has released a statement this morning welcoming South Australian senator Leah Blyth to her party . Blyth is the second high-",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Out-of-control bushfire with flames 10-metres high destroys at least six homes on Flinders Island",
+"link": "https://www.theguardian.com/australia-news/2026/nov/25/large-bushfire-threatens-homes-and-properties-on-remote-island-off-tasmania",
+"when": "2026-11-26T01:59:30+00:00",
+"desc": "Fire making a ‘significant run’ towards the south-west of Flinders Island on Thursday, Tasmania Fire Service says Get our breaking news email , free app or daily news podcast Residents in the north of",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Emissions fall, but not fast enough to meet climate target",
+"link": "https://www.abc.net.au/news/2026-11-26/australia-emissions-fall-short-2035-climate-target/107418552",
+"when": "2026-11-26T01:50:51+00:00",
+"desc": "Australia's greenhouse gas emissions have dropped by 1.3 per cent in the past year, but drastic cuts are necessary to reach the country's 2035 climate goal.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "The Fox is an absurd, fable-like comedy that explores the weirdness of being human",
+"link": "https://theconversation.com/the-fox-is-an-absurd-fable-like-comedy-that-explores-the-weirdness-of-being-human-290435",
+"when": "2026-11-26T01:32:27+00:00",
+"desc": "Who better to muse on the frivolities of life than a vulgar talking magpie?",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "North star's path from family tragedy to a fourth AFLW flag tilt",
+"link": "https://www.abc.net.au/news/2026-11-26/jenna-bruton-north-melbourne-extra-emotion-big-games/107424726",
+"when": "2026-11-26T01:28:21+00:00",
+"desc": "Jenna Bruton and her Kangaroos will be aiming for a third straight premiership on Friday night.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Australia's only TV shopping network goes into liquidation",
+"link": "https://www.abc.net.au/news/2026-11-26/tvsn-shopping-network-channel-liquidation/107428726",
+"when": "2026-11-26T01:21:01+00:00",
+"desc": "The 31-year-old TVSN's final show was broadcast earlier this month after its owners failed to secure new investment or a buyer for the network.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Guardian Essential report: why has Albanese’s disapproval rating reached a new high? - podcast",
+"link": "https://www.theguardian.com/australia-news/audio/2026/nov/26/guardian-essential-report-why-has-albaneses-disapproval-rating-reached-a-new-high-australian-politics-podcast",
+"when": "2026-11-26T01:00:40+00:00",
+"desc": "The prime minister is ending the parliamentary year with his highest ever level of disapproval, after his net popularity fell by 10 points this month. Political reporter Josh Butler speaks with the Es",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Jayden Short and wife Maddy complete Melbourne home reno",
+"link": "https://www.realestate.com.au/news/jayden-short-and-wife-maddy-complete-melbourne-home-reno/",
+"when": "2026-11-26T01:00:00+00:00",
+"desc": "Richmond star Jayden Short and wife Maddy have transformed a rundown house in Melbourne’s north into their dream home. The post Jayden Short and wife Maddy complete Melbourne home reno appeared first ",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "‘Turncoat’: Liberal senator Leah Blyth announces defection to One Nation, blindsiding Coalition",
+"link": "https://www.theguardian.com/australia-news/2026/nov/26/liberal-senator-leah-blyth-defection-to-one-nation-ntwnfb",
+"when": "2026-11-26T00:58:49+00:00",
+"desc": "South Australian senator labels One Nation the ‘only party with the bold ideas needed to turn this country around’ Follow our Australia politics live blog for latest updates Get our daily political em",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Calls for census investigation as country towns claim ABS underestimates them",
+"link": "https://www.abc.net.au/news/2026-11-26/census-investigation-regional-wa-recount-york-northam/107414540",
+"when": "2026-11-26T00:56:27+00:00",
+"desc": "Communities in WA's Wheatbelt say failed deliveries of census material mean their local population is being significantly undercounted.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "View from The Hill: Liberal senator’s defection to One Nation a major blow to Angus Taylor",
+"link": "https://theconversation.com/view-from-the-hill-liberal-senators-defection-to-one-nation-a-major-blow-to-angus-taylor-295661",
+"when": "2026-11-26T00:55:51+00:00",
+"desc": "The defection of Blyth, who had been assistant shadow minister for defence infrastructure, came as a complete shock to colleagues.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Anthropic's first data centre in Australia given environmental approval",
+"link": "https://www.abc.net.au/news/2026-11-26/western-downs-digital-park-federal-environmental-approval/107428970",
+"when": "2026-11-26T00:48:51+00:00",
+"desc": "The National Environmental Protection Agency has determined the $32 billion data centre is unlikely to significantly affect protected animals and plants.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Sydney Swans player has driving charge dismissed by judge",
+"link": "https://www.abc.net.au/news/2026-11-26/sydney-swans-tom-papley-driving-while-suspended-dismissed/107429248",
+"when": "2026-11-26T00:42:06+00:00",
+"desc": "Tom Papley apologised to his family and the Sydney Swans after having a driving while suspended charge dismissed by a judge.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Geelong teacher's licence suspended amid police investigation",
+"link": "https://www.abc.net.au/news/2026-11-26/geelong-teacher-licence-suspended-amid-police-investigation/107425790",
+"when": "2026-11-26T00:37:30+00:00",
+"desc": "A Geelong high school teacher's registration has been suspended amid a sexual offences and child abuse police team investigation into allegations relating to a previous role in Bendigo.",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Live: Chief Minister details terror threat made against government ministers",
+"link": "https://www.abc.net.au/news/2026-11-26/nt-government-threat-darwin-minister-and-public-areas/107429190",
+"when": "2026-11-26T00:33:13+00:00",
+"desc": "NT Police are speaking about their investigation into an emailed terror threat targeting NT government ministers, bureaucrats and public areas. Follow live.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Victoria’s planning reforms targets $249m funding for more homes",
+"link": "https://www.realestate.com.au/news/victorias-planning-reforms-targets-249m-funding-for-more-homes/",
+"when": "2026-11-26T00:28:06+00:00",
+"desc": "Under a new deal, the state can access funding for infrastructure crucial to building new ... The post Victoria’s planning reforms targets $249m funding for more homes appeared first on realestate.com",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Jack Clayton draws on AFL draft experience to chase Test cricket debut",
+"link": "https://www.abc.net.au/news/2026-11-26/jack-clayton-draws-on-afl-draft-experience-to-chase-test-debut/107429042",
+"when": "2026-11-26T00:17:41+00:00",
+"desc": "Jack Clayton, a former member of the Brisbane Lions academy, says missing out on the AFL draft has taught him how to deal with the pressure of chasing a Test debut for Australia after his switch to cr",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Gordon Ramsay announced as new host of Top Gear to air in 2028",
+"link": "https://www.abc.net.au/news/2026-11-26/gordon-ramsay-top-gear-host-revival/107428244",
+"when": "2026-11-26T00:14:28+00:00",
+"desc": "The celebrity chef will begin filming the new season in 2027 after the show was paused in 2022.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Commissioner resigns after ambulance delay deaths in Queensland",
+"link": "https://www.abc.net.au/news/2026-11-26/qld-ambulance-service-commissioner-resigns/107429060",
+"when": "2026-11-26T00:12:37+00:00",
+"desc": "Craig Emery's five-year contract as commissioner was due to end in February but Health Minister Tim Nicholls announced today Mr Emery had decided to retire from the role.",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Taxpayer-funded cleaners not allowed to bend down under aged care rules",
+"link": "https://www.abc.net.au/news/2026-11-26/complaints-over-aged-care-cleaner-rules/107424906",
+"when": "2026-11-26T00:11:31+00:00",
+"desc": "Margaret Harvey is being charged for a cleaner costing $115 per hour who is not allowed to reach up to clean high places or bend down to clean low places.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Buyers snap up Ocean St luxury homes as $150m Maroochydore tower starts rising",
+"link": "https://www.realestate.com.au/news/buyers-snap-up-ocean-st-luxury-homes-as-150m-maroochydore-tower-starts-rising/",
+"when": "2026-11-26T00:00:00+00:00",
+"desc": "Strong buyer demand has seen nearly a third of Maroochydore’s exclusive Aer Residence apartments snapped up – with just 30 luxury homes available and piling now complete. The post Buyers snap up Ocean",
+"cat": "地产"
+},
+{
+"src": "realestate 新闻",
+"title": "Green light for $150m three-building project in North Adelaide",
+"link": "https://www.realestate.com.au/news/green-light-for-150m-threebuilding-project-in-north-adelaide/",
+"when": "2026-11-26T00:00:00+00:00",
+"desc": "Approval has been granted to build a $150m development with more than 50 high-end residences designed for buyers who refuse to leave its coveted Adelaide suburb. The post Green light for $150m three-b",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "Which is a more effective deterrent to speeding drivers – fines or demerit points? Our study found out",
+"link": "https://theconversation.com/which-is-a-more-effective-deterrent-to-speeding-drivers-fines-or-demerit-points-our-study-found-out-296814",
+"when": "2026-11-25T23:53:20+00:00",
+"desc": "Policymakers aim to reduce road trauma in different ways. Some have even proposed income-based fines, tied to drivers’ salaries.",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "The reason why North Melbourne dominates the AFLW landscape",
+"link": "https://www.abc.net.au/news/2026-11-26/aflw-premiership-north-melbourne-in-sight/107427680",
+"when": "2026-11-25T23:40:42+00:00",
+"desc": "The Kangaroos are eyeing a premiership three-peat in the AFLW, boasting an astonishing 96 per cent win-loss rate across the past three seasons.",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "76% of Australians are struggling to tell apart real and AI content – new report",
+"link": "https://theconversation.com/76-of-australians-are-struggling-to-tell-apart-real-and-ai-content-new-report-296952",
+"when": "2026-11-25T23:40:03+00:00",
+"desc": "The challenge is not just that AI-generated content is becoming more realistic. It’s that many people are unsure whether they’re able to recognise it at all.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Live: Victorian election stoush over dumped Liberal's blue t-shirts back in court",
+"link": "https://www.abc.net.au/news/2026-11-26/victorian-election-live-updates-labor-liberal-court-battle/107428608",
+"when": "2026-11-25T23:25:43+00:00",
+"desc": "As the major parties continue their push to election day, Labor are seeking an injunction in the Supreme Court to stop dumped Liberal candidate for Williamstown Paul Lindemann from campaigning in a bl",
+"cat": "墨尔本"
+},
+{
+"src": "realestate 新闻",
+"title": "Five rate hikes later, beating ‘refinancing fatigue’ is easier than you think",
+"link": "https://www.realestate.com.au/news/five-rate-hikes-later-beating-refinancing-fatigue-is-easier-than-you-think/",
+"when": "2026-11-25T23:19:26+00:00",
+"desc": "Households are showing signs of refinancing fatigue according to a new mortgage study. The latest ... The post Five rate hikes later, beating ‘refinancing fatigue’ is easier than you think appeared fi",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "ACT teenager filmed during alleged knife-point robbery",
+"link": "https://www.abc.net.au/news/2026-11-26/four-young-people-to-be-charged-following-aggravated-robbery/107428558",
+"when": "2026-11-25T23:04:09+00:00",
+"desc": "Four young people have been accused by ACT police of aggravated robbery, after they allegedly held a teenage boy at knifepoint and forced him to transfer money to several bank accounts.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "‘Tightarses is for the people’: a happy hour crawl with Melbourne’s cheapest guide",
+"link": "https://www.theguardian.com/food/2026/nov/26/tightarses-of-melbourne-best-deals-food-drink-specials-cheap-happy-hour",
+"when": "2026-11-25T23:00:38+00:00",
+"desc": "It started as a joke, but Tightarses of Melbourne has grown into a thriving community. Accompanied by its founder Lisa Lorenz, Guardian Australia tests how much bang you can get for $50 Get our weeken",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Police officer learns Italian after adopting car crash victim's pet dog",
+"link": "https://www.abc.net.au/news/2026-11-26/wa-police-officer-takes-in-dog-after-crash-kills-owner/107417162",
+"when": "2026-11-25T23:00:00+00:00",
+"desc": "When a country cop arrived at the scene of a horrific car accident, the last thing he expected to find was an Alaskan malamute.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "'Perverse' vote means Tasmania ends greyhound racing without protections",
+"link": "https://www.abc.net.au/news/2026-11-26/greyhound-racing-tasmania-phase-out-legislative-protections/107428306",
+"when": "2026-11-25T22:54:23+00:00",
+"desc": "The state's racing minister says the upper house's rejection of a formal greyhound racing ban simply means it will proceed without \"legislative protections\" for dogs and participants, with animal welf",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Roseanne Barr offloads $2m LA ranch house",
+"link": "https://www.realestate.com.au/news/roseanne-barr-offloads-2m-la-ranch-house/",
+"when": "2026-11-25T22:48:00+00:00",
+"desc": "After swapping Hollywood for a 30-acre farm, comedy star Roseanne Barr is parting with the retreat she bought for pandemic peace and quiet. The post Roseanne Barr offloads $2m LA ranch house appeared ",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Senator Leah Blyth defects to One Nation saying Liberals cannot save Australia",
+"link": "https://www.abc.net.au/news/2026-11-26/leah-blyth-liberal-one-nation-angus-taylor-/107428224",
+"when": "2026-11-25T22:27:08+00:00",
+"desc": "Opposition Leader Angus Taylor is dealt a major blow as a South Australian Liberal senator announces her defection and delivers a parting shot on her way out the door.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Senator Leah Blyth defects to One Nation saying Liberals can't 'save' Australia",
+"link": "https://www.abc.net.au/news/2026-11-26/leah-blyth-liberal-one-nation-angus-taylor-/107428224",
+"when": "2026-11-25T22:27:08+00:00",
+"desc": "Opposition Leader Angus Taylor is dealt a major blow as a South Australian Liberal senator announces her defection and delivers a parting shot on her way out the door.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Plan for 200ha kelp farm off NSW coast sparks debate",
+"link": "https://www.abc.net.au/news/2026-11-26/public-speaks-on-first-commercial-kelp-farm-proposed-for-nsw/107421622",
+"when": "2026-11-25T22:24:31+00:00",
+"desc": "A proposal to build the state's first commercial kelp farm south of Eden is being considered by the NSW Independent Planning Commission.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Cancelled flight forces man to drive 1,000km to 'lifesaving' appointment",
+"link": "https://www.abc.net.au/news/2026-11-26/wa-man-drives-1000km-cancelled-kununurra-flight/107425554",
+"when": "2026-11-25T22:05:00+00:00",
+"desc": "John Barnes says an apology from Airnorth is not good enough after a flight cancellation could have threatened his health condition.",
+"cat": "生活"
+},
+{
+"src": "卫报澳洲",
+"title": "It’s time for Australia to tax our gas industry. It is a public policy no-brainer | Rod Simms",
+"link": "https://www.theguardian.com/commentisfree/2026/nov/26/its-time-for-australia-to-tax-our-gas-industry-it-is-a-public-policy-no-brainer",
+"when": "2026-11-25T22:00:37+00:00",
+"desc": "Fossil fuel companies are effectively not paying for the natural resource on which their businesses depend Raising more tax revenue from our gas industry is the closest thing you will find to a public",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "12 Melbourne suburbs surge past key first-home buyer stamp duty threshold",
+"link": "https://www.realestate.com.au/news/12-melbourne-suburbs-surge-past-key-firsthome-buyer-stamp-duty-threshold/",
+"when": "2026-11-25T22:00:00+00:00",
+"desc": "Melbourne homebuyers are sacrificing neighbourhood safety and spending thousands on CCTV as more suburbs are priced out of key property tax breaks. The post 12 Melbourne suburbs surge past key first-h",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Duran Duran guitarist Andy Taylor dies aged 65",
+"link": "https://www.abc.net.au/news/2026-11-26/duran-duran-andy-taylor-dies/107428492",
+"when": "2026-11-25T21:50:58+00:00",
+"desc": "Taylor's death was confirmed by his family and bandmates in a statement posted on social media and Duran Duran's website.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Rare glimpse inside Meghan Markle and Prince Harry’s new UK estate home",
+"link": "https://www.realestate.com.au/news/rare-glimpse-inside-meghan-markle-and-prince-harrys-new-uk-estate-home/",
+"when": "2026-11-25T21:38:00+00:00",
+"desc": "A close friend has shared a rare look inside the Sussexes’ private British retreat as the couple settles their children into local schools. The post Rare glimpse inside Meghan Markle and Prince Harry’",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Renegades WBBL player bowled without facing a ball",
+"link": "https://www.abc.net.au/news/2026-11-26/wbbl-deandra-dottin-melbourne-renegades-bowled/107428262",
+"when": "2026-11-25T21:34:37+00:00",
+"desc": "Melbourne Renegades snuck home on the last delivery against Brisbane Heat but not before Deandra Dottin was dismissed via the most bizarre wicket of the WBBL season.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Copper theft costing SEQ ratepayers a small fortune",
+"link": "https://www.abc.net.au/news/2026-11-26/copper-theft-costs-greater-brisbane-ratepayers-millions/107427286",
+"when": "2026-11-25T21:25:33+00:00",
+"desc": "Copper thefts on council assets have doubled and even quadrupled in some local government areas. Here's what it is costing you.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Amazon bans tiny home sales despite thousands of listings",
+"link": "https://www.realestate.com.au/news/amazon-bans-tiny-home-sales-despite-thousands-of-listings/",
+"when": "2026-11-25T21:22:00+00:00",
+"desc": "While low prices and fast shipping make prefab homes from Amazon look like a bargain, buyers should be aware of several factors with their purchase. The post Amazon bans tiny home sales despite thousa",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Billionaire sells apartment at huge $90m loss",
+"link": "https://www.realestate.com.au/news/billionaire-sells-apartment-at-huge-90m-loss/",
+"when": "2026-11-25T21:05:00+00:00",
+"desc": "A billionaire who splashed out $102 million for an apartment has just sold it for a staggering loss. The post Billionaire sells apartment at huge $90m loss appeared first on realestate.com.au .",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "New photos reveal stadium-sized crater in asteroid knocked off course by NASA",
+"link": "https://www.abc.net.au/news/2026-11-26/new-photos-of-struck-asteroid-dimorphos/107428078",
+"when": "2026-11-25T20:41:17+00:00",
+"desc": "A spacecraft observing the asteroid will approach within 13km of it next month, obtaining increasingly higher-resolution images.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Live: David Jones granted 3-month administration extension",
+"link": "https://www.abc.net.au/news/2026-11-26/asx-markets-business-news-live-updates-thursday-26-november/107428134",
+"when": "2026-11-25T20:33:38+00:00",
+"desc": "David Jones's administrators have been granted a three-month extension for their second creditors' meeting. Follow the day's events and insights from our business reporters on the ABC News live market",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Union warns of passenger delays as Virgin workers strike",
+"link": "https://www.abc.net.au/news/2026-11-26/virgin-australia-workers-industrial-action/107428072",
+"when": "2026-11-25T20:27:06+00:00",
+"desc": "Short strikes will take place at four airports across Australia as part of an industrial relations stand-off between Virgin airline management and workers.",
 "cat": "澳洲"
 },
 {
@@ -31,16 +415,8 @@
 "cat": "澳洲"
 },
 {
-"src": "ABC 新闻",
-"title": "Muscular dystrophy drug approval brings hope and progress",
-"link": "https://www.abc.net.au/news/2026-11-26/drug-approval-hopeful-development-for-muscular-dystrophy/107423880",
-"when": "2026-11-25T19:58:33+00:00",
-"desc": "The first treatment for a type of muscular dystrophy has given this father a second shot at life. Its US approval is an exciting development for others.",
-"cat": "澳洲"
-},
-{
 "src": "卫报澳洲",
-"title": "Victoria’s likely Liberal future; grim milestone for global heating; and an asteroid close up",
+"title": "Morning Mail: Victoria’s likely Liberal future; grim milestone for global heating; and an asteroid close up",
 "link": "https://www.theguardian.com/australia-news/2026/nov/26/morning-mail-thursday-ntwnfb",
 "when": "2026-11-25T19:45:22+00:00",
 "desc": "Want to get this in your inbox every weekday? Sign up for the Morning Mail here , and finish your day with our Politics, really newsletter . Morning everyone. More fossil fuels, more punishment and le",
@@ -48,18 +424,10 @@
 },
 {
 "src": "ABC 新闻",
-"title": "US stocks tumble as AI rout and Trump tariffs rattle markets",
-"link": "https://www.abc.net.au/news/2026-11-26/nasdaq-ai-tariffs-rattle-markets/107428016",
-"when": "2026-11-25T19:44:30+00:00",
-"desc": "Chip makers led the declines, with Nvidia falling 8.7 per cent and the broader Philadelphia Semiconductor Index losing 7.3 per cent.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Out-of-control bushfire making a 'significant run' across Flinders Island",
+"title": "Six homes destroyed or damaged as Flinders Island fights '10-metre' flames",
 "link": "https://www.abc.net.au/news/2026-11-26/flinders-island-bushfire-thursday-making-significant-run/107425982",
 "when": "2026-11-25T19:40:52+00:00",
-"desc": "The blaze has burned about 13,000 hectares across the northern tip of the island, with the Tasmania Fire Service warning it is quickly travelling south-west.",
+"desc": "The blaze has burnt more than 10 per cent of Flinders island and destroyed or damaged at least six homes.",
 "cat": "澳洲"
 },
 {
@@ -72,59 +440,11 @@
 },
 {
 "src": "ABC 新闻",
-"title": "New breed of black sheep has hair instead of wool",
-"link": "https://www.abc.net.au/news/2026-11-26/martinmore-australian-black-haired-sheep-breed/107419772",
-"when": "2026-11-25T19:37:42+00:00",
-"desc": "The black sheep on this family's farm grow hair rather than wool, and are naturally less susceptible to a potentially deadly skin condition.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
 "title": "Tom Tate's lucrative bowls-land deal with major Australian developer revealed",
 "link": "https://www.abc.net.au/news/2026-11-26/queensland-tom-tate-gold-coast-bowls-club/107421592",
 "when": "2026-11-25T19:37:31+00:00",
 "desc": "Gold Coast Mayor Tom Tate was able to take over from colossal Australian developer Meriton the private purchase of a long-desired slice of prime real estate, the ABC can reveal.",
 "cat": "地产"
-},
-{
-"src": "ABC 新闻",
-"title": "Minister defends slashing paediatric patient waitlist by 96pc",
-"link": "https://www.abc.net.au/news/2026-11-26/canberra-health-services-slashes-waitlist/107427352",
-"when": "2026-11-25T19:36:39+00:00",
-"desc": "The Royal Australian College of General Practitioners says its doctors were not consulted about patients being struck from waitlists.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Bondi to be illuminated for terror attack memorial in 'act of love'",
-"link": "https://www.abc.net.au/news/2026-11-26/sharing-light-art-installation-bondi-terror-attack-anniversary/107240280",
-"when": "2026-11-25T19:30:24+00:00",
-"desc": "Thousands of clay pots will light up one by one at Archer Park every night during Hanukkah to pay tribute to those affected by the Bondi terror attack.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Community art to illuminate Bondi terror attack site on first anniversary",
-"link": "https://www.abc.net.au/news/2026-11-26/sharing-light-art-installation-bondi-terror-attack-anniversary/107240280",
-"when": "2026-11-25T19:30:24+00:00",
-"desc": "Thousands of clay pots will light up one by one at Archer Park every night during Hanukkah to pay tribute to those affected by the Bondi terror attack.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Live: SA Liberal senator Leah Blyth defects to One Nation",
-"link": "https://www.abc.net.au/news/2026-11-26/federal-politics-live-blog-november-26/107427220",
-"when": "2026-11-25T19:24:16+00:00",
-"desc": "Leah Blyth, who is understood to have had a falling out with SA Liberal president Alex Antic, says she has lost confidence in the party's ability to \"save this country\". Follow live.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Trump administration backs Musk's plan for space-based data centres",
-"link": "https://www.abc.net.au/news/2026-11-26/musk-spacex-datacentres-fcc/107428024",
-"when": "2026-11-25T19:21:00+00:00",
-"desc": "Elon Musk's company says solar-powered satellites in orbit could help power the next generation of AI.",
-"cat": "澳洲"
 },
 {
 "src": "The Conversation",
@@ -175,14 +495,6 @@
 "cat": "澳洲"
 },
 {
-"src": "ABC 新闻",
-"title": "The Malinauskas government is winning in court — but losing on TV",
-"link": "https://www.abc.net.au/news/2026-11-26/sa-government-parklands-projects-winning-in-court-losing-on-tv/107419900",
-"when": "2026-11-25T19:06:00+00:00",
-"desc": "The parklands protesters trying to stop the Malinauskas government's controversial projects appear all but doomed for defeat, but that doesn't mean they're not having an impact.",
-"cat": "澳洲"
-},
-{
 "src": "realestate 新闻",
 "title": "New report shows Sydney’s top affordable suburbs",
 "link": "https://www.realestate.com.au/news/new-report-shows-sydneys-top-affordable-suburbs/",
@@ -200,35 +512,11 @@
 },
 {
 "src": "ABC 新闻",
-"title": "How anger at data centres is boiling over at Victoria's ballot box",
+"title": "How data centre anger is boiling over at Victoria's ballot box",
 "link": "https://www.abc.net.au/news/2026-11-26/data-centre-anger-vic-election-political-issue/107425482",
 "when": "2026-11-25T18:45:45+00:00",
 "desc": "Data centres have become a piping hot political issue in a seemingly short length of time. Will they be a factor in this weekend's Victorian election?",
 "cat": "墨尔本"
-},
-{
-"src": "ABC 新闻",
-"title": "Which Aussie composer left a legacy of terry towels? Take the quiz",
-"link": "https://www.abc.net.au/news/2026-11-26/can-you-ace-this-australian-classical-music-history-quiz/107404292",
-"when": "2026-11-25T18:30:00+00:00",
-"desc": "Test yourself against the larrikins, mavericks and trailblazers behind some of the strangest and most fascinating stories in Australia's classical music history.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "This artist lost herself after childbirth. Making a show brought her back",
-"link": "https://www.abc.net.au/news/2026-11-26/aimee-falzon-she-rested-urban-theatre-projects-superposition/107421058",
-"when": "2026-11-25T18:30:00+00:00",
-"desc": "With her new show She Rested, composer and performer Aimée Falzon is trying to share the darkness, grief and outrageous joy of becoming a mother.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Red flags exhibited by Beau Lamarre-Condon in lead-up to double murder",
-"link": "https://www.abc.net.au/news/2026-11-26/beau-lamarre-condon-domestic-violence-red-flags-double-murder/107329010",
-"when": "2026-11-25T18:16:55+00:00",
-"desc": "The double murder trial of Beau Lamarre-Condon not only exposed him as a callous killer, but someone who was controlling when he stalked and \"petrified\" a former partner.",
-"cat": "澳洲"
 },
 {
 "src": "ABC 新闻",
@@ -264,22 +552,6 @@
 },
 {
 "src": "ABC 新闻",
-"title": "ADF members who lived through homosexual ban speak of being 'hunted down'",
-"link": "https://www.abc.net.au/news/2026-11-26/adf-members-recall-homosexual-ban-following-formal-apology/107427028",
-"when": "2026-11-25T18:00:00+00:00",
-"desc": "Australian Defence Force veterans and personnel are overjoyed with an \"overdue\" formal apology for a heavily enforced homosexuality ban.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Albanese had some wins this week — then inflation numbers landed with a thud",
-"link": "https://www.abc.net.au/news/2026-11-26/inflation-numbers-ruin-governments-good-week/107424930",
-"when": "2026-11-25T18:00:00+00:00",
-"desc": "The final week of parliament for the year has seen Labor whipping through their legislative to-do list. But the latest inflation numbers make it hard to celebrate.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
 "title": "What are the side effects of GLP-1 medications? We ask the experts",
 "link": "https://www.abc.net.au/news/health/2026-11-26/glp-1s-side-effects-oral-injectable-explainer/107393886",
 "when": "2026-11-25T18:00:00+00:00",
@@ -288,18 +560,18 @@
 },
 {
 "src": "ABC 新闻",
-"title": "Even buttons on clothes are suspect after Asia's exam cheating scandals",
-"link": "https://www.abc.net.au/news/2026-11-26/asia-exams-and-ai-smart-glasses-cheating/107419882",
-"when": "2026-11-25T18:00:00+00:00",
-"desc": "Wearable devices have emerged as aids to cheaters across Asia, where exams can determine people's life trajectories.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
 "title": "ADF members who lived through homosexual ban speak of peers 'hunted down'",
 "link": "https://www.abc.net.au/news/2026-11-26/adf-members-recall-homosexual-ban-following-formal-apology/107427028",
 "when": "2026-11-25T18:00:00+00:00",
 "desc": "Australian Defence Force veterans and personnel are overjoyed with an \"overdue\" formal apology for a heavily enforced homosexuality ban.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "The exam cheating threat in Asia described as 'worse than a disaster'",
+"link": "https://www.abc.net.au/news/2026-11-26/asia-exams-and-ai-smart-glasses-cheating/107419882",
+"when": "2026-11-25T18:00:00+00:00",
+"desc": "Wearable devices have emerged as aids to cheaters across Asia, where exams can determine people's life trajectories.",
 "cat": "澳洲"
 },
 {
@@ -365,22 +637,6 @@
 "when": "2026-11-25T18:00:00+00:00",
 "desc": "Years of soaring Adelaide home prices have set the stage for one of the city’s sharpest corrections, new research reveals. The post Adelaide property prices set for major correction in 2027 appeared f",
 "cat": "地产"
-},
-{
-"src": "ABC 新闻",
-"title": "US Army detonates country's entire stockpile of lead azide explosives",
-"link": "https://www.abc.net.au/news/2026-11-26/iowa-us-army-lead-azide/107427996",
-"when": "2026-11-25T17:32:01+00:00",
-"desc": "Residents in the area are being urged to take precautions due to concerns the explosion may throw lead particles into the air.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "How this Australian musician ended up in nu-metal band Limp Bizkit",
-"link": "https://www.abc.net.au/news/2026-11-26/limp-bizkit-australian-bassist-richie-buxton-ecca-vandal/107402862",
-"when": "2026-11-25T17:30:00+00:00",
-"desc": "Ahead of Good Things, Richie Buxton tells the unlikely story of how a musician from Beaumaris ended up in Limp Bizkit.",
-"cat": "澳洲"
 },
 {
 "src": "realestate 新闻",
@@ -456,18 +712,10 @@
 },
 {
 "src": "ABC 新闻",
-"title": "Two men face court over break-in at Kate and William's estate",
-"link": "https://www.abc.net.au/news/2026-11-26/sandringham-estate-breakin-court-appearance/107427840",
-"when": "2026-11-25T14:07:37+00:00",
-"desc": "Two men who allegedly broke into the country residence of the Prince and Princess of Wales stole six pairs of cufflinks and a clock, a UK court has heard.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
 "title": "More than 2 million Australians living in 'unhealthy' housing",
 "link": "https://www.abc.net.au/news/2026-11-26/millions-australians-living-houses-linked-poor-health-mould/107425024",
 "when": "2026-11-25T14:01:00+00:00",
-"desc": "New research from the University of Melbourne finds 2.5 million Australians live in homes linked to serious health problems, from asthma and respiratory illness to poor mental health.",
+"desc": "New research from the University of Melbourne finds 2.5 million Australians live in homes linked to serious health problems, including asthma and respiratory illness.",
 "cat": "地产"
 },
 {
@@ -483,56 +731,8 @@
 "title": "Australia’s most progressive state is poised to turn blue. How would Victoria change under a Coalition government?",
 "link": "https://www.theguardian.com/australia-news/2026/nov/26/victoria-elections-2026-jess-wilson-coalition-government",
 "when": "2026-11-25T14:00:29+00:00",
-"desc": "Jess Wilson says the Liberal and National parties will implement policies to ‘fix’ Victoria if they win the state election. Here’s what’s in store Get our daily political email , free app or daily new",
+"desc": "Jess Wilson says the Liberal and National parties will implement policies to ‘fix’ Victoria if they win the state election. Here’s what’s in store Victorian election 2026 guide: what you need to know ",
 "cat": "墨尔本"
-},
-{
-"src": "卫报澳洲",
-"title": "Aidan is one of thousands of students forced to verbally defend his honours thesis as universities take on AI",
-"link": "https://www.theguardian.com/australia-news/2026/nov/25/australian-universities-tackle-ai-plagiarism-oral-assessment-honours-masters-phd",
-"when": "2026-11-25T14:00:29+00:00",
-"desc": "Honours students are increasingly being asked to sit oral assessments – but at the University of Sydney it’s become a requirement for all Get our breaking news email , free app or daily news podcast W",
-"cat": "地产"
-},
-{
-"src": "卫报澳洲",
-"title": "Hundreds of applications and no offers: the young Australians looking for work as economy hits perfect storm",
-"link": "https://www.theguardian.com/business/2026/nov/26/hundreds-of-applications-no-offers-young-australians-looking-for-work-as-economy-hits-perfect-storm",
-"when": "2026-11-25T14:00:28+00:00",
-"desc": "As unemployment and inflation rise, many young Australians are feeling anxious and ‘defeated’ amid the struggle to find secure jobs Get our daily political email , free app or daily news podcast For I",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Trump unveils suite of new tariffs on major trading partners",
-"link": "https://www.abc.net.au/news/2026-11-26/trump-new-tariffs-major-trading-partners/107425504",
-"when": "2026-11-25T13:59:09+00:00",
-"desc": "Goods from China, Brazil, the EU and Vietnam are all set to be taxed higher as Donald Trump doubles down on his tariff policies after a midterms drubbing.",
-"cat": "中澳"
-},
-{
-"src": "卫报澳洲",
-"title": "Large bushfire threatens homes and properties on Flinders Island off Tasmania",
-"link": "https://www.theguardian.com/australia-news/2026/nov/25/large-bushfire-threatens-homes-and-properties-on-remote-island-off-tasmania",
-"when": "2026-11-25T13:55:42+00:00",
-"desc": "Blaze spreads significantly across the north of Flinders Island after being started by lightning strikes Get our breaking news email , free app or daily news podcast Homes and properties on a pictures",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Libya vows retaliation over Ukrainian strikes as Russian deaths near 500,000",
-"link": "https://www.abc.net.au/news/2026-11-25/ukraine-defends-attack-on-russian-ships-in-libya/107427720",
-"when": "2026-11-25T11:38:52+00:00",
-"desc": "Two Libyan army personnel have succumbed to wounds suffered in a Ukrainian drone strike on Russian ships in Benghazi.",
-"cat": "澳洲"
-},
-{
-"src": "ABC 新闻",
-"title": "Indigenous groups alarmed as NT flags fresh child protection overhaul",
-"link": "https://www.abc.net.au/news/2026-11-25/indigenous-advocates-concerned-about-child-protection-overhaul/107424898",
-"when": "2026-11-25T10:29:09+00:00",
-"desc": "The Northern Territory is considering further child protection changes that would limit judicial oversight of care arrangements and give child protection workers the ability to issue domestic violence",
-"cat": "澳洲"
 },
 {
 "src": "The Conversation",
@@ -543,20 +743,20 @@
 "cat": "澳洲"
 },
 {
-"src": "ABC 新闻",
-"title": "Bowen details how the words 'fossil fuels' derailed COP31",
-"link": "https://www.abc.net.au/news/2026-11-25/chris-bowen-disappointed-at-cop31-result-geopolitics/107427460",
-"when": "2026-11-25T08:27:07+00:00",
-"desc": "Minister for Energy and Climate Change Chris Bowen breaks his silence on just what went wrong at the UN Climate Summit.",
-"cat": "澳洲"
-},
-{
 "src": "The Conversation",
 "title": "Solomon Islands and Australia sign a new defence treaty – and there’s plenty in it for both countries",
 "link": "https://theconversation.com/solomon-islands-and-australia-sign-a-new-defence-treaty-and-theres-plenty-in-it-for-both-countries-297498",
 "when": "2026-11-25T07:54:13+00:00",
 "desc": "While the new pact tears up a previous deal between Solomon Islands and China, there is much in the new deal with Australia for the Solomons people.",
 "cat": "中澳"
+},
+{
+"src": "卫报澳洲",
+"title": "‘You’re protecting Trump’: Hanson-Young clashes with Liberal senator before digital duty of care legislation passes – as it happened",
+"link": "https://www.theguardian.com/australia-news/live/2026/nov/25/treasurer-jim-chalmers-myefo-inflation-figures-coalition-one-nation-ntwnfb",
+"when": "2026-11-25T07:34:44+00:00",
+"desc": "Get our daily political email , free app or daily news podcast Wells says AI investment and creative protections not a ‘zero-sum game’ Weighing into the gigantic debate that is AI companies wanting to",
+"cat": "澳洲"
 },
 {
 "src": "卫报澳洲",
@@ -583,28 +783,12 @@
 "cat": "澳洲"
 },
 {
-"src": "ABC 新闻",
-"title": "Indonesian rescuers recover eight bodies from mine, more miners remain missing",
-"link": "https://www.abc.net.au/news/2026-11-25/miners-trapped-underground-in-west-java-indonesia/107426126",
-"when": "2026-11-25T05:26:20+00:00",
-"desc": "Twenty-six miners have been trapped in a 100-metre-deep mine since Monday as heavy rain inundated access.",
-"cat": "澳洲"
-},
-{
 "src": "realestate 新闻",
 "title": "The signals that reveal when the market is bottoming out",
 "link": "https://www.realestate.com.au/news/the-signals-that-reveal-when-the-market-is-bottoming-out/",
 "when": "2026-11-25T04:47:40+00:00",
 "desc": "It’s almost impossible to pick the exact bottom of the market, but a convergence of ... The post The signals that reveal when the market is bottoming out appeared first on realestate.com.au .",
 "cat": "地产"
-},
-{
-"src": "卫报澳洲",
-"title": "Defence minister apologises to LGBTQ+ veterans for past discrimination – video",
-"link": "https://www.theguardian.com/australia-news/video/2026/nov/25/defence-minister-apologises-to-lgbtq-veterans-for-past-discrimination-video",
-"when": "2026-11-25T04:09:28+00:00",
-"desc": "Defence minister Richard Marles has given a national apology in parliament to LGBTQ+ veterans for the homophobic and discriminatory past policies of the Australian defence force. Until the early 1990s",
-"cat": "澳洲"
 },
 {
 "src": "The Conversation",
@@ -751,14 +935,6 @@
 "cat": "地产"
 },
 {
-"src": "卫报澳洲",
-"title": "Why are people captivated by this photo of Australia’s climate change minister scowling at Cop31?",
-"link": "https://www.theguardian.com/culture/2026/nov/25/chris-bowen-cop31-deal-failure-photograph",
-"when": "2026-11-25T00:40:13+00:00",
-"desc": "Chris Bowen was president of negotiations at Cop31 in Turkey when it all went a bit sideways Blake, I was at the back of the huge plenary hall in Antalya on Sunday at the end of the UN climate summit ",
-"cat": "澳洲"
-},
-{
 "src": "The Conversation",
 "title": "That Black Friday countdown says the sale ends in ten minutes. But is it real?",
 "link": "https://theconversation.com/that-black-friday-countdown-says-the-sale-ends-in-ten-minutes-but-is-it-real-296501",
@@ -895,14 +1071,6 @@
 "cat": "澳洲"
 },
 {
-"src": "卫报澳洲",
-"title": "I lived in the US for 10 years – here’s how Australian supermarkets compare",
-"link": "https://www.theguardian.com/food/2026/nov/24/australian-vs-us-supermarkets-how-do-they-compare-bread-bacon",
-"when": "2026-11-24T19:00:53+00:00",
-"desc": "The US has more big chains but in Australia produce is better quality – and bread doesn’t taste like cake I poked. I pulled. I looked in confusion at the head of garlic I was holding, wondering why th",
-"cat": "澳洲"
-},
-{
 "src": "realestate 新闻",
 "title": "Inside Ashleigh: Historic mansion turning heads in prestige market",
 "link": "https://www.realestate.com.au/news/inside-ashleigh-historic-mansion-turning-heads-in-prestige-market/",
@@ -957,46 +1125,6 @@
 "when": "2026-11-24T17:00:00+00:00",
 "desc": "A couple who poured everything into drought-ravaged Central Queensland land have listed their 236ha showpiece just months after completing a brand-new designer home on the property. The post ‘Bittersw",
 "cat": "地产"
-},
-{
-"src": "realestate 新闻",
-"title": "Dilapidated Marrickville home heads to auction for $1.3m",
-"link": "https://www.realestate.com.au/news/dilapidated-marrickville-home-heads-to-auction-for-13m/",
-"when": "2026-11-24T17:00:00+00:00",
-"desc": "A dilapidated Marrickville home dubbed “probably the worst home in a great street” is heading to auction with a $1.3m price guide after 80 years in the same family. The post Dilapidated Marrickville h",
-"cat": "地产"
-},
-{
-"src": "realestate 新闻",
-"title": "First home buyers’ market share hits surprise turning point – but for how long?",
-"link": "https://www.realestate.com.au/news/first-home-buyers-market-share-hits-surprise-turning-point-but-for-how-long/",
-"when": "2026-11-24T17:00:00+00:00",
-"desc": "The percentage of first homebuyers taking out new housing loans is on the up, but experts warn the reason behind it isn’t what you think. The post First home buyers’ market share hits surprise turning",
-"cat": "地产"
-},
-{
-"src": "realestate 新闻",
-"title": "NAB drops fixed mortgage rates as brutal rate crisis continues",
-"link": "https://www.realestate.com.au/news/nab-drops-fixed-mortgage-rates-as-brutal-rate-crisis-continues/",
-"when": "2026-11-24T17:00:00+00:00",
-"desc": "One of Australia’s biggest banks has dropped two of its mortgage rates, and experts say it could signal a pause on the price hikes ravaging homeowners. The post NAB drops fixed mortgage rates as bruta",
-"cat": "地产"
-},
-{
-"src": "realestate 新闻",
-"title": "‘No regrets’: Perth tradie gives up $300k FIFO life to guide Tokyo tourists",
-"link": "https://www.realestate.com.au/news/no-regrets-perth-tradie-gives-up-300k-fifo-life-to-guide-tokyo-tourists/",
-"when": "2026-11-24T17:00:00+00:00",
-"desc": "A 32-year-old tradie, who quit his $300,000 job and Australia, says he won’t return home any time soon after a shock twist changed everything. The post ‘No regrets’: Perth tradie gives up $300k FIFO l",
-"cat": "地产"
-},
-{
-"src": "The Conversation",
-"title": "Albanese and Taylor focus their troops on election as government pushes agenda through packed pre-Christmas sitting week",
-"link": "https://theconversation.com/albanese-and-taylor-focus-their-troops-on-election-as-government-pushes-agenda-through-packed-pre-christmas-sitting-week-296267",
-"when": "2026-11-24T11:02:57+00:00",
-"desc": "Only half way through this term, both prime minister and opposition leader have their sights on the next election.",
-"cat": "澳洲"
 }
 ]
 }
