@@ -1,0 +1,20 @@
+name: IndexNow（人工或 Claude 推上来的页面改动，马上通知搜索引擎）
+# 房源页的自动构建（build-pages）自己会推；这里管其它推送：今日要闻、楼盘页、指南、在售页、首页等。
+on:
+  push:
+    branches: [main]
+    paths: ["news/**", "building/**", "guide/**", "sale/**", "rent/**", "index.html", "rentals.html", "rents.html", "sitemap.xml"]
+  workflow_dispatch:
+    inputs:
+      base: { description: "从哪个提交之后的改动开始推（sha）", required: false }
+permissions:
+  contents: read
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node tools/indexnow.js ${{ github.event.inputs.base || github.event.before || 'HEAD~1' }}

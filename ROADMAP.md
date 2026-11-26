@@ -42,6 +42,14 @@
 - 选项 B：网址和对外地址只写到街名，旧网址自动跳转到新网址。
 网址里带不带关键词对排名影响很小，所以这一项只看隐私和你的习惯。告诉我选 A 还是 B 就行。
 
+### F17. 开 Bing 站长工具（可选，5 分钟）
+以后能看到 Bing 收录了几页、带来多少点击。IndexNow 已经在自动通知 Bing，这一步只是让你看得到结果。
+1. 打开 https://www.bing.com/webmasters ，点 **Sign in**，选 **Google** 登录（用管 Search Console 的那个 Google 账号）。
+2. 页面问怎么添加网站时，选左边 **Import from Google Search Console**（从 Search Console 导入），点 **Import**。
+3. Google 弹窗问权限，点 **允许 / Allow**。
+4. 勾上 **howzu.com.au**，点 **Import**。看到“已添加”就完成了，不用再验证。
+5. 验收：几天后左边 **Search Performance** 开始有数字。
+
 ### F7. 手机实测咨询按钮（3 分钟）
 我没法用真手机测，需要你在 iPhone 和安卓上各点一次：
 1. 手机打开 https://howzu.com.au/rent/2110-spencer.html 。
@@ -167,7 +175,7 @@ D. 测试
 | 1e | **房东获客入口：查租金页 → “我的房能租多少？”**（Frank 11/16 提出，见下方专节） | 高（房源数） | 中 | 3 | 🟡 11/16 卡片已上线（查租金页、25 个区域页、投资测算页）：估租金 → 免费上架（预填区、房型、几房、租金）或留微信/手机找托管（备注“租金查询-房东”），最多 3 次点击。查租金页补上了访问统计。待做：《房东第一次出租要做什么》指南（Frank 要省 token，先放着） |
 | 1g | 发房源必勾“符合维州最低租住标准”（RTA s65B；goals 第 17 条） | 中（合规，保护平台） | 小 | — | ✅ 11/19 post.html 必勾，没勾点发布会跳到勾选框；提交记进 highlights；贴帖入库的 confirm.html 原来就有；验证工具 post 流程加了这两项检查 |
 | 1h | 房源显示“比本区同房型中位数高/低 X%”（goals 第 16 条，用 DFFH 数据） | 中（询盘） | 小 | — | ✅ 11/22 租房列表卡片、详情弹窗、rent/ 独立页都显示（js/rent-vs.js + data/rent_vs.json，22KB）；±5% 内写“接近本区中位数”；区/房型对不上、单间/联排、样本 < 10 套一律不显示；写明中位数、样本数、数据季度、DFFH 出处和“仅供参考”；英文界面已翻。现在 4 套：2110 高 8%、3005 高 17%、3817 高 9%、4803B 接近 |
-| 1c | 房东自助发布和贴帖入库的房源（存在 Supabase）还没有独立静态页，Google 只能靠 rentals.html 的 JS 看到：build-pages 工作流定时从 Supabase 读已上线房源，生成 rent/ 静态页并进 sitemap | 中 | 中 | 3 | 待做 |
+| 1c | 房东自助发布和贴帖入库的房源（存在 Supabase）生成 rent/ 静态页并进 sitemap；加 IndexNow | 中 | 中 | 3 | ✅ 11/26 上线：tools/build-supabase-pages.js 每 2 小时只读 Supabase，网址 rent/<区>-<街>-<短id>.html，不放房东电话、微信、邮箱（描述里夹带的也擦掉），下架后同一网址改“已租出”并出 sitemap；IndexNow 每次构建只推改过的网址（房源页、要闻、楼盘页、sitemap 新增），密钥文件在根目录。测试 tools/test-supabase-pages.js |
 | 1b | **一键入库（房东授权版）**：在线房源只有 5 套，是三个数里最大的瓶颈 | 高 | 中 | **2** | ✅ 11/15 已上线可用：admin.html → 📥 贴帖入库 |
 | 2 | 首页性能 32：学区数据一打开就全量加载 | 高 | 小 | 2 | ✅ 11/14 → 97 |
 | 3 | 房源页 schema 补 Offer + BreadcrumbList，中英标题和描述 | 中 | 小 | 3 | ✅ 11/14 |

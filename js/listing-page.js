@@ -5,7 +5,7 @@
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const hideUnit = a => String(a || "").replace(/^\s*[\w-]+\s*\/\s*/, "");
   const isLet = x => x.status === "let";
-  const pageUrl = x => `${SITE}/rent/${encodeURIComponent(x.id)}.html`;
+  const pageUrl = x => `${SITE}/rent/${encodeURIComponent(x.page || x.id)}.html`; // x.page：Supabase 房源用 区-街-短id 当文件名
   const fmtTel = t => String(t || "").replace(/^(\d{4})(\d{3})(\d{3})$/, "$1 $2 $3");
 
   // 入住时间：发房源时存的是 ISO 日期（2026-11-26）或文字（尽快 / 2027 年 1 月）。
@@ -40,7 +40,7 @@
   function ogDesc(x) {
     const head = [x.suburb, facts(x), isLet(x) ? "已租出" : x.available ? `${availText(x.available)}入住` : "", x.furnished === true ? "带家具" : ""].filter(Boolean).join(" · ");
     const first = String(x.desc || "").split(/\n/).map(s => s.trim()).filter(Boolean)[0] || "";
-    const s = head + (first ? "。" + first : "") + " 好租 Howzu 中文服务，持牌管理。";
+    const s = head + (first ? "。" + first : "") + (x.user ? " 好租 Howzu 已审核的个人房源。" : " 好租 Howzu 中文服务，持牌管理。");
     return s.length > 110 ? s.slice(0, 109) + "…" : s;
   }
   // 搜索结果描述：中文在前，后面补一句英文
@@ -233,11 +233,11 @@ ${isLet(x) ? "" : (T => `<div class="tr"><div class="tr-h">✓ ${esc(T.title)}</
 ${x.desc ? `<div class="desc"${x.descEn ? ` data-en="${esc(x.descEn)}"` : ""}>${esc(x.desc)}</div>` : ""}
 ${P.length > 1 ? `<div class="grid">${P.slice(1, 7).map((p, i) => `<a href="${esc(full)}" aria-label="查看第 ${i + 2} 张照片"><img src="${esc(rel(sized(p, "s")))}" width="480" height="360" alt="" loading="lazy"></a>`).join("")}</div>` : ""}
 ${isLet(x) ? `<a class="more lead" href="${esc(leadUrl(x))}"><b>🔔 想租同楼或附近的房？</b>留下需求，有空房第一时间通知你 ›</a>` : ""}
-${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "这些现在可以租" : "其他在租房源"}</div>${others.map(y => `<a href="${esc(y.id)}.html" data-act="rel" data-id="${esc(y.id)}">${(y.photos || [])[0] ? `<img src="${esc(rel(sized(y.photos[0], "s")))}" width="480" height="360" alt="" loading="lazy">` : ""}<b>${esc(priceText(y))}</b><span>${esc((y.title || y.suburb || "").split("·")[0].trim())}</span><small>${esc([y.beds != null ? y.beds + " 房" : "", y.baths != null ? y.baths + " 卫" : "", y.cars ? y.cars + " 车位" : ""].filter(Boolean).join(" · ") || y.suburb || "")}</small></a>`).join("")}</div>` : ""}
+${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "这些现在可以租" : "其他在租房源"}</div>${others.map(y => `<a href="${esc(y.page || y.id)}.html" data-act="rel" data-id="${esc(y.id)}">${(y.photos || [])[0] ? `<img src="${esc(rel(sized(y.photos[0], "s")))}" width="480" height="360" alt="" loading="lazy">` : ""}<b>${esc(priceText(y))}</b><span>${esc((y.title || y.suburb || "").split("·")[0].trim())}</span><small>${esc([y.beds != null ? y.beds + " 房" : "", y.baths != null ? y.baths + " 卫" : "", y.cars ? y.cars + " 车位" : ""].filter(Boolean).join(" · ") || y.suburb || "")}</small></a>`).join("")}</div>` : ""}
 <a class="more" href="${esc(full)}">查看全部照片 · 看对口学区 ›</a>
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
 <div class="alert-sub" data-suburb="${esc(x.suburb || "")}" data-beds="${esc(x.beds != null ? x.beds : "")}" data-max="${esc(Number(x.rentWeekly) > 0 ? Math.ceil(Number(x.rentWeekly) * 1.1 / 10) * 10 : "")}"></div>
-<p class="trust">好租 Howzu · 持牌物业管理 · 全程中文服务</p>
+<p class="trust">${x.user ? "好租 Howzu · 个人发布、好租已审核 · 全程中文" : "好租 Howzu · 持牌物业管理 · 全程中文服务"}</p>
 </main>
 ${isLet(x) ? `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${esc(x.id)}">看在租房源</a><a class="p" href="${esc(leadUrl(x))}" data-act="lead" data-id="${esc(x.id)}">🔔 同楼或附近有空房通知我</a></div></nav>` : ""}
 ${isLet(x) || !tel ? "" : `<nav class="bar"><div><a class="g" href="sms:${esc(tel)}?&amp;body=${msg}" data-act="sms" data-id="${esc(x.id)}">💬 短信</a><a class="g" href="tel:${esc(tel)}" data-act="call" data-id="${esc(x.id)}">📞 电话</a><a class="p" href="${esc(full)}#book" data-act="book" data-id="${esc(x.id)}">📅 预约看房</a></div></nav>`}

@@ -44,6 +44,11 @@
 |---|---|---|---|---|
 | 2026-11-22 | 0（刚上线） | 0 | 0 | 发信等 F16 密钥 |
 
+## 🗂 Supabase 静态页（ROADMAP 1c，每 2 小时自动生成）
+| 日期 | Supabase 已上线 | 静态页（在 sitemap） | 已租出页 | IndexNow |
+|---|---|---|---|---|
+| 2026-11-26 | 见构建日志 | 见构建日志 | 0 | 见构建日志 |
+
 ## 🏢 楼盘百科（11/24 上线 30 栋，12/14 看收录再决定扩不扩）
 三个数：**楼盘页访问** = pageviews 里 path 以 /building/ 开头的浏览数（js/track.js 的 HowzuTrack.type() 归为 building）；**询盘** = 从楼盘页来的回电、求租需求（描述里“页面：…/building/”）；**楼盘订阅** = kind=找房订阅 且 highlights 含“楼:”的条数。
 扩批规则：12/14 看 Search Console，30 页收录 ≥ 18 页（60%）才扩下一批 50 栋；不到就先补内容。AI 找房（Claude / Gemini 各 3 个带楼名的租房问题，如“Australia 108 租房”“Eureka Tower 两房租金”“Queen's Place 墨尔本租房”）：11/20 基线 0/3，12/14 再测。
