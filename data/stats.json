@@ -1,14 +1,14 @@
 {
- "updated": "2026-11-26",
+ "updated": "2026-11-27",
  "window": "近 30 天（需求热度近 60 天）",
- "views30": 528,
+ "views30": 559,
  "enquiries30": 3,
- "conversionPct": 0.6,
- "mobilePct": 80,
+ "conversionPct": 0.5,
+ "mobilePct": 81,
  "viewChannels": [
   [
    "直接",
-   496
+   526
   ],
   [
    "Facebook",
@@ -41,20 +41,20 @@
  "liveOwn": 4,
  "livePublic": 0,
  "studyAbroad": {
-  "views": 4,
-  "inspectOpen": 1,
+  "views": 5,
+  "inspectOpen": 2,
   "inspectBook": 0,
   "enquiries": 0,
   "inspectRows": 0,
   "channels": [
    [
     "直接",
-    4
+    5
    ]
   ]
  },
  "building": {
-  "views": 27,
+  "views": 32,
   "enquiries": 0,
   "subs": 0
  },
