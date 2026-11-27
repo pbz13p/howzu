@@ -1,0 +1,578 @@
+{
+"fetched": "2026-11-27T20:30:07.639298+00:00",
+"log": [
+"ABC 新闻: 25",
+"ABC 新闻: 25",
+"SBS 新闻: 0",
+"SBS 中文: 失败 HTTPError",
+"卫报澳洲: 14",
+"The Conversation: 21",
+"澳联储 RBA: 0",
+"Domain 新闻: 失败 HTTPError",
+"realestate 新闻: 2",
+"维州州长新闻稿: 失败 HTTPError",
+"移民局新闻: 失败 HTTPError"
+],
+"items": [
+{
+"src": "ABC 新闻",
+"title": "Tight-knit community helps ease pain of bushfires on Flinders Island",
+"link": "https://www.abc.net.au/news/2026-11-28/tas-flinders-island-bushfire-community-comes-together/107433832",
+"when": "2026-11-27T20:09:31+00:00",
+"desc": "Bushfires have been raging across the northern part of remote Flinders Island this week. It's been a tough time for locals, but they've come together to ease the burden.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Live: Polls open soon in Victoria as voters prepare to decide next government",
+"link": "https://www.abc.net.au/news/2026-11-28/victorian-election-live-updates-voting-results-seat-count/107418038",
+"when": "2026-11-27T20:00:08+00:00",
+"desc": "Victorians head to the polls today to decide who will lead Australia's second most populous state for the next four years. Follow live.",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "Confused about who you should vote for in the Victoria state election? A guide to key promises and policies from Labor, Coalition, Greens and One Nation",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/victoria-election-2026-who-to-vote-for-should-policies-summary-state-victorian-vic-labor-liberal-greens-one-nation-ntwnfb",
+"when": "2026-11-27T19:54:16+00:00",
+"desc": "From cost of living to health, transport and crime, here is a summary of some of the major promises and policies announced by parties ahead of the 2026 Victorian state election Victorian election 2026",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "When, where and how to vote in Victoria’s 2026 state election: what voters need to know on polling day",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/victorian-election-2026-when-is-it-how-to-vote-date-where-victoria-state-polls-candidates-voting-near-count-ntwnfb",
+"when": "2026-11-27T19:53:54+00:00",
+"desc": "Labor is chasing a fourth consecutive term and the Liberals are hoping for a breakthrough – but could One Nation end up with the balance of power? And how, when and where can people vote in Victoria? ",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Mixed feelings over Coalition's boot camp plan for young offenders",
+"link": "https://www.abc.net.au/news/2026-11-28/dhurringile-boot-camp-coalition-victorian-election-shepparton/107426122",
+"when": "2026-11-27T19:45:00+00:00",
+"desc": "A controversial proposal to turn a decommissioned prison in Victoria's north into a boot camp facility for young offenders has received mixed reactions from the community.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Australia selling more wine than it is making but huge glut persists",
+"link": "https://www.abc.net.au/news/2026-11-28/australian-wine-glut-continues-despite-sales-production/107425900",
+"when": "2026-11-27T19:40:41+00:00",
+"desc": "Sales of Australian wine have overtaken previous production volumes, but a glut of millions of litres persists.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "MotoGP world champion Marquez announces shock retirement",
+"link": "https://www.abc.net.au/news/2026-11-28/motogp-world-champion-marc-marquez-announces-shock-retirement/107437638",
+"when": "2026-11-27T19:38:11+00:00",
+"desc": "Marc Marquez will take his final bow in Valencia after the eight-time MotoGP champion announced on Friday that he would retire following the 2026 season finale, ending one of motorcycle racing's great",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "More women choosing to give birth at home but inquest shows risks",
+"link": "https://www.abc.net.au/news/2026-11-28/neonatal-death-inquest-hears-homebirth-rates-rising/107433758",
+"when": "2026-11-27T19:30:00+00:00",
+"desc": "In two weeks of heartbreaking testimony at a coronial inquest into the deaths of four babies, a stark piece of evidence about the trend has emerged.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Live: Wallabies seeking revenge against Ireland in Nations Championship",
+"link": "https://www.abc.net.au/news/2026-11-28/wallabies-vs-ireland-nations-championship-live-blog-updates/107437612",
+"when": "2026-11-27T19:27:01+00:00",
+"desc": "After losing to Ireland at the beginning of the Nations Championship, the Wallabies are looking to square the ledger in their final Test of 2026. Follow live.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Roos are 'finally able to say' the words they have refused all season",
+"link": "https://www.abc.net.au/news/2026-11-28/north-melbourne-wins-third-premiership/107437178",
+"when": "2026-11-27T19:20:25+00:00",
+"desc": "North Melbourne claims a historic three-peat after a near flawless but challenging season.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "'Surreal feeling' as North Melbourne claims third AFLW flag",
+"link": "https://www.abc.net.au/news/2026-11-28/north-melbourne-wins-third-premiership/107437178",
+"when": "2026-11-27T19:20:25+00:00",
+"desc": "North Melbourne claims a historic three-peat after a near flawless but challenging season.",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "Flash flooding, river flooding possible across eastern states",
+"link": "https://www.abc.net.au/news/2026-11-28/australia-wild-weekend-weather-caps-off-wettest-el-nino-spring/107435544",
+"when": "2026-11-27T19:14:42+00:00",
+"desc": "Australia has witnessed its wettest spring on record for an El Niño year after frequent rain events during the past two months.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Eat beef? There's a high chance it has come from an Australian feedlot",
+"link": "https://www.abc.net.au/news/2026-11-28/australian-cattle-feedlot-industry-record-growth/107420348",
+"when": "2026-11-27T18:57:34+00:00",
+"desc": "Australia's feedlot industry is expanding amid strong demand for grain-fed beef from Asia, with a record 1.6 million-plus cattle now in feedlots.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Documentary to detail how cancer 'changed' Princess of Wales",
+"link": "https://www.abc.net.au/news/2026-11-28/princess-catherine-cancer-recovery-documentary/107432910",
+"when": "2026-11-27T18:56:47+00:00",
+"desc": "Princess Catherine has spoken candidly about how \"cancer does change you\" in a documentary to be aired in Britain later today.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "ABC 50/50 quiz: Duran Duran, Countdown vs Hey Hey, and is this a spider or a moth?",
+"link": "https://www.abc.net.au/news/2026-11-28/abc-5050-quiz/107433698",
+"when": "2026-11-27T18:30:00+00:00",
+"desc": "Each question in the ABC 50/50 quiz has only two options: one is right, the other is wrong. But be warned: we might try to trick you.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Comedian Adam Kay on hospital nightshifts and six things he won't throw away",
+"link": "https://www.abc.net.au/news/2026-11-28/british-comedian-adam-kay-doctor-christmas-show-hospitals/107364000",
+"when": "2026-11-27T18:30:00+00:00",
+"desc": "Adam Kay says it's rare for people to thank their doctors, and some of his most prized possessions are cards from former patients. He has turned his time working the wards into a new comedy show.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Sculpture workshops to create more Indigenous public art",
+"link": "https://www.abc.net.au/news/2026-11-28/sculpture-workshops-indigenous-public-art-tennant-creek/107394056",
+"when": "2026-11-27T18:30:00+00:00",
+"desc": "Renowned Australian bronze-caster Mal Wood wants more Aboriginal art in public places. His sculpture program, travelling through Central Australia and the Barkly, is helping to make that happen.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "The eight books our critics couldn't put down in November",
+"link": "https://www.abc.net.au/news/2026-11-28/best-new-books-2026-solvej-balle-on-the-calculation-of-volume/107348984",
+"when": "2026-11-27T18:30:00+00:00",
+"desc": "This month's best books include the latest from Solvej Balle, Claire North, Hannah Goldstein and more.",
+"cat": "澳洲"
+},
+{
+"src": "realestate 新闻",
+"title": "Mining boss’ mansion with underwater James Bond lair named Aus best home",
+"link": "https://www.realestate.com.au/news/mining-boss-mansion-with-underwater-james-bond-lair-named-aus-best-home/",
+"when": "2026-11-27T18:30:00+00:00",
+"desc": "A father-son building duo has claimed Australia’s top residential prize for a coastal mansion featuring a James Bond-style subterranean car lair. The post Mining boss’ mansion with underwater James Bo",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "'Antichrist' tradie breaks cult's 27-year code of silence",
+"link": "https://www.abc.net.au/news/2026-11-28/universal-medicine-former-follower-on-cult-leader-serge-benhayon/107409902",
+"when": "2026-11-27T18:00:00+00:00",
+"desc": "For the first time, a devotee of Australia's biggest cult export has revealed the secret tricks its predatory leader uses.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "What are Taiwan's 'nine-in-one' elections and why should we care?",
+"link": "https://www.abc.net.au/news/2026-11-28/what-are-taiwan-nine-in-one-elections/107433590",
+"when": "2026-11-27T18:00:00+00:00",
+"desc": "Analysts say the elections will be watched closely by Beijing, while Taiwan has warned against possible Chinese interference.",
+"cat": "中澳"
+},
+{
+"src": "ABC 新闻",
+"title": "The mothers who have battled and recovered from postpartum psychosis",
+"link": "https://www.abc.net.au/news/2026-11-28/postpartum-psychosis-during-pregnancy-after-birth/107173646",
+"when": "2026-11-27T18:00:00+00:00",
+"desc": "For many mums, the birth of their baby can be the happiest time in their life. For one or two in every 1,000, it is the start of a mental health emergency.",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "If Australia wants to be a middle power, we have to stand up to the US",
+"link": "https://www.abc.net.au/news/2026-11-28/trump-creates-tariff-chaos-but-australia-wont-push-back/107435236",
+"when": "2026-11-27T18:00:00+00:00",
+"desc": "From intervening on Jensen Huang to a new round of tariffs, Donald Trump is continuing to create global chaos. But the government missed a crucial chance to assert ourselves around our 'ally'.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Australia poured millions into power stations PNG is now looking to sell",
+"link": "https://www.abc.net.au/news/2026-11-28/australia-poured-millions-into-png-power-stations-now-being-sold/107433586",
+"when": "2026-11-27T18:00:00+00:00",
+"desc": "In announcing the sell-off, Papua New Guinea Prime Minister James Marape said the power stations were putting \"financial pressure\" on the government.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Chris Bowen may have flamed out at COP, but at least he tried",
+"link": "https://www.abc.net.au/news/2026-11-28/chris-bowen-cop-climate-politics/107434496",
+"when": "2026-11-27T18:00:00+00:00",
+"desc": "The climate talks in Türkiye ended with disappointment for just about everyone, but getting consensus on the global stage is becoming increasingly impossible.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Victoria appears poised to dump Labor as election day arrives",
+"link": "https://www.abc.net.au/news/2026-11-28/victorian-election-day-arrives-ben-carroll-jess-wilson/107422598",
+"when": "2026-11-27T14:25:42+00:00",
+"desc": "Victoria's election day has finally arrived, after a tumultuous term for both the Labor and Liberal parties.",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "Jess Wilson’s plan for Melbourne sewage plants risks water and wetlands without bringing debt down, experts say",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/jess-wilson-melbourne-sewage-plants-privatisation-risks-water-and-wetlands",
+"when": "2026-11-27T14:00:14+00:00",
+"desc": "Academic says Victorian Liberal proposal to privatise treatment plants and generate profit with no compromise of services ‘a total furphy’ Victorian election 2026 guide: what you need to know Confused",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "As bad polling dims his parliamentary wins, Albanese faces a long summer of political heat | Tom McIlroy",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/as-bad-polling-dims-his-parliamentary-wins-albanese-faces-a-long-summer-of-political-heat",
+"when": "2026-11-27T14:00:14+00:00",
+"desc": "Even usually down-in-the-mouth Coalition MPs think their side is cutting through more effectively than the prime minister’s Taking a victory lap after passing a slew of bills in parliament’s final sit",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Jesse Baird and Luke Davies’ murders rocked Sydney’s LGBTQI+ heart. Three years on, sentencing will cast a shadow over Mardi Gras",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/jesse-baird-luke-davies-murders-sydney-lgbtqi-beau-lamarre-sentencing-mardi-gras-ntwnfb",
+"when": "2026-11-27T14:00:13+00:00",
+"desc": "The couple’s deaths at the hands of Beau Lamarre-Condon sent a bolt through Pride celebrations. Their community says they will never be forgotten Get our breaking news email , free app or daily news p",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Labor faces prospect of electoral wipeout in Victoria as voters turn to Liberals and One Nation",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/vic-election-labor-faces-electoral-wipeout-as-voters-turn-to-liberals-and-one-nation-ntwnfb",
+"when": "2026-11-27T14:00:13+00:00",
+"desc": "Former ALP strategist says Ben Carroll government at risk of losing more than 30 seats in Saturday’s election, to fall behind Pauline Hanson’s party Victorian election 2026 guide: what you need to kno",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "NSW Labor is ‘trampling over party principles’ with preselections by captain’s call, members say",
+"link": "https://www.theguardian.com/australia-news/2026/nov/28/nsw-labor-is-trampling-over-party-principles-with-preselections-by-captains-call-members-say",
+"when": "2026-11-27T14:00:12+00:00",
+"desc": "Exclusive: Ryde councillor Penny Pedersen was asked by Labor head office not to nominate for Lane Cove in March state election Get our breaking news email , free app or daily news podcast Labor’s New ",
+"cat": "生活"
+},
+{
+"src": "ABC 新闻",
+"title": "Zelenskyy says Trump's relationship with Putin like being friends with Hitler",
+"link": "https://www.abc.net.au/news/2026-11-27/zelenskyy-says-trump-putin-relationship-like-being-friend-hitler/107437062",
+"when": "2026-11-27T11:41:15+00:00",
+"desc": "Kyiv is becoming increasingly frustrated by US President Donald Trump's relationship with Vladimir Putin as it urges allies to stand up to the Russian president.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Australia 'have to be better,' humbled by England at rain-soaked Gabba",
+"link": "https://www.abc.net.au/news/2026-11-27/australia-vs-england-3rd-t20i-at-the-gabba/107435858",
+"when": "2026-11-27T10:05:50+00:00",
+"desc": "England beats Australia by seven wickets at the Gabba, bowling the home team out for their lowest-ever T20I total, 108.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Sony's 1999 robot dog toys rehomed in Japan hospitals to offer companionship",
+"link": "https://www.abc.net.au/news/2026-11-27/sony-s-dog-robot-aibo-gets-rehomed-to-hospitals/107436690",
+"when": "2026-11-27T08:50:10+00:00",
+"desc": "Packed with sensors and digital cameras, this digital puppy has been programmed to remember its name, the owner's face and its surroundings.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Twelfth teen charged over alleged group bashing at Gold Coast schoolies",
+"link": "https://www.abc.net.au/news/2026-11-27/qld-twelfth-charged-schoolies-gold-coast-alleged-bashing/107436214",
+"when": "2026-11-27T06:07:33+00:00",
+"desc": "A twelfth person has been charged over the alleged group bashing of a 15-year-old during schoolies celebrations on the Gold Coast.",
+"cat": "生活"
+},
+{
+"src": "realestate 新闻",
+"title": "Strata for singles: The solo women buying apartments for lifestyle over investment",
+"link": "https://www.realestate.com.au/news/strata-for-singles-the-solo-women-buying-apartments-for-lifestyle-over-investment/",
+"when": "2026-11-27T06:06:35+00:00",
+"desc": "A growing cohort of single women are buying into strata for the lifestyle, location and ... The post Strata for singles: The solo women buying apartments for lifestyle over investment appeared first o",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "ACCC finds no evidence of misleading food label claims aired on Four Corners",
+"link": "https://www.abc.net.au/news/2026-11-27/accc-concludes-food-fraud-inquiries-after-four-corners-episode/107435478",
+"when": "2026-11-27T06:04:15+00:00",
+"desc": "Australia's consumer watchdog says it has concluded its inquiries into allegations of food fraud aired by Four Corners, finding no evidence of misleading labelling on two types of food products.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "From Beau Lamarre-Condon to Erin Patterson: the domestic and family violence we don’t name",
+"link": "https://theconversation.com/from-beau-lamarre-condon-to-erin-patterson-the-domestic-and-family-violence-we-dont-name-297619",
+"when": "2026-11-27T05:53:23+00:00",
+"desc": "The Lamarre-Condon and Patterson cases are very different, but they share a common thread: neither fits the picture most of us have of domestic and family violence.",
+"cat": "地产"
+},
+{
+"src": "ABC 新闻",
+"title": "Ex-NSW Liberal MP jailed for two years over rape of 13yo boy",
+"link": "https://www.abc.net.au/news/2026-11-27/former-nsw-liberal-mp-rory-amon-jailed-2-years-rape-13yo-boy/107435644",
+"when": "2026-11-27T05:36:04+00:00",
+"desc": "The 13-year-old boy told the NSW Supreme Court the abuse inflicted by Rory Amon had led him \"down a path of self-harm and suffering\".",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Mushroom killer Erin Patterson asks High Court to hear appeal",
+"link": "https://www.abc.net.au/news/2026-11-27/mushroom-killer-erin-patterson-high-court-appeal-bid/107433688",
+"when": "2026-11-27T05:08:33+00:00",
+"desc": "Lawyers for the triple murderer have lodged the bid on the final day of the appeal window.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Australia’s new gas reservation policy aims to keep supply secure and prices low. Will it work?",
+"link": "https://theconversation.com/australias-new-gas-reservation-policy-aims-to-keep-supply-secure-and-prices-low-will-it-work-297736",
+"when": "2026-11-27T04:29:46+00:00",
+"desc": "Gas exporters will have to keep up to 20% of their production for domestic markets in a bid to secure supply and bring down prices.",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "Has Australia been rigged for the rich?",
+"link": "https://theconversation.com/has-australia-been-rigged-for-the-rich-291461",
+"when": "2026-11-27T04:22:18+00:00",
+"desc": "Why are Australia’s billionaires getting wealthier and wealthier when the rest of us aren’t? We’ve mapped the tactics the ultra-rich use to amass their fortunes.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "The world’s ice is in real peril from climate change – and will keep melting even if we reach net zero",
+"link": "https://theconversation.com/the-worlds-ice-is-in-real-peril-from-climate-change-and-will-keep-melting-even-if-we-reach-net-zero-297062",
+"when": "2026-11-27T04:21:12+00:00",
+"desc": "As temperatures overshoot 1.5°C, some ice loss may be irreversible. Rapid emissions cuts can still preserve parts of the cryosphere and limit future sea-level rise.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "What is Victoria's First Nations treaty? – video",
+"link": "https://www.theguardian.com/australia-news/video/2026/nov/27/what-is-victorias-first-nations-treaty-video",
+"when": "2026-11-27T04:20:50+00:00",
+"desc": "Victoria's treaty with Indigenous Peoples is at stake in this state election. The Coalition leader, Jess Wilson, who once supported the federal Indigenous voice to parliament, has vowed to repeal the ",
+"cat": "墨尔本"
+},
+{
+"src": "ABC 新闻",
+"title": "'Always hated you': Daughter's message as father found guilty of mum's murder",
+"link": "https://www.abc.net.au/news/2026-11-27/ex-raaf-pilot-robert-crawford-found-guilty-of-wife-s-murder/107430874",
+"when": "2026-11-27T04:07:44+00:00",
+"desc": "Frances Crawford was found dead near a ride-on lawnmower at the couple's property in 2024.",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "How have the Kangaroos become such an AFLW powerhouse? And can the Demons upset them in the grand final?",
+"link": "https://theconversation.com/how-have-the-kangaroos-become-such-an-aflw-powerhouse-and-can-the-demons-upset-them-in-the-grand-final-297636",
+"when": "2026-11-27T04:02:57+00:00",
+"desc": "The grand final features underdog vs heavyweight. The return of a club leader. And a possible fairytale celebration for an icon of the sport.",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Mum welcomes removal of 'horrifying' AI companion from app store",
+"link": "https://www.abc.net.au/news/2026-11-27/talkie-ai-app-blocked-taken-off-apple-store/107433834",
+"when": "2026-11-27T03:12:53+00:00",
+"desc": "AI companion service Talkie has blocked access to web users in Australia and the UK, just days after Apple removed it from its App Store.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "ABC in war of words with The Australian over Gaza freelancer, but Hugh Marks says it’s ‘fair scrutiny’ | Weekly Beast",
+"link": "https://www.theguardian.com/media/2026/nov/27/weekly-beast-hugh-marks-abc-hamas-freelancer-allegations-ntwnfb",
+"when": "2026-11-27T03:03:56+00:00",
+"desc": "Managing director has no problem with multiple stories alleging ABC engaged a Hamas terrorist. Plus: One Nation gives mixed messages on media bans Sign up for Guardian Australia’s free weekly media ne",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "NZ election final: right needs Opportunity to govern, uncharted political waters ahead",
+"link": "https://theconversation.com/nz-election-final-right-needs-opportunity-to-govern-uncharted-political-waters-ahead-297127",
+"when": "2026-11-27T02:42:13+00:00",
+"desc": "Complex negotiations will now determine the makeup of New Zealand’s next coalition government – with a new, untested party under intense scrutiny.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "The view from Canberra: is Labor on the edge of an economic cliff? - podcast",
+"link": "https://www.theguardian.com/australia-news/audio/2026/nov/27/the-view-from-canberra-is-labor-on-the-edge-of-an-economic-cliff-australian-politics-podcast-ntwnfb",
+"when": "2026-11-27T02:00:15+00:00",
+"desc": "The parliamentary year has ended with Labor passing a swathe of legislation and the surprise defection of a Liberal senator to Pauline Hanson’s One Nation party. But the government won’t be able to ca",
+"cat": "澳洲"
+},
+{
+"src": "ABC 新闻",
+"title": "Young father allegedly bashed after playground dispute dies in hospital",
+"link": "https://www.abc.net.au/news/2026-11-27/treeby-father-dies-after-alleged-playground-bashing-over-scooter/107408688",
+"when": "2026-11-27T01:50:30+00:00",
+"desc": "A 25-year-old man dies in a Perth hospital after being on life support since allegedly being assaulted 11 days ago following a dispute about a child's scooter.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Melbourne’s safe injecting room is one of the world’s busiest. The Liberals have vowed to close it",
+"link": "https://theconversation.com/melbournes-safe-injecting-room-is-one-of-the-worlds-busiest-the-liberals-have-vowed-to-close-it-297506",
+"when": "2026-11-27T01:25:41+00:00",
+"desc": "The evidence is clear: the Richmond facility has saved lives, helped people get off drugs, and freed up Victoria’s ambulance and hospital system.",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "Soft plastic recycling in Australia is struggling. How do we fix it?",
+"link": "https://theconversation.com/soft-plastic-recycling-in-australia-is-struggling-how-do-we-fix-it-297148",
+"when": "2026-11-27T01:24:52+00:00",
+"desc": "Without more action, we risk watching more recycling companies go bust – or else relying on ongoing injections of taxpayer funding.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Russia wants to build a new security framework to end the war. This is why it won’t work",
+"link": "https://theconversation.com/russia-wants-to-build-a-new-security-framework-to-end-the-war-this-is-why-it-wont-work-296813",
+"when": "2026-11-27T01:19:26+00:00",
+"desc": "Vladimir Putin wants to counter NATO with his own security pact, but there are reasons to be sceptical.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "The Coconut Children is a tender coming-of-age story about taking root between two worlds",
+"link": "https://theconversation.com/the-coconut-children-is-a-tender-coming-of-age-story-about-taking-root-between-two-worlds-297659",
+"when": "2026-11-27T00:28:38+00:00",
+"desc": "Based on Vivian Pham’s 2020 novel, this magical stage debut uses milk crates and disco to bring 1990s Cabramatta to the stage.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "In the digital age, the ABC is more important than ever. Margaret Simons’ new book reveals why",
+"link": "https://theconversation.com/in-the-digital-age-the-abc-is-more-important-than-ever-margaret-simons-new-book-reveals-why-296838",
+"when": "2026-11-27T00:16:26+00:00",
+"desc": "Going Digital is essential for anyone wanting to understand why public service broadcasting has become so important in our fractured, fractious social media age.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Coalition teams up with Labor to pass 20% gas reservation scheme for Australia’s largest exporters",
+"link": "https://www.theguardian.com/australia-news/2026/nov/26/coalition-to-team-up-with-labor-to-pass-20-gas-reservation-scheme-for-australias-largest-exporters",
+"when": "2026-11-27T00:02:10+00:00",
+"desc": "Labor passes final major piece of legislation for 2026, denying Greens’ bid for 25% tax on exports Get our daily political email , free app or daily news podcast A federal gas reservation scheme requi",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Elon Musk has approval to launch 1 million satellites. An astronomer explains how this would impact the sky",
+"link": "https://theconversation.com/elon-musk-has-approval-to-launch-1-million-satellites-an-astronomer-explains-how-this-would-impact-the-sky-297646",
+"when": "2026-11-26T23:39:50+00:00",
+"desc": "If Starmind proceeds in full, the number of operational satellites will be multiplied by a factor of 50.",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Whispering Jack: John Farnham musical is a triumph of big hits and stratospheric vocals",
+"link": "https://theconversation.com/whispering-jack-john-farnham-musical-is-a-triumph-of-big-hits-and-stratospheric-vocals-296836",
+"when": "2026-11-26T23:18:02+00:00",
+"desc": "The new musical captures an Australian icon’s journey from teen idol to struggling singer and then finding his own artistic voice",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Coalition set for a big win in Victorian election as One Nation fades in final polls",
+"link": "https://theconversation.com/coalition-set-for-a-big-win-in-victorian-election-as-one-nation-fades-in-final-polls-297630",
+"when": "2026-11-26T22:22:35+00:00",
+"desc": "There seems no doubt about the winner on Saturday night. But which party will come second is less certain.",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "Meet Tiny Tim: at 192cm, he's one of Australia's tallest steers – video",
+"link": "https://www.theguardian.com/world/video/2026/nov/27/meet-tiny-tim-at-192cm-hes-one-of-australias-tallest-steers-video",
+"when": "2026-11-26T22:03:30+00:00",
+"desc": "Tiny Tim is an eight-year-old Friesian steer, and one of the largest cattle in Australia. His owner, Eric Walmsley, a cattle farmer in the small farming community of Waroona, says he's owned him since",
+"cat": "澳洲"
+},
+{
+"src": "The Conversation",
+"title": "Does drinking raw milk actually deliver extra health benefits? Here’s the science",
+"link": "https://theconversation.com/does-drinking-raw-milk-actually-deliver-extra-health-benefits-heres-the-science-296915",
+"when": "2026-11-26T19:15:56+00:00",
+"desc": "There’s no direct evidence for any of the claimed health benefits of raw milk, but there is a risk of contracting a bacterial infection.",
+"cat": "生活"
+},
+{
+"src": "The Conversation",
+"title": "Victoria’s major parties are silent on arts and culture. What are the others offering?",
+"link": "https://theconversation.com/victorias-major-parties-are-silent-on-arts-and-culture-what-are-the-others-offering-297298",
+"when": "2026-11-26T19:15:39+00:00",
+"desc": "Victoria’s arts sector is struggling. The various policies (or lack thereof) in the lead up to the state election reveal a stark political divide.",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "AI could be used to write your child’s report. Is this a problem?",
+"link": "https://theconversation.com/ai-could-be-used-to-write-your-childs-report-is-this-a-problem-297517",
+"when": "2026-11-26T19:15:26+00:00",
+"desc": "Currently, there is no consistent national guidance for AI use in school reports.",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "We built an AI you can dance with. It taught us about developing the technology responsibly",
+"link": "https://theconversation.com/we-built-an-ai-you-can-dance-with-it-taught-us-about-developing-the-technology-responsibly-295348",
+"when": "2026-11-26T19:15:14+00:00",
+"desc": "An experiment in an Auckland dance studio suggests a different approach to AI – one that gives people more say in shaping the technology they use.",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "Friday essay: What if …? The imaginative adventure of reading alternative histories",
+"link": "https://theconversation.com/friday-essay-what-if-the-imaginative-adventure-of-reading-alternative-histories-286662",
+"when": "2026-11-26T19:15:02+00:00",
+"desc": "An interest in alternative histories is shared by novelists and historians. Yet they pursue quite different aims.",
+"cat": "地产"
+},
+{
+"src": "The Conversation",
+"title": "Residential aged care can cost $100,000 a year. Here’s why – and how to ‘try before you buy’",
+"link": "https://theconversation.com/residential-aged-care-can-cost-100-000-a-year-heres-why-and-how-to-try-before-you-buy-295250",
+"when": "2026-11-26T19:14:35+00:00",
+"desc": "You or your loved one can access weeks of subsidised short-stay respite care in aged care homes every year, even before needing to make the move.",
+"cat": "澳洲"
+},
+{
+"src": "卫报澳洲",
+"title": "Barrie and Tony's final Victorian election predictions – Back to Back Barries live",
+"link": "https://www.theguardian.com/australia-news/video/2026/nov/27/barrie-and-tonys-final-victorian-election-predictions-back-to-back-barries-live",
+"when": "2026-11-26T14:00:38+00:00",
+"desc": "In this sold-out live show from the Capitol Theatre in Melbourne, Barrie Cassidy and Tony Barry give their final predictions for what is being called the most consequential state election in a generat",
+"cat": "墨尔本"
+},
+{
+"src": "卫报澳洲",
+"title": "Victoria’s mental health crisis has been decades in the making. It’s going to be harder than potholes to fix | Zoe Daniel",
+"link": "https://www.theguardian.com/society/commentisfree/2026/nov/27/mental-health-crisis-victoria-state-election-2026-comment-homelessness",
+"when": "2026-11-26T14:00:37+00:00",
+"desc": "The drivers of mental ill health are all increasing; social isolation, cost of living, family violence, alcohol and other drug use, homelessness and psychological distress Victorian election 2026 guid",
+"cat": "墨尔本"
+},
+{
+"src": "The Conversation",
+"title": "Can the International Criminal Court survive Trump’s attacks – and hold world leaders to account?",
+"link": "https://theconversation.com/can-the-international-criminal-court-survive-trumps-attacks-and-hold-world-leaders-to-account-297530",
+"when": "2026-11-26T11:10:07+00:00",
+"desc": "The trial of former president of the Philippines, Rodrigo Duterte, comes at a precarious moment for the International Criminal Court, as the US ramps up its efforts to undermine the institution.",
+"cat": "澳洲"
+}
+]
+}
