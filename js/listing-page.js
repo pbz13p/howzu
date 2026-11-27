@@ -40,7 +40,7 @@
   function ogDesc(x) {
     const head = [x.suburb, facts(x), isLet(x) ? "已租出" : x.available ? `${availText(x.available)}入住` : "", x.furnished === true ? "带家具" : ""].filter(Boolean).join(" · ");
     const first = String(x.desc || "").split(/\n/).map(s => s.trim()).filter(Boolean)[0] || "";
-    const s = head + (first ? "。" + first : "") + (x.user ? " 好租 Howzu 已审核的个人房源。" : " 好租 Howzu 中文服务，持牌管理。");
+    const s = head + (first ? "。" + first : "") + (x.agency ? ` 由 ${x.agency} 提供，好租 Howzu 中文咨询。` : x.user ? " 好租 Howzu 已审核的个人房源。" : " 好租 Howzu 中文服务，持牌管理。");
     return s.length > 110 ? s.slice(0, 109) + "…" : s;
   }
   // 搜索结果描述：中文在前，后面补一句英文
@@ -237,7 +237,7 @@ ${others && others.length ? `<div class="rel"><div class="rel-h">${isLet(x) ? "�
 <a class="more" href="${esc(full)}">查看全部照片 · 看对口学区 ›</a>
 <a class="more" href="../rentals.html">${isLet(x) ? "这套已租出，看看其他在租房源 ›" : "看看其他在租房源 ›"}</a>
 <div class="alert-sub" data-suburb="${esc(x.suburb || "")}" data-beds="${esc(x.beds != null ? x.beds : "")}" data-max="${esc(Number(x.rentWeekly) > 0 ? Math.ceil(Number(x.rentWeekly) * 1.1 / 10) * 10 : "")}"></div>
-<p class="trust">${x.user ? "好租 Howzu · 个人发布、好租已审核 · 全程中文" : "好租 Howzu · 持牌物业管理 · 全程中文服务"}</p>
+<p class="trust">${x.agency ? `好租 Howzu · 由 ${esc(x.agency)} 提供 · 中文咨询` : x.user ? "好租 Howzu · 个人发布、好租已审核 · 全程中文" : "好租 Howzu · 持牌物业管理 · 全程中文服务"}</p>
 </main>
 ${isLet(x) ? `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${esc(x.id)}">看在租房源</a><a class="p" href="${esc(leadUrl(x))}" data-act="lead" data-id="${esc(x.id)}">🔔 同楼或附近有空房通知我</a></div></nav>` : ""}
 ${isLet(x) || !tel ? "" : `<nav class="bar"><div><a class="g" href="sms:${esc(tel)}?&amp;body=${msg}" data-act="sms" data-id="${esc(x.id)}">💬 短信</a><a class="g" href="tel:${esc(tel)}" data-act="call" data-id="${esc(x.id)}">📞 电话</a><a class="p" href="${esc(full)}#book" data-act="book" data-id="${esc(x.id)}">📅 预约看房</a></div></nav>`}
@@ -274,6 +274,12 @@ ${!isLet(x) && !tel && wx ? `<nav class="bar"><div><a href="${esc(full)}">微信
 
   // 信任信息：自管房源讲清楚我们的保障；个人发布的房源给防骗提醒（不替私人房东做承诺）
   function trust(x, letCount) {
+    if (x && x.agency) return { // 中介授权展示的房源（REAXML 自动导入）
+      kind: "user", title: `由 ${x.agency} 提供 · 持牌中介`,
+      items: [["看房签约", "由中介负责"], ["押金交 RTBA", "不交现金给个人"], ["签标准合同", "维州 CAV 标准租约"]],
+      note: `这是 ${x.agency} 授权好租展示的房源${x.agencyPhone ? "，中介电话 " + x.agencyPhone : ""}。通过好租咨询，我们会把你的需求转给中介。`,
+      guide: "/guide/first-rental.html#scam", guideText: "第一次在墨尔本租房？看要准备什么 ›",
+    };
     if (x && x.user) return {
       kind: "user", title: "个人发布 · 好租已审核",
       items: [["看房前不转账", "不要先付定金或押金"], ["押金交 RTBA", "不交现金给个人"], ["签标准合同", "维州 CAV 标准租约"]],

@@ -1,0 +1,4 @@
+{
+  "note": "中介房源自动导入名单（tools/import-feed.js 每 2 小时读一次）。只放书面授权过的中介；名单为空什么都不做。字段：key=英文小写短名（一旦定了不改）；name=显示名；url=REAXML 拉取网址；agentID=feed 里这家的 agentID（可选，用来防串）；snapshot=true 表示网址给的是全量（不在里面的算下架），FTP 增量推送填 false；authorizedOn=授权日期；authorization=授权邮件存档位置（Gmail 链接或文件路径，不写邮件内容）；minStandardsConfirmed=中介书面确认房源符合维州最低租住标准（RTA s65B），没确认的只导进后台、不公开；phone=中介办公室电话（feed 里没有经纪人电话时用）；forward=是否把询盘转给中介（默认 false，要 Frank 打开）；leadEmail=收询盘的邮箱。",
+  "agencies": []
+}

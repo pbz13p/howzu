@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 仿真数据 2：SIM-001 租金从 620 改成 650（全部是编的，地址只用街名，不对应真实房源） -->
+<propertyList date="2026-11-27-10:00:00">
+  <rental modTime="2026-11-28-09:00:00" status="current">
+    <agentID>SIMAG1</agentID><uniqueID>SIM-001</uniqueID>
+    <listingAgent><name>Amy Chen</name><telephone type="BH">03 9000 0001</telephone><email>amy@example.com</email></listingAgent>
+    <dateAvailable>2026-12-15</dateAvailable>
+    <rent period="week" display="yes">650</rent><bond>2694</bond>
+    <address display="yes"><subNumber>1203</subNumber><streetNumber>200</streetNumber><street>Example Street</street><suburb display="yes">CARLTON</suburb><state>VIC</state><postcode>3053</postcode></address>
+    <category name="Apartment"/>
+    <headline>Bright 2 bed near Melbourne Uni</headline>
+    <description>Two bedrooms, one bathroom, walk to campus &amp; trams. Call Amy on 0400 000 001.</description>
+    <allowances><petFriendly>no</petFriendly><furnished>yes</furnished></allowances>
+    <features><bedrooms>2</bedrooms><bathrooms>1</bathrooms><garages>0</garages><carports>0</carports></features>
+    <images><img id="m" url="https://images.example.com/sim001-a.jpg"/><img id="a" url="http://images.example.com/sim001-b.jpg"/></images>
+  </rental>
+  <rental modTime="2026-11-27-09:00:00" status="current">
+    <agentID>SIMAG1</agentID><uniqueID>SIM-002</uniqueID>
+    <rent period="month" display="yes">2600</rent>
+    <address display="yes"><streetNumber>15</streetNumber><street>Sample Avenue</street><suburb>BOX HILL</suburb><state>vic</state><postcode>3128</postcode></address>
+    <category name="Townhouse"/><headline>Townhouse</headline><description>Quiet.</description>
+    <features><bedrooms>3</bedrooms><bathrooms>2</bathrooms><garages>1</garages></features>
+    <images><img id="m" url="https://images.example.com/sim002.jpg"/></images>
+  </rental>
+  <rental modTime="2026-11-27-09:00:00" status="current">
+    <agentID>SIMAG1</agentID><uniqueID>SIM-003</uniqueID>
+    <rent period="week" display="yes">Contact agent</rent>
+    <address><streetNumber>3</streetNumber><street>Test Road</street><suburb>RICHMOND</suburb><state>VIC</state><postcode>3121</postcode></address>
+    <features><bedrooms>1</bedrooms></features>
+  </rental>
+  <rental modTime="2026-11-27-09:00:00" status="current">
+    <agentID>SIMAG1</agentID><uniqueID>SIM-004</uniqueID>
+    <rent period="week">700</rent>
+    <address><streetNumber>9</streetNumber><street>Harbour Lane</street><suburb>SYDNEY</suburb><state>NSW</state><postcode>2000</postcode></address>
+  </rental>
+  <residential modTime="2026-11-27-09:00:00" status="current"><agentID>SIMAG1</agentID><uniqueID>SALE-1</uniqueID></residential>
+</propertyList>

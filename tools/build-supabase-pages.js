@@ -38,7 +38,8 @@ function toListing(r) {
     title: scrub(r.title), address: scrub(hideUnit(r.address)), suburb: r.suburb, beds: r.beds, baths: r.baths, cars: r.cars,
     rentWeekly: r.rent_weekly, available: av ? LP.availText(av) : null,
     furnished: r.furnished === "带家具" ? true : r.furnished === "不带家具" ? false : r.furnished === "部分家具" ? "部分家具" : null,
-    photos: (r.photos || []).filter(p => /^https:\/\//.test(p)), highlights: (r.highlights || []).filter(h => !/^(渠道|来源|lang|type|楼)[:：]/.test(h)).map(scrub),
+    photos: (r.photos || []).filter(p => /^https:\/\//.test(p)), highlights: (r.highlights || []).filter(h => !/^(渠道|来源|lang|type|楼)[:：]/.test(h) && !/^中介(：|已确认)/.test(h)).map(scrub),
+    ...(A => A && /^feed:/.test(r.review_note || "") ? { agency: A.slice(3), agencyPhone: String(r.contact_phone || "").slice(0, 30) || null } : {})((r.highlights || []).find(h => /^中介：/.test(h))), // 中介房源：公开中介名和中介电话
     desc: scrub(D[0]), descEn: scrub((D[1] || "").trim()) || null, createdAt: r.created_at,
   };
 }
@@ -47,7 +48,10 @@ const asLet = x => Object.assign({}, x, { status: "let", rentWeekly: null, avail
 function renderPage(x, ctx) {
   let html = LP.render(x, {}, ctx.letCount || 0, LP.related(x, ctx.pool || [], 3), { vs: ctx.RVC ? (r => r && { html: RV.html(r), css: RV.CSS })(RV.match(x, ctx.RVC)) : null });
   if (x.status === "live") { // 静态页不放房东电话：底部按钮进详情页联系
-    const bar = `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${x.id}">看其他房源</a><a class="p" href="../rentals.html?id=${encodeURIComponent(x.id)}" data-act="contact" data-id="${x.id}">💬 联系房东</a></div></nav>\n`;
+    const tel = x.agency && x.agencyPhone ? x.agencyPhone.replace(/[^\d+]/g, "") : "";
+    const bar = x.agency // 中介房源：电话直接打给中介；在线咨询进好租后台，再转给中介
+      ? `<nav class="bar"><div>${tel ? `<a class="g" href="tel:${tel}" data-act="tel-agency" data-id="${x.id}">📞 中介电话</a>` : `<a class="g" href="../rentals.html" data-act="more" data-id="${x.id}">看其他房源</a>`}<a class="p" href="../rentals.html?id=${encodeURIComponent(x.id)}" data-act="contact" data-id="${x.id}">💬 在线咨询</a></div></nav>\n`
+      : `<nav class="bar"><div><a class="g" href="../rentals.html" data-act="more" data-id="${x.id}">看其他房源</a><a class="p" href="../rentals.html?id=${encodeURIComponent(x.id)}" data-act="contact" data-id="${x.id}">💬 联系房东</a></div></nav>\n`;
     html = html.replace("</body>", bar + "</body>");
   }
   return html;
@@ -67,7 +71,7 @@ function build(rows, mani, ctx) {
   for (const x of live) {
     if (M[x.id] && M[x.id].page) x.page = M[x.id].page; // 名字一旦定了不再变（避免旧链接失效）
     files["rent/" + x.page + ".html"] = renderPage(x, Object.assign({}, ctx, { pool }));
-    const snap = { title: x.title, address: x.address, suburb: x.suburb, beds: x.beds, baths: x.baths, cars: x.cars, furnished: x.furnished, photos: x.photos, highlights: x.highlights, desc: x.desc, descEn: x.descEn, kind: x.kind };
+    const snap = { agency: x.agency, title: x.title, address: x.address, suburb: x.suburb, beds: x.beds, baths: x.baths, cars: x.cars, furnished: x.furnished, photos: x.photos, highlights: x.highlights, desc: x.desc, descEn: x.descEn, kind: x.kind };
     M[x.id] = { page: x.page, status: "live", since: (M[x.id] && M[x.id].status === "live" && M[x.id].since) || ctx.today, snap };
   }
   for (const id of Object.keys(M)) if (!ids.has(id) && M[id].status === "live") { // 下架 / 已租出
@@ -84,7 +88,7 @@ async function main() {
   const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!KEY) { console.log("Supabase 静态页：没有 SUPABASE_SERVICE_ROLE_KEY，跳过"); return; }
   const url = (/SUPABASE_URL:\s*"([^"]+)"/.exec(fs.readFileSync(path.join(root, "js/config.js"), "utf8")) || [])[1];
-  const sel = "id,kind,status,title,address,suburb,beds,baths,cars,rent_weekly,available,furnished,photos,highlights,description,created_at";
+  const sel = "id,kind,status,title,address,suburb,beds,baths,cars,rent_weekly,available,furnished,photos,highlights,description,created_at,contact_phone,review_note"; // contact_phone 只在中介房源上用（中介公开的商业电话），个人房源不读
   const r = await fetch(`${url}/rest/v1/listings?select=${sel}&status=eq.live&order=created_at.desc&limit=500`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
   if (!r.ok) { // 读不到就沿用上次的在租列表，保证 sitemap 不丢这些页面
     console.log("Supabase 静态页：读取失败 HTTP " + r.status + "，页面不动，sitemap 沿用上次记录");

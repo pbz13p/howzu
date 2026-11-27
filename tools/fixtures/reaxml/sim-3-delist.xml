@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 仿真数据 3：SIM-001 已租出（leased），SIM-002 不在 feed 里了（全量 feed → 算下架） -->
+<propertyList date="2026-11-29-10:00:00">
+  <rental modTime="2026-11-29-09:00:00" status="leased"><agentID>SIMAG1</agentID><uniqueID>SIM-001</uniqueID></rental>
+  <rental modTime="2026-11-29-09:00:00" status="current">
+    <agentID>SIMAG1</agentID><uniqueID>SIM-005</uniqueID><rent period="week">480</rent>
+    <address><streetNumber>8</streetNumber><street>New Street</street><suburb>CLAYTON</suburb><state>VIC</state><postcode>3168</postcode></address>
+    <category name="Unit"/><features><bedrooms>1</bedrooms><bathrooms>1</bathrooms></features>
+  </rental>
+</propertyList>
