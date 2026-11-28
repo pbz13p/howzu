@@ -1,14 +1,14 @@
 {
- "updated": "2026-11-27",
+ "updated": "2026-11-28",
  "window": "近 30 天（需求热度近 60 天）",
- "views30": 559,
+ "views30": 588,
  "enquiries30": 3,
  "conversionPct": 0.5,
- "mobilePct": 81,
+ "mobilePct": 82,
  "viewChannels": [
   [
    "直接",
-   526
+   555
   ],
   [
    "Facebook",
@@ -54,7 +54,7 @@
   ]
  },
  "building": {
-  "views": 32,
+  "views": 34,
   "enquiries": 0,
   "subs": 0
  },
