@@ -24,6 +24,13 @@ ok("公寓 4 房 DFFH 没有 → 不显示", RV.match({ ...x, beds: 4 }, C) === 
 const h = RV.html(r);
 ok("详情写明中位数、样本、数据日期、出处、仅供参考", h.includes("$750") && h.includes("6461 套") && h.includes("截至 2026 年 6 月") && h.includes("DFFH") && h.includes("仅供参考"));
 ok("XSS 转义", !RV.html({ ...r, group: "<script>" }).includes("<script>"));
+// 发房源页定价参考（goals 第 18 条）
+ok("定价参考：没填租金只给中位数", (t => t.includes("$750") && t.includes("DFFH") && t.includes("仅供参考") && !t.includes("你的定价"))(RV.postText({ ...x, rentWeekly: 0 }, C)));
+ok("定价参考：高 20% 写清楚", RV.postText({ ...x, rentWeekly: 900 }, C).includes("你的定价高约 20%"));
+ok("定价参考：接近中位数", RV.postText({ ...x, rentWeekly: 760 }, C).includes("接近本区中位数"));
+ok("定价参考：单间 / 认不出房型 → 空", RV.postText({ ...x, kind: "单间出租" }, C) === "" && RV.postText({ ...x, title: "好房出租", address: "12 Smith St", highlights: [] }, C) === "");
+ok("定价参考：英文版", RV.postText({ ...x, rentWeekly: 900 }, C, true).includes("about 20% higher"));
+ok("ref 不影响 match（已租出仍不显示）", RV.ref({ ...x, status: "let" }, C) && RV.match({ ...x, status: "let" }, C) === null);
 // 生成的数据文件和独立页
 const vf = path.join(__dirname, "..", "data/rent_vs.json");
 if (fs.existsSync(vf)) {

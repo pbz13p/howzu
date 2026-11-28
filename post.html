@@ -45,6 +45,7 @@ textarea{resize:vertical;min-height:110px}
 .step b{font-size:22px;min-width:24px}
 .rent{display:flex;gap:8px;align-items:center}
 .rent input{flex:1}
+.rref{margin-top:6px;padding:8px 10px;border-radius:10px;background:#f4faf7;border:1px solid #cfe6d8;color:#3d4a44;line-height:1.55}.rref.hi{background:#fffaf0;border-color:#f0dfb8}
 .rent .unit{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .rent .unit button{border:0;padding:11px 12px;background:#fff;font-size:15px;cursor:pointer;color:var(--ink)}
 .rent .unit button.on{background:var(--accent);color:#fff}
@@ -120,7 +121,7 @@ textarea{resize:vertical;min-height:110px}
 .ba-l{left:8px}.ba-r{right:8px;background:rgba(15,107,79,.9)}
 @media(min-width:721px){.demo{grid-template-columns:1fr 1.3fr;align-items:center}}
 </style>
-<script src="/js/i18n-en.js?v=20261119b" defer></script><script src="/js/i18n.js?v=20261117b" defer></script>
+<script src="/js/i18n-en.js?v=20261128" defer></script><script src="/js/i18n.js?v=20261128" defer></script>
 </head>
 <body>
 <nav class="nav"><div class="in">
@@ -169,6 +170,7 @@ textarea{resize:vertical;min-height:110px}
       <div class="unit" id="unit"><button class="on" data-u="w">每周</button><button data-u="m">每月</button></div>
     </div>
     <div class="hint" id="rentHint"></div>
+    <div class="hint rref" id="rentRef" hidden></div>
     <label class="l">什么时候能入住</label>
     <div class="chips" data-k="when" data-single>
       <button class="on">马上</button><button>两周内</button><button data-date>选日期</button>
@@ -266,6 +268,7 @@ textarea{resize:vertical;min-height:110px}
 
 <script src="js/post-form.js?v=20261112i"></script>
 <script src="js/post-parse.js?v=20261115"></script>
+<script src="js/rent-vs.js?v=20261128"></script>
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import "./js/config.js";
@@ -369,19 +372,32 @@ document.querySelectorAll(".chips").forEach(g => g.addEventListener("click", e =
     // 点“选日期”直接弹出日历，少点一下；没选日期提交时存空，不会把“选日期”四个字当入住时间
     if (!d.hidden && b.classList.contains("on") && !d.value) { d.focus(); try { d.showPicker && d.showPicker(); } catch (_) {} } }
   if (g.dataset.k === "bond") rentHint();
+  if (g.dataset.k === "ptype" || g.dataset.k === "kind") rentRef();
   if (g.dataset.k === "viewing") { $("#slots").hidden = !g.querySelector("button.on[data-slots]"); if (!$("#slots").hidden) setTimeout(() => $("#slots input").focus({ preventScroll: true }), 50); }
   save(); progress();
 }));
 // 租期、押金、看房方式都作为结构化标签放进已有的 highlights 字段（不改数据库）
 const slotVals = () => [...document.querySelectorAll("#slots input")].map(i => i.value);
 const tags = () => PostForm.withSlots([], document.querySelector('.chips[data-k="viewing"] button.on[data-slots]') ? slotVals() : []).concat(PostForm.withTag(PostForm.withTag(PostForm.withLease(PostForm.withTag(PostForm.withTag(chips("pets").concat(PostForm.billTags(chips("bills")), chips("highlights"), chips("amen")), "看房 ", chips("viewing")[0]), "押金 ", chips("bond")[0]), chips("lease")[0]), "类型 ", chips("ptype")[0]), "楼层 ", chips("floor")[0]));
-const chips = k => [...document.querySelectorAll(`.chips[data-k="${k}"] button.on`)].map(b => b.textContent);
+// 选项值一律用中文原文：英文界面下按钮文字被翻译，原文在 data-zh（js/i18n.js 记下），提交到数据库的仍是中文
+const lab = b => (b.dataset.zh || b.textContent).trim();
+const chips = k => [...document.querySelectorAll(`.chips[data-k="${k}"] button.on`)].map(lab);
 document.querySelectorAll("[data-s]").forEach(b => b.onclick = () => {
-  const k = b.dataset.s; S[k] = Math.max(LIM[k][0], Math.min(LIM[k][1], S[k] + +b.dataset.d)); $("#v-" + k).textContent = S[k]; save();
+  const k = b.dataset.s; S[k] = Math.max(LIM[k][0], Math.min(LIM[k][1], S[k] + +b.dataset.d)); $("#v-" + k).textContent = S[k]; if (k === "beds") rentRef(); save();
 });
 $("#unit").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.unit = b.dataset.u; $("#unit").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); rentHint(); save(); };
 function weekly() { const v = +$("#rent").value || 0; return S.unit === "m" ? Math.round(v * 12 / 52) : v; }
-function rentHint() { const v = +$("#rent").value || 0; $("#rentHint").textContent = v ? (S.unit === "m" ? `≈ 每周 $${weekly()}` : `≈ 每月 $${Math.round(v * 52 / 12).toLocaleString("en-AU")}`) : ""; $("#bondHint").textContent = PostForm.bondText(weekly(), chips("bond")[0]); progress(); }
+function rentHint() { const v = +$("#rent").value || 0; $("#rentHint").textContent = v ? (S.unit === "m" ? `≈ 每周 $${weekly()}` : `≈ 每月 $${Math.round(v * 52 / 12).toLocaleString("en-AU")}`) : ""; $("#bondHint").textContent = PostForm.bondText(weekly(), chips("bond")[0]); progress(); rentRef(); }
+// 定价参考（goals 第 18 条）：本区同房型 DFFH 周租中位数，填了租金再说高/低多少；区、房型对不上就不显示
+let RVC = null;
+if (window.RentVs) fetch("/data/rent_vs.json").then(r => r.ok ? r.json() : null).then(d => { RVC = d; rentRef(); }).catch(() => {});
+function rentRef() {
+  const el = $("#rentRef"); if (!el) return;
+  const pt = chips("ptype")[0], x = { kind: chips("kind")[0] || "整套出租", beds: S.beds, rentWeekly: weekly(), address: $("#addr").value,
+    suburb: S.suburb || (($("#addr").value.split(",")[1]) || "").trim(), highlights: pt ? ["类型 " + pt] : [] };
+  const en = window.HowzuLang && HowzuLang.lang === "en", t = RVC && window.RentVs ? RentVs.postText(x, RVC, en) : "";
+  el.hidden = !t; el.textContent = t; const r = t && RentVs.match(x, RVC); el.classList.toggle("hi", !!(r && r.pct >= RentVs.NEAR));
+}
 $("#rent").oninput = () => { rentHint(); save(); };
 
 // ---------- address autocomplete (Photon / OSM) ----------
@@ -391,16 +407,16 @@ function unitAuto() {
   const u = PostForm.unitFloor($("#addr").value), h = $("#unitHint"), done = [];
   [["ptype", u && "公寓"], ["floor", u && u.bucket]].forEach(([k, label]) => {
     const g = document.querySelector(`.chips[data-k="${k}"]`); if (!g || g.dataset.auto === "-") return; // "-"：房东亲手点过，不再自动
-    const cur = g.querySelector("button.on"), mine = cur && cur.textContent.trim() === g.dataset.auto;
+    const cur = g.querySelector("button.on"), mine = cur && lab(cur) === g.dataset.auto;
     if (cur && !mine) return; // 房东自己选的，不动
-    if (mine && cur.textContent.trim() !== label) cur.classList.remove("on");
-    const b = label && [...g.querySelectorAll("button")].find(x => x.textContent.trim() === label);
+    if (mine && lab(cur) !== label) cur.classList.remove("on");
+    const b = label && [...g.querySelectorAll("button")].find(x => lab(x) === label);
     g.dataset.auto = b ? label : ""; if (b) { b.classList.add("on"); done.push(label); }
   });
   h.hidden = !done.length; if (done.length) h.textContent = `✓ 按房号 ${u.unit} 帮你选好了：${done.join(" · ")}（不对可在上面改）`;
 }
 $("#addr").oninput = () => {
-  unitAuto(); S.lat = S.lng = null; clearTimeout(t); const q = $("#addr").value.trim(); progress(); save();
+  unitAuto(); rentRef(); S.lat = S.lng = null; clearTimeout(t); const q = $("#addr").value.trim(); progress(); save();
   if (q.length < 4) { $("#sug").innerHTML = ""; return; }
   t = setTimeout(async () => {
     try {
@@ -413,7 +429,7 @@ $("#sug").onclick = e => {
   const d = e.target.closest("div[data-i]"); if (!d) return;
   const typed = $("#addr").value.trim(); const unit = (typed.match(/^\s*(\w+)\s*\//) || [])[1];
   $("#addr").value = (unit ? unit + "/" : "") + d.dataset.label; S.lat = +d.dataset.lat; S.lng = +d.dataset.lng; S.suburb = d.dataset.sub;
-  $("#sug").innerHTML = ""; progress(); save();
+  $("#sug").innerHTML = ""; rentRef(); progress(); save();
 };
 
 // ---------- auto write ----------
@@ -493,7 +509,7 @@ $("#std").addEventListener("change", progress);
 // ---------- 一键填好：粘贴自己写过的房源介绍 → 自动填表（js/post-parse.js，规则识别，识别不出的不填、不编） ----------
 function setChip(k, text, on = true) {
   const g = document.querySelector(`.chips[data-k="${k}"]`); if (!g || !text) return false;
-  const bs = [...g.querySelectorAll("button")], b = bs.find(x => x.textContent.trim() === text); if (!b) return false;
+  const bs = [...g.querySelectorAll("button")], b = bs.find(x => lab(x) === text); if (!b) return false;
   if (g.hasAttribute("data-single")) bs.forEach(x => x.classList.toggle("on", x === b && on)); else b.classList.toggle("on", on);
   g.dataset.auto = "-"; return true;
 }
@@ -545,7 +561,7 @@ try { const d = JSON.parse(localStorage.getItem(KEY) || "null"); if (d) { Object
   $("#date").value = d.date || "";
   if (d.chips) { d.chips.amen = PostForm.oldAmen(d.chips); d.chips.bills = PostForm.oldBills(d.chips); }
   for (const k of CHIPK) { const g = document.querySelector(`.chips[data-k="${k}"]`); if (!g) continue; const bs = [...g.querySelectorAll("button")];
-    const st = PostForm.chipState(bs.map(b => b.textContent), d.chips && d.chips[k], g.hasAttribute("data-single"), bs.map(b => b.classList.contains("on"))); bs.forEach((b, i) => b.classList.toggle("on", st[i])); }
+    const st = PostForm.chipState(bs.map(lab), d.chips && d.chips[k], g.hasAttribute("data-single"), bs.map(b => b.classList.contains("on"))); bs.forEach((b, i) => b.classList.toggle("on", st[i])); }
   $("#date").hidden = !document.querySelector('.chips[data-k="when"] button.on[data-date]');
   (d.slots || []).forEach((v, i) => { const el = document.querySelectorAll("#slots input")[i]; if (el) el.value = v || ""; });
   $("#slots").hidden = !document.querySelector('.chips[data-k="viewing"] button.on[data-slots]');

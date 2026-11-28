@@ -45,7 +45,8 @@
       if (root.nodeType === 1 && root.hasAttribute("data-en") && root.textContent !== root.getAttribute("data-en")) root.textContent = root.getAttribute("data-en");
       var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { var p = n.parentElement; return p && !/^(SCRIPT|STYLE|TEXTAREA|NOSCRIPT)$/.test(p.tagName) && !p.closest("[data-noi18n],[data-en]") && HAN.test(n.nodeValue) ? 1 : 2; } }), n, list = [];
       while ((n = w.nextNode())) list.push(n);
-      list.forEach(function (t) { var v = tr(t.nodeValue); if (v !== t.nodeValue) t.nodeValue = v; });
+      list.forEach(function (t) { var v = tr(t.nodeValue); if (v !== t.nodeValue) { var pb = t.parentElement; if (pb && pb.tagName === "BUTTON" && !pb.hasAttribute("data-zh") && pb.childNodes.length === 1) pb.setAttribute("data-zh", t.nodeValue.trim()); t.nodeValue = v; } });
+      // ↑ 按钮翻成英文前记下中文原文（data-zh），页面脚本读选项值用它，提交到数据库的仍是中文（发房源页的房型、家具等）
       var els = root.querySelectorAll ? root.querySelectorAll("[placeholder],[title],[aria-label],[alt]") : [];
       for (var i = 0; i < els.length; i++) for (var a = 0; a < ATTRS.length; a++) { var x = els[i].getAttribute(ATTRS[a]); if (x && HAN.test(x)) { var xv = tr(x); if (xv !== x) els[i].setAttribute(ATTRS[a], xv); } }
       if (root.nodeType === 1) for (var b = 0; b < ATTRS.length; b++) { var y = root.getAttribute(ATTRS[b]); if (y && HAN.test(y)) { var yv = tr(y); if (yv !== y) root.setAttribute(ATTRS[b], yv); } }

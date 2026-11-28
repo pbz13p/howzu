@@ -157,4 +157,6 @@ window.HOWZU_EN = {
 "比本区中位数高 {n}%": "{n}% above suburb median", "比本区中位数低 {n}%": "{n}% below suburb median", "接近本区中位数": "Close to suburb median",
 "📊 比本区中位数高 {n}%": "📊 {n}% above suburb median", "📊 比本区中位数低 {n}%": "📊 {n}% below suburb median", "📊 接近本区中位数": "📊 Close to suburb median", "查各区租金 ›": "Rents by suburb ›",
 "🔔 有新房通知我": "🔔 Email me new listings", "有符合条件的新房源上线或降价，第一时间发邮件给你，一天最多一封，随时一键退订。": "When a matching place is listed or drops its rent, we email you — at most one email a day, one-click unsubscribe.", "区（空着 = 全墨尔本）": "Suburb (blank = all Melbourne)", "几房": "Beds", "周租上限": "Max $/wk", "你的邮箱": "Your email", "订阅": "Subscribe", "几房起": "Min beds", "周租上限 $": "Max $/wk", "不限": "Any", "我同意好租 Howzu 按上面的条件给我发房源邮件（每封都能一键退订）。": "I agree to receive listing emails from Howzu for these criteria (one-click unsubscribe in every email).", "请填正确的邮箱": "Please enter a valid email", "请勾选同意接收房源邮件": "Please tick the box to agree to listing emails", "预算请填 50–20000 之间的周租": "Budget must be between $50 and $20,000 a week", "✅ 订阅好了": "✅ You're subscribed", "有符合的新房源会发到你的邮箱。没收到记得看看垃圾邮件箱。": "We'll email matching new listings. Check your spam folder if nothing arrives.", "没订阅成功，请稍后再试": "Couldn't subscribe — please try again later",
+// ---- 发房源：租金换算（11/28） ----
+"≈ 每月 {n}": "≈ {n} per month", "≈ 每周 {n}": "≈ {n} per week",
 };
